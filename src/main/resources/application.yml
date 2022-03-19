@@ -14,3 +14,11 @@ spring:
       hibernate.hbm2ddl.auto: create
     show-sql: true
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+server:
+  port: 8080
+  servlet:
+    context-path: /picTO
