@@ -1,6 +1,5 @@
 package kr.co.picTO.service;
 
-import kr.co.picTO.model.response.CommonResponse;
 import kr.co.picTO.model.response.CommonResult;
 import kr.co.picTO.model.response.ListResult;
 import kr.co.picTO.model.response.SingleResult;

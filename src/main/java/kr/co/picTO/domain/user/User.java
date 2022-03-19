@@ -1,4 +1,4 @@
-package kr.co.picTO.entity;
+package kr.co.picTO.domain.user;
 
 import lombok.*;
 

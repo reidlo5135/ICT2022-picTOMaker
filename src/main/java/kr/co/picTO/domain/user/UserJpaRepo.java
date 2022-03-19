@@ -1,6 +1,6 @@
-package kr.co.picTO.repo;
+package kr.co.picTO.domain.user;
 
-import kr.co.picTO.entity.User;
+import kr.co.picTO.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserJpaRepo extends JpaRepository<User, Long> {

@@ -1,4 +1,4 @@
-package kr.co.picTO.model.response;
+package kr.co.picTO.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
