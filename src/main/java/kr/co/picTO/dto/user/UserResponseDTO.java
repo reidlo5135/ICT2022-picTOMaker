@@ -1,6 +1,6 @@
 package kr.co.picTO.dto.user;
 
-import kr.co.picTO.domain.user.User;
+import kr.co.picTO.entity.User;
 import lombok.Getter;
 
 @Getter

@@ -4,14 +4,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-import kr.co.picTO.advice.exception.UserNotFoundCException;
-import kr.co.picTO.domain.user.User;
 import kr.co.picTO.dto.user.UserRequestDTO;
 import kr.co.picTO.dto.user.UserResponseDTO;
 import kr.co.picTO.model.response.CommonResult;
 import kr.co.picTO.model.response.ListResult;
 import kr.co.picTO.model.response.SingleResult;
-import kr.co.picTO.domain.user.UserJpaRepo;
 
 import kr.co.picTO.service.ResponseService;
 import kr.co.picTO.service.UserService;

@@ -1,8 +1,8 @@
 package kr.co.picTO.service;
 
 import kr.co.picTO.advice.exception.UserNotFoundCException;
-import kr.co.picTO.domain.user.User;
-import kr.co.picTO.domain.user.UserJpaRepo;
+import kr.co.picTO.entity.User;
+import kr.co.picTO.repository.UserJpaRepo;
 import kr.co.picTO.dto.user.UserRequestDTO;
 import kr.co.picTO.dto.user.UserResponseDTO;
 import lombok.AllArgsConstructor;
