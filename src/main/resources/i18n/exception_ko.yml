@@ -1,7 +1,7 @@
 unKnwon:
   code: "-9999"
-  msg: "An unknown error has occurred."
+  msg: "알 수 없는 에러 발생."
 
 userNotFound:
   code: "-1000"
-  msg: "This member not exist"
+  msg: "회원이 존재하지 않습니다."

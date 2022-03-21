@@ -22,6 +22,9 @@ spring:
     basename: i18n/exception
     encoding: UTF-8
 
+  profiles:
+    include: jwt
+
 server:
   port: 8080
   servlet:
