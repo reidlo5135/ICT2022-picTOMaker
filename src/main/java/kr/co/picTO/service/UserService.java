@@ -1,11 +1,16 @@
 package kr.co.picTO.service;
 
+import kr.co.picTO.advice.exception.EmailLoginFailedCException;
+import kr.co.picTO.advice.exception.EmailSignUpFailedCException;
 import kr.co.picTO.advice.exception.UserNotFoundCException;
+import kr.co.picTO.dto.user.UserLoginResponseDTO;
+import kr.co.picTO.dto.user.UserSignUpRequestDTO;
 import kr.co.picTO.entity.User;
 import kr.co.picTO.repository.UserJpaRepo;
 import kr.co.picTO.dto.user.UserRequestDTO;
 import kr.co.picTO.dto.user.UserResponseDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +22,27 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private UserJpaRepo userJpaRepo;
+    private PasswordEncoder passwordEncoder;
+
+    @Transactional(readOnly = true)
+    public UserLoginResponseDTO login(String email, String password) {
+        User user = userJpaRepo.findByEmail(email).orElseThrow(EmailLoginFailedCException::new);
+        if(!passwordEncoder.matches(password, user.getPassword()))
+            throw new EmailLoginFailedCException();
+        return new UserLoginResponseDTO(user);
+    }
+
+    @Transactional
+    public Long signup(UserSignUpRequestDTO userSignUpRequestDTO) {
+        if(userJpaRepo.findByEmail(userSignUpRequestDTO.getEmail()).orElse(null) == null)
+            return userJpaRepo.save(userSignUpRequestDTO.toEntity()).getUserid();
+        else throw new EmailSignUpFailedCException();
+    }
 
     @Transactional
     public Long save(UserRequestDTO userDTO) {
-        userJpaRepo.save(userDTO.toEntity());
-        return userJpaRepo.findByEmail(userDTO.getEmail()).getUserid();
+        User saved = userJpaRepo.save(userDTO.toEntity());
+        return saved.getUserid();
     }
 
     @Transactional(readOnly = true)
@@ -33,7 +54,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserResponseDTO findByEmail(String email) {
-        User user = userJpaRepo.findByEmail(email);
+        User user = userJpaRepo.findByEmail(email).orElseThrow(UserNotFoundCException::new);
         if (user == null) throw new UserNotFoundCException();
         else return new UserResponseDTO(user);
     }
