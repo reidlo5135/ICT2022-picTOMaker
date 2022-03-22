@@ -1,0 +1,3 @@
+spring:
+  jwt:
+    secret: ictictjwtjwtsecretkeykey2022022

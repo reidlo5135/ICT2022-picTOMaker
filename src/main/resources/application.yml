@@ -25,6 +25,11 @@ spring:
   profiles:
     include: jwt
 
+logging:
+  level:
+    root: debug
+    org.hibernate.SQL: debug
+
 server:
   port: 8080
   servlet:

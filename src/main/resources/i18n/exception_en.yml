@@ -9,3 +9,7 @@ userNotFound:
 emailLoginFailed:
   code: "-1001"
   msg: "It's an ID you didn't sign up for, or It's an incorrect password."
+
+emailSignUpFailed:
+  code: "-1002"
+  msg: "It's enable to sign up for"
