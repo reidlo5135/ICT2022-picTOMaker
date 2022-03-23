@@ -1,8 +1,10 @@
 package kr.co.picTO.config.security;
 
+import kr.co.picTO.advice.exception.CustomAccessDeniedHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final JwtProvider jwtProvider;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     @Override
@@ -31,7 +35,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/*/login", "/*/signup").permitAll()
+                    .antMatchers(HttpMethod.POST, "/v1/sign/signup", "/v1/sign/login",
+                        "/v1/reissue", "/v1/social/**").permitAll()
+                    .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
                     .mvcMatchers("/v3/api-docs/**",
                         "/configuration/**",
                         "/swagger*/**",
@@ -39,11 +45,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/swagger-resources/**").permitAll()
                     .anyRequest().hasRole("USER")
                 .and()
+                    .exceptionHandling()
+                    .authenticationEntryPoint(customAuthenticationEntryPoint)
+                    .accessDeniedHandler(customAccessDeniedHandler)
+                .and()
                     .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
     }
-
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/v3/api-docs/**", "/swagger-ui/**");
-//    }
 }

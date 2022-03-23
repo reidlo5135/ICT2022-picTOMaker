@@ -1,4 +1,4 @@
-package kr.co.picTO.service;
+package kr.co.picTO.service.response;
 
 import kr.co.picTO.model.response.CommonResult;
 import kr.co.picTO.model.response.ListResult;

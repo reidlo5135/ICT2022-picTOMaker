@@ -1,14 +1,14 @@
 package kr.co.picTO.config.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
-import kr.co.picTO.service.CustomUserDetailsService;
+import kr.co.picTO.advice.exception.CAuthenticationEntryPointException;
+import kr.co.picTO.dto.jwt.TokenDTO;
+import kr.co.picTO.service.security.CustomUserDetailsService;
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,15 +22,16 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+@Log4j2
 @RequiredArgsConstructor
 @Component
 public class JwtProvider {
 
     @Value("${spring.jwt.secret}")
     private String secretKey;
-
-    private Long tokenValidMillisecond = 60 * 60 * 1000L;
-
+    private String ROLES = "roles";
+    private Long accessTokenValidMillisecond = 60 * 60 * 1000L;
+    private Long refreshTokenValidMillisecond = 14 * 24 * 60 * 60 * 1000L;
     private final CustomUserDetailsService userDetailsService;
 
     @PostConstruct
@@ -38,27 +39,52 @@ public class JwtProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String userPk, List<String> roles) {
-        Claims claims = Jwts.claims().setSubject(userPk);
-        claims.put("roles", roles);
+    public TokenDTO createTokenDTO(Long userPk, List<String> roles) {
+        Claims claims = Jwts.claims().setSubject(String.valueOf(userPk));
+        claims.put("ROLES", roles);
 
         Date now = new Date();
 
-        return Jwts.builder()
+        String accessToken = Jwts.builder()
+                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + tokenValidMillisecond))
+                .setExpiration(new Date(now.getTime() + accessTokenValidMillisecond))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+
+        String refreshToken = Jwts.builder()
+                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+                .setExpiration(new Date(now.getTime() + refreshTokenValidMillisecond))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+
+        return TokenDTO.builder()
+                .grantType("bearer")
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .accessTokenExpireDate(accessTokenValidMillisecond)
+                .build();
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+
+        Claims claims = parseClaims(token);
+
+        if(claims.get(ROLES) == null) {
+            throw new CAuthenticationEntryPointException();
+        }
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    private String getUserPk(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    private Claims parseClaims(String token) {
+        try {
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims();
+        }
     }
 
     public String resolveToken(HttpServletRequest request) {
@@ -67,9 +93,10 @@ public class JwtProvider {
 
     public boolean validationToken(String token) {
         try {
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return !claimsJws.getBody().getExpiration().before(new Date());
-        } catch (Exception e) {
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            log.error(e.toString());
             return false;
         }
     }

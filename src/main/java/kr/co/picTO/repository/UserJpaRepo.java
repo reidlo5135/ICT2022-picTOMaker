@@ -1,6 +1,6 @@
 package kr.co.picTO.repository;
 
-import kr.co.picTO.entity.User;
+import kr.co.picTO.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

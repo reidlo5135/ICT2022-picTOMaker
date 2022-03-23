@@ -1,6 +1,7 @@
-package kr.co.picTO.entity;
+package kr.co.picTO.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import kr.co.picTO.entity.BaseTimeEntity;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

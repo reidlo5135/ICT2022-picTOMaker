@@ -1,51 +1,50 @@
 package kr.co.picTO.controller;
 
 import io.swagger.annotations.*;
-import kr.co.picTO.config.security.JwtProvider;
-import kr.co.picTO.dto.user.UserLoginResponseDTO;
-import kr.co.picTO.dto.user.UserSignUpRequestDTO;
+
+import kr.co.picTO.dto.jwt.TokenDTO;
+import kr.co.picTO.dto.jwt.TokenRequestDTO;
+import kr.co.picTO.dto.sign.UserLoginRequestDTO;
+import kr.co.picTO.dto.sign.UserSignUpRequestDTO;
 import kr.co.picTO.model.response.SingleResult;
-import kr.co.picTO.service.ResponseService;
-import kr.co.picTO.service.UserService;
+import kr.co.picTO.service.SecurityService;
+import kr.co.picTO.service.response.ResponseService;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = {"2. SignUp / Login"})
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1")
+@RequestMapping(value = "/v1/sign")
 public class SignController {
 
-    private final UserService userService;
+    private final SecurityService securityService;
     private final ResponseService responseService;
-    private final JwtProvider jwtProvider;
-    private final PasswordEncoder passwordEncoder;
 
-    @ApiOperation(value = "회원 단건 검색", notes = "userId로 회원 검색")
-    @GetMapping(value = "/login")
-    public SingleResult<String> login(@ApiParam(value = "로그인 아이디 : 이메일", required = true) @RequestParam String email,
-                                      @ApiParam(value = "로그인 비밀번호 : ", required = true) @RequestParam String password) {
-        UserLoginResponseDTO userLoginDTO = userService.login(email, password);
+    @ApiOperation(value = "로그인", notes = "이메일로 로그인.")
+    @PostMapping(value = "/login")
+    public SingleResult<TokenDTO> login(@ApiParam(value = "로그인 요청", required = true)
+                                        @RequestBody UserLoginRequestDTO userLoginRequestDTO) {
 
-        String token = jwtProvider.createToken(String.valueOf(userLoginDTO.getUserId()), userLoginDTO.getRoles());
-        return responseService.getSingleResult(token);
+        TokenDTO tokenDTO = securityService.login(userLoginRequestDTO);
+        return responseService.getSingleResult(tokenDTO);
     }
 
-    @ApiOperation(value = "회원 등록", notes = "회원 가입")
+    @ApiOperation(value = "회원 가입", notes = "회원 가입")
     @PostMapping(value = "/signup")
-    public SingleResult<Long> signup(@ApiParam(value = "회원가입 아이디 : 이메일", required = true) @RequestParam String email,
-                                     @ApiParam(value = "회원 가입 비밀번호 : ", required = true) @RequestParam String password,
-                                     @ApiParam(value = "회원 가입 이름 : ", required = true) @RequestParam String name,
-                                     @ApiParam(value = "회원 가입 닉네임", required = true) @RequestParam String nickName) {
-        UserSignUpRequestDTO userSignUpRequestDTO = UserSignUpRequestDTO.builder()
-                .email(email)
-                .password(passwordEncoder.encode(password))
-                .name(name)
-                .nickName(nickName)
-                .build();
+    public SingleResult<Long> signup(@ApiParam(value = "회원 가입 요청 DTO", required = true)
+                                     @RequestBody UserSignUpRequestDTO userSignUpRequestDTO) {
 
-        Long signupId = userService.signup(userSignUpRequestDTO);
+        Long signupId = securityService.signup(userSignUpRequestDTO);
         return responseService.getSingleResult(signupId);
+    }
+
+    @ApiOperation(value = "액세스, 리프레시 토큰 재발급", notes = "액세스 토큰 만료시 회원 검증 후 리프레시 토큰을 검증해서 액세스 토큰과 리프레시 토큰을 재발급")
+    @PostMapping(value = "/reissue")
+    public SingleResult<TokenDTO> reissue(@ApiParam(value = "토큰 재발급 요청 DTO", required = true)
+                                          @RequestBody TokenRequestDTO tokenRequestDTO) {
+        return responseService.getSingleResult(securityService.reissue(tokenRequestDTO));
     }
 }

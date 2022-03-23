@@ -8,8 +8,8 @@ import kr.co.picTO.model.response.CommonResult;
 import kr.co.picTO.model.response.ListResult;
 import kr.co.picTO.model.response.SingleResult;
 
-import kr.co.picTO.service.ResponseService;
-import kr.co.picTO.service.UserService;
+import kr.co.picTO.service.response.ResponseService;
+import kr.co.picTO.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.*;

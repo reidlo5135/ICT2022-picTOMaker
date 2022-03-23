@@ -1,11 +1,7 @@
-package kr.co.picTO.service;
+package kr.co.picTO.service.user;
 
-import kr.co.picTO.advice.exception.EmailLoginFailedCException;
-import kr.co.picTO.advice.exception.EmailSignUpFailedCException;
-import kr.co.picTO.advice.exception.UserNotFoundCException;
-import kr.co.picTO.dto.user.UserLoginResponseDTO;
-import kr.co.picTO.dto.user.UserSignUpRequestDTO;
-import kr.co.picTO.entity.User;
+import kr.co.picTO.advice.exception.CUserNotFoundException;
+import kr.co.picTO.entity.user.User;
 import kr.co.picTO.repository.UserJpaRepo;
 import kr.co.picTO.dto.user.UserRequestDTO;
 import kr.co.picTO.dto.user.UserResponseDTO;
@@ -24,21 +20,6 @@ public class UserService {
     private UserJpaRepo userJpaRepo;
     private PasswordEncoder passwordEncoder;
 
-    @Transactional(readOnly = true)
-    public UserLoginResponseDTO login(String email, String password) {
-        User user = userJpaRepo.findByEmail(email).orElseThrow(EmailLoginFailedCException::new);
-        if(!passwordEncoder.matches(password, user.getPassword()))
-            throw new EmailLoginFailedCException();
-        return new UserLoginResponseDTO(user);
-    }
-
-    @Transactional
-    public Long signup(UserSignUpRequestDTO userSignUpRequestDTO) {
-        if(userJpaRepo.findByEmail(userSignUpRequestDTO.getEmail()).orElse(null) == null)
-            return userJpaRepo.save(userSignUpRequestDTO.toEntity()).getUserid();
-        else throw new EmailSignUpFailedCException();
-    }
-
     @Transactional
     public Long save(UserRequestDTO userDTO) {
         User saved = userJpaRepo.save(userDTO.toEntity());
@@ -48,14 +29,14 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserResponseDTO findById(Long id) {
         User user = userJpaRepo.findById(id)
-                .orElseThrow(UserNotFoundCException::new);
+                .orElseThrow(CUserNotFoundException::new);
         return new UserResponseDTO(user);
     }
 
     @Transactional(readOnly = true)
     public UserResponseDTO findByEmail(String email) {
-        User user = userJpaRepo.findByEmail(email).orElseThrow(UserNotFoundCException::new);
-        if (user == null) throw new UserNotFoundCException();
+        User user = userJpaRepo.findByEmail(email).orElseThrow(CUserNotFoundException::new);
+        if (user == null) throw new CUserNotFoundException();
         else return new UserResponseDTO(user);
     }
 
@@ -70,7 +51,7 @@ public class UserService {
     @Transactional
     public Long update(Long id, UserRequestDTO userRequestDTO) {
         User modifiedUser = userJpaRepo
-                .findById(id).orElseThrow(UserNotFoundCException::new);
+                .findById(id).orElseThrow(CUserNotFoundException::new);
         return id;
     }
 
