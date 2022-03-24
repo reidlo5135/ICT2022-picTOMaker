@@ -31,13 +31,13 @@ public class UserSignUpRequestDTO {
                 .build();
     }
 
-//    public User toEntity() {
-//        return User.builder()
-//                .email(email)
-//                .nickName(nickName)
-//                .name(name)
-//                .provider(provider)
-//                .roles(Collections.singletonList("ROLE_USER"))
-//                .build();
-//    }
+    public User toEntity() {
+        return User.builder()
+                .email(email)
+                .nickName(nickName)
+                .name(name)
+                .provider(provider)
+                .roles(Collections.singletonList("ROLE_USER"))
+                .build();
+    }
 }

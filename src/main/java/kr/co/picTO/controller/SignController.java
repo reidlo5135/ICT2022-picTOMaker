@@ -29,6 +29,7 @@ public class SignController {
                                         @RequestBody UserLoginRequestDTO userLoginRequestDTO) {
 
         TokenDTO tokenDTO = securityService.login(userLoginRequestDTO);
+
         return responseService.getSingleResult(tokenDTO);
     }
 

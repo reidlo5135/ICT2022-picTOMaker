@@ -1,6 +1,7 @@
 package kr.co.picTO.service;
 
 import kr.co.picTO.advice.exception.CEmailLoginFailedException;
+import kr.co.picTO.advice.exception.CEmailSignUpFailedException;
 import kr.co.picTO.advice.exception.CRefreshTokenException;
 import kr.co.picTO.advice.exception.CUserNotFoundException;
 import kr.co.picTO.config.security.JwtProvider;
@@ -26,7 +27,7 @@ public class SecurityService {
     private final UserJpaRepo userJpaRepo;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
-    private RefreshTokenJpaRepo tokenJpaRepo;
+    private final RefreshTokenJpaRepo tokenJpaRepo;
 
     @Transactional
     public TokenDTO login(UserLoginRequestDTO userLoginRequestDTO) {
@@ -49,8 +50,8 @@ public class SecurityService {
 
     @Transactional
     public Long signup(UserSignUpRequestDTO userSignUpRequestDTO) {
-        if(userJpaRepo.findByEmail(userSignUpRequestDTO.getEmail()).isPresent())
-            throw new CEmailLoginFailedException();
+        if (userJpaRepo.findByEmail(userSignUpRequestDTO.getEmail()).isPresent())
+            throw new CEmailSignUpFailedException();
         return userJpaRepo.save(userSignUpRequestDTO.toEntity(passwordEncoder)).getUserid();
     }
 
