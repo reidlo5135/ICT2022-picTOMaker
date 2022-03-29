@@ -147,4 +147,22 @@ public class SignControllerTest {
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.code").value(-1002));
     }
+
+    @Test
+    @WithMockUser(username = "mockUser", roles = {"GUEST"})
+    public void 접근실패() throws Exception {
+        mockMvc.perform(get("/v1/users"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/exception/accessDenied"));
+    }
+
+    @Test
+    @WithMockUser(username = "mockUser", roles = {"GUEST", "USER"})
+    public void 접근성공() throws Exception {
+        mockMvc.perform(
+                        get("/v1/users"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 }
