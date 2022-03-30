@@ -1,4 +1,4 @@
-package kr.co.picTO.controller;
+package kr.co.picTO.controller.v1;
 
 import io.swagger.annotations.*;
 

@@ -17,7 +17,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(swaggerInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("kr.co.picTO.controller"))
+                .apis(RequestHandlerSelectors.basePackage("kr.co.picTO.controller.*"))
                 .paths(PathSelectors.any())
                 .build()
                 .useDefaultResponseMessages(false);

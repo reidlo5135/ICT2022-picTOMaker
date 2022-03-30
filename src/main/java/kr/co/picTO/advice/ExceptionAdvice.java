@@ -1,9 +1,6 @@
 package kr.co.picTO.advice;
 
-import kr.co.picTO.advice.exception.CAuthenticationEntryPointException;
-import kr.co.picTO.advice.exception.CEmailLoginFailedException;
-import kr.co.picTO.advice.exception.CEmailSignUpFailedException;
-import kr.co.picTO.advice.exception.CUserNotFoundException;
+import kr.co.picTO.advice.exception.*;
 import kr.co.picTO.model.response.CommonResult;
 import kr.co.picTO.service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
@@ -57,6 +54,14 @@ public class ExceptionAdvice {
     protected CommonResult accessDeniedException(HttpServletRequest request, AccessDeniedException e) {
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("accessDenied.code")), getMessage("accessDenied.msg"));
+    }
+
+    @ExceptionHandler(CCommunicationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected CommonResult communicationException(HttpServletRequest request, CCommunicationException e) {
+        return responseService.getFailResult(
+                Integer.parseInt(getMessage("communicationException.code")), getMessage("communicationException.msg")
+        );
     }
 
     private String getMessage(String code) {
