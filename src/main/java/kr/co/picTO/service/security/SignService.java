@@ -1,9 +1,6 @@
-package kr.co.picTO.service;
+package kr.co.picTO.service.security;
 
-import kr.co.picTO.advice.exception.CEmailLoginFailedException;
-import kr.co.picTO.advice.exception.CEmailSignUpFailedException;
-import kr.co.picTO.advice.exception.CRefreshTokenException;
-import kr.co.picTO.advice.exception.CUserNotFoundException;
+import kr.co.picTO.advice.exception.*;
 import kr.co.picTO.config.security.JwtProvider;
 import kr.co.picTO.dto.jwt.TokenDTO;
 import kr.co.picTO.dto.jwt.TokenRequestDTO;
@@ -23,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Log4j2
 @Service
 @RequiredArgsConstructor
-public class SecurityService {
+public class SignService {
     private final UserJpaRepo userJpaRepo;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
@@ -53,6 +50,15 @@ public class SecurityService {
         if (userJpaRepo.findByEmail(userSignUpRequestDTO.getEmail()).isPresent())
             throw new CEmailSignUpFailedException();
         return userJpaRepo.save(userSignUpRequestDTO.toEntity(passwordEncoder)).getUserid();
+    }
+
+    @Transactional
+    public Long socialSignup(UserSignUpRequestDTO userSignupRequestDto) {
+        if (userJpaRepo
+                .findByEmailAndProvider(userSignupRequestDto.getEmail(), userSignupRequestDto.getProvider())
+                .isPresent()
+        ) throw new CUserExistException();
+        return userJpaRepo.save(userSignupRequestDto.toEntity()).getUserid();
     }
 
     @Transactional

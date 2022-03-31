@@ -27,7 +27,7 @@ public class User extends BaseTimeEntity implements UserDetails {
     private Long userid;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String password;
 
     @Column(nullable = false, unique = true, length = 30)
@@ -36,11 +36,11 @@ public class User extends BaseTimeEntity implements UserDetails {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(length = 20)
+    @Column(nullable = false, length = 20)
     private String nickName;
 
-//    @Column(length = 100)
-//    private String provider;
+    @Column(length = 100)
+    private String provider;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

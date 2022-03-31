@@ -2,6 +2,7 @@ package kr.co.picTO.service.user;
 
 import com.google.gson.Gson;
 import kr.co.picTO.advice.exception.CCommunicationException;
+import kr.co.picTO.dto.social.KakaoProfile;
 import kr.co.picTO.dto.social.RetKakaoOAuth;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,25 +32,25 @@ public class KakaoService {
     @Value("${social.kakao.redirect}")
     private String kakaoRedirectUri;
 
-//    public KakaoProfile getKakaoProfile(String kakaoAccessToken) {
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-//        headers.set("Authorization", "Bearer " + kakaoAccessToken);
-//
-//        String requestUrl = env.getProperty("social.kakao.url.profile");
-//        if (requestUrl == null) throw new CCommunicationException();
-//
-//        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(null, headers);
-//        try {
-//            ResponseEntity<String> response = restTemplate.postForEntity(requestUrl, request, String.class);
-//            if (response.getStatusCode() == HttpStatus.OK)
-//                return gson.fromJson(response.getBody(), KakaoProfile.class);
-//        } catch (Exception e) {
-//            log.error(e.toString());
-//            throw new CCommunicationException();
-//        }
-//        throw new CCommunicationException();
-//    }
+    public KakaoProfile getKakaoProfile(String kakaoAccessToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.set("Authorization", "Bearer " + kakaoAccessToken);
+
+        String requestUrl = env.getProperty("social.kakao.url.profile");
+        if (requestUrl == null) throw new CCommunicationException();
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(null, headers);
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(requestUrl, request, String.class);
+            if (response.getStatusCode() == HttpStatus.OK)
+                return gson.fromJson(response.getBody(), KakaoProfile.class);
+        } catch (Exception e) {
+            log.error(e.toString());
+            throw new CCommunicationException();
+        }
+        throw new CCommunicationException();
+    }
 
     public RetKakaoOAuth getKakaoTokenInfo(String code) {
         HttpHeaders headers = new HttpHeaders();

@@ -1,23 +1,43 @@
 unKnown:
   code: "-9999"
-  msg: "<UnKnown> An unknown error has occurred."
+  msg: "An unknown error has occurred."
 
 userNotFound:
   code: "-1000"
-  msg: "<User Not Found> This member not exist"
+  msg: "This member not exist"
 
 emailLoginFailed:
   code: "-1001"
-  msg: "<Email Login Failed> It's an ID you didn't sign up for, or It's an incorrect password."
+  msg: "It's an ID you didn't sign up for, or it's an incorrect password."
 
-emailSignUpFailed:
+emailSignupFailed:
   code: "-1002"
-  msg: "<Email SignUp Failed> It's enable to sign up for"
+  msg: "This email is already subscribed."
 
 authenticationEntrypoint:
   code: "-1003"
-  msg: "<No Authentication> You do not have permission to access that resource."
+  msg: "You do not have permission to access that resource."
 
 accessDenied:
   code: "-1004"
-  msg: "<Access Denied> Permission not accessible to this resource."
+  msg: "Permission not accessible to this resource."
+
+refreshTokenInValid:
+  code: "-1005"
+  msg: "Refresh Token is Wrong."
+
+expiredAccessToken:
+  code: "-1006"
+  msg: "AccessToken is Expired"
+
+communicationException:
+  code: "-1007"
+  msg: "An error occurred during the social authentication process."
+
+userExistException:
+  code: "-1008"
+  msg: "Already signed account, please login."
+
+agreementException:
+  code: "-1009"
+  msg: "A consent is required for the required consent item."
