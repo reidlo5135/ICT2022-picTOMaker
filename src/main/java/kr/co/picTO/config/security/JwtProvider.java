@@ -70,8 +70,10 @@ public class JwtProvider {
     public Authentication getAuthentication(String token) {
 
         Claims claims = parseClaims(token);
+        log.info("---[token]--- : " + token);
+        log.info("---[claims]--- : " + claims);
 
-        if(claims.get(ROLES) == null) {
+        if(claims.get("ROLES") == null) {
             throw new CAuthenticationEntryPointException();
         }
 
@@ -81,6 +83,8 @@ public class JwtProvider {
 
     private Claims parseClaims(String token) {
         try {
+            log.info("---[parseClaims token]--- : " + token);
+            log.info("---[parseClaims]--- : " + Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody());
             return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
             return e.getClaims();
@@ -95,9 +99,15 @@ public class JwtProvider {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
-        } catch (JwtException | IllegalArgumentException e) {
-            log.error(e.toString());
-            return false;
+        } catch (SecurityException | MalformedJwtException e) {
+            log.error("잘못된 Jwt 서명입니다.");
+        } catch (ExpiredJwtException e) {
+            log.error("만료된 토큰입니다.");
+        } catch (UnsupportedJwtException e) {
+            log.error("지원하지 않는 토큰입니다.");
+        } catch (IllegalArgumentException e) {
+            log.error("잘못된 토큰입니다.");
         }
+        return false;
     }
 }
