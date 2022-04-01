@@ -1,3 +1,49 @@
 spring:
+  freemarker:
+    template-loader-path: classpath:/templates
+    suffix: .ftl
+
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/picTO/maker
+    driver-class-name: org.h2.Driver
+    username: sa
+
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate.hbm2ddl.auto: create
     show-sql: true
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  messages:
+    basename: i18n/exception
+    encoding: UTF-8
+
+  profiles:
+    include: jwt
+
+  url:
+    base: http://localhost:8080
+
+#logging:
+#  level:
+#    root: debug
+#    org.hibernate.SQL: debug
+
+server:
+  port: 8080
+  servlet:
+    context-path: /picTO
+
+social:
+  kakao:
+    client-id: 42c51ed9e78ced900811f39d27801209
+    redirect: /picTO/oauth/kakao/redirect
+    url:
+      login: https://kauth.kakao.com/oauth/authorize
+      token: https://kauth.kakao.com/oauth/token
+      profile: https://kapi.kakao.com/v2/user/me
+      unlink: https://kapi.kakao.com/v1/user/unlink
