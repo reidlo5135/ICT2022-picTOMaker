@@ -1,0 +1,17 @@
+logging:
+  level:
+    root: warn
+    kr.co.picTO: info
+
+  logback:
+    rollingpolicy:
+      max-history: 7
+
+server:
+  port: 8080
+  servlet:
+    context-path: /picTO
+
+spring:
+  profiles: dev
+    include: private
