@@ -5,7 +5,7 @@ import kr.co.picTO.advice.exception.CCommunicationException;
 import kr.co.picTO.dto.social.KakaoProfile;
 import kr.co.picTO.dto.social.RetKakaoOAuth;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
@@ -14,7 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-@Slf4j
+@Log4j2
 @RequiredArgsConstructor
 @Service
 public class KakaoService {
