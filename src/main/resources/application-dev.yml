@@ -10,7 +10,7 @@ logging:
 server:
   port: 8080
   servlet:
-    context-path: /picTO
+    context-path: /picTOmaker.com
 
 spring:
   profiles: dev
