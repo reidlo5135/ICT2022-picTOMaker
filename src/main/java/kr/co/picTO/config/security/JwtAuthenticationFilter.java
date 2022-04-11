@@ -1,6 +1,6 @@
 package kr.co.picTO.config.security;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -12,7 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@Log4j2
+@Slf4j
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final JwtProvider jwtProvider;
@@ -22,17 +22,19 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request,
+                         ServletResponse response,
+                         FilterChain filterChain) throws IOException, ServletException {
+
         String token = jwtProvider.resolveToken((HttpServletRequest) request);
 
         log.info("[Verifying token]");
         log.info(((HttpServletRequest) request).getRequestURL().toString());
-        log.info("[token] : " + token);
 
-        if(token != null && jwtProvider.validationToken(token)) {
+        if (token != null && jwtProvider.validationToken(token)) {
             Authentication authentication = jwtProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        chain.doFilter(request, response);
+        filterChain.doFilter(request, response);
     }
 }

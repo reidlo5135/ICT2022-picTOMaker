@@ -1,0 +1,26 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome">
+    <title>Document</title>
+</head>
+<body>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6">
+            {{#userName}}
+                Logged in as: <span id="user">{{userName}}</span>
+                EMAIL : {{userEmail}}
+                PICTURE : {{userPic}}
+                <a href="/picTOmaker.com/oauth2/logout" class="btn btn-info active" role="button">Logout</a>
+            {{/userName}}
+            {{^userName}}
+                <a href="/picTOmaker.com/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+                <a href="/picTOmaker.com/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
+                <a href="/picTOmaker.com/oauth2/authorization/kakao" class="btn btn-third active" role="button">Kakao Login</a>
+            {{/userName}}
+        </div>
+    </div>
+</div>
+</body>
+</html>
