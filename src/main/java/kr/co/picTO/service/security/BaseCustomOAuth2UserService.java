@@ -41,7 +41,9 @@ public class BaseCustomOAuth2UserService implements OAuth2UserService<OAuth2User
         BaseAuthUser authUser = saveOrUpdate(oAuthAttributes);
         httpSession.setAttribute("user", new SessionUser(authUser));
 
-        log.info("{}" + authUser.toString());
+        log.info("AuthUser Name : " + authUser.getName());
+        log.info("AuthUser Name : " + authUser.getEmail());
+        log.info("AuthUser Name : " + authUser.getPicture());
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(authUser.getRoleKey())), oAuthAttributes.getAttributes(), oAuthAttributes.getNameAttributeKey()
         );

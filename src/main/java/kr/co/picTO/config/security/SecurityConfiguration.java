@@ -60,6 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .deleteCookies()
                 .and()
                     .oauth2Login()
+                        .defaultSuccessUrl("/index")
                         .userInfoEndpoint()
                             .userService(customOAuth2UserService);
 
