@@ -1,7 +1,5 @@
 package kr.co.picTO.service;
 
-import kr.co.picTO.entity.user.User;
-import kr.co.picTO.service.user.RestUserService;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;

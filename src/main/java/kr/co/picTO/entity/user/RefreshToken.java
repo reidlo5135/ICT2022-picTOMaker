@@ -1,6 +1,7 @@
-package kr.co.picTO.entity.security;
+package kr.co.picTO.entity.user;
 
 import kr.co.picTO.entity.BaseTimeEntity;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
