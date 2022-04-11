@@ -1,6 +1,5 @@
 package kr.co.picTO.entity;
 
-import kr.co.picTO.entity.user.User;
 import kr.co.picTO.repository.UserJpaRepo;
 
 import org.assertj.core.api.Assertions;

@@ -1,47 +1,48 @@
 package kr.co.picTO.config.security;
 
 import io.jsonwebtoken.*;
-
+import io.jsonwebtoken.impl.Base64UrlCodec;
 import kr.co.picTO.advice.exception.CAuthenticationEntryPointException;
 import kr.co.picTO.dto.jwt.TokenDTO;
-import kr.co.picTO.service.security.CustomUserDetailsService;
 
 import lombok.RequiredArgsConstructor;
-
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.lang.String;
 
-@Log4j2
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class JwtProvider {
 
-    @Value("${spring.jwt.secret}")
+    @Value("spring.jwt.secret")
     private String secretKey;
     private String ROLES = "roles";
-    private Long accessTokenValidMillisecond = 60 * 60 * 1000L;
-    private Long refreshTokenValidMillisecond = 14 * 24 * 60 * 60 * 1000L;
-    private final CustomUserDetailsService userDetailsService;
+    private final Long accessTokenValidMillisecond = 60 * 60 * 1000L; // 1 hour
+    private final Long refreshTokenValidMillisecond = 14 * 24 * 60 * 60 * 1000L; // 14 day
+    private final UserDetailsService userDetailsService;
 
     @PostConstruct
     protected void init() {
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+        secretKey = Base64UrlCodec.BASE64URL.encode(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
-    public TokenDTO createTokenDTO(Long userPk, List<String> roles) {
+    public TokenDTO createTokenDto(Long userPk, List<String> roles) {
+
         Claims claims = Jwts.claims().setSubject(String.valueOf(userPk));
-        claims.put("ROLES", roles);
+        claims.put(ROLES, roles);
 
         Date now = new Date();
 
@@ -60,7 +61,7 @@ public class JwtProvider {
                 .compact();
 
         return TokenDTO.builder()
-                .grantType("bearer")
+                .grantType("Bearer")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .accessTokenExpireDate(accessTokenValidMillisecond)
@@ -70,10 +71,8 @@ public class JwtProvider {
     public Authentication getAuthentication(String token) {
 
         Claims claims = parseClaims(token);
-        log.info("---[token]--- : " + token);
-        log.info("---[claims]--- : " + claims);
 
-        if(claims.get("ROLES") == null) {
+        if (claims.get(ROLES) == null) {
             throw new CAuthenticationEntryPointException();
         }
 
@@ -83,8 +82,6 @@ public class JwtProvider {
 
     private Claims parseClaims(String token) {
         try {
-            log.info("---[parseClaims token]--- : " + token);
-            log.info("---[parseClaims]--- : " + Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody());
             return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
             return e.getClaims();

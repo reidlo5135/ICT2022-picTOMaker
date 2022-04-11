@@ -1,6 +1,5 @@
 package kr.co.picTO.controller;
 
-import kr.co.picTO.entity.user.User;
 import kr.co.picTO.repository.UserJpaRepo;
 import kr.co.picTO.service.user.UserService;
 import org.junit.Before;

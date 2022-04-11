@@ -1,25 +1,32 @@
 package kr.co.picTO.config.security;
 
-import kr.co.picTO.advice.exception.CustomAccessDeniedHandler;
-
+import kr.co.picTO.service.security.BaseCustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@RequiredArgsConstructor
 @Configuration
+@RequiredArgsConstructor
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true
+)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final BaseCustomOAuth2UserService customOAuth2UserService;
     private final JwtProvider jwtProvider;
-    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     @Override
@@ -38,18 +45,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.POST, "/v1/sign/signup", "/v1/sign/login", "/v1/sign/reissue", "/v1/sign/social/**").permitAll()
                     .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
                     .antMatchers("/login/oauth2/code/**").permitAll()
-                    .antMatchers("/oauth/**").permitAll()
+                    .antMatchers("/oauth2/**", "/").permitAll()
+                    .antMatchers("/index").permitAll()
                     .mvcMatchers("/v3/api-docs/**",
                         "/configuration/**",
                         "/swagger*/**",
                         "/webjars/**",
                         "/swagger-resources/**").permitAll()
-                    .anyRequest().hasRole("USER")
+                    .anyRequest().authenticated()
                 .and()
-                    .exceptionHandling()
-                    .authenticationEntryPoint(customAuthenticationEntryPoint)
-                    .accessDeniedHandler(customAccessDeniedHandler)
+                    .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
+                    .logout()
+                        .logoutSuccessUrl("/logout")
+                        .deleteCookies()
                 .and()
-                    .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+                    .oauth2Login()
+                        .userInfoEndpoint()
+                            .userService(customOAuth2UserService);
+
     }
 }
