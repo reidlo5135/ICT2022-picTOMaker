@@ -9,10 +9,9 @@
     <div class="row">
         <div class="col-md-6">
             {{#userName}}
-                Logged in as: <span id="user">{{userName}}</span>
-                EMAIL : {{userEmail}}
-                PICTURE : {{userPic}}
-                <a href="/picTOmaker.com/oauth2/logout" class="btn btn-info active" role="button">Logout</a>
+                <img src="{{userPic}}" alt="profile_img" width="400" height="400" />
+                <h1>EMAIL : {{userEmail}}</h1>
+                <a href="/picTOmaker.com/logout" class="btn btn-info active" role="button">Logout</a>
             {{/userName}}
             {{^userName}}
                 <a href="/picTOmaker.com/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
