@@ -42,8 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/v1/sign/signup", "/v1/sign/login", "/v1/sign/reissue", "/v1/sign/social/**").permitAll()
                     .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
-                    .antMatchers("/login/oauth2/code/**").permitAll()
-                    .antMatchers("/oauth2/**", "/", "/social/login", "/social/login/**").permitAll()
+                    .antMatchers("/oauth2/**", "/", "/social/login", "/social/login/**", "/account/**").permitAll()
                     .antMatchers("/index").permitAll()
                     .mvcMatchers("/v3/api-docs/**",
                         "/configuration/**",
@@ -57,7 +56,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .deleteCookies()
                 .and()
                     .oauth2Login()
-                        .defaultSuccessUrl("/social/login/{provider}")
                         .userInfoEndpoint()
                             .userService(customOAuth2UserService);
 

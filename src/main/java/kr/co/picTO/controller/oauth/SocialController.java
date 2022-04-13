@@ -1,20 +1,21 @@
 package kr.co.picTO.controller.oauth;
 
+import kr.co.picTO.dto.social.ProfileDTO;
+import kr.co.picTO.entity.oauth.AccessToken;
 import kr.co.picTO.service.security.ProviderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 
 @RestController
 @Log4j2
 @RequiredArgsConstructor
-@RequestMapping(value = "/social/login")
 public class SocialController {
 
-    private final Environment env;
     private final ProviderService providerService;
 
     @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
@@ -29,10 +30,13 @@ public class SocialController {
     @Value("${spring.security.oauth2.client.registration.naver.client-id}")
     private String naverClientId;
 
+    @Value("${spring.security.oauth2.client.provider.naver.authorization_uri}")
+    private String naverAuthorUri;
+
     @Value("${spring.security.oauth2.client.registration.naver.redirectUri}")
     private String naverRedirect;
 
-    @GetMapping()
+    @GetMapping(value = "/social/login")
     public ModelAndView socialKakaoLogin(ModelAndView mav) {
         StringBuilder kakaoUrl = new StringBuilder()
                 .append("http://localhost:8080/picTOmaker.com/oauth2/authorization/kakao")
@@ -41,14 +45,17 @@ public class SocialController {
                 .append("&redirect_uri=").append(kakaoRedirect);
 
         StringBuilder googleUrl = new StringBuilder()
-                .append("https://accounts.google.com/o/oauth2/auth")
-                .append("?client_id=").append(googleClientId)
-                .append("&response_type=code")
-                .append("&scope=email%20profile")
-                .append("&redirect_uri=").append("http://localhost:8080/picTOmaker.com/login/oauth2/code/google");
+                .append("https://accounts.google.com/o/oauth2/auth?")
+                .append("scope=https://www.googleapis.com/auth/drive.metadata.readonly&")
+                .append("access_type=offline&")
+                .append("include_granted_scopes=true&")
+                .append("response_type=code&")
+                .append("state=state_parameter_passthrough_value&")
+                .append("redirect_uri=").append("http://localhost:8080/picTOmaker.com/account/signcallback/google&")
+                .append("client_id=").append(googleClientId);
 
         StringBuilder naverUrl = new StringBuilder()
-                .append("http://localhost:8080/picTOmaker.com/oauth2.0/authorization/naver")
+                .append(naverAuthorUri)
                 .append("?client_id=").append(naverClientId)
                 .append("&response_type=code")
                 .append("&state=project")
@@ -61,11 +68,27 @@ public class SocialController {
         return mav;
     }
 
-    @GetMapping(value = "/{provider}")
-    public ModelAndView redirectKakao(ModelAndView mav, @RequestParam("code") String code, @PathVariable String provider) {
-        log.info("Provider : " + code);
-        mav.addObject("code", code);
-        mav.setViewName("social/redirect");
-        return mav;
+    @GetMapping(value = "/account/signcallback/{provider}")
+    public ModelAndView GoogleSignCallback(ModelAndView mav, @RequestParam("code") String code, @PathVariable String provider) {
+        try {
+            AccessToken accessToken = providerService.getAccessToken(code, provider);
+            log.info("Prov Controller ACCESS TOKEN : " + accessToken);
+            log.info("Prov Controller prov : " + provider);
+
+            ProfileDTO profileDTO = providerService.getProfile(accessToken.getAccess_token(), provider);
+            log.info("Prov Controller pDTO : " + profileDTO);
+
+            mav.addObject("Provider", provider);
+            mav.addObject("code", accessToken);
+            mav.addObject("profile", profileDTO);
+            mav.setViewName("social/redirect");
+
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            mav.addObject("code", "TOKEN IS NULL");
+            mav.setViewName("social/redirect");
+            return mav;
+        }
     }
 }
