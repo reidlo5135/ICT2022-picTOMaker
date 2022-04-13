@@ -2,12 +2,14 @@ package kr.co.picTO.controller.oauth;
 
 import kr.co.picTO.service.security.ProviderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
+@Log4j2
 @RequiredArgsConstructor
 @RequestMapping(value = "/social/login")
 public class SocialController {
@@ -60,7 +62,8 @@ public class SocialController {
     }
 
     @GetMapping(value = "/{provider}")
-    public ModelAndView redirectKakao(ModelAndView mav, @RequestParam String code, @PathVariable String provider) {
+    public ModelAndView redirectKakao(ModelAndView mav, @RequestParam("code") String code, @PathVariable String provider) {
+        log.info("Provider : " + code);
         mav.addObject("code", code);
         mav.setViewName("social/redirect");
         return mav;
