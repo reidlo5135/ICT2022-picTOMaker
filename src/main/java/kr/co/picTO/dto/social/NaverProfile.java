@@ -13,5 +13,7 @@ public class NaverProfile {
     @Data
     public class Response {
         private String email;
+        private String name;
+        private String imgUrl;
     }
 }

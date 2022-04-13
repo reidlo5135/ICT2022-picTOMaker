@@ -9,4 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GoogleProfile {
     private String email;
+    private String name;
+    private String imgUrl;
 }
