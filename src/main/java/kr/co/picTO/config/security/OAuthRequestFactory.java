@@ -3,10 +3,14 @@ package kr.co.picTO.config.security;
 import kr.co.picTO.dto.social.OAuthRequest;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 
+import java.net.URI;
+
+@Log4j2
 @Component
 @RequiredArgsConstructor
 public class OAuthRequestFactory {
@@ -17,6 +21,7 @@ public class OAuthRequestFactory {
 
     public OAuthRequest getRequest(String code, String provider) {
         LinkedMultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        log.info("OAuthFactory prov : " + provider);
         if (provider.equals("kakao")) {
             map.add("grant_type", "authorization_code");
             map.add("client_id", kakaoInfo.getKakaoClientId());
@@ -26,6 +31,7 @@ public class OAuthRequestFactory {
             return new OAuthRequest(kakaoInfo.getKakaoTokenUrl(), map);
 
         } else if(provider.equals("google")) {
+
             map.add("grant_type", "authorization_code");
             map.add("client_id", googleInfo.getGoogleClientId());
             map.add("client_secret", googleInfo.getGoogleClientSecret());
@@ -74,11 +80,12 @@ public class OAuthRequestFactory {
         @Value("${spring.security.oauth2.client.registration.google.client-id}")
         String googleClientId;
 
-        String googleRedirect = "http://localhost:8080/picTOmaker.com/login/oauth2/code/google";
+        String googleRedirect = "http://localhost:8080/picTOmaker.com/account/signcallback/google";
+
         @Value("${spring.security.oauth2.client.registration.google.client-secret}")
         String googleClientSecret;
 
-        private String googleTokenUrl = "https://oauth2.googleapis.com/token";
+        private String googleTokenUrl = "https://www.googleapis.com/oauth2/v4/token";
 
         private String googleProfileUrl = "https://www.googleapis.com/oauth2/v2/userinfo";
     }
