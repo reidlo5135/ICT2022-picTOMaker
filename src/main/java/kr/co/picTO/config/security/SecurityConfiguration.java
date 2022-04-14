@@ -1,6 +1,5 @@
 package kr.co.picTO.config.security;
 
-import kr.co.picTO.service.security.BaseCustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -23,8 +22,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
         prePostEnabled = true
 )
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    private final BaseCustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     @Override
@@ -55,9 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .logoutSuccessUrl("/logout")
                         .deleteCookies()
                 .and()
-                    .oauth2Login()
-                        .userInfoEndpoint()
-                            .userService(customOAuth2UserService);
+                    .oauth2Login().userInfoEndpoint();
 
     }
 }
