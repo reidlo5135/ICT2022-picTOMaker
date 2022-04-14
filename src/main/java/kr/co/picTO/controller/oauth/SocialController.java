@@ -44,15 +44,23 @@ public class SocialController {
                 .append("&response_type=code")
                 .append("&redirect_uri=").append(kakaoRedirect);
 
+//        StringBuilder googleUrl = new StringBuilder()
+//                .append("https://accounts.google.com/o/oauth2/auth?")
+//                .append("scope=https://www.googleapis.com/auth/userinfo.email&")
+//                .append("access_type=offline&")
+//                .append("include_granted_scopes=true&")
+//                .append("response_type=code&")
+//                .append("state=state_parameter_passthrough_value&")
+//                .append("redirect_uri=").append("http://localhost:8080/picTOmaker.com/account/signcallback/google&")
+//                .append("client_id=").append(googleClientId);
         StringBuilder googleUrl = new StringBuilder()
                 .append("https://accounts.google.com/o/oauth2/auth?")
-                .append("scope=https://www.googleapis.com/auth/drive.metadata.readonly&")
-                .append("access_type=offline&")
-                .append("include_granted_scopes=true&")
-                .append("response_type=code&")
-                .append("state=state_parameter_passthrough_value&")
-                .append("redirect_uri=").append("http://localhost:8080/picTOmaker.com/account/signcallback/google&")
-                .append("client_id=").append(googleClientId);
+                .append("client_id=").append(googleClientId)
+                .append("&redirect_uri=").append("http://localhost:8080/picTOmaker.com/account/signcallback/google")
+                .append("&response_type=code")
+                .append("&scope=https://www.googleapis.com/auth/userinfo.profile")
+                .append("&approval_prompt=force")
+                .append("&access_type=offline");
 
         StringBuilder naverUrl = new StringBuilder()
                 .append(naverAuthorUri)
