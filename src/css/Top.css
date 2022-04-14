@@ -1,0 +1,38 @@
+.topMenu{
+	margin: 0 auto;
+	width:1280px;
+	display: flex;
+	border-bottom: solid 1px #F2F2F2;
+}
+
+
+.topMenu div{
+	
+	font-family:"Noto Sans KR";
+	display: inline-block;
+	font-size: 14px;
+	font-weight: bold;
+	color: #191919;
+	line-height:5;
+	padding-right: 10px;
+	cursor: pointer;
+	margin-left: 150px;
+}
+
+.topMenu div:last-child{
+	border:none;
+	padding-right:0;
+}
+
+.Top{
+	width:1280px;
+	margin: 0 auto;
+}
+
+.Top .logo img{
+	display:block;
+	margin: 24px auto 33px;
+	width:174px;
+	height:41px;
+}
+
