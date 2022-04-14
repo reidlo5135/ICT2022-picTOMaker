@@ -51,6 +51,7 @@ public class ProviderService {
                 return gson.fromJson(response.getBody(), AccessToken.class);
             }
         } catch (Exception e) {
+            log.error("CCommunicate exception" + e.getMessage());
             throw new CCommunicationException();
         }
         throw new CCommunicationException();
@@ -62,18 +63,35 @@ public class ProviderService {
         httpHeaders.set("Authorization", "Bearer " + accessToken);
 
         String profileUrl = oAuthRequestFactory.getProfileUrl(provider);
+        log.info("Prov SVC profileURL : " + profileUrl);
+
+        StringBuilder googleProfUrl = new StringBuilder()
+                .append(oAuthRequestFactory.getProfileUrl(provider))
+                .append("?access_token=")
+                .append(accessToken);
+        log.info("Prov SVC googleProfUrl : " + googleProfUrl.toString());
+
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(httpHeaders);
-        ResponseEntity<String> response = restTemplate.postForEntity(profileUrl, request, String.class);
+
+        ResponseEntity<String> response = null;
+        if(provider.equals("google")) {
+            response = restTemplate.postForEntity(googleProfUrl.toString(), request, String.class);
+        }
+        response = restTemplate.postForEntity(profileUrl, request, String.class);
 
         log.info("Prov SVC profileUrl : " + profileUrl);
         log.info("Prov SVC req : " + request);
         log.info("Prov SVC res : " + response);
 
         try {
+            log.info("Prov SVC res statusCode : "+ response.getStatusCode());
+            log.info("Prov SVC res getBody : " + response.getBody());
+            log.info("Prov SVC res getHeaders : " + response.getHeaders());
             if (response.getStatusCode() == HttpStatus.OK) {
                 return extractProfile(response, provider);
             }
         } catch (Exception e) {
+            log.error("CCommunicate exception" + e.getMessage());
             throw new CCommunicationException();
         }
         throw new CCommunicationException();
@@ -92,7 +110,7 @@ public class ProviderService {
             NaverProfile naverProfile = gson.fromJson(response.getBody(), NaverProfile.class);
             log.info("Prov SVC extractProfile : " + naverProfile);
             saveUser(naverProfile.getResponse().getName(), naverProfile.getResponse().getEmail(), naverProfile.getResponse().getImgUrl());
-            return new ProfileDTO(naverProfile.getResponse().getEmail(), naverProfile.getResponse().getName(), naverProfile.getResponse().getImgUrl());
+            return new ProfileDTO(naverProfile.getResponse().getEmail(), naverProfile.getResponse().getName());
         }
     }
 
