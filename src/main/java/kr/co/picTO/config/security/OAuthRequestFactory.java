@@ -85,7 +85,7 @@ public class OAuthRequestFactory {
 
         private String googleTokenUrl = "https://www.googleapis.com/oauth2/v4/token";
 
-        private String googleProfileUrl = "https://www.googleapis.com/oauth2/v2/userinfo";
+        private String googleProfileUrl = "https://www.googleapis.com/auth/userinfo.profile";
     }
 
     @Getter
