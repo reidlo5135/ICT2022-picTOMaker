@@ -11,6 +11,8 @@ function App() {
             <img src={logo}/>
         </h1>
           <a href={}></a>
+          <a href={}></a>
+          <a href={}></a>
       </header>
     </div>
   );
