@@ -39,7 +39,7 @@ public class SocialController {
     private String naverRedirect;
 
     @GetMapping(value = "/social/login")
-    public ModelAndView socialKakaoLogin(ModelAndView mav) {
+    public String socialKakaoLogin(ModelAndView mav) {
         StringBuilder kakaoUrl = new StringBuilder()
                 .append("http://localhost:8080/picTOmaker.com/oauth2/authorization/kakao")
                 .append("?client-id=").append(kakaoClientId)
@@ -74,8 +74,7 @@ public class SocialController {
         mav.addObject("loginUrl1", kakaoUrl);
         mav.addObject("loginUrl2", googleUrl);
         mav.addObject("loginUrl3", naverUrl);
-        mav.setViewName("social/login");
-        return mav;
+        return "";
     }
 
     @GetMapping(value = "/account/signcallback/{provider}")
