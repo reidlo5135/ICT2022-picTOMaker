@@ -39,6 +39,7 @@ class SelectCotent extends Component{
                     픽토수정
                     </button>
                 </Link>
+                
             </div> 
 
             <div className='Things-Content'>
@@ -59,6 +60,7 @@ class SelectCotent extends Component{
           </div>
 
         </div>
+        /*ㅁㄴㅇㅁㄴㅇ */
       );
     }
   }
