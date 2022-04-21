@@ -6,7 +6,7 @@ class Top extends Component{
     render(){
     return (
       <div className='topMenu'>
-        <img src={Logo} alt="PictoMaker-Logo"/>
+        <img src={Logo} alt="PictoMaker-Logo" style={{width:"100px",height:"50px"}}/>
         <div className='GnbMenu'>
           <div>소개</div>
 	        <div>시작하기</div>

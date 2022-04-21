@@ -3,9 +3,12 @@ import { Component } from 'react';
 import '../App.css';
 import Top from "../component/Top"
 import Footer from "../component/Footer"
+import SelectContent from "../component/Select-Content"
 
 
-class Select extends Component{
+
+
+class SelectPage extends Component{
     constructor(props){
       super(props);
       this.state = {
@@ -22,7 +25,7 @@ class Select extends Component{
       <div className="App">
         
         <Top/>
-
+        <SelectContent/>
         <Footer />
       </div>
     );
@@ -30,5 +33,5 @@ class Select extends Component{
   }
   /*커밋*/
   
-  export default Select;
+  export default SelectPage;
   

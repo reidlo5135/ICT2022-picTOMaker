@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import explanation from "../image/explanation.png"
-import "../css/Contents.css"
+import "../css/Main-Contents.css"
 import { Link } from "react-router-dom";
-import Select from "../Page/SelectPage";
+
 
 class Contents extends Component{
     render(){
