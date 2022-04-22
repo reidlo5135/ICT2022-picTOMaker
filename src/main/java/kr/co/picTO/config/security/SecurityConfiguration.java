@@ -1,5 +1,6 @@
 package kr.co.picTO.config.security;
 
+import kr.co.picTO.advice.exception.RestAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,11 +38,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
                 .and()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .csrf().disable()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                    .formLogin().disable()
+                    .httpBasic().disable()
+                    .exceptionHandling()
+                        .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
+                        .antMatchers("/",
+                            "/error",
+                            "/favicon.ico",
+                            "/**/*.png",
+                            "/**/*.gif",
+                            "/**/*.svg",
+                            "/**/*.jpg",
+                            "/**/*.html",
+                            "/**/*.css",
+                            "/**/*.js",
+                            "/**/*.json").permitAll()
                     .antMatchers(HttpMethod.POST, "/v1/sign/signup", "/v1/sign/login", "/v1/sign/reissue", "/v1/sign/social/**").permitAll()
                     .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
                     .antMatchers("/oauth2/**", "/", "/social/login", "/social/login/**", "/account/**", "/api/**").permitAll()

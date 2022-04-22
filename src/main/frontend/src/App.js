@@ -1,5 +1,6 @@
 import React from "react";
 import logo from './PicTOmaker-LOGO.png';
+import {KAKAO_AUTH_URL} from "./env";
 import './App.css';
 
 function App() {
@@ -9,11 +10,8 @@ function App() {
       <header className="App-header">
         <h1>
             <img src={logo}/>
+            <a href={KAKAO_AUTH_URL}>KAKAO LOGIN</a>
         </h1>
-          <a href={}></a>
-          <a href={}></a>
-          <a href={}></a>
-          <a href={}></a>
       </header>
     </div>
   );
