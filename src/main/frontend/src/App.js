@@ -1,22 +1,26 @@
-import React from "react";
-import logo from './PicTOmaker-LOGO.png';
+import React, { Component } from 'react';
 import './App.css';
+import {BrowserRouter, Routes,Route} from 'react-router-dom';
+import MainPage from './Page/MainPage';
+import SelectPage from './Page/SelectPage';
 
-function App() {
 
+
+class App extends Component{
+  
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>
-            <img src={logo}/>
-        </h1>
-          <a href={}></a>
-          <a href={}></a>
-          <a href={}></a>
-      </header>
+    <div className='App'>
+      <BrowserRouter>
+        <Routes >
+        <Route path = '/' element={<MainPage />}/>
+        <Route path = '/Select' element={<SelectPage />}/>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
+  }
 }
-/*test */
+/*커밋*/
 
 export default App;
