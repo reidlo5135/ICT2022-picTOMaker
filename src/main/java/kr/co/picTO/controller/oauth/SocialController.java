@@ -19,7 +19,7 @@ public class SocialController {
     private final ProviderService providerService;
     private final ResponseService responseService;
 
-    @GetMapping(value = "/redirect/{provider}")
+    @GetMapping(value = "/signcallback/{provider}")
     public SingleResult<ProfileDTO> signCallback(@RequestParam("code") String code, @PathVariable String provider) {
         try {
             AccessToken accessToken = providerService.getAndSaveAccessToken(code, provider);
