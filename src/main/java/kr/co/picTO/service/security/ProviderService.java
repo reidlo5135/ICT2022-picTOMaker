@@ -13,9 +13,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Locale;
 
 @Service
 @Log4j2
@@ -30,7 +33,8 @@ public class ProviderService {
     private final BaseTokenRepo tokenRepo;
 
 
-    public AccessToken getAccessToken(String code, String provider) {
+    @Transactional
+    public AccessToken getAndSaveAccessToken(String code, String provider) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -101,7 +105,7 @@ public class ProviderService {
         if (provider.equals("kakao")) {
             KakaoProfile kakaoProfile = gson.fromJson(response.getBody(), KakaoProfile.class);
             log.info("Prov SVC extractProfile : " + kakaoProfile);
-            saveUser(kakaoProfile.getProperties().getNickname(), kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getProfile_image());
+            saveUser(kakaoProfile.getProperties().getNickname(), kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getProfile_image(), provider);
             return new ProfileDTO(kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getNickname(), kakaoProfile.getProperties().getProfile_image());
         } else if(provider.equals("google")) {
             GoogleProfile googleProfile = gson.fromJson(response.getBody(), GoogleProfile.class);
@@ -109,17 +113,18 @@ public class ProviderService {
         } else {
             NaverProfile naverProfile = gson.fromJson(response.getBody(), NaverProfile.class);
             log.info("Prov SVC extractProfile : " + naverProfile);
-            saveUser(naverProfile.getResponse().getName(), naverProfile.getResponse().getEmail(), naverProfile.getResponse().getImgUrl());
+            saveUser(naverProfile.getResponse().getName(), naverProfile.getResponse().getEmail(), naverProfile.getResponse().getImgUrl(), provider);
             return new ProfileDTO(naverProfile.getResponse().getEmail(), naverProfile.getResponse().getName());
         }
     }
 
-    private BaseAuthUser saveUser(String name, String email, String picture){
+    private BaseAuthUser saveUser(String name, String email, String picture, String provider){
+        String role = provider.toUpperCase(Locale.ROOT);
         BaseAuthUser baseAuthUser = BaseAuthUser.builder()
                 .name(name)
                 .email(email)
                 .picture(picture)
-                .role(BaseAuthRole.USER)
+                .role(BaseAuthRole.valueOf(role))
                 .build();
         log.info("Prov SVC saveUser : " + baseAuthUser.toString());
         return userRepo.save(baseAuthUser);
