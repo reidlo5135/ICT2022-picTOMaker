@@ -2,10 +2,6 @@ spring:
   profiles:
     include: private, local
 
-  freemarker:
-    template-loader-path: classpath:/templates
-    suffix: .ftl
-
   messages:
     basename: i18n/exception
     encoding: UTF-8
