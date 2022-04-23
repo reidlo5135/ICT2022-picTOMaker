@@ -78,7 +78,7 @@ public class OAuthRequestFactory {
         @Value("${spring.security.oauth2.client.registration.google.client-id}")
         String googleClientId;
 
-        String googleRedirect = "http://localhost:8080/oauth2/signcallback/google";
+        String googleRedirect = "http://localhost:8080/oauth2/redirect/google";
 
         @Value("${spring.security.oauth2.client.registration.google.client-secret}")
         String googleClientSecret;
