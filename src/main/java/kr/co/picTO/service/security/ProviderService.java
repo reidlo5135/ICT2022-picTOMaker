@@ -72,7 +72,6 @@ public class ProviderService {
         httpHeaders.set("Authorization", "Bearer " + accessToken);
 
         String profileUrl = oAuthRequestFactory.getProfileUrl(provider);
-        log.info("Prov SVC profileURL : " + profileUrl);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(httpHeaders);
 
