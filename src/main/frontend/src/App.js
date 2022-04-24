@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
         <h1>
-            <img src={logo}/>
+            <img src={logo}/><br></br>
             <a href={KAKAO_AUTH_URL}>KAKAO LOGIN</a><br></br>
             <a href={GOOGLE_AUTH_URL}>GOOGLE LOGIN</a><br></br>
             <a href={NAVER_AUTH_URL}>NAVER LOGIN</a>
