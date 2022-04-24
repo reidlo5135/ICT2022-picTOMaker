@@ -14,6 +14,6 @@ public class NaverProfile {
     public class Response {
         private String email;
         private String name;
-        private String imgUrl;
+        private String profile_image;
     }
 }

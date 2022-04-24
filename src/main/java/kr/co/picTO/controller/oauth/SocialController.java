@@ -26,8 +26,15 @@ public class SocialController {
             log.info("Prov Controller ACCESS TOKEN : " + accessToken);
             log.info("Prov Controller prov : " + provider);
 
-            ProfileDTO profileDTO = providerService.getProfile(accessToken.getAccess_token(), provider);
-            log.info("Prov Controller pDTO : " + profileDTO);
+            ProfileDTO profileDTO;
+
+            if(provider.equals("google")) {
+                profileDTO = providerService.getProfileForGoogle(accessToken.getAccess_token(), provider);
+                log.info("Prov Controller google pDTO : " + profileDTO);
+            } else {
+                profileDTO = providerService.getProfile(accessToken.getAccess_token(), provider);
+                log.info("Prov Controller pDTO : " + profileDTO);
+            }
 
             return responseService.getSingleResult(profileDTO);
         } catch (Exception e) {
