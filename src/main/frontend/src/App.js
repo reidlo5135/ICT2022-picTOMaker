@@ -1,20 +1,26 @@
+import React, { Component } from 'react';
 import React from "react";
 import logo from './PicTOmaker-LOGO.png';
-import {KAKAO_AUTH_URL, GOOGLE_AUTH_URL, NAVER_AUTH_URL} from "./component/oauth2/env";
 import './App.css';
+import {BrowserRouter, Routes,Route} from 'react-router-dom';
+import MainPage from './Page/MainPage';
+import SelectPage from './Page/SelectPage';
 
-function App() {
 
+
+class App extends Component{
+  
+  render(){
   return (
-    <div className="App">
-        <h1>
-            <img src={logo}/><br></br>
-            <a href={KAKAO_AUTH_URL}>KAKAO LOGIN</a><br></br>
-            <a href={GOOGLE_AUTH_URL}>GOOGLE LOGIN</a><br></br>
-            <a href={NAVER_AUTH_URL}>NAVER LOGIN</a>
-        </h1>
-    </div>
+    <div className='App'>
+      <BrowserRouter>
+        <Routes >
+        <Route path = '/' element={<MainPage />}/>
+        <Route path = '/Select' element={<SelectPage />}/>
+        </Routes>
+      </BrowserRouter>
   );
+  }
 }
 
 export default App;
