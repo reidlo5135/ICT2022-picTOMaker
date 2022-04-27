@@ -17,6 +17,10 @@ public class OAuthRequestFactory {
     private final GoogleInfo googleInfo;
     private final NaverInfo naverInfo;
 
+    void logRequest(LinkedMultiValueMap<String, String> map) {
+        log.info("OAuthFactory Fac Prov Map : " + map);
+    }
+
     public OAuthRequest getRequest(String code, String provider) {
         LinkedMultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         log.info("OAuthFactory prov : " + provider);
@@ -25,6 +29,8 @@ public class OAuthRequestFactory {
             map.add("client_id", kakaoInfo.getKakaoClientId());
             map.add("redirect_uri", kakaoInfo.getKakaoRedirect());
             map.add("code", code);
+
+            logRequest(map);
 
             return new OAuthRequest(kakaoInfo.getKakaoTokenUrl(), map);
 
@@ -36,6 +42,8 @@ public class OAuthRequestFactory {
             map.add("redirect_uri", googleInfo.getGoogleRedirect());
             map.add("code", code);
 
+            logRequest(map);
+
             return new OAuthRequest(googleInfo.getGoogleTokenUrl(), map);
         } else {
             map.add("grant_type", "authorization_code");
@@ -44,6 +52,8 @@ public class OAuthRequestFactory {
             map.add("redirect_uri", naverInfo.getNaverRedirect());
             map.add("state", "project");
             map.add("code", code);
+
+            logRequest(map);
 
             return new OAuthRequest(naverInfo.getNaverTokenUrl(), map);
         }
@@ -77,15 +87,14 @@ public class OAuthRequestFactory {
     static class GoogleInfo {
         @Value("${spring.security.oauth2.client.registration.google.client-id}")
         String googleClientId;
-
-        String googleRedirect = "http://localhost:8080/picTOmaker.com/account/signcallback/google";
-
+        @Value("${spring.security.oauth2.client.registration.google.redirectUri}")
+        String googleRedirect;
         @Value("${spring.security.oauth2.client.registration.google.client-secret}")
         String googleClientSecret;
-
-        private String googleTokenUrl = "https://www.googleapis.com/oauth2/v4/token";
-
-        private String googleProfileUrl = "https://www.googleapis.com/auth/userinfo.profile";
+        @Value("${spring.security.oauth2.client.provider.google.token-uri}")
+        private String googleTokenUrl;
+        @Value("${spring.security.oauth2.client.provider.google.user-info-uri}")
+        private String googleProfileUrl;
     }
 
     @Getter

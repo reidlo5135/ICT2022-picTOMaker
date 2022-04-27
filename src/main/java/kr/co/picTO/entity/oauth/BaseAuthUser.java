@@ -25,15 +25,19 @@ public class BaseAuthUser extends BaseTimeEntity {
     @Column
     private String picture;
 
+    @Column(nullable = false)
+    private String provider;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BaseAuthRole role;
 
     @Builder
-    public BaseAuthUser(String name, String email, String picture, BaseAuthRole role) {
+    public BaseAuthUser(String name, String email, String picture, String provider, BaseAuthRole role) {
         this.name = name;
         this.email = email;
         this.picture = picture;
+        this.provider = provider;
         this.role = role;
     }
 
