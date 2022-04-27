@@ -91,8 +91,10 @@ public class OAuthRequestFactory {
         String googleRedirect;
         @Value("${spring.security.oauth2.client.registration.google.client-secret}")
         String googleClientSecret;
-        private String googleTokenUrl = "https://www.googleapis.com/oauth2/v4/token";
-        private String googleProfileUrl = "https://www.googleapis.com/userinfo/v2/me";
+        @Value("${spring.security.oauth2.client.provider.google.token-uri}")
+        private String googleTokenUrl;
+        @Value("${spring.security.oauth2.client.provider.google.user-info-uri}")
+        private String googleProfileUrl;
     }
 
     @Getter
