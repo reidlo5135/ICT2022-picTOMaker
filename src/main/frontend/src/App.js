@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import React from "react";
+import logo from './PicTOmaker-LOGO.png';
 import './App.css';
 import {BrowserRouter, Routes,Route} from 'react-router-dom';
 import MainPage from './Page/MainPage';
@@ -17,10 +19,8 @@ class App extends Component{
         <Route path = '/Select' element={<SelectPage />}/>
         </Routes>
       </BrowserRouter>
-    </div>
   );
   }
 }
-/*커밋*/
 
 export default App;
