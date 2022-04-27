@@ -1,0 +1,81 @@
+.Select-Content{
+  width: 1280px;
+  margin: 0 auto;
+  height: 860px;
+  margin-bottom: 100px;
+}
+
+.HT-Content{
+  margin: 5% auto auto auto;
+  display: flex;
+  justify-content: space-between;
+  width: 1200px;
+  height: 700px;
+  border-radius: 3%;
+}
+
+.Human-Button,.Things-Button,.Edit-Button {
+  width: 150px;
+  height: 50px;
+  position: relative;
+  padding: 15px 30px;
+  border-radius: 10px;
+  border: #ffffff solid 1px;
+  color: #ffffff;
+  background: linear-gradient(to left,#EB5D38, #E72D71);
+  text-decoration: none;
+  font-weight: 700;
+  transition: 0.25s;
+  margin-left: 30%;
+}
+.Human-Button:hover, .Things-Button:hover, .Edit-Button:hover {
+  letter-spacing: 2px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.Human-content{
+  width: 30%;
+  background: linear-gradient(to left,#EB5D38, #E72D71);
+  
+  color:#ffffff;
+  border-radius: 3%;
+  margin-top: 5%;
+
+}
+
+.Human-Image,.Things-Image,.Edit-Image{
+  margin-top: 30%;
+  text-align: center;
+}
+.Human-des,.Things-des, .Edit-des{
+  text-align: center;
+  margin: 100px 0 100px 0;
+}
+.Things-Content{
+  width: 30%;
+  background: linear-gradient(to left,#EB5D38, #E72D71);
+  color:#ffffff;
+  border-radius: 3%;
+  margin-top: 5%;
+
+}
+
+.Edit-Content{
+  width: 30%;
+  background: linear-gradient(to left,#EB5D38, #E72D71);
+  color:#ffffff;
+  border-radius: 3%;
+  margin-top: 5%;
+}
+
+/*애니메이션*/
+
+.homeTransition-appear{
+  opacity: 0;
+}
+ 
+.homeTransition-appear.homeTransition-appear-active{
+  opacity: 1;
+  transition: all .5s ease-in-out;
+}
