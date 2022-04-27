@@ -1,16 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.073c9b0a.css",
-    "main.js": "/static/js/main.a5fd9c6f.js",
+    "main.css": "/static/css/main.7fb7d4f2.css",
+    "main.js": "/static/js/main.f44f9820.js",
     "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
-    "static/media/PicTOmaker-LOGO.png": "/static/media/PicTOmaker-LOGO.49a2b641e417a1fcf20f.png",
+    "static/media/Logo.png": "/static/media/Logo.e77aafe3609b5c991ceb.png",
+    "static/media/Things.jpg": "/static/media/Things.f50db5dff03b0834f0b6.jpg",
+    "static/media/explanation.png": "/static/media/explanation.a7f35d89b95137ffdb13.png",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
-    "main.073c9b0a.css.map": "/static/css/main.073c9b0a.css.map",
-    "main.a5fd9c6f.js.map": "/static/js/main.a5fd9c6f.js.map",
+    "main.7fb7d4f2.css.map": "/static/css/main.7fb7d4f2.css.map",
+    "main.f44f9820.js.map": "/static/js/main.f44f9820.js.map",
     "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.a5fd9c6f.js"
+    "static/css/main.7fb7d4f2.css",
+    "static/js/main.f44f9820.js"
   ]
 }
