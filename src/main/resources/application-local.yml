@@ -7,31 +7,33 @@ server:
   port: 8080
 
 spring:
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/picTO/maker
-    driver-class-name: org.h2.Driver
-    username: sa
-
-  messages:
-    basename: i18n/exception
-    encoding: UTF-8
-
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    properties.hibernate:
-      hbm2ddl.auto: create
-      format_sql: true
-    show-sql: true
-    generate-ddl: true
-    open-in-view: false
-
-  url:
-    base: http://localhost:8080
-
   config:
     activate:
       on-profile: local
 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ict?useSSL=false&characterEncoding=UTF-8&useUnicode=true&serverTimezone=Asia/Seoul
+    username: spring5
+    password: spring5
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  url:
+    base: http://localhost:8080
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+  messages:
+    basename: i18n/exception
+    encoding: UTF-8
