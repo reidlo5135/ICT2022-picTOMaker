@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Login from "../component/Login"
-import Top from "../component/Top"
 import '../App.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -21,7 +20,7 @@ class LoginPage extends Component{
   render(){
   return (
     <div className="App">
-      <Top />
+
       <Login />
 
     </div>

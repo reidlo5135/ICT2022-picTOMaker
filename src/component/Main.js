@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import explanation from "../image/explanation.png"
 import "../css/Main-Contents.css"
 import { Link } from "react-router-dom";
 import "../css/font.css"
@@ -24,10 +23,6 @@ class Main extends Component{
               무료로 시작
             </button>
             </Link>
-          </div>
-
-          <div className='Image'>
-            <img src={explanation} alt="PictoMaker-explanation"/>
           </div>
         </div>
       );

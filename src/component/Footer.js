@@ -10,7 +10,7 @@ class Footer extends Component{
 		<div className="FooterMenu">
 			<p><a href="#!">회사소개</a><span>ㅣ</span></p>
 			<p><a href="#!">개인정보처리방침</a><span>ㅣ</span></p>
-			<p><a href="#!">이용약관</a><span>ㅣ</span></p>
+			<p><a href="#!">이용약관</a>사<span>ㅣ</span></p>
 			<p><a href="#!">공지사항</a><span>ㅣ</span></p>
 			<p><a href="#!">고객센터</a><span>ㅣ</span></p>
 			<p><a href="#!">FAQ</a></p>

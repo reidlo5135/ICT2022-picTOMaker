@@ -6,20 +6,23 @@
 .SU-Content{
     width: 100%;
 }
-.Logo{
+.SU-Logo{
     width:278px;
     height:142px;
-    margin: 145px 821px 85px 821px;
+    margin: 10% 0 5% 65%;
 }
 .SU-Input{
     width: 400px;
-    margin: 0 1115px 15px 755px
+    margin: 0 60% 0 59%;
 }
 .Label-txt{
     font-size: 18px;
-    margin-bottom: 15px;
-    margin-top: 20px;
+    margin-bottom: 4%;
     font-weight: bold;
+}
+
+.SU-Form{
+    margin-bottom:4%
 }
 
 .SU-Form input{
@@ -51,7 +54,8 @@
   text-decoration: none;
   transition: 0.25s;
   cursor: pointer;
-  margin-top:45px;
+  margin-top:4%;
+  margin-left:2%;
 }
 
 .SU-Button:hover {
@@ -60,13 +64,12 @@
     cursor: pointer;
   }
 
-.Caution{
+.SU-Caution{
     width: 100%;
-    margin-left: 776px;
-    margin-right: 776px;
+    margin: 0 50% 0 60%;
     font-size: 13px;
 }
-.Caution span{
+.SU-Caution span{
     color:#E72D71;
     font-weight: bold;
 }
