@@ -1,20 +1,18 @@
 package kr.co.picTO.entity.oauth2;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import java.io.Serializable;
 
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "base_access_token")
-public class AccessToken {
+@AllArgsConstructor
+@EqualsAndHashCode
+public class AccessTokenId implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long token_id;
 
     @Column(nullable = false)
@@ -31,5 +29,4 @@ public class AccessToken {
 
     @Column(nullable = false)
     private long refresh_token_expires_in;
-
 }
