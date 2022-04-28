@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import kr.co.picTO.advice.exception.CCommunicationException;
 import kr.co.picTO.config.security.OAuthRequestFactory;
 import kr.co.picTO.dto.social.*;
-import kr.co.picTO.entity.oauth.AccessToken;
-import kr.co.picTO.entity.oauth.BaseAuthRole;
-import kr.co.picTO.entity.oauth.BaseAuthUser;
+import kr.co.picTO.entity.oauth2.AccessToken;
+import kr.co.picTO.entity.oauth2.BaseAuthRole;
+import kr.co.picTO.entity.oauth2.BaseAuthUser;
 import kr.co.picTO.repository.BaseAuthUserRepo;
 import kr.co.picTO.repository.BaseTokenRepo;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import java.util.Locale;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class ProviderService {
+public class OAuth2ProviderService {
 
     private final OAuthRequestFactory oAuthRequestFactory;
     private final RestTemplate restTemplate;

@@ -1,4 +1,4 @@
-package kr.co.picTO.entity.oauth;
+package kr.co.picTO.entity.oauth2;
 
 import kr.co.picTO.entity.BaseTimeEntity;
 import lombok.Builder;
@@ -9,11 +9,11 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
-@Entity
+@Entity(name = "user_oauth2")
 public class BaseAuthUser extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
