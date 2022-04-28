@@ -15,7 +15,7 @@
 	line-height:5;
 	padding-right: 10px;
 	cursor: pointer;
-	margin-left: 150px;
+	margin-left: 50px;
 }
 
 .topMenu div:last-child{
@@ -37,6 +37,10 @@
 
 img{
 	margin-top: 10px;
+}
+
+.Sign{
+	margin-left: 30%;
 }
 
 .LoginMenu{}
