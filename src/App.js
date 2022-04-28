@@ -4,6 +4,7 @@ import {BrowserRouter, Routes,Route} from 'react-router-dom';
 import MainPage from './Page/MainPage';
 import SelectPage from './Page/SelectPage';
 import LoginPage from './Page/LoginPage';
+import SignUpPage from './Page/SignUpPage';
 
 
 
@@ -27,6 +28,7 @@ class App extends Component{
         <Route path = '/' element={<MainPage />}/>
         <Route path = '/Select' element={<SelectPage />}/>
         <Route path = '/Login' element={<LoginPage />}/>
+        <Route path = '/SignUp' element={<SignUpPage />}/>
         </Routes>
       </BrowserRouter>
     </div>

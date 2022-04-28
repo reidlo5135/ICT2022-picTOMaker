@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Logo from "../image/Logo.png";
 import "../css/Top.css"
 import { Link } from "react-router-dom";
+import "../css/font.css"
 
 
 class Top extends Component{

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "../css/Login.css"
+import "../css/font.css"
 
 
 class Login extends Component{
@@ -11,7 +12,6 @@ class Login extends Component{
                     <div className='Login-Text'>
                         Login
                     </div>
-
                     <form action="" method="get">
                         <div className='form'>
                             <label>E-mail</label>

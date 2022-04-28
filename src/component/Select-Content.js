@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Human from "../image/Human.png"
-import Things from "../image/Things.jpg"
+import Things from "../image/Things.png"
 import Edit from "../image/Edit.png"
 import { Link } from "react-router-dom";
 import "../css/Select-Content.css"
+import "../css/font.css"
 
 class SelectCotent extends Component{
   
