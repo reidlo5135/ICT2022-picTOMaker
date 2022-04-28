@@ -22,7 +22,7 @@
     font-weight: bold;
 }
 
-input{
+.SU-Form input{
     padding-left: 15px;
     width: 411px;
     height: 42px;
@@ -31,12 +31,12 @@ input{
     background-color: #f8f8f8;
 }
 
-input::placeholder{
+.SU-Form input::placeholder{
     padding: 15px 365px 10px 0;
     color: #979797;
 }
 
-input:focus{
+.SU-Form input:focus{
     outline: solid 1.5px #979797;
 }
 

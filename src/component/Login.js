@@ -13,11 +13,11 @@ class Login extends Component{
                         Login
                     </div>
                     <form action="" method="get">
-                        <div className='form'>
+                        <div className='Lg-Form'>
                             <label>E-mail</label>
                             <input type={'email'} />
                         </div>
-                        <div className='form'>
+                        <div className='Lg-Form'>
                             <label>Password</label>
                             <input type={'password'} />
                         </div>

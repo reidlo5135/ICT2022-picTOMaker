@@ -13,19 +13,19 @@ class SignUp extends Component{
                 </div>
                 <div className='SU-Input'>
                     <form action="" method="get">
-                        <div className=''>
+                        <div className='SU-Form'>
                             <div className='Label-txt'>아이디</div>
                             <input type={'email'} placeholder="아이디"/>
                         </div>
-                        <div className='form'>
+                        <div className='SU-Form'>
                             <div className='Label-txt'>비밀번호</div>
                             <input type={'password'} placeholder="비밀번호"/>
                         </div>
-                        <div className='form'>
+                        <div className='SU-Form'>
                             <div className='Label-txt'>비밀번호 확인</div>
                             <input type={'password'} placeholder="비밀번호 확인"/>
                         </div>
-                        <div className='form'>
+                        <div className='SU-Form'>
                             <div className='Label-txt'>이름</div>
                             <input type={'text'} placeholder="이름"/>
                         </div>
