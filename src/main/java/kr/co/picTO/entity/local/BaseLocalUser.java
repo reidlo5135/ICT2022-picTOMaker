@@ -1,6 +1,8 @@
 package kr.co.picTO.entity.local;
 
+import kr.co.picTO.entity.BaseTimeEntity;
 import kr.co.picTO.entity.oauth2.BaseAuthRole;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,9 +10,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor
-@Entity(name = "user_local")
-public class LocalUser {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+public class BaseLocalUser extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +29,7 @@ public class LocalUser {
     private BaseAuthRole role;
 
     @Builder
-    public LocalUser(String name, String email, BaseAuthRole role) {
+    public BaseLocalUser(String name, String email, BaseAuthRole role) {
         this.name = name;
         this.email = email;
         this.role = role;

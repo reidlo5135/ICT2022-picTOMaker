@@ -32,7 +32,6 @@ public class OAuth2ProviderService {
     private final BaseAuthUserRepo userRepo;
     private final BaseTokenRepo tokenRepo;
 
-
     @Transactional
     public AccessToken getAndSaveAccessToken(String code, String provider) {
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -53,14 +52,14 @@ public class OAuth2ProviderService {
         try {
             if (response.getStatusCode() == HttpStatus.OK) {
                 AccessToken accessToken = gson.fromJson(response.getBody(), AccessToken.class);
-                log.info("Prov SVC gASAT gson GetBody : " + accessToken);
                 tokenRepo.save(accessToken);
+                log.info("Prov SVC gASAT gson GetBody : " + accessToken);
                 return gson.fromJson(response.getBody(), AccessToken.class);
             } else if(response.getStatusCode() != HttpStatus.OK) {
                 log.error("Prov SVC gASAT getBody : " + response.getBody());
             }
         } catch (Exception e) {
-            log.error("CCommunicate exception" + e.getMessage());
+            log.error("CCommunicate exception - {}" + e.getMessage());
             throw new CCommunicationException();
         }
         throw new CCommunicationException();
