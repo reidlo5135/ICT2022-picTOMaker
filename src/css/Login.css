@@ -1,0 +1,25 @@
+
+.Login-Content{
+    margin: 40px auto;
+    width: 1280px;
+    height: 860px;
+    overflow: hidden;
+    box-shadow: 0 10px 35px #F25F29;
+    
+    border-radius: 5%;
+    color: #000000;
+    display: flex;
+    align-items: center;
+}
+
+.Input-Content, .UI-Content{
+    width: 50%;
+    text-align: center;
+
+}
+
+.UI-Content{
+    height: 100%;
+    background: linear-gradient(to bottom ,#EB5D38 20%, #E72D71);
+}
+

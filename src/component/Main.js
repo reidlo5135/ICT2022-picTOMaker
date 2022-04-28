@@ -4,7 +4,7 @@ import "../css/Main-Contents.css"
 import { Link } from "react-router-dom";
 
 
-class Contents extends Component{
+class Main extends Component{
     render(){
       return(
         <div className='explanation'>
@@ -18,7 +18,7 @@ class Contents extends Component{
               픽토그램을 제작해 보세요.
               </div>
             </div>
-            <Link to="/Select">
+            <Link to="/Login">
             <button className='MainButton'>
               무료로 시작
             </button>
@@ -33,4 +33,4 @@ class Contents extends Component{
     }
   }
 
-export default Contents;
+export default Main;

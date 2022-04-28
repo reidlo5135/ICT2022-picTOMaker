@@ -60,7 +60,6 @@ class SelectCotent extends Component{
           </div>
 
         </div>
-        /*ㅁㄴㅇㅁㄴㅇ */
       );
     }
   }

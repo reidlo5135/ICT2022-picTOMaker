@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import Best from "../component/Main-best"
-import Main from "../component/Main"
+import Login from "../component/Login"
 import Top from "../component/Top"
 import '../App.css';
-import Footer from "../component/Footer"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 
-class MainPage extends Component{
+class LoginPage extends Component{
   constructor(props){
     super(props);
     this.state = {
@@ -23,15 +21,12 @@ class MainPage extends Component{
   render(){
   return (
     <div className="App">
-      
-      <Top/>
-      <Main />      
-      <Best />
-      <Footer />
+      <Top />
+      <Login />
+
     </div>
   );
   }
 }
-/*커밋*/
 
-export default MainPage;
+export default LoginPage;
