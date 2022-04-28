@@ -36,7 +36,7 @@ dependencies {
 
     implementation 'junit:junit:4.13.1'
 
-    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.code.gson:gson:2.9.0'
 
     compileOnly 'org.projectlombok:lombok'
 
