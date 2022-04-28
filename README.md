@@ -1,7 +1,7 @@
 # **픽토메이커(22_HF168)**
 2022년 한이음 ICT 멘토링 프로젝트<br><br>
-2022-04-13 ~ 2022-11-30<br><br>
-멘토: 유현성, 오은석<br>
+2022-03-02 ~ 2022-11-30<br><br>
+멘토: 오은석<br>
 멘티: 진승범, 강준모, 김동호, 서동근
 
 ## **픽토메이커란?**
@@ -24,11 +24,14 @@
 <img src="https://img.shields.io/badge/git kraken-179287?style=for-the-badge&logo=gitkraken&logoColor=white"></span><br>
 <img src="https://img.shields.io/badge/GRADLE-efefef?style=for-the-badge&logo=gradle&logoColor=white"></span>
 <img src="https://img.shields.io/badge/AMAZON AWS-232F3E?style=for-the-badge&logo=amazon AWS&logoColor=white"></span>
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"></span>
 <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white">
+<img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
+<img src="https://img.shields.io/badge/Adobe XD-FF61F6?style=for-the-badge&logo=Adobe XD&logoColor=white">
 
-- Design - Figma
+- Design - Figma, Adobe Xd
 - Frontend - React.js, HTML5, CSS3, JavaScript
-- Backend - Spring Boot, Spring Security, OAuth2.0, REST API, Json Web Token, JAVA
+- Backend - Spring Boot, Spring Security, OAuth2.0, REST API, Swagger, Json Web Token, JAVA
 - Database - MySQL, Spring Data JPA, AWS RDS, AWS S3
 - WAS - Apache Tomcat, AWS EC2
 
