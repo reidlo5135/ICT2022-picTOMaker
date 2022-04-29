@@ -6,7 +6,7 @@ import kakaotalk from "../image/kakaotalk.png";
 import naver from "../image/naver.png";
 import google from "../image/google.png";
 import { Link } from "react-router-dom";
-
+import {KAKAO_AUTH_URL, GOOGLE_AUTH_URL, NAVER_AUTH_URL} from "./oauth2/env";
 
 
 class Login extends Component{
@@ -28,9 +28,9 @@ class Login extends Component{
                                 <input type={'password'} placeholder="비밀번호"/>
                             </div>
                             <div className='Sns-Si'>
-                                <img src={kakaotalk} alt="kakaotalk-icon" style={{width:"70px",height:"70px"}}/>
-                                <img src={naver} alt="naver-icon" style={{width:"70px",height:"70px"}}/>
-                                <img src={google} alt="google-icon" style={{width:"70px",height:"70px"}}/>
+                                <a href={KAKAO_AUTH_URL}><img src={kakaotalk} alt="kakaotalk-icon" style={{width:"70px",height:"70px"}} /></a>
+                                <a href={NAVER_AUTH_URL}><img src={naver} alt="naver-icon" style={{width:"70px",height:"70px"}}/></a>
+                                <a href={GOOGLE_AUTH_URL}><img src={google} alt="google-icon" style={{width:"70px",height:"70px"}}/></a>
                             </div>
                             <button className='SI-Button'>
                                 로그인
