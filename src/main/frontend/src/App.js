@@ -5,7 +5,7 @@ import MainPage from './Page/MainPage';
 import SelectPage from './Page/SelectPage';
 import LoginPage from './Page/LoginPage';
 import SignUpPage from './Page/SignUpPage';
-
+import InfoPage from './Page/InfoPage';
 
 
 class App extends Component{
@@ -19,6 +19,7 @@ class App extends Component{
                         <Route path = '/Select' element={<SelectPage />}/>
                         <Route path = '/Login' element={<LoginPage />}/>
                         <Route path = '/SignUp' element={<SignUpPage />}/>
+                        <Route path = '/Info' element={<InfoPage />} />
                     </Routes>
                 </BrowserRouter>
             </div>
