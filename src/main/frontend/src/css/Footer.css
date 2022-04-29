@@ -8,12 +8,12 @@
 }
 
 .Footer-wrap{
-    margin: 0 auto;
-    text-align: -webkit-center;
+	margin: 0 auto;
+	text-align: -webkit-center;
 }
 
 .Footer .FooterMenu{
-    width: 50%;
+	width: 50%;
 	font-size: 16px;
 	font-weight: bold;
 	line-height: 1.76;
@@ -32,7 +32,7 @@
 }
 
 .Footer .FooterText{
-    width: 50%;
+	width: 50%;
 	font-size:16px;
 	line-height: 1.69;
 	margin-top: 30px;
