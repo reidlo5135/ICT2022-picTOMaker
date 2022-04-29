@@ -1,16 +1,16 @@
 @font-face {
 
     src : url("../fonts/NotoSansKR-Medium.otf");
-
+    src : url("../fonts/NotoSansKR-Regular.otf");
     font-family: "Noto-Medium"
 
 }
 body{
-  font-family: "Noto-Medium";
+    font-family: "Noto-Medium";
 }
 h1 {
 
-  font-family: "Noto-Medium";
+    font-family: "Noto-Medium";
 
 }
 
@@ -20,28 +20,28 @@ p{
 h2 {
 
     font-family: "Noto-Medium";
-  
-  }
-  h3 {
+
+}
+h3 {
 
     font-family: "Noto-Medium";
-  
-  }
-  h4 {
+
+}
+h4 {
 
     font-family: "Noto-Medium";
-  
-  }
-  h5 {
+
+}
+h5 {
 
     font-family: "Noto-Medium";
-  
-  }
-  
+
+}
+
 span{
     font-family: "Noto-Medium";
 }
 
 ul{
-  font-family: "Noto-Medium";
+    font-family: "Noto-Medium";
 }
