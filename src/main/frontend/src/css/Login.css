@@ -1,0 +1,84 @@
+.SIgnIn{
+    display: flex;
+    width: 1280px;
+
+}
+.SI-Content{
+    width: 100%;
+}
+.SI-Logo{
+    width:278px;
+    height:142px;
+    margin: 9% 0 5% 42%;
+}
+.SI-Input{
+    width: 400px;
+    margin: 0 60% 0 38%;
+}
+.Label-txt{
+    font-SIze: 18px;
+    margin-bottom: 4%;
+    font-weight: bold;
+}
+
+.SI-Form{
+    margin-bottom:4%
+}
+
+.SI-Form input{
+    padding-left: 15px;
+    width: 411px;
+    height: 42px;
+    border: solid 0.5px #d4d4d4;
+    border-radius: 7px;
+    background-color: #f8f8f8;
+}
+
+.SI-Form input::placeholder{
+    padding: 15px 365px 10px 0;
+    color: #979797;
+}
+
+.SI-Form input:focus{
+    outline: solid 1.5px #979797;
+}
+
+.Sns-Si{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 1%;
+}
+
+.SI-Button{
+    width: 411px;
+    height: 42px;
+    poSItion: relative;
+    border-radius: 13px;
+    border: #ffffff solid 1px;
+    color: #ffffff;
+    background: linear-gradient(to left,#EB5D38, #E72D71);
+    text-decoration: none;
+    tranSItion: 0.25s;
+    cursor: pointer;
+    margin-top:7%;
+    margin-left:2%;
+    font-weight: bold;
+}
+
+.SI-Button:hover {
+    letter-spacing: 2px;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.SI-Caution{
+    width: 100%;
+    margin: 0 50% 0 47.5%;
+    font-SIze: 13px;
+}
+.SI-Caution span{
+    color:#E72D71;
+    font-weight: bold;
+}
+/*#bbbbbb 테두라*/
+/*#f8f8f8 안쪽*/
