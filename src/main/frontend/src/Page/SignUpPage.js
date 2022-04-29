@@ -16,10 +16,7 @@ class SelectPage extends Component{
     render(){
         return (
             <div className="App">
-
-
                 <SignUp/>
-
             </div>
         );
     }
