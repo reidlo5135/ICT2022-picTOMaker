@@ -8,7 +8,6 @@ import google from "../image/google.png";
 import { Link } from "react-router-dom";
 import {KAKAO_AUTH_URL, GOOGLE_AUTH_URL, NAVER_AUTH_URL} from "./oauth2/env";
 
-/**ㅁㄴㅇㅁㄴㅇㅁㄴㅇ */
 class Login extends Component{
     render(){
         return(
@@ -42,8 +41,6 @@ class Login extends Component{
                             <p>회원가입</p>
                         </div>
                     </Link>
-
-
                 </div>
             </div>
         );
