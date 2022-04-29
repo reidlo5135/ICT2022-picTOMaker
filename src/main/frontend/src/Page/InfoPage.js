@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
-import Login from "../component/Login"
-import '../App.css';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import React from 'react';
+import { Component } from 'react';
+import Info from '../component/Info';
 
-
-class LoginPage extends Component{
+class InfoPage extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -20,10 +17,10 @@ class LoginPage extends Component{
     render(){
         return (
             <div className="App">
-                <Login />
+                <Info />
             </div>
         );
     }
 }
 
-export default LoginPage;
+export default InfoPage;
