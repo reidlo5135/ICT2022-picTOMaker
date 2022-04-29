@@ -37,7 +37,7 @@
 .Human-content{
   width: 30%;
   background: linear-gradient(to left,#EB5D38, #E72D71);
-  
+
   color:#ffffff;
   border-radius: 3%;
   margin-top: 5%;
@@ -74,7 +74,7 @@
 .homeTransition-appear{
   opacity: 0;
 }
- 
+
 .homeTransition-appear.homeTransition-appear-active{
   opacity: 1;
   transition: all .5s ease-in-out;
