@@ -24,6 +24,6 @@ class Footer extends Component{
 	</div>
     );
     }
-}
+}/*레포 이동 */
 
   export default Footer;
