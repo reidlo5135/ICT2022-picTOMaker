@@ -23,7 +23,6 @@ class SelectPage extends Component{
     render(){
         return (
             <div className="App">
-
                 <Top/>
                 <SelectContent/>
                 <Footer />

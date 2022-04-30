@@ -7,7 +7,13 @@ import kr.co.picTO.service.response.ResponseService;
 import kr.co.picTO.service.security.OAuth2ProviderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 
 @RestController
@@ -20,7 +26,7 @@ public class SocialController {
     private final ResponseService responseService;
 
     @GetMapping(value = "/redirect/{provider}")
-    public SingleResult<ProfileDTO> signCallback(@RequestParam("code") String code, @PathVariable String provider) {
+    public SingleResult<ResponseEntity<ProfileDTO>> signCallback(@RequestParam("code") String code, @PathVariable String provider, HttpSession session) {
         try {
             AccessToken accessToken = OAuth2ProviderService.getAndSaveAccessToken(code, provider);
             log.info("Prov Controller ACCESS TOKEN : " + accessToken);
@@ -36,7 +42,14 @@ public class SocialController {
                 log.info("Prov Controller pDTO : " + profileDTO);
             }
 
-            return responseService.getSingleResult(profileDTO);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            SingleResult result = responseService.getSingleResult(new ResponseEntity<>(profileDTO, headers, HttpStatus.OK));
+            log.info("Prov Controller result GET DATA : " + result.getData());
+            session.setAttribute("user", result.getData());
+
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
