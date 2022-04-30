@@ -9,8 +9,6 @@ import SignUpPage from './Page/SignUpPage';
 class App extends Component{
 
     render(){
-        let user = sessionStorage.getItem("user");
-        console.log("USER : ", user);
         return (
             <div className='App'>
                 <BrowserRouter>
