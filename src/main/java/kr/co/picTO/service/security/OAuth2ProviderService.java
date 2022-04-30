@@ -28,7 +28,6 @@ public class OAuth2ProviderService {
     private final OAuthRequestFactory oAuthRequestFactory;
     private final RestTemplate restTemplate;
     private final Gson gson;
-
     private final BaseAuthUserRepo userRepo;
     private final BaseTokenRepo tokenRepo;
 

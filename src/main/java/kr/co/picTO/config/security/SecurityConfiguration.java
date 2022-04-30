@@ -77,7 +77,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .deleteCookies()
                 .and()
                     .formLogin().disable()
-                    .oauth2Login().userInfoEndpoint();
+                    .oauth2Login()
+                        .defaultSuccessUrl("http://localhost:8080/").userInfoEndpoint();
 
     }
 }
