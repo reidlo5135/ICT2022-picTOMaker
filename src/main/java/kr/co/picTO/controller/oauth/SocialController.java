@@ -13,7 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -26,7 +30,7 @@ public class SocialController {
     private final ResponseService responseService;
 
     @GetMapping(value = "/redirect/{provider}")
-    public SingleResult<ResponseEntity<ProfileDTO>> signCallback(@RequestParam("code") String code, @PathVariable String provider, HttpSession session) {
+    public void signCallback(@RequestParam("code") String code, @PathVariable String provider, HttpServletResponse response, HttpSession session) {
         try {
             AccessToken accessToken = OAuth2ProviderService.getAndSaveAccessToken(code, provider);
             log.info("Prov Controller ACCESS TOKEN : " + accessToken);
@@ -42,17 +46,34 @@ public class SocialController {
                 log.info("Prov Controller pDTO : " + profileDTO);
             }
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
 
-            SingleResult result = responseService.getSingleResult(new ResponseEntity<>(profileDTO, headers, HttpStatus.OK));
+            SingleResult result = responseService.getSingleResult(profileDTO);
             log.info("Prov Controller result GET DATA : " + result.getData());
             session.setAttribute("user", result.getData());
-
-            return result;
+            response.sendRedirect("http://localhost:8080/oauth2/login");
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+    }
+
+    @GetMapping(value = "/login")
+    public ResponseEntity<ProfileDTO> login(HttpServletResponse response, HttpSession session) {
+        try {
+            log.info("Prov Controller login : " + session.getAttribute("user"));
+
+            ProfileDTO profileDTO = (ProfileDTO) session.getAttribute("user");
+            URI uri = new URI("http://localhost:8080/");
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+            httpHeaders.setLocation(uri);
+
+            log.info("Prov Controller login pDTO : " + profileDTO);
+            log.info("Prov Controller login headers : " + httpHeaders);
+            return new ResponseEntity<>(profileDTO, httpHeaders, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return null;
     }
 }
