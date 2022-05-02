@@ -16,15 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @RestController
 @Log4j2
 @RequiredArgsConstructor
 @RequestMapping(value = "/oauth2")
-public class SocialController {
+public class OAuth2Controller {
 
     private final OAuth2ProviderService OAuth2ProviderService;
     private final ResponseService responseService;
