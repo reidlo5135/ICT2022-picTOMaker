@@ -1,4 +1,4 @@
-package kr.co.picTO.service.security;
+package kr.co.picTO.service.local;
 
 import kr.co.picTO.advice.exception.CUserNotFoundException;
 import lombok.RequiredArgsConstructor;
