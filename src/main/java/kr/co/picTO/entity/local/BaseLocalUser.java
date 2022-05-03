@@ -2,8 +2,10 @@ package kr.co.picTO.entity.local;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import kr.co.picTO.entity.BaseTimeEntity;
-import kr.co.picTO.entity.oauth2.BaseAuthRole;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,9 +44,6 @@ public class BaseLocalUser extends BaseTimeEntity implements UserDetails {
     @Column(length = 100)
     private String provider;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private BaseAuthRole role;
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
