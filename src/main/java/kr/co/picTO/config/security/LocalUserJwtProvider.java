@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import kr.co.picTO.entity.oauth2.AccessToken;
+import kr.co.picTO.entity.oauth2.BaseAuthRole;
 import kr.co.picTO.repository.BaseTokenRepo;
 import kr.co.picTO.service.local.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -51,17 +52,20 @@ public class LocalUserJwtProvider {
 
         Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt);
 
+        String provider = roles.get(0);
+        log.info("Local Jwt Prov prov : "  + provider + ", " + BaseAuthRole.ADMIN.getKey());
+
         AccessToken accessToken = AccessToken.builder()
                 .access_token(jwt)
                 .expires_in(claimsJws.getBody().getExpiration().getTime())
                 .token_type("bearer")
                 .refresh_token(null)
                 .refresh_token_expires_in(0)
-                .provider("LOCAL")
+                .provider(provider)
                 .build();
         tokenRepo.save(accessToken);
 
-        log.info("Local Jwt Prov creaToken : " + jwt);
+        log.info("Local Jwt Prov createToken : " + jwt);
         log.info("Local Jwt Prov Claims : " + claimsJws.getBody());
         log.info("Local Jwt Prov accessToken : " + accessToken);
 
@@ -70,6 +74,7 @@ public class LocalUserJwtProvider {
 
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserpk(token));
+        log.info("Local Jwt Prov userDetails : " + userDetails);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
