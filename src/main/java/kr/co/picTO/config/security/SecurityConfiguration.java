@@ -1,13 +1,11 @@
 package kr.co.picTO.config.security;
 
 import kr.co.picTO.advice.exception.RestAuthenticationEntryPoint;
-import kr.co.picTO.entity.oauth2.BaseAuthRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -64,7 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/v1/user", "/v1/signUp").permitAll()
                 .antMatchers(HttpMethod.GET,"/exception/**", "/v1/login").permitAll()
                 .antMatchers(HttpMethod.GET,"/info").permitAll()
-                .antMatchers("/v1/admin/**").hasRole(BaseAuthRole.ADMIN.getKey())
+                .antMatchers("/v1/admin/**").hasRole("ADMIN")
                     .antMatchers("/oauth2/**", "/", "/social/login", "/social/login/**", "/account/**", "/api/**", "/Info").permitAll()
                     .antMatchers("/index").permitAll()
                     .mvcMatchers("/v3/api-docs/**",

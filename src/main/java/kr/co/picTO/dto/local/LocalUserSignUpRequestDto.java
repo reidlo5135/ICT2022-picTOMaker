@@ -11,29 +11,28 @@ import java.util.Collections;
 @Getter
 @Log4j2
 public class LocalUserSignUpRequestDto {
+
     private String email;
     private String password;
     private String name;
     private String nickName;
     private String provider;
-    private BaseAuthRole role;
 
     @Builder
-    public LocalUserSignUpRequestDto(String email, String password, String name, String nickName, String provider, BaseAuthRole role) {
+    public LocalUserSignUpRequestDto(String email, String password, String name, String nickName, String provider) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.nickName = nickName;
         this.provider = provider;
-        this.role = role;
     }
 
     public BaseLocalUser toEntity() {
-        if(email.equals("picTOadmin@picTOMaker.com") && email != null) {
-            String role = BaseAuthRole.ADMIN.getKey();
-            String provider = BaseAuthRole.ADMIN.toString();
+        String provider = null;
 
-            log.info("Local User SRUDTO r, p : " + role + ", " + provider);
+        if(email.equals("picTOadmin@picTOMaker.com") && email != null) {
+            provider = BaseAuthRole.ADMIN.toString();
+            log.info("Local User SRUDTO provider : " + provider);
 
             return BaseLocalUser.builder()
                     .email(email)
@@ -41,18 +40,19 @@ public class LocalUserSignUpRequestDto {
                     .name(name)
                     .nickName(nickName)
                     .provider(provider)
-                    .role(BaseAuthRole.ADMIN)
-                    .roles(Collections.singletonList(role))
+                    .roles(Collections.singletonList("ROLE_ADMIN"))
                     .build();
         } else {
+            provider = BaseAuthRole.LOCAL.toString();
+            log.info("Local User SRUDTO provider : " + provider);
+
             return BaseLocalUser.builder()
                     .email(email)
                     .password(password)
                     .name(name)
                     .nickName(nickName)
-                    .provider(BaseAuthRole.LOCAL.toString())
-                    .role(BaseAuthRole.LOCAL)
-                    .roles(Collections.singletonList(BaseAuthRole.LOCAL.getKey()))
+                    .provider(provider)
+                    .roles(Collections.singletonList("ROLE_LOCAL"))
                     .build();
         }
     }
