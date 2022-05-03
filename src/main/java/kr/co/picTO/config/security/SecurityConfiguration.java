@@ -1,6 +1,7 @@
 package kr.co.picTO.config.security;
 
 import kr.co.picTO.advice.exception.RestAuthenticationEntryPoint;
+import kr.co.picTO.entity.oauth2.BaseAuthRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        securedEnabled = true,
-        jsr250Enabled = true,
-        prePostEnabled = true
-)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final LocalUserJwtProvider localUserJwtProvider;
@@ -65,8 +61,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                             "/**/*.otf",
                             "/**/content.js.map",
                             "/requestProvider.js.map").permitAll()
-                    .antMatchers(HttpMethod.POST, "/v1/signUp").permitAll()
-                    .antMatchers(HttpMethod.GET,"/exception/**", "/v1/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/v1/user", "/v1/signUp").permitAll()
+                .antMatchers(HttpMethod.GET,"/exception/**", "/v1/login").permitAll()
+                .antMatchers(HttpMethod.GET,"/info").permitAll()
+                .antMatchers("/v1/admin/**").hasRole(BaseAuthRole.ADMIN.getKey())
                     .antMatchers("/oauth2/**", "/", "/social/login", "/social/login/**", "/account/**", "/api/**", "/Info").permitAll()
                     .antMatchers("/index").permitAll()
                     .mvcMatchers("/v3/api-docs/**",
