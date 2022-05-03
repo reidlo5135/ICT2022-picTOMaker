@@ -27,16 +27,13 @@ public class LocalUserController {
     private final LocalUserService userService;
     private final ResponseService responseService;
     private final PasswordEncoder passwordEncoder;
-    private final LocalUserJwtProvider localUserJwtProvider;
-
     @ApiOperation(value = "로그인", notes = "Login By Email")
     @GetMapping(value = "/login")
-    public SingleResult<String> login(@ApiParam(value = "Login Email : email", required = true) @RequestParam String email,
-                                      @ApiParam(value = "Login Pwd : ", required = true) @RequestParam String password) {
+    public SingleResult<String> loginAndCreateToken(@ApiParam(value = "Login Email : email", required = true) @RequestParam String email,
+                                                    @ApiParam(value = "Login Pwd : ", required = true) @RequestParam String password) {
 
-        LocalUserLoginResponseDto localUserLoginResponseDto = userService.login(email, password);
-
-        String token = localUserJwtProvider.createToken(String.valueOf(localUserLoginResponseDto.getId()), localUserLoginResponseDto.getRoles());
+        LocalUserLoginResponseDto userLoginResponseDto = userService.login(email, password);
+        String token = userService.createToken(userLoginResponseDto.getId(), userLoginResponseDto.getRoles());
 
         SingleResult<String> result = responseService.getSingleResult(token);
 
