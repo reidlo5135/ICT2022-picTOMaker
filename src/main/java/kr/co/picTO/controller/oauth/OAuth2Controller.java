@@ -1,5 +1,6 @@
 package kr.co.picTO.controller.oauth;
 
+import io.swagger.annotations.Api;
 import kr.co.picTO.dto.social.ProfileDTO;
 import kr.co.picTO.entity.oauth2.AccessToken;
 import kr.co.picTO.model.response.SingleResult;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
 
-
+@Api(tags = {"2. OAuth2 User"})
 @RestController
 @Log4j2
 @RequiredArgsConstructor

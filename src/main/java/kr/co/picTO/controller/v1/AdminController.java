@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(tags = {"3. Admin"})
+@Api(tags = {"3. Only Admin - User"})
 @Log4j2
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/v1/admin")
 public class AdminController {
+
     private final LocalUserService userService;
     private final ResponseService responseService;
 

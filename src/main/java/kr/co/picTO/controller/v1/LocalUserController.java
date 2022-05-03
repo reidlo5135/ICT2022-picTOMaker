@@ -1,18 +1,14 @@
 package kr.co.picTO.controller.v1;
 
-import io.swagger.annotations.*;
-
-import kr.co.picTO.config.security.LocalUserJwtProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import kr.co.picTO.dto.local.LocalUserLoginResponseDto;
 import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
-
 import kr.co.picTO.model.response.SingleResult;
-
 import kr.co.picTO.service.local.LocalUserService;
 import kr.co.picTO.service.response.ResponseService;
-
 import lombok.RequiredArgsConstructor;
-
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +23,14 @@ public class LocalUserController {
     private final LocalUserService userService;
     private final ResponseService responseService;
     private final PasswordEncoder passwordEncoder;
+
     @ApiOperation(value = "로그인", notes = "Login By Email")
     @GetMapping(value = "/login")
     public SingleResult<String> loginAndCreateToken(@ApiParam(value = "Login Email : email", required = true) @RequestParam String email,
                                                     @ApiParam(value = "Login Pwd : ", required = true) @RequestParam String password) {
 
         LocalUserLoginResponseDto userLoginResponseDto = userService.login(email, password);
+
         String token = userService.createToken(userLoginResponseDto.getId(), userLoginResponseDto.getRoles());
 
         SingleResult<String> result = responseService.getSingleResult(token);
@@ -58,7 +56,7 @@ public class LocalUserController {
 
         log.info("Local User Controller signUp DTO : " + user.toString());
 
-        SingleResult<Long> result = responseService.getSingleResult(userService.singUp(user));
+        SingleResult<Long> result = responseService.getSingleResult(userService.signUp(user));
         log.info("Local User Controller result : " + result);
 
         return result;
