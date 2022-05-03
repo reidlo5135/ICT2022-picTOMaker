@@ -42,6 +42,9 @@ public class BaseLocalUser extends BaseTimeEntity implements UserDetails {
     @Column(length = 100)
     private String provider;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private BaseAuthRole role;
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
