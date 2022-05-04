@@ -2,13 +2,19 @@ package kr.co.picTO.dto.local;
 
 import kr.co.picTO.entity.local.BaseLocalUser;
 import kr.co.picTO.entity.oauth2.BaseAuthRole;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
 
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Log4j2
 public class LocalUserSignUpRequestDto {
 
@@ -16,18 +22,8 @@ public class LocalUserSignUpRequestDto {
     private String password;
     private String name;
     private String nickName;
-    private String provider;
 
-    @Builder
-    public LocalUserSignUpRequestDto(String email, String password, String name, String nickName, String provider) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.nickName = nickName;
-        this.provider = provider;
-    }
-
-    public BaseLocalUser toEntity() {
+    public BaseLocalUser toEntity(PasswordEncoder passwordEncoder) {
         String provider = null;
 
         if(email.equals("picTOadmin@picTOMaker.com") && email != null) {
@@ -36,7 +32,7 @@ public class LocalUserSignUpRequestDto {
 
             return BaseLocalUser.builder()
                     .email(email)
-                    .password(password)
+                    .password(passwordEncoder.encode(password))
                     .name(name)
                     .nickName(nickName)
                     .provider(provider)
@@ -48,7 +44,7 @@ public class LocalUserSignUpRequestDto {
 
             return BaseLocalUser.builder()
                     .email(email)
-                    .password(password)
+                    .password(passwordEncoder.encode(password))
                     .name(name)
                     .nickName(nickName)
                     .provider(provider)

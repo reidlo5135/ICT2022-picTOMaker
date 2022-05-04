@@ -1,5 +1,6 @@
 package kr.co.picTO.entity.oauth2;
 
+import kr.co.picTO.entity.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +11,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "base_access_token")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccessToken {
+public class BaseAccessToken extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,14 +37,4 @@ public class AccessToken {
 
     @Column(nullable = false)
     private String provider;
-
-    @Builder
-    public AccessToken(String access_token, String token_type, String refresh_token, long expires_in, long refresh_token_expires_in, String provider) {
-        this.access_token = access_token;
-        this.token_type = token_type;
-        this.refresh_token = refresh_token;
-        this.expires_in = expires_in;
-        this.refresh_token_expires_in = refresh_token_expires_in;
-        this.provider = provider;
-    }
 }
