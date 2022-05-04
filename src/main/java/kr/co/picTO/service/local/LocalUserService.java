@@ -1,13 +1,15 @@
 package kr.co.picTO.service.local;
 
 import kr.co.picTO.advice.exception.CEmailLoginFailedException;
+import kr.co.picTO.advice.exception.CEmailSignUpFailedException;
 import kr.co.picTO.advice.exception.CUserNotFoundException;
 import kr.co.picTO.config.security.LocalUserJwtProvider;
-import kr.co.picTO.dto.local.LocalUserLoginResponseDto;
+import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.dto.local.LocalUserRequestDto;
 import kr.co.picTO.dto.local.LocalUserResponseDto;
 import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
 import kr.co.picTO.entity.local.BaseLocalUser;
+import kr.co.picTO.entity.oauth2.BaseAccessToken;
 import kr.co.picTO.repository.BaseLocalUserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -27,36 +29,62 @@ public class LocalUserService {
     private final PasswordEncoder passwordEncoder;
     private final LocalUserJwtProvider localUserJwtProvider;
 
-    @Transactional(readOnly = true)
-    public LocalUserLoginResponseDto login(String email, String password) {
-        BaseLocalUser user = userJpaRepo.findByEmail(email).orElseThrow(CEmailLoginFailedException::new);
-        if(!passwordEncoder.matches(password, user.getPassword()))
+    @Transactional
+    public BaseAccessToken login(LocalUserLoginRequestDto localuserLoginRequestDto) {
+
+        BaseLocalUser user = userJpaRepo.findByEmail(localuserLoginRequestDto.getEmail())
+                .orElseThrow(CEmailLoginFailedException::new);
+
+        if (!passwordEncoder.matches(localuserLoginRequestDto.getPassword(), user.getPassword()))
             throw new CEmailLoginFailedException();
 
-        log.info("Local User SVC login email, password : " + email + ", " + password);
+        BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getRoles());
 
-        return new LocalUserLoginResponseDto(user);
+        log.info("Local User SVC bAToken : " + baseAccessToken);
+
+        return baseAccessToken;
     }
 
     @Transactional
-    public Long signUp(LocalUserSignUpRequestDto localUserSignUpRequestDto) {
-        if(userJpaRepo.findByEmail(localUserSignUpRequestDto.getEmail()).orElse(null) == null)
-            return userJpaRepo.save(localUserSignUpRequestDto.toEntity()).getId();
-        else throw new CEmailLoginFailedException();
+    public Long signUp(LocalUserSignUpRequestDto userSignupDto) {
+        if (userJpaRepo.findByEmail(userSignupDto.getEmail()).isPresent())
+            throw new CEmailSignUpFailedException();
+
+        return userJpaRepo.save(userSignupDto.toEntity(passwordEncoder)).getId();
     }
 
-    @Transactional
-    public String createToken(Long id, List<String> roles) {
-        String token = localUserJwtProvider.createToken(String.valueOf(id), roles);
-
-        if (token == null || token.equals(""))
-            throw new NullPointerException("Local User token is null");
-
-        log.info("Local User SVC id, roles : " + id + ", " + roles);
-        log.info("Local User SVC createToken : " + token);
-
-        return token;
-    }
+//    @Transactional
+//    public TokenDto reissue(TokenRequestDto tokenRequestDto) {
+//
+//        if (!localUserJwtProvider.validationToken(tokenRequestDto.getRefreshToken())) {
+//            throw new CRefreshTokenException();
+//        }
+//
+//        String accessToken = tokenRequestDto.getAccessToken();
+//        Authentication authentication = localUserJwtProvider.getAuthentication(accessToken);
+//
+//        log.info("Local User SVC accToken, authen : " + accessToken + ", " + authentication);
+//
+//        BaseLocalUser user = userJpaRepo.findById(Long.parseLong(authentication.getName()))
+//                .orElseThrow(CUserNotFoundException::new);
+//
+//        BaseLocalRefreshToken refreshToken = baseRefreshTokenRepo.findByKey(user.getId())
+//                .orElseThrow(CRefreshTokenException::new);
+//
+//        log.info("Local User SVC user, refreshToken : " + user + ", " + refreshToken);
+//
+//        if (!refreshToken.getToken().equals(tokenRequestDto.getRefreshToken()))
+//            throw new CRefreshTokenException();
+//
+//        TokenDto newCreatedToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getRoles());
+//
+//        BaseLocalRefreshToken updateRefreshToken = refreshToken.updateToken(newCreatedToken.getRefreshToken());
+//        baseRefreshTokenRepo.save(updateRefreshToken);
+//
+//        log.info("Local User SVC newCreatedToken, updateRefreshToken : " + newCreatedToken + ", " + updateRefreshToken);
+//
+//        return newCreatedToken;
+//    }
 
     @Transactional(readOnly = true)
     public LocalUserResponseDto findById(Long id) {

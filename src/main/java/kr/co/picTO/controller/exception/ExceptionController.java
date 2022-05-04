@@ -1,4 +1,4 @@
-package kr.co.picTO.advice.exception;
+package kr.co.picTO.controller.exception;
 
 import kr.co.picTO.advice.exception.CAuthenticationEntryPointException;
 import kr.co.picTO.model.response.CommonResult;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/exception")
 public class ExceptionController {
 
@@ -20,6 +20,6 @@ public class ExceptionController {
 
     @GetMapping(value = "/accessDenied")
     public CommonResult accessDeniedException() {
-        throw new AccessDeniedException("");
+        throw new AccessDeniedException("Access Denied");
     }
 }
