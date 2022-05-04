@@ -1,5 +1,6 @@
 package kr.co.picTO.config.security;
 
+import kr.co.picTO.advice.exception.CustomAccessDeniedHandler;
 import kr.co.picTO.advice.exception.RestAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .addFilterBefore(new LocalUserJwtAuthenticationFilter(localUserJwtProvider), UsernamePasswordAuthenticationFilter.class)
                     .exceptionHandling()
                         .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                        .accessDeniedHandler(new CustomAccessDeniedHandler())
                 .and()
                     .authorizeRequests()
                         .antMatchers("/",
@@ -59,8 +61,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                             "/**/*.otf",
                             "/**/content.js.map",
                             "/requestProvider.js.map").permitAll()
-                .antMatchers(HttpMethod.POST, "/v1/user", "/v1/signUp").permitAll()
-                .antMatchers(HttpMethod.GET,"/exception/**", "/v1/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/v1/user", "/v1/signUp", "/v1/login").permitAll()
+                .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/info").permitAll()
                 .antMatchers("/v1/admin/**").hasRole("ADMIN")
                     .antMatchers("/oauth2/**", "/", "/social/login", "/social/login/**", "/account/**", "/api/**", "/Info").permitAll()

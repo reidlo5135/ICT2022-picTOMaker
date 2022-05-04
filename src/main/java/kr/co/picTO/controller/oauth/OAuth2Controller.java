@@ -2,7 +2,7 @@ package kr.co.picTO.controller.oauth;
 
 import io.swagger.annotations.Api;
 import kr.co.picTO.dto.social.ProfileDTO;
-import kr.co.picTO.entity.oauth2.AccessToken;
+import kr.co.picTO.entity.oauth2.BaseAccessToken;
 import kr.co.picTO.model.response.SingleResult;
 import kr.co.picTO.service.response.ResponseService;
 import kr.co.picTO.service.security.OAuth2ProviderService;
@@ -31,17 +31,17 @@ public class OAuth2Controller {
     @GetMapping(value = "/redirect/{provider}")
     public void signCallback(@RequestParam("code") String code, @PathVariable String provider, HttpServletResponse response, HttpSession session) {
         try {
-            AccessToken accessToken = OAuth2ProviderService.getAndSaveAccessToken(code, provider);
-            log.info("Prov Controller ACCESS TOKEN : " + accessToken);
+            BaseAccessToken baseAccessToken = OAuth2ProviderService.getAndSaveAccessToken(code, provider);
+            log.info("Prov Controller ACCESS TOKEN : " + baseAccessToken);
             log.info("Prov Controller prov : " + provider);
 
             ProfileDTO profileDTO;
 
             if(provider.equals("google")) {
-                profileDTO = OAuth2ProviderService.getProfileForGoogle(accessToken.getAccess_token(), provider);
+                profileDTO = OAuth2ProviderService.getProfileForGoogle(baseAccessToken.getAccess_token(), provider);
                 log.info("Prov Controller google pDTO : " + profileDTO);
             } else {
-                profileDTO = OAuth2ProviderService.getProfile(accessToken.getAccess_token(), provider);
+                profileDTO = OAuth2ProviderService.getProfile(baseAccessToken.getAccess_token(), provider);
                 log.info("Prov Controller pDTO : " + profileDTO);
             }
 
