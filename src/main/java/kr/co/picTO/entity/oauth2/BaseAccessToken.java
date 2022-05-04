@@ -26,13 +26,13 @@ public class BaseAccessToken extends BaseTimeEntity {
     @Column(nullable = false)
     private String token_type;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String refresh_token;
 
     @Column(nullable = false)
     private long expires_in;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private long refresh_token_expires_in;
 
     @Column(nullable = false)
