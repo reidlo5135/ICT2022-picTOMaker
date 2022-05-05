@@ -1,7 +1,7 @@
 package kr.co.picTO.service.security;
 
 import com.google.gson.Gson;
-import kr.co.picTO.advice.exception.CCommunicationException;
+import kr.co.picTO.advice.exception.CustomCommunicationException;
 import kr.co.picTO.config.security.OAuthRequestFactory;
 import kr.co.picTO.dto.social.*;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
@@ -60,9 +60,9 @@ public class OAuth2ProviderService {
             }
         } catch (Exception e) {
             log.error("CCommunicate exception - {}" + e.getMessage());
-            throw new CCommunicationException();
+            throw new CustomCommunicationException();
         }
-        throw new CCommunicationException();
+        throw new CustomCommunicationException();
     }
 
     public ProfileDTO getProfile(String accessToken, String provider) {
@@ -89,9 +89,9 @@ public class OAuth2ProviderService {
             }
         } catch (Exception e) {
             log.error("CCommunicate exception" + e.getMessage());
-            throw new CCommunicationException();
+            throw new CustomCommunicationException();
         }
-        throw new CCommunicationException();
+        throw new CustomCommunicationException();
     }
 
     public ProfileDTO getProfileForGoogle(String accessToken, String provider) {
@@ -117,9 +117,9 @@ public class OAuth2ProviderService {
             }
         } catch (Exception e){
             log.error("CCoummuicate exception : " + e.getMessage());
-            throw new CCommunicationException();
+            throw new CustomCommunicationException();
         }
-        throw new CCommunicationException();
+        throw new CustomCommunicationException();
     }
 
     private ProfileDTO extractProfile(ResponseEntity<String> response, String provider) {

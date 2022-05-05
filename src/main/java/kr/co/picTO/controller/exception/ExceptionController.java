@@ -1,6 +1,6 @@
 package kr.co.picTO.controller.exception;
 
-import kr.co.picTO.advice.exception.CAuthenticationEntryPointException;
+import kr.co.picTO.advice.exception.CustomAuthenticationEntryPointException;
 import kr.co.picTO.model.response.CommonResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
@@ -15,7 +15,7 @@ public class ExceptionController {
 
     @GetMapping(value = "/entrypoint")
     public CommonResult entrypointException() {
-        throw new CAuthenticationEntryPointException();
+        throw new CustomAuthenticationEntryPointException();
     }
 
     @GetMapping(value = "/accessDenied")

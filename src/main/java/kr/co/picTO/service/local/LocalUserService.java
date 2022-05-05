@@ -1,8 +1,8 @@
 package kr.co.picTO.service.local;
 
-import kr.co.picTO.advice.exception.CEmailLoginFailedException;
-import kr.co.picTO.advice.exception.CEmailSignUpFailedException;
-import kr.co.picTO.advice.exception.CUserNotFoundException;
+import kr.co.picTO.advice.exception.CustomEmailLoginFailedException;
+import kr.co.picTO.advice.exception.CustomEmailSignUpFailedException;
+import kr.co.picTO.advice.exception.CustomUserNotFoundException;
 import kr.co.picTO.config.security.LocalUserJwtProvider;
 import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.dto.local.LocalUserRequestDto;
@@ -33,10 +33,10 @@ public class LocalUserService {
     public BaseAccessToken login(LocalUserLoginRequestDto localuserLoginRequestDto) {
 
         BaseLocalUser user = userJpaRepo.findByEmail(localuserLoginRequestDto.getEmail())
-                .orElseThrow(CEmailLoginFailedException::new);
+                .orElseThrow(CustomEmailLoginFailedException::new);
 
         if (!passwordEncoder.matches(localuserLoginRequestDto.getPassword(), user.getPassword()))
-            throw new CEmailLoginFailedException();
+            throw new CustomEmailLoginFailedException();
 
         BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getRoles());
 
@@ -48,7 +48,7 @@ public class LocalUserService {
     @Transactional
     public Long signUp(LocalUserSignUpRequestDto userSignupDto) {
         if (userJpaRepo.findByEmail(userSignupDto.getEmail()).isPresent())
-            throw new CEmailSignUpFailedException();
+            throw new CustomEmailSignUpFailedException();
 
         return userJpaRepo.save(userSignupDto.toEntity(passwordEncoder)).getId();
     }
@@ -89,14 +89,14 @@ public class LocalUserService {
     @Transactional(readOnly = true)
     public LocalUserResponseDto findById(Long id) {
         BaseLocalUser user = userJpaRepo.findById(id)
-                .orElseThrow(CUserNotFoundException::new);
+                .orElseThrow(CustomUserNotFoundException::new);
         return new LocalUserResponseDto(user);
     }
 
     @Transactional(readOnly = true)
     public LocalUserResponseDto findByEmail(String email) {
         BaseLocalUser user = userJpaRepo.findByEmail(email)
-                .orElseThrow(CUserNotFoundException::new);
+                .orElseThrow(CustomUserNotFoundException::new);
         return new LocalUserResponseDto(user);
     }
 
@@ -111,7 +111,7 @@ public class LocalUserService {
     @Transactional
     public Long update(Long id, LocalUserRequestDto userRequestDto) {
         BaseLocalUser modifiedUser = userJpaRepo
-                .findById(id).orElseThrow(CUserNotFoundException::new);
+                .findById(id).orElseThrow(CustomUserNotFoundException::new);
         modifiedUser.updateNickName(userRequestDto.getNickName());
         return id;
     }

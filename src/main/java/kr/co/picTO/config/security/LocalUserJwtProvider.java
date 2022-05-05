@@ -1,7 +1,7 @@
 package kr.co.picTO.config.security;
 
 import io.jsonwebtoken.*;
-import kr.co.picTO.advice.exception.CAuthenticationEntryPointException;
+import kr.co.picTO.advice.exception.CustomAuthenticationEntryPointException;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
 import kr.co.picTO.entity.oauth2.BaseAuthRole;
 import kr.co.picTO.repository.BaseTokenRepo;
@@ -84,7 +84,7 @@ public class LocalUserJwtProvider {
         Claims claims = parseClaims(token);
 
         if(claims.get(ROLES) == null)
-            throw new CAuthenticationEntryPointException();
+            throw new CustomAuthenticationEntryPointException();
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
         log.info("Local Jwt Prov userDetails : " + userDetails);

@@ -41,9 +41,9 @@ public class ExceptionAdvice {
      * -1000
      * 유저를 찾지 못했을 때 발생시키는 예외
      */
-    @ExceptionHandler(CUserNotFoundException.class)
+    @ExceptionHandler(CustomUserNotFoundException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResult userNotFoundException(HttpServletRequest request, CUserNotFoundException e) {
+    protected CommonResult userNotFoundException(HttpServletRequest request, CustomUserNotFoundException e) {
         return responseService.getFailResult(Integer.parseInt(getMessage("userNotFound.code")), getMessage("userNotFound.msg"));
     }
 
@@ -51,9 +51,9 @@ public class ExceptionAdvice {
      * -1001
      * 유저 이메일 로그인 실패 시 발생시키는 예외
      */
-    @ExceptionHandler(CEmailLoginFailedException.class)
+    @ExceptionHandler(CustomEmailLoginFailedException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResult emailLoginFailedException(HttpServletRequest request, CEmailLoginFailedException e) {
+    protected CommonResult emailLoginFailedException(HttpServletRequest request, CustomEmailLoginFailedException e) {
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("emailLoginFailed.code")), getMessage("emailLoginFailed.msg"));
     }
@@ -62,9 +62,9 @@ public class ExceptionAdvice {
      * -1002
      * 회원 가입 시 이미 로그인 된 이메일인 경우 발생 시키는 예외
      */
-    @ExceptionHandler(CEmailSignUpFailedException.class)
+    @ExceptionHandler(CustomEmailSignUpFailedException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResult emailSignUpFailedCException(HttpServletRequest request, CEmailSignUpFailedException e) {
+    protected CommonResult emailSignUpFailedCException(HttpServletRequest request, CustomEmailSignUpFailedException e) {
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("emailSignUpFailed.code")), getMessage("emailSignUpFailed.msg"));
     }
@@ -73,9 +73,9 @@ public class ExceptionAdvice {
      * -1003
      * 전달한 Jwt 이 정상적이지 않은 경우 발생 시키는 예외
      */
-    @ExceptionHandler(CAuthenticationEntryPointException.class)
+    @ExceptionHandler(CustomAuthenticationEntryPointException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResult authenticationEntrypointException(HttpServletRequest request, CAuthenticationEntryPointException e) {
+    protected CommonResult authenticationEntrypointException(HttpServletRequest request, CustomAuthenticationEntryPointException e) {
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("authenticationEntrypoint.code")), getMessage("authenticationEntrypoint.msg"));
     }
@@ -95,9 +95,9 @@ public class ExceptionAdvice {
      * -1007
      * Social 인증 과정에서 문제 발생하는 에러
      */
-    @ExceptionHandler(CCommunicationException.class)
+    @ExceptionHandler(CustomCommunicationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected CommonResult communicationException(HttpServletRequest request, CCommunicationException e) {
+    protected CommonResult communicationException(HttpServletRequest request, CustomCommunicationException e) {
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("communicationException.code")), getMessage("communicationException.msg")
         );
@@ -107,9 +107,9 @@ public class ExceptionAdvice {
      * -1008
      * 기 가입자 에러
      */
-    @ExceptionHandler(CUserExistException.class)
+    @ExceptionHandler(CustomUserExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    protected CommonResult existUserException(HttpServletRequest request, CUserExistException e) {
+    protected CommonResult existUserException(HttpServletRequest request, CustomUserExistException e) {
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("userExistException.code")), getMessage("userExistException.msg")
         );
@@ -119,9 +119,9 @@ public class ExceptionAdvice {
      * -1009
      * 소셜 로그인 시 필수 동의항목 미동의시 에러
      */
-    @ExceptionHandler(CSocialAgreementException.class)
+    @ExceptionHandler(CustomSocialAgreementException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected CommonResult socialAgreementException(HttpServletRequest request, CSocialAgreementException e) {
+    protected CommonResult socialAgreementException(HttpServletRequest request, CustomSocialAgreementException e) {
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("agreementException.code")), getMessage("agreementException.msg")
         );
