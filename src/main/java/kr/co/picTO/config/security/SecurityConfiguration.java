@@ -1,27 +1,25 @@
 package kr.co.picTO.config.security;
 
+import kr.co.picTO.advice.exception.CustomAccessDeniedHandler;
 import kr.co.picTO.advice.exception.RestAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        securedEnabled = true,
-        jsr250Enabled = true,
-        prePostEnabled = true
-)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private final LocalUserJwtProvider localUserJwtProvider;
 
     @Bean
     @Override
@@ -43,8 +41,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin().disable()
                     .httpBasic().disable()
+                    .addFilterBefore(new LocalUserJwtAuthenticationFilter(localUserJwtProvider), UsernamePasswordAuthenticationFilter.class)
                     .exceptionHandling()
                         .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                        .accessDeniedHandler(new CustomAccessDeniedHandler())
                 .and()
                     .authorizeRequests()
                         .antMatchers("/",
@@ -61,9 +61,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                             "/**/*.otf",
                             "/**/content.js.map",
                             "/requestProvider.js.map").permitAll()
-                    .antMatchers(HttpMethod.POST, "/v1/sign/signup", "/v1/sign/login", "/v1/sign/reissue", "/v1/sign/social/**").permitAll()
-                    .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
-                    .antMatchers("/oauth2/**", "/", "/social/login", "/social/login/**", "/account/**", "/api/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/v1/user", "/v1/signUp", "/v1/login").permitAll()
+                .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/info").permitAll()
+                .antMatchers("/v1/admin/**").hasRole("ADMIN")
+                    .antMatchers("/oauth2/**", "/", "/social/login", "/social/login/**", "/account/**", "/api/**", "/Info").permitAll()
                     .antMatchers("/index").permitAll()
                     .mvcMatchers("/v3/api-docs/**",
                         "/configuration/**",

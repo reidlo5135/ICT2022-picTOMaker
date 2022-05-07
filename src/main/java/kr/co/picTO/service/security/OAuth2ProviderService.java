@@ -1,10 +1,10 @@
 package kr.co.picTO.service.security;
 
 import com.google.gson.Gson;
-import kr.co.picTO.advice.exception.CCommunicationException;
+import kr.co.picTO.advice.exception.CustomCommunicationException;
 import kr.co.picTO.config.security.OAuthRequestFactory;
 import kr.co.picTO.dto.social.*;
-import kr.co.picTO.entity.oauth2.AccessToken;
+import kr.co.picTO.entity.oauth2.BaseAccessToken;
 import kr.co.picTO.entity.oauth2.BaseAuthRole;
 import kr.co.picTO.entity.oauth2.BaseAuthUser;
 import kr.co.picTO.repository.BaseAuthUserRepo;
@@ -28,12 +28,11 @@ public class OAuth2ProviderService {
     private final OAuthRequestFactory oAuthRequestFactory;
     private final RestTemplate restTemplate;
     private final Gson gson;
-
     private final BaseAuthUserRepo userRepo;
     private final BaseTokenRepo tokenRepo;
 
     @Transactional
-    public AccessToken getAndSaveAccessToken(String code, String provider) {
+    public BaseAccessToken getAndSaveAccessToken(String code, String provider) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -51,18 +50,19 @@ public class OAuth2ProviderService {
 
         try {
             if (response.getStatusCode() == HttpStatus.OK) {
-                AccessToken accessToken = gson.fromJson(response.getBody(), AccessToken.class);
-                tokenRepo.save(accessToken);
-                log.info("Prov SVC gASAT gson GetBody : " + accessToken);
-                return gson.fromJson(response.getBody(), AccessToken.class);
+                BaseAccessToken baseAccessToken = gson.fromJson(response.getBody(), BaseAccessToken.class);
+                baseAccessToken.setProvider(provider.toUpperCase(Locale.ROOT));
+                tokenRepo.save(baseAccessToken);
+                log.info("Prov SVC gASAT gson GetBody : " + baseAccessToken);
+                return gson.fromJson(response.getBody(), BaseAccessToken.class);
             } else if(response.getStatusCode() != HttpStatus.OK) {
                 log.error("Prov SVC gASAT getBody : " + response.getBody());
             }
         } catch (Exception e) {
             log.error("CCommunicate exception - {}" + e.getMessage());
-            throw new CCommunicationException();
+            throw new CustomCommunicationException();
         }
-        throw new CCommunicationException();
+        throw new CustomCommunicationException();
     }
 
     public ProfileDTO getProfile(String accessToken, String provider) {
@@ -89,9 +89,9 @@ public class OAuth2ProviderService {
             }
         } catch (Exception e) {
             log.error("CCommunicate exception" + e.getMessage());
-            throw new CCommunicationException();
+            throw new CustomCommunicationException();
         }
-        throw new CCommunicationException();
+        throw new CustomCommunicationException();
     }
 
     public ProfileDTO getProfileForGoogle(String accessToken, String provider) {
@@ -117,9 +117,9 @@ public class OAuth2ProviderService {
             }
         } catch (Exception e){
             log.error("CCoummuicate exception : " + e.getMessage());
-            throw new CCommunicationException();
+            throw new CustomCommunicationException();
         }
-        throw new CCommunicationException();
+        throw new CustomCommunicationException();
     }
 
     private ProfileDTO extractProfile(ResponseEntity<String> response, String provider) {
