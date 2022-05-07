@@ -24,11 +24,12 @@ public class OAuthRequestFactory {
     public OAuthRequest getRequest(String code, String provider) {
         LinkedMultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         log.info("OAuthFactory prov : " + provider);
+        map.add("code", code);
+
         if (provider.equals("kakao")) {
             map.add("grant_type", "authorization_code");
             map.add("client_id", kakaoInfo.getKakaoClientId());
             map.add("redirect_uri", kakaoInfo.getKakaoRedirect());
-            map.add("code", code);
 
             logRequest(map);
 
@@ -40,7 +41,6 @@ public class OAuthRequestFactory {
             map.add("client_id", googleInfo.getGoogleClientId());
             map.add("client_secret", googleInfo.getGoogleClientSecret());
             map.add("redirect_uri", googleInfo.getGoogleRedirect());
-            map.add("code", code);
 
             logRequest(map);
 
@@ -51,7 +51,6 @@ public class OAuthRequestFactory {
             map.add("client_secret", naverInfo.getNaverClientSecret());
             map.add("redirect_uri", naverInfo.getNaverRedirect());
             map.add("state", "project");
-            map.add("code", code);
 
             logRequest(map);
 

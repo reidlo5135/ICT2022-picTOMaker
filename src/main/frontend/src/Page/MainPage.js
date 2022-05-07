@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Best from "../component/Main-best"
-import Main from "../component/Main"
-import Top from "../component/Top"
+import Best from "../component/Main-best";
+import Main from "../component/Main";
+import Top from "../component/Top";
 import '../App.css';
-import Footer from "../component/Footer"
+import Footer from "../component/Footer";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -23,7 +23,6 @@ class MainPage extends Component{
     render(){
         return (
             <div className="App">
-
                 <Top/>
                 <Main />
                 <Best />
