@@ -62,7 +62,7 @@ public class LocalUserJwtProvider {
                 .compact();
 
         String provider = roles.get(0);
-        log.info("Local Jwt Prov prov : "  + provider + ", " + BaseAuthRole.ADMIN.getKey());
+        log.info("Local Jwt Prov prov : "  + provider);
         log.info("Local Jwt Prov accessToken : " + accessToken);
 
         BaseAccessToken baseAccessToken = BaseAccessToken.builder()
