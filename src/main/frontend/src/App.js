@@ -5,7 +5,6 @@ import MainPage from './Page/MainPage';
 import SelectPage from './Page/SelectPage';
 import LoginPage from './Page/LoginPage';
 import SignUpPage from './Page/SignUpPage';
-import axios from "axios";
 
 class App extends Component{
 
@@ -29,6 +28,7 @@ class App extends Component{
                         <Route path = '/Login' element={<LoginPage />}/>
                         <Route path = '/Select' element={<SelectPage />}/>
                         <Route path = '/SignUp' element={<SignUpPage />}/>
+                        <Route path = '/MyPage' element={<MyPage />}/>
                     </Routes>
                 </BrowserRouter>
             </div>
