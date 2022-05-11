@@ -45,7 +45,6 @@ public class OAuth2Controller {
                 log.info("Prov Controller pDTO : " + profileDTO);
             }
 
-
             SingleResult result = responseService.getSingleResult(profileDTO);
             log.info("Prov Controller result GET DATA : " + result.getData());
             session.setAttribute("user", result.getData());

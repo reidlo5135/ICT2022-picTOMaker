@@ -7,9 +7,22 @@ import naver from "../image/naver.png";
 import google from "../image/google.png";
 import { Link } from "react-router-dom";
 import {KAKAO_AUTH_URL, GOOGLE_AUTH_URL, NAVER_AUTH_URL} from "./oauth2/env";
+import axios from "axios";
 
 class Login extends Component{
+
     render(){
+        const handleLogin = (e) => {
+            const provider = e.target.id;
+            if(provider == "kakao") {
+                window.location.href = KAKAO_AUTH_URL;
+            } else if(provider == "naver") {
+                window.location.href = NAVER_AUTH_URL;
+            } else {
+                window.location.href = GOOGLE_AUTH_URL;
+            }
+        }
+
         return(
             <div className='SignIn'>
                 <div className='SI-Content'>
