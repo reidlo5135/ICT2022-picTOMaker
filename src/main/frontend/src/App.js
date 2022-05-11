@@ -5,22 +5,12 @@ import MainPage from './Page/MainPage';
 import SelectPage from './Page/SelectPage';
 import LoginPage from './Page/LoginPage';
 import SignUpPage from './Page/SignUpPage';
+import MyPage from './component/MyPage-Content';
 import axios from "axios";
 
 class App extends Component{
 
     render(){
-        // const [profile, setProfile] = useState();
-        // useEffect(() => {
-        //    axios.post("http://localhost:8080/oauth2/login").then((response) => {
-        //        if(response.data) {
-        //            console.log(response.data);
-        //            setProfile(response.data);
-        //        } else {
-        //            alert("failed to");
-        //        }
-        //    });
-        // }, []);
         return (
             <div className='App'>
                 <BrowserRouter>
@@ -29,6 +19,7 @@ class App extends Component{
                         <Route path = '/Login' element={<LoginPage />}/>
                         <Route path = '/Select' element={<SelectPage />}/>
                         <Route path = '/SignUp' element={<SignUpPage />}/>
+                        <Route path = '/MyPage' element={<MyPage />}/>
                     </Routes>
                 </BrowserRouter>
             </div>
