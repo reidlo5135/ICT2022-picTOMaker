@@ -17,25 +17,6 @@ class App extends Component{
         }
     }
 
-    componentDidMount() {
-        const history = useHistory();
-        const url = 'http://localhost:8080/oauth2/login';
-        let data = {
-            email,
-            nickname,
-            profile_image_url
-        }
-        axios.get(url, JSON.stringify(data), {
-            headers: {
-                "Content-Type": `application/json`,
-            },
-        })
-            .then((res) => {
-                console.log(res);
-                history.replace("/");
-            });
-    }
-
     render(){
         return (
             <div className='App'>
