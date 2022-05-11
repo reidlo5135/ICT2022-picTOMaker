@@ -1,0 +1,92 @@
+
+.MyPage-Content{
+    width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+}
+
+.MyPage-Logo{
+    margin: 5% 0 10% 40%;
+}
+
+.MyPage-Left{
+    width: 30%;
+    height: 100%;
+    box-shadow: 0.1px 1px 5px 0 gray;
+}
+.MyPage-Right{
+    width: 70%;
+    height: 100%;
+}
+/*MyPage-Left 프로필*/
+.Pro-Img{
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    background-color: #d6d6d6;
+    border-radius: 50%;
+}
+
+.Pro-Txt{
+    margin: 5%;
+    text-align: center;
+}
+
+.Pro-Title{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.Pro-Email{
+    font-size: 12px;
+    color: #d6d6d6;
+}
+
+.MyPage-Menu{
+    line-height: 150%;
+    margin: 30% 0 0 10%;
+    font-weight: bold;
+}
+
+.MyPage-footer{
+    margin: 50% 0 0 20%;
+    font-size: 12px;
+}
+span{
+    margin: 0 2% 0 2%;
+}
+
+.Copyright{
+    margin-left: -5%;
+    color: #d6d6d6;
+}
+
+/*MyPage-Right*/
+
+.Right-Contents{
+    margin:25% 0 0 5%;
+}
+
+.Menu-Name{
+    margin-bottom: 3%;
+    font-size: 24px;
+    font-weight: bold;
+    color: #E72D71;
+}
+
+.Name{
+    color:#E72D71;
+    font-size: 14px;
+    font-weight: bold;
+}
+.MenuBox-props{
+    color: #777777;
+}
+
+.MenuBox{
+    padding: 0.5% 0 0.5% 2%;
+    margin-bottom: 3%;
+    border: 2px solid #E72D71;
+    border-radius: 15px;
+}
