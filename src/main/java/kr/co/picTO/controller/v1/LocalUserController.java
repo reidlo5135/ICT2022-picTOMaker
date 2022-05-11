@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/v1")
+@RequestMapping(value = "/v1/user")
 public class LocalUserController {
 
     private final LocalUserService userService;
