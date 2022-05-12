@@ -1,12 +1,17 @@
-import axios from "axios";
-import {useEffect, useState} from 'react';
-import {BrowserRouter} from "react-router-dom";
+import React, { Component} from 'react';
 
-const CallbackPage = () => {
-    const [error, setError] = useState(null);
+class Callback extends Component{
 
-    useEffect(() => {
-    })
+    render() {
+        alert('CallBack Page');
+        const code = new URL(window.location.href).searchParams.get("code");
+        return(
+            <div>
+                {code}
+            </div>
+        );
+    }
+
 }
 
-export default CallbackPage;
+export default Callback;
