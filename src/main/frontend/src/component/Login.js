@@ -7,24 +7,11 @@ import naver from "../image/naver.png";
 import google from "../image/google.png";
 import {Link} from "react-router-dom";
 import {KAKAO_AUTH_URL, GOOGLE_AUTH_URL, NAVER_AUTH_URL} from "./oauth2/env";
-import axios from "axios";
 
 class Login extends Component{
 
 
     render(){
-        let code = new URL(window.location.href).searchParams.get('code');
-        const url = `http://localhost:8080/oauth2/redirect/kakao?code=${code}`;
-        console.log('code : ', code);
-
-        const login = async () => {
-            await axios.get(url)
-                .then((res) => {
-                    console.log('res : ', res);
-                })
-        };
-
-        console.log(login());
         return(
             <div className='SignIn'>
                 <div className='SI-Content'>

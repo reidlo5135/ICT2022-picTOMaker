@@ -1,13 +1,21 @@
 import React, {Component, useEffect, useState} from 'react';
 import './App.css';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Route, Routes, Router} from 'react-router-dom';
 import MainPage from './Page/MainPage';
 import SelectPage from './Page/SelectPage';
 import LoginPage from './Page/LoginPage';
 import SignUpPage from './Page/SignUpPage';
 import MyPage from './component/MyPage-Content';
+import axios from "axios";
 
 class App extends Component{
+    componentDidMount() {
+        axios.get("http://localhost:8080/oauth2/login")
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => console.error(err));
+    }
 
     render(){
         return (
