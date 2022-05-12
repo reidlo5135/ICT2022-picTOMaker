@@ -76,11 +76,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()
                 .and()
                     .logout()
-                        .logoutSuccessUrl("/logout")
-                        .deleteCookies()
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .deleteCookies("JSESSIONID", "remember-me")
                 .and()
                     .formLogin().disable()
-                    .oauth2Login().userInfoEndpoint();
+                    .oauth2Login()
+                        .userInfoEndpoint();
 
     }
 }
