@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,9 +28,10 @@ public class OAuth2Controller {
 
     private final OAuth2ProviderService OAuth2ProviderService;
     private final ResponseService responseService;
+    private final RestTemplate restTemplate;
 
     @GetMapping(value = "/redirect/{provider}")
-    public void signCallback(@RequestParam("code") String code, @PathVariable String provider, HttpServletResponse response, HttpSession session) {
+    public ResponseEntity<SingleResult<ProfileDTO>> signCallback(@RequestParam("code") String code, @PathVariable String provider, HttpServletResponse response, HttpSession session) {
         try {
             BaseAccessToken baseAccessToken = OAuth2ProviderService.getAndSaveAccessToken(code, provider);
             log.info("Prov Controller ACCESS TOKEN : " + baseAccessToken);
@@ -47,33 +49,19 @@ public class OAuth2Controller {
 
             SingleResult result = responseService.getSingleResult(profileDTO);
             log.info("Prov Controller result GET DATA : " + result.getData());
-            session.setAttribute("user", result.getData());
-            response.sendRedirect("http://localhost:8080/oauth2/login");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    @GetMapping(value = "/login")
-    public ResponseEntity<ProfileDTO> login(HttpServletResponse response, HttpSession session) {
-        try {
-            log.info("Prov Controller login : " + session.getAttribute("user"));
-
-            ProfileDTO profileDTO = (ProfileDTO) session.getAttribute("user");
             URI uri = new URI("http://localhost:8080/");
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-            log.info("Prov Controller login pDTO : " + profileDTO);
-            log.info("Prov Controller login headers : " + httpHeaders);
+            ResponseEntity<SingleResult<ProfileDTO>> entity = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            log.info("Prov Controller entity : " + entity);
 
-            response.sendRedirect(uri.toString());
-
-            return new ResponseEntity<>(profileDTO, httpHeaders, HttpStatus.OK);
+            return entity;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 }
