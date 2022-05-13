@@ -56,19 +56,19 @@ public class OAuth2Controller {
     }
 
     @PostMapping(value = "/profile/{provider}")
-    public ResponseEntity<SingleResult<ProfileDTO>> getProfile(@RequestBody String access_token, @PathVariable String provider) {
+    public ResponseEntity<SingleResult<ProfileDTO>> getProfile(@RequestBody Map<String, String> access_token, @PathVariable String provider) {
         ResponseEntity<SingleResult<ProfileDTO>> ett = null;
-        log.info("Prov Controller access_token : " + access_token);
+        log.info("Prov Controller access_token : " + access_token.get("access_token"));
         log.info("Prov Controller prov : " + provider);
 
         try {
             ProfileDTO profileDTO;
 
             if(provider.equals("google")) {
-                profileDTO = OAuth2ProviderService.getProfileForGoogle(access_token, provider);
+                profileDTO = OAuth2ProviderService.getProfileForGoogle(access_token.get("access_token"), provider);
                 log.info("Prov Controller google pDTO : " + profileDTO);
             } else {
-                profileDTO = OAuth2ProviderService.getProfile(access_token, provider);
+                profileDTO = OAuth2ProviderService.getProfile(access_token.get("access_token"), provider);
                 log.info("Prov Controller pDTO : " + profileDTO);
             }
 
