@@ -13,10 +13,9 @@ class App extends Component{
     render(){
         const access_token =  localStorage.getItem("access_token");
         const refresh_token =  localStorage.getItem("refresh_token");
-        console.log(access_token, refresh_token);
-        if(access_token == "" || refresh_token == "") {
+        const profile = localStorage.getItem("profile");
+        console.log(access_token, refresh_token, profile);
 
-        }
         return (
             <div className='App'>
                 <BrowserRouter>
