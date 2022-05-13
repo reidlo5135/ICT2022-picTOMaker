@@ -30,41 +30,6 @@ public class OAuth2Controller {
     private final OAuth2ProviderService OAuth2ProviderService;
     private final ResponseService responseService;
 
-//    @GetMapping(value = "/redirect/{provider}")
-//    public ResponseEntity<SingleResult<ProfileDTO>> signCallback(@RequestParam("code") String code, @PathVariable String provider, HttpServletResponse response, HttpSession session) {
-//        try {
-//            BaseAccessToken baseAccessToken = OAuth2ProviderService.getAndSaveAccessToken(code, provider);
-//            log.info("Prov Controller ACCESS TOKEN : " + baseAccessToken);
-//            log.info("Prov Controller prov : " + provider);
-//
-//            ProfileDTO profileDTO;
-//
-//            if(provider.equals("google")) {
-//                profileDTO = OAuth2ProviderService.getProfileForGoogle(baseAccessToken.getAccess_token(), provider);
-//                log.info("Prov Controller google pDTO : " + profileDTO);
-//            } else {
-//                profileDTO = OAuth2ProviderService.getProfile(baseAccessToken.getAccess_token(), provider);
-//                log.info("Prov Controller pDTO : " + profileDTO);
-//            }
-//
-//            SingleResult result = responseService.getSingleResult(profileDTO);
-//            log.info("Prov Controller result GET DATA : " + result.getData());
-//
-//            URI uri = new URI("http://localhost:8080/");
-//
-//            HttpHeaders httpHeaders = new HttpHeaders();
-//            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-//
-//            ResponseEntity<SingleResult<ProfileDTO>> entity = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
-//            log.info("Prov Controller entity : " + entity);
-//
-//            return entity;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-
     @PostMapping(value = "/token/{provider}")
     public ResponseEntity<SingleResult<BaseAccessToken>> generateToken(@RequestBody Map<String, String> code, @PathVariable String provider) {
         ResponseEntity<SingleResult<BaseAccessToken>> ett = null;
@@ -112,6 +77,9 @@ public class OAuth2Controller {
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            log.info("Prov Controller ett : " + ett);
         }catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
