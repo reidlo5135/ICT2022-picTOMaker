@@ -8,16 +8,27 @@ class Callback extends Component{
         const code = new URL(window.location.href).searchParams.get("code");
         console.log('code : ', code);
 
+        if(code.toString() == null) {
+            alert('Token is Null');
+        }
+
         try {
-            axios.post('/oauth2/token/kakao', {
+            const resp = axios.post('/oauth2/token/kakao', {
                 code
             },{
                 baseURL: 'http://localhost:8080',
                 withCredentials: true
             }).then((response) => {
                 console.log('res data : ', response.data);
-                document.location.href = '/';
+                console.log('res data.data : ', response.data.data);
+                const access_token = response.data.data.access_token;
+                const refresh_token = response.data.data.refresh_token;
+                localStorage.setItem("access_token", access_token);
+                localStorage.setItem("refresh_token", refresh_token);
             });
+
+            console.log('localStorage : ', {localStorage});
+
         } catch (err) {
             alert(err);
             console.error(err);
