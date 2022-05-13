@@ -30,8 +30,16 @@ class Callback extends Component{
             });
 
             console.log('resp : ', {resp});
-            console.log('localStorage : ', {localStorage});
 
+            axios.post('/oauth2/profile/kakao', {
+                access_token
+            },{
+                baseURL: 'http://localhost:8080',
+                withCredentials: true
+            }).then((response) => {
+                console.log('profile res data : ', response.data);
+                console.log('profile res data.data : ', response.data.data);
+            });
         } catch (err) {
             alert(err);
             console.error(err);
