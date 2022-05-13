@@ -27,19 +27,19 @@ class Callback extends Component{
 
                 localStorage.setItem("access_token", access_token);
                 localStorage.setItem("refresh_token", refresh_token);
+
+                axios.post('/oauth2/profile/kakao', {
+                    access_token
+                },{
+                    baseURL: 'http://localhost:8080',
+                    withCredentials: true
+                }).then((response) => {
+                    console.log('profile res data : ', response.data);
+                    console.log('profile res data.data : ', response.data.data);
+                });
             });
 
             console.log('resp : ', {resp});
-
-            axios.post('/oauth2/profile/kakao', {
-                access_token
-            },{
-                baseURL: 'http://localhost:8080',
-                withCredentials: true
-            }).then((response) => {
-                console.log('profile res data : ', response.data);
-                console.log('profile res data.data : ', response.data.data);
-            });
         } catch (err) {
             alert(err);
             console.error(err);
