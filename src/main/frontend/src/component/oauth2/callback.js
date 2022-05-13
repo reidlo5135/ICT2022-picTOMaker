@@ -19,7 +19,6 @@ class Callback extends Component{
                 baseURL: 'http://localhost:8080',
                 withCredentials: true
             }).then((response) => {
-                console.log('res data : ', response.data);
                 console.log('res data.data : ', response.data.data);
 
                 const access_token = response.data.data.access_token;
@@ -34,8 +33,17 @@ class Callback extends Component{
                     baseURL: 'http://localhost:8080',
                     withCredentials: true
                 }).then((response) => {
-                    console.log('profile res data : ', response.data);
                     console.log('profile res data.data : ', response.data.data);
+
+                    const profile = {
+                        'email': response.data.data.email,
+                        'nickname': response.data.data.nickname,
+                        'profile_image_url': response.data.data.profile_image_url
+                    }
+
+                    console.log('profile res profile : ', profile);
+
+                    localStorage.setItem("profile", JSON.stringify(profile));
                 });
             });
 
@@ -47,7 +55,6 @@ class Callback extends Component{
 
         return <div>Loading....</div>;
     }
-
 }
 
 export default Callback;
