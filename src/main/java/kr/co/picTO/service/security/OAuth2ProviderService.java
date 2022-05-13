@@ -52,9 +52,11 @@ public class OAuth2ProviderService {
             if (response.getStatusCode() == HttpStatus.OK) {
                 BaseAccessToken baseAccessToken = gson.fromJson(response.getBody(), BaseAccessToken.class);
                 baseAccessToken.setProvider(provider.toUpperCase(Locale.ROOT));
+
                 tokenRepo.save(baseAccessToken);
+
                 log.info("Prov SVC gASAT gson GetBody : " + baseAccessToken);
-                return gson.fromJson(response.getBody(), BaseAccessToken.class);
+                return baseAccessToken;
             } else if(response.getStatusCode() != HttpStatus.OK) {
                 log.error("Prov SVC gASAT getBody : " + response.getBody());
             }

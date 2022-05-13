@@ -69,6 +69,7 @@ public class OAuth2Controller {
     public ResponseEntity<SingleResult<BaseAccessToken>> generateToken(@RequestBody Map<String, String> code, @PathVariable String provider) {
         ResponseEntity<SingleResult<BaseAccessToken>> ett = null;
         log.info("Prov Controller code : " + code.get("code"));
+
         try {
             BaseAccessToken baseAccessToken = OAuth2ProviderService.getAndSaveAccessToken(code.get("code"), provider);
             log.info("Prov Controller ACCESS TOKEN : " + baseAccessToken);
@@ -83,6 +84,35 @@ public class OAuth2Controller {
             ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
             log.info("Prov Controller ett : " + ett);
         } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
+        return ett;
+    }
+
+    @PostMapping(value = "/profile/{provider}")
+    public ResponseEntity<SingleResult<ProfileDTO>> getProfile(@RequestBody String access_token, @PathVariable String provider) {
+        ResponseEntity<SingleResult<ProfileDTO>> ett = null;
+        log.info("Prov Controller access_token : " + access_token);
+        log.info("Prov Controller prov : " + provider);
+
+        try {
+            ProfileDTO profileDTO;
+
+            if(provider.equals("google")) {
+                profileDTO = OAuth2ProviderService.getProfileForGoogle(access_token, provider);
+                log.info("Prov Controller google pDTO : " + profileDTO);
+            } else {
+                profileDTO = OAuth2ProviderService.getProfile(access_token, provider);
+                log.info("Prov Controller pDTO : " + profileDTO);
+            }
+
+            SingleResult result = responseService.getSingleResult(profileDTO);
+            log.info("Prov Controller result GET DATA : " + result.getData());
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        }catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
         }
