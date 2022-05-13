@@ -1,4 +1,5 @@
 import React, { Component} from 'react';
+import {useHistory} from "react-router";
 import axios from "axios";
 
 class Callback extends Component{
@@ -15,6 +16,7 @@ class Callback extends Component{
                 withCredentials: true
             }).then((response) => {
                 console.log('res data : ', response.data);
+                document.location.href = '/';
             });
         } catch (err) {
             alert(err);
