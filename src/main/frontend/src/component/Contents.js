@@ -18,7 +18,7 @@ class Contents extends Component{
               픽토그램을 제작해 보세요.
               </div>
             </div>
-            <Link to="/Select">
+            <Link to="/select">
             <button className='MainButton'>
               무료로 시작
             </button>
