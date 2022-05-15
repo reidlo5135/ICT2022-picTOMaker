@@ -30,6 +30,7 @@ public class LocalUserController {
     @PostMapping(value = "/login")
     public SingleResult<BaseAccessToken> loginAndCreateToken(@ApiParam(value = "Login Req DTO", required = true) @RequestBody LocalUserLoginRequestDto localUserLoginRequestDto) {
 
+        log.info("Local User Login Controller localReqDto : " + localUserLoginRequestDto.getEmail() + ", " + localUserLoginRequestDto.getPassword());
         BaseAccessToken baseAccessToken = userService.login(localUserLoginRequestDto);
 
         SingleResult<BaseAccessToken> result = responseService.getSingleResult(baseAccessToken);
@@ -44,6 +45,7 @@ public class LocalUserController {
     @PostMapping(value = "/signUp")
     public SingleResult<Long> save(@ApiParam(value = "Sign Req DTO", required = true) @RequestBody LocalUserSignUpRequestDto localUserSignUpRequestDto) {
 
+        log.info("Local User Sign Controller localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
         Long signUpId = userService.signUp(localUserSignUpRequestDto);
 
         SingleResult<Long> result = responseService.getSingleResult(signUpId);
