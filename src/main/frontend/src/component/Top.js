@@ -3,10 +3,12 @@ import Logo from "../image/Logo.png";
 import "../css/Top.css"
 import { Link } from "react-router-dom";
 import "../css/font.css"
+import Main from "./Main"
 
 
 class Top extends Component{
     render(){
+    
         return (
             <div className='top'>
 
@@ -26,8 +28,12 @@ class Top extends Component{
                     </div>
 
                     <div className='Sign'>
-                        <div>로그인</div>
+
+                        <div onClick={this.openModal}>로그인</div>
+
                     </div>
+
+                  
 
                 </div>
             </div>
