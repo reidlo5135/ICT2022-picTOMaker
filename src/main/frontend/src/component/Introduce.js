@@ -67,7 +67,7 @@ class Introduce extends Component{
 
             
             <div className='Arrow'>
-                <img src={Arrow} alt="PictoMaker-Logo" style={{width:"900px",height:"200px"}}/>
+                <img src={Arrow} alt="PictoMaker-Logo" style={{width:"300px",height:"100px"}}/>
             </div>
 
             <div class="col-md-7" data-aos="fade-left">
@@ -91,7 +91,7 @@ class Introduce extends Component{
             </div>
 
             <div className='Arrow'>
-                <img src={Arrow} alt="PictoMaker-Logo" style={{width:"900px",height:"200px"}}/>
+                <img src={Arrow} alt="PictoMaker-Logo" style={{width:"300px",height:"100px"}}/>
             </div>
 
             <div class="col-md-7" data-aos="fade-right">
@@ -115,7 +115,7 @@ class Introduce extends Component{
             </div>
 
             <div className='Arrow'>
-                <img src={Arrow} alt="PictoMaker-Logo" style={{width:"900px",height:"200px"}}/>
+                <img src={Arrow} alt="PictoMaker-Logo" style={{width:"300px",height:"100px"}}/>
             </div>
 
 
