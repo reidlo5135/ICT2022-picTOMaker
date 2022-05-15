@@ -6,7 +6,7 @@ import SelectPage from './Page/SelectPage';
 import LoginPage from './Page/LoginPage';
 import SignUpPage from './Page/SignUpPage';
 import MyPage from './component/MyPage-Content';
-import CallBackPage from './Page/CallBackPage';
+import CallbackPage from './Page/CallBackPage';
 
 class App extends Component{
 
@@ -18,16 +18,14 @@ class App extends Component{
 
         return (
             <div className='App'>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path = '/' element={<MainPage />}/>
-                        <Route path = '/Login' element={<LoginPage />}/>
-                        <Route path = '/Select' element={<SelectPage />}/>
-                        <Route path = '/SignUp' element={<SignUpPage />}/>
-                        <Route path = '/MyPage' element={<MyPage />}/>
-                        <Route path = '/oauth2/redirect/kakao' element={<CallBackPage />} />
-                    </Routes>
-                </BrowserRouter>
+                <Routes>
+                    <Route path = '/' element={<MainPage />}/>
+                    <Route path = '/Login' element={<LoginPage />}/>
+                    <Route path = '/Select' element={<SelectPage />}/>
+                    <Route path = '/SignUp' element={<SignUpPage />}/>
+                    <Route path = '/MyPage' element={<MyPage />}/>
+                    <Route path = '/oauth2/redirect/kakao' element={<CallbackPage />} />
+                </Routes>
             </div>
         );
     }
