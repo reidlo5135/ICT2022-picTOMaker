@@ -83,37 +83,40 @@ class Main extends Component{
                         무료로 시작
                     </button>
                     <div className={'loginModal'}>
-                        <Modal open={ this.state.modalOpen } close={ this.closeModal } title="Login">
+                        <Modal open={ this.state.modalOpen } close={ this.closeModal }>
                             <div className='SignIn'>
                                 <div className='SI-Content'>
-                                    <div className='SI-Logo'>
-                                        <img src={Logo} alt="PictoMaker-Logo" style={{width:"278px",height:"142px"}}/>
-                                    </div>
+                                    <span className={'logo_modal'}>
+                                        <img src={Logo} alt="PictoMaker-Logo" />
+                                    </span>
                                     <div className='SI-Input'>
                                         <form>
                                             <div className='SI-Form'>
-                                                <div className='Label-txt'>아이디</div>
-                                                <input type={'email'} onChange={this.idInputCheck} placeholder="아이디"/>
-                                            </div>
-                                            <div className='SI-Form'>
-                                                <div className='Label-txt'>비밀번호</div>
-                                                <input type={'password'} onChange={this.pwInputCheck} placeholder="비밀번호"/>
-                                            </div>
-                                            <div className='Sns-Si'>
-                                                <a href={KAKAO_AUTH_URL}><img src={kakaotalk} alt="kakaotalk-icon" style={{width:"70px",height:"70px"}} /></a>
-                                                <a href={NAVER_AUTH_URL}><img src={naver} alt="naver-icon" style={{width:"70px",height:"70px"}}/></a>
-                                                <a href={GOOGLE_AUTH_URL}><img src={google} alt="google-icon" style={{width:"70px",height:"70px"}}/></a>
+                                                <input type={'email'} className='form-input' onChange={this.idInputCheck} placeholder="이메일"/>
+                                                <input type={'password'} className='form-input' onChange={this.pwInputCheck} placeholder="비밀번호"/>
                                             </div>
                                             <button className='SI-Button' onClick={this.localLogin}>
                                                 로그인
                                             </button>
                                         </form>
                                     </div>
-                                    <Link to='/SignUp'>
-                                        <button className='SI-Button'>
-                                            회원가입
-                                        </button>
-                                    </Link>
+                                    <p>
+                                        <Link to='/v1/user/'>
+                                            <p className={'p_pw'}>비밀번호 찾기</p>
+                                        </Link>
+                                        <Link to='/SignUp'>
+                                            <p className={'p_signUp'}>| 회원가입</p>
+                                        </Link>
+                                    </p>
+                                    <div className='Sns-Si'>
+                                        <hr className='.social-inline'></hr>
+                                        <span>간편 로그인</span>
+                                        <div className='Si-social-div'>
+                                            <a href={KAKAO_AUTH_URL}><img src={kakaotalk} alt="kakaotalk-icon" /></a>
+                                            <a href={NAVER_AUTH_URL}><img src={naver} alt="naver-icon" /></a>
+                                            <a href={GOOGLE_AUTH_URL}><img src={google} alt="google-icon" /></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </Modal>
