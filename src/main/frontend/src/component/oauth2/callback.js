@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, {Component} from 'react';
 import axios from "axios";
 
 class Callback extends Component{
@@ -51,7 +51,6 @@ class Callback extends Component{
             alert(err);
             console.error(err);
         }
-
         return <div>Loading....</div>;
     }
 }
