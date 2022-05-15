@@ -30,12 +30,14 @@ public class LocalUserService {
     private final LocalUserJwtProvider localUserJwtProvider;
 
     @Transactional
-    public BaseAccessToken login(LocalUserLoginRequestDto localuserLoginRequestDto) {
+    public BaseAccessToken login(LocalUserLoginRequestDto localUserLoginRequestDto) {
 
-        BaseLocalUser user = userJpaRepo.findByEmail(localuserLoginRequestDto.getEmail())
+        log.info("Local User SVC localReqDto : " + localUserLoginRequestDto.getEmail() + ", " + localUserLoginRequestDto.getPassword());
+
+        BaseLocalUser user = userJpaRepo.findByEmail(localUserLoginRequestDto.getEmail())
                 .orElseThrow(CustomEmailLoginFailedException::new);
 
-        if (!passwordEncoder.matches(localuserLoginRequestDto.getPassword(), user.getPassword()))
+        if (!passwordEncoder.matches(localUserLoginRequestDto.getPassword(), user.getPassword()))
             throw new CustomEmailLoginFailedException();
 
         BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getRoles());
@@ -46,11 +48,11 @@ public class LocalUserService {
     }
 
     @Transactional
-    public Long signUp(LocalUserSignUpRequestDto userSignupDto) {
-        if (userJpaRepo.findByEmail(userSignupDto.getEmail()).isPresent())
+    public Long signUp(LocalUserSignUpRequestDto localUserSignupDto) {
+        if (userJpaRepo.findByEmail(localUserSignupDto.getEmail()).isPresent())
             throw new CustomEmailSignUpFailedException();
 
-        return userJpaRepo.save(userSignupDto.toEntity(passwordEncoder)).getId();
+        return userJpaRepo.save(localUserSignupDto.toEntity(passwordEncoder)).getId();
     }
 
 //    @Transactional
