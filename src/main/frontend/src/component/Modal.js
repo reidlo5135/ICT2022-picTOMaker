@@ -1,5 +1,4 @@
-import React, {Component, useState} from "react";
-import ModalCss from '../css/Modal.css';
+import React, {Component} from "react";
 
 export class Modal extends Component {
     render() {
@@ -11,16 +10,15 @@ export class Modal extends Component {
                     <section>
                         <header>
                             {header}
-                            <button className="close" onClick={close}>
-                                &times;
-                            </button>
                         </header>
-                        <main>{this.props.children}</main>
-                        <footer>
-                            <button className="close" onClick={close}>
-                                close
-                            </button>
-                        </footer>
+                        <main>
+                            <span className={'modal-span'}>
+                                <button className="close" onClick={close}>
+                                    &times;
+                                </button>
+                            </span>
+                            {this.props.children}
+                        </main>
                     </section>
                 ) : null}
             </div>

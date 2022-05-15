@@ -13,6 +13,20 @@
     cursor: pointer;
     border: 0;
 }
+.modal span {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: #ffffff;
+}
+.modal span button {
+    margin-left: auto;
+    font-size: 30px;
+    font-weight: 300;
+    text-align: center;
+    color: #999;
+    background-color: transparent;
+}
 .modal > section {
     width: 90%;
     max-width: 450px;
@@ -22,38 +36,10 @@
     animation: modal-show 0.3s;
     overflow: hidden;
 }
-.modal > section > header {
-    position: relative;
-    padding: 16px 64px 16px 16px;
-    background-color: #f1f1f1;
-    font-weight: 700;
-}
-.modal > section > header button {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 30px;
-    font-size: 21px;
-    font-weight: 700;
-    text-align: center;
-    color: #999;
-    background-color: transparent;
-}
 .modal > section > main {
     padding: 16px;
     border-bottom: 1px solid #dee2e6;
     border-top: 1px solid #dee2e6;
-}
-.modal > section > footer {
-    padding: 12px 16px;
-    text-align: right;
-}
-.modal > section > footer button {
-    padding: 6px 12px;
-    color: #fff;
-    background-color: #6c757d;
-    border-radius: 5px;
-    font-size: 13px;
 }
 .modal.openModal {
     display: flex;
