@@ -4,6 +4,8 @@ import axios from "axios";
 class Callback extends Component{
 
     render() {
+        const url = new URL(window.location.href);
+        let provider;
         const code = new URL(window.location.href).searchParams.get("code");
         console.log('code : ', code);
 
@@ -11,8 +13,20 @@ class Callback extends Component{
             alert('Token is Null');
         }
 
+        if(url.toString().includes('kakao')) {
+            provider = 'kakao';
+        } else if(url.toString().includes('naver')) {
+            provider = 'naver';
+        } else if(url.toString().includes('google')) {
+            provider = 'google';
+        } else {
+            provider = null;
+        }
+
+        console.log('provider : ', provider);
+
         try {
-            const resp = axios.post('/oauth2/token/kakao', {
+            const resp = axios.post(`/oauth2/token/${provider}`, {
                 code
             },{
                 baseURL: 'http://localhost:8080',
@@ -26,7 +40,7 @@ class Callback extends Component{
                 localStorage.setItem("access_token", access_token);
                 localStorage.setItem("refresh_token", refresh_token);
 
-                axios.post('/oauth2/profile/kakao', {
+                axios.post(`/oauth2/profile/${provider}`, {
                     access_token
                 },{
                     baseURL: 'http://localhost:8080',
