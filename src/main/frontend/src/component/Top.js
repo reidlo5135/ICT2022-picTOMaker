@@ -15,8 +15,10 @@ class Top extends Component{
                         <img src={Logo} alt="PictoMaker-Logo" style={{width:"100px",height:"50px"}}/>
                     </Link>
                     <div className='GnbMenu'>
+                        <Link to ='/introduce'>
                         <div>소개</div>
-                        <Link to ='/Select'>
+                        </Link>
+                        <Link to ='/select'>
                             <div>시작하기</div>
                         </Link>
                         <div>도움말</div>

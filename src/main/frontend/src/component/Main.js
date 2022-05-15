@@ -104,7 +104,7 @@ class Main extends Component{
                                         <Link to='/v1/user/'>
                                             <p className={'p_pw'}>비밀번호 찾기</p>
                                         </Link>
-                                        <Link to='/SignUp'>
+                                        <Link to='/signUp'>
                                             <p className={'p_signUp'}>| 회원가입</p>
                                         </Link>
                                     </p>
