@@ -3,8 +3,6 @@ import Logo from "../image/Logo.png";
 import "../css/Top.css"
 import { Link } from "react-router-dom";
 import "../css/font.css"
-import Main from "./Main"
-
 
 class Top extends Component{
     render(){

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
+import '../../css/Callback.css';
 
 class Callback extends Component{
 
@@ -65,7 +66,17 @@ class Callback extends Component{
             alert(err);
             console.error(err);
         }
-        return <div>Loading....</div>;
+        return (
+            <center>
+                <div className='loading'>
+                    <h1>잠시만 기다려주세요...</h1>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </center>
+        );
     }
 }
 
