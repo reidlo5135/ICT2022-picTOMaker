@@ -21,7 +21,9 @@ class Top extends Component{
                         <Link to ='/select'>
                             <div>시작하기</div>
                         </Link>
-                        <div>도움말</div>
+                        <Link to ='/qna'>
+                        <div>문의사항</div>
+                        </Link>
                         <div>커뮤니티</div>
                     </div>
 
