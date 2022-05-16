@@ -40,7 +40,7 @@ class Main extends Component{
         this.props.history.push("/");
     }
 
-    idInputCheck = (event) => {
+    emailInputCheck = (event) => {
         this.setState({email: event.target.value});
     }
 
@@ -92,7 +92,7 @@ class Main extends Component{
                                     <div className='SI-Input'>
                                         <form>
                                             <div className='SI-Form'>
-                                                <input type={'email'} className='form-input' onChange={this.idInputCheck} placeholder="이메일"/>
+                                                <input type={'email'} className='form-input' onChange={this.emailInputCheck} placeholder="이메일"/>
                                                 <input type={'password'} className='form-input' onChange={this.pwInputCheck} placeholder="비밀번호"/>
                                             </div>
                                             <button className='SI-Button' onClick={this.localLogin}>
