@@ -49,20 +49,28 @@ class Main extends Component{
     }
 
     localLogin = () => {
-        try {
-            axios.post('/v1/user/login', {
-                email: this.state.email,
-                password: this.state.password
-            },{
-                baseURL: 'http://localhost:8080',
-                withCredentials: true
-            }).then((response) => {
-                console.log('res data ', response.data);
-                console.log('res data.data ', response.data.data);
-                this.props.history.push("/");
-            });
-        } catch (err) {
-            console.error(err);
+        if(this.state.email === ""){
+            alert('아이디를 입력해주세요.');
+        } else if(this.state.password === "") {
+            alert('비밀번호를 입력해주세요.');
+        }else if(this.state.email === "" && this.state.password === "") {
+            alert('아이디와 비밀번호를 입력해주세요.');
+        } else {
+            try {
+                axios.post('/v1/user/login', {
+                    email: this.state.email,
+                    password: this.state.password
+                },{
+                    baseURL: 'http://localhost:8080',
+                    withCredentials: true
+                }).then((response) => {
+                    console.log('res data ', response.data);
+                    console.log('res data.data ', response.data.data);
+                    this.props.history.push("/");
+                });
+            } catch (err) {
+                console.error(err);
+            }
         }
     }
 

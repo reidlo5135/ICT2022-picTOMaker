@@ -125,8 +125,6 @@ class SignUp extends Component{
                     <div className='SU-Caution'>
                         <p>가입시에 <span>이용약관</span>과 <span>개인정보취급방침</span>에 동의한 것으로 간주합니다.</p>
                     </div>
-
-
                 </div>
             </div>
         );
