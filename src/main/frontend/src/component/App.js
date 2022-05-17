@@ -2,18 +2,20 @@ import React from 'react';
 import '../App.css';
 import {Route, Switch} from 'react-router-dom';
 import Main from "./Main";
-import SelectContent from "./Select-Content";
+import SelectContent from "../Page/SelectPage";
 import SignUp from "./SignUp";
-import Introduce from "./Introduce";
+import Introduce from "../Page/IntroducePage";
 import QnA from "./QnA";
 import Callback from "./oauth2/callback";
 import MyPageContent from "./MyPage-Content";
+import {AnimatePresence} from "framer-motion";
 
 
 export default function App(){
 
     return (
         <div className='App'>
+            <AnimatePresence>
             <Switch>
                 <Route exact path = '/' component={Main}/>
                 <Route path = '/select' component={SelectContent}/>
@@ -25,6 +27,7 @@ export default function App(){
                 <Route path='/oauth2/redirect/naver' component={Callback} />
                 <Route path='/oauth2/redirect/google' component={Callback} />
             </Switch>
-        </div>
+            </AnimatePresence>
+       </div>
     );
 }

@@ -1,3 +1,9 @@
+.introducepage > .Footer{
+    position: relative;
+    top: 4000px;
+}
+
+
 .Introduce{
     width: 1280px; 
     margin: 0 auto;
