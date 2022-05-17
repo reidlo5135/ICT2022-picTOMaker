@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import "aos/dist/aos.css";
 import AOS from "aos";
 import "../css/Introduce.css"
@@ -10,20 +10,24 @@ import Intboximg2 from "../image/Intboximg2.png";
 import Intboximg3 from "../image/Intboximg3.png";
 import Intboximg4 from "../image/Intboximg4.png";
 import Arrow from "../image/arrow.png";
-
+import { motion } from "framer-motion";
 
 
 
 export default function Introduce(){
-    AOS.init = function (param) {
-
-    }
-    AOS.init({
-        easing: 'ease-out-back',
-        duration: 1000
+    useEffect(() => {
+        AOS.init({
+            duration : 1000
+        });
     });
 
     return(
+        <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ ease: "easeOut", duration: 1 }}
+    >
         <div className='Introduce'>
             <div class="wave">
                 <div className='Int-MainTitle'>
@@ -142,6 +146,6 @@ export default function Introduce(){
                 </div>
             </div>
         </div>
-
+        </motion.div>
     );
 }
