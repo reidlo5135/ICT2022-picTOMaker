@@ -6,9 +6,9 @@ import "../css/QnA.css"
 import { Link } from "react-router-dom";
 
 
-const QnA = () => {
-    
-    function semdEmail(e){
+export default function QnA() {
+
+    function sendEmail(e){
         e.preventDefault();
 
         emailjs.sendForm(
@@ -26,27 +26,27 @@ const QnA = () => {
     return(
         <div className='qna-content'>
              <div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
             <Link to='/'>
                 <div className='qna-logo'>
                     <img src={Logo} alt="PictoMaker-Logo" style={{width:"150px",height:"70px"}}/>
                 </div>
             </Link>
 
-            <form onSubmit={semdEmail}>
+            <form onSubmit={sendEmail}>
                 <div className='qna-form'>
                     <div className='qna-left'>
                         <div className='left-input'>
@@ -66,11 +66,7 @@ const QnA = () => {
                     </div>
                     <input type='submit' value='문의하기' className='sendbutton'/>
                 </div>
-                
-                
             </form>
         </div>
-    )
+    );
 }
-
-export default QnA;
