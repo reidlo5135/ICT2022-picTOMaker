@@ -22,6 +22,9 @@ export default function Top(){
                         <div>문의사항</div>
                     </Link>
                     <div>커뮤니티</div>
+                    <div className='profile_bar'>
+                        <img src='' alt='profile-image' />
+                    </div>
                 </div>
             </div>
         </div>
