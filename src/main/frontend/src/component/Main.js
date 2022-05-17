@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import {Modal} from "./Modal";
+import React, {useEffect, useState} from 'react';
+import {useHistory} from "react-router";
+import Modal from "./Modal";
 import "../css/Main-Contents.css";
 import "../css/font.css";
 import "../css/Modal.css";
@@ -11,62 +12,50 @@ import kakaotalk from "../image/kakaotalk.png";
 import naver from "../image/naver.png";
 import google from "../image/google.png";
 import {Link} from "react-router-dom";
+import Top from "./Top";
+import Footer from "./Footer";
+import Best from "./Main-best";
 
 
-class Main extends Component{
+export default function Main(){
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [modalOpen, setModalOpen] = useState(false);
+    const history = useHistory();
 
-    state = {
-        modalOpen: false,
+    const openModal = () => {
+        setModalOpen(true);
+    }
+    const closeModal = () => {
+        setModalOpen(false);
     }
 
-    openModal = () => {
-        this.setState({ modalOpen: true })
-    }
-    closeModal = () => {
-        this.setState({ modalOpen: false })
+    const emailInputCheck = (event) => {
+        setEmail(event.target.value);
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            password: ""
-        };
-        console.log('state : ', this.state);
+    const pwInputCheck = (event) => {
+        setPassword(event.target.value);
     }
 
-    goToMain = () => {
-        console.log(this.props);
-        this.props.history.push("/");
-    }
-
-    emailInputCheck = (event) => {
-        this.setState({email: event.target.value});
-    }
-
-    pwInputCheck = (event) => {
-        this.setState({password: event.target.value});
-    }
-
-    localLogin = () => {
-        if(this.state.email === ""){
+    const localLogin = () => {
+        if(email === ""){
             alert('아이디를 입력해주세요.');
-        } else if(this.state.password === "") {
+        } else if(password === "") {
             alert('비밀번호를 입력해주세요.');
-        }else if(this.state.email === "" && this.state.password === "") {
+        }else if(email === "" && password === "") {
             alert('아이디와 비밀번호를 입력해주세요.');
         } else {
             try {
                 axios.post('/v1/user/login', {
-                    email: this.state.email,
-                    password: this.state.password
+                    email: email,
+                    password: password
                 },{
                     baseURL: 'http://localhost:8080',
                     withCredentials: true
                 }).then((response) => {
                     console.log('res data ', response.data);
                     console.log('res data.data ', response.data.data);
-                    this.props.history.push("/");
                 });
             } catch (err) {
                 console.error(err);
@@ -74,8 +63,9 @@ class Main extends Component{
         }
     }
 
-    render(){
-        return(
+    return(
+        <React.Fragment>
+            <Top />
             <div className='explanation'>
                 <div className='Title'>
                     <div className='MainTitle'>
@@ -87,23 +77,23 @@ class Main extends Component{
                             픽토그램을 제작해 보세요.
                         </div>
                     </div>
-                    <button className='MainButton' onClick={this.openModal}>
+                    <button className='MainButton' onClick={openModal}>
                         무료로 시작
                     </button>
                     <div className={'loginModal'}>
-                        <Modal open={ this.state.modalOpen } close={ this.closeModal }>
+                        <Modal open={modalOpen} close={closeModal}>
                             <div className='SignIn'>
                                 <div className='SI-Content'>
-                                    <span className={'logo_modal'}>
-                                        <img src={Logo} alt="PictoMaker-Logo" />
-                                    </span>
+                                        <span className={'logo_modal'}>
+                                            <img src={Logo} alt="PictoMaker-Logo" />
+                                        </span>
                                     <div className='SI-Input'>
                                         <form>
                                             <div className='SI-Form'>
-                                                <input type={'email'} className='form-input' onChange={this.emailInputCheck} placeholder="이메일"/>
-                                                <input type={'password'} className='form-input' onChange={this.pwInputCheck} placeholder="비밀번호"/>
+                                                <input type={'email'} className='form-input' onChange={emailInputCheck} placeholder="이메일"/>
+                                                <input type={'password'} className='form-input' onChange={pwInputCheck} placeholder="비밀번호"/>
                                             </div>
-                                            <button className='SI-Button' onClick={this.localLogin}>
+                                            <button className='SI-Button' onClick={localLogin}>
                                                 로그인
                                             </button>
                                         </form>
@@ -131,8 +121,8 @@ class Main extends Component{
                     </div>
                 </div>
             </div>
-        );
-    }
+            <Best />
+            <Footer />
+        </React.Fragment>
+    );
 }
-
-export default Main;
