@@ -41,27 +41,29 @@ export default function Callback(){
 
             localStorage.setItem("access_token", access_token);
             localStorage.setItem("refresh_token", refresh_token);
+            localStorage.setItem("provider", provider);
 
             if(response.data.code === 0) {
-                axios.post(`/oauth2/profile/${provider}`, {
-                    access_token
-                },{
-                    baseURL: 'http://localhost:8080',
-                    withCredentials: true
-                }).then((response) => {
-                    console.log('profile res data.data : ', response.data.data);
-
-                    const profile = {
-                        'email': response.data.data.email,
-                        'nickname': response.data.data.nickname,
-                        'profile_image_url': response.data.data.profile_image_url
-                    }
-
-                    console.log('profile res profile : ', profile);
-
-                    localStorage.setItem("profile", JSON.stringify(profile));
-                    history.push("/");
-                });
+                // axios.post(`/oauth2/profile/${provider}`, {
+                //     access_token
+                // },{
+                //     baseURL: 'http://localhost:8080',
+                //     withCredentials: true
+                // }).then((response) => {
+                //     console.log('profile res data.data : ', response.data.data);
+                //
+                //     const profile = {
+                //         'email': response.data.data.email,
+                //         'nickname': response.data.data.nickname,
+                //         'profile_image_url': response.data.data.profile_image_url
+                //     }
+                //
+                //     console.log('profile res profile : ', profile);
+                //
+                //     localStorage.setItem("profile", JSON.stringify(profile));
+                //     history.push("/");
+                // });
+                history.push("/");
             } else {
                 alert("An ERROR OCCURRED" + response.data.code);
             }
