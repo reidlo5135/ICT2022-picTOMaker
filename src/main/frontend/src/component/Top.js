@@ -7,33 +7,10 @@ import axios from "axios";
 
 export default function Top(){
 
-    const access_token = localStorage.getItem('access_token');
-    const provider = localStorage.getItem('provider');
-    const [profile, setProfile] = useState(null);
+    const getProf = localStorage.getItem('profile');
     const [isLogged, setIsLogged] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
 
-    if(access_token) {
-        axios.post(`/oauth2/profile/${provider}`, {
-            access_token
-        },{
-            baseURL: 'http://localhost:8080',
-            withCredentials: true
-        }).then((response) => {
-            console.log('profile res data.data : ', response.data.data);
-
-            const profile = response.data.data;
-
-            console.log('profile res profile : ', profile);
-
-            if(profile) {
-                setProfile(profile);
-                setIsLogged(true);
-            } else {
-                alert("An Error Occurred");
-            }
-        });
-    }
+    console.log('get profile : ', getProf);
 
     return (
         <div className='top'>
@@ -52,8 +29,8 @@ export default function Top(){
                         <div>문의사항</div>
                     </Link>
                     <div>커뮤니티</div>
-                    {isLogged ? <div className={'p-img'}>
-                        <img src={profile.profile_image_url} alt={'p_image'} style={{width:'40px', height:'40px'}} />
+                    {getProf != null ? <div className={'p-img'}>
+                        <img src={getProf.profile_image_url} alt={'p-image'} style={{width:'40px', height:'40px'}} />
                     </div> : <div></div>}
                 </div>
             </div>
