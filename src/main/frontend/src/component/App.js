@@ -16,17 +16,17 @@ export default function App(){
     return (
         <div className='App'>
             <AnimatePresence>
-            <Switch>
-                <Route exact path = '/' component={Main}/>
-                <Route path = '/select' component={SelectContent}/>
-                <Route path = '/signUp' component={SignUp}/>
-                <Route path = '/myPage' component={MyPageContent}/>
-                <Route path = '/introduce' component={Introduce}/>
-                <Route path = '/qna' component={QnA}/>
-                <Route path = '/oauth2/redirect/kakao' component={Callback} />
-                <Route path='/oauth2/redirect/naver' component={Callback} />
-                <Route path='/oauth2/redirect/google' component={Callback} />
-            </Switch>
+                <Switch>
+                    <Route exact path = '/' component={Main}/>
+                    <Route path = '/select' component={SelectContent}/>
+                    <Route path = '/signUp' component={SignUp}/>
+                    <Route path = '/myPage' component={MyPageContent}/>
+                    <Route path = '/introduce' component={Introduce}/>
+                    <Route path = '/qna' component={QnA}/>
+                    <Route path = '/oauth2/redirect/kakao' component={Callback} />
+                    <Route path='/oauth2/redirect/naver' component={Callback} />
+                    <Route path='/oauth2/redirect/google' component={Callback} />
+                </Switch>
             </AnimatePresence>
        </div>
     );
