@@ -109,7 +109,7 @@
 }
 
 /*form 애니메이션*/
-.qna-content { animation: 0.6s ease-in-out loadEffect2; }
+.qna-form { animation: 0.6s ease-in-out loadEffect2; }
 
 @keyframes loadEffect2 {
     0%{

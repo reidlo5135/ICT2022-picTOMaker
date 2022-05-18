@@ -24,8 +24,9 @@ export default function QnA() {
     }
 
     return(
+        <div className='qnapage'>
         <div className='qna-content'>
-             <div class="firefly"></div>
+        <div class="firefly"></div>
         <div class="firefly"></div>
         <div class="firefly"></div>
         <div class="firefly"></div>
@@ -67,6 +68,7 @@ export default function QnA() {
                     <input type='submit' value='문의하기' className='sendbutton'/>
                 </div>
             </form>
+        </div>
         </div>
     );
 }
