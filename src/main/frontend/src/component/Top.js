@@ -1,16 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Logo from "../image/Logo.png";
 import "../css/Top.css"
 import { Link } from "react-router-dom";
 import "../css/font.css"
-import axios from "axios";
 
 export default function Top(){
-
-    const getProf = localStorage.getItem('profile');
-    const [isLogged, setIsLogged] = useState(false);
-
-    console.log('get profile : ', getProf);
 
     return (
         <div className='top'>
@@ -29,9 +23,6 @@ export default function Top(){
                         <div>문의사항</div>
                     </Link>
                     <div>커뮤니티</div>
-                    {getProf != null ? <div className={'p-img'}>
-                        <img src={getProf.profile_image_url} alt={'p-image'} style={{width:'40px', height:'40px'}} />
-                    </div> : <div></div>}
                 </div>
             </div>
         </div>
