@@ -41,19 +41,10 @@ export default function Callback(){
 
             localStorage.setItem("access_token", access_token);
             localStorage.setItem("refresh_token", refresh_token);
+            localStorage.setItem("provider", provider);
 
             if(response.data.code === 0) {
-                axios.post(`/oauth2/profile/${provider}`, {
-                    access_token
-                },{
-                    baseURL: 'http://localhost:8080',
-                    withCredentials: true
-                }).then((response) => {
-                    console.log('profile res data.data : ', response.data.data);
-
-                    localStorage.setItem("profile", JSON.stringify(response.data.data));
-                    history.push("/");
-                });
+                history.push("/");
             } else {
                 alert("An ERROR OCCURRED" + response.data.code);
             }
