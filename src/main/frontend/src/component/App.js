@@ -7,7 +7,7 @@ import SignUp from "./SignUp";
 import Introduce from "../Page/IntroducePage";
 import QnA from "./QnA";
 import Callback from "./oauth2/callback";
-import MyPageContent from "./MyPage-Content";
+import MyPageContent from "../Page/MyPage";
 import {AnimatePresence} from "framer-motion";
 
 
