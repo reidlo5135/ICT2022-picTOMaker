@@ -26,6 +26,7 @@ export default function Top(){
                     <div>커뮤니티</div>
                     <Profile />
                 </div>
+                
             </div>
         </div>
     );
