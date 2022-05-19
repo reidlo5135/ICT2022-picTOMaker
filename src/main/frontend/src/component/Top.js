@@ -7,11 +7,13 @@ import Profile from "./Profile";
 
 export default function Top(){
 
+    const access_token = localStorage.getItem('access_token');
+
     return (
         <div className='top'>
             <div className='topMenu'>
                 <Link to='/'>
-                    <img src={Logo} alt="PictoMaker-Logo" style={{width:"100px",height:"50px"}}/>
+                    <img src={Logo} className='img_logo' alt="PictoMaker-Logo" style={{width:"100px",height:"50px"}}/>
                 </Link>
                 <div className='GnbMenu'>
                     <Link to ='/introduce'>
@@ -24,9 +26,8 @@ export default function Top(){
                         <div>문의사항</div>
                     </Link>
                     <div>커뮤니티</div>
-                    <Profile />
+                    {access_token === null ? <div></div> : <Profile />}
                 </div>
-                
             </div>
         </div>
     );
