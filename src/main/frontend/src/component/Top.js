@@ -3,6 +3,7 @@ import Logo from "../image/Logo.png";
 import "../css/Top.css"
 import { Link } from "react-router-dom";
 import "../css/font.css"
+import Profile from "./Profile";
 
 export default function Top(){
 
@@ -23,7 +24,9 @@ export default function Top(){
                         <div>문의사항</div>
                     </Link>
                     <div>커뮤니티</div>
+                    <Profile />
                 </div>
+                
             </div>
         </div>
     );

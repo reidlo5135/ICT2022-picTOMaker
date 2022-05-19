@@ -1,3 +1,10 @@
+.qna-link{
+    text-decoration: none;
+}
+
+.qna-link:visited {
+    color : black;
+  }
 
 .MyPage-Content{
     width: 1280px;
@@ -47,6 +54,10 @@
     line-height: 150%;
     margin: 30% 0 0 10%;
     font-weight: bold;
+}
+
+.MyPage-Menu p{
+    cursor: pointer;
 }
 
 .MyPage-footer{

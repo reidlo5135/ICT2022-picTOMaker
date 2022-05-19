@@ -38,4 +38,7 @@ img{
 	margin-left: 30%;
 }
 
-.LoginMenu{}
+/*사용자 프로필*/
+.topMenu .p-img{
+	margin-left: 450px;
+}
