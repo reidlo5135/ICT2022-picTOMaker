@@ -15,7 +15,7 @@ import {Link} from "react-router-dom";
 import Top from "./Top";
 import Footer from "./Footer";
 import Best from "./Main-best";
-import Profile from "./Profile";
+
 
 
 export default function Main(){
@@ -67,7 +67,6 @@ export default function Main(){
     return(
         <React.Fragment>
             <Top />
-            <Profile />
             <div className='explanation'>
                 <div className='Title'>
                     <div className='MainTitle'>

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import '../css/Top.css'
 
 const Profile = () => {
     const access_token = localStorage.getItem('access_token');
