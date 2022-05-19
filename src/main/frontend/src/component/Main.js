@@ -16,8 +16,6 @@ import Top from "./Top";
 import Footer from "./Footer";
 import Best from "./Main-best";
 
-
-
 export default function Main(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
