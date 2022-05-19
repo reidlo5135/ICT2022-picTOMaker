@@ -7,5 +7,4 @@ import java.util.Optional;
 
 public interface BaseBoardRepo extends JpaRepository<BaseBoard, Long> {
 
-    Optional<BaseBoard> findByNickName(String nickname);
 }
