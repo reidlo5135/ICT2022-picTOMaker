@@ -42,9 +42,11 @@ const Profile = () => {
 
     if(isLogged) {
         return (
-            <div className={'p-img'}>
-                <img src={profileImage} alt={'p-image'} style={{width:'40px', height:'40px'}} />
-                <div>{nickName}님 환영합니다!</div>
+            <div>
+                <section>
+                    <img src={profileImage} className='img_profile' alt={'p-image'} />
+                    {nickName}님 환영합니다!
+                </section>
             </div>
         );
     }
