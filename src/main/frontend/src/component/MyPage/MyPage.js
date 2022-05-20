@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import MyPic from './MyPage-Mypic';
 import MyPageProfile from './MyPage-profile';
 import SetSocialImg from "../oauth2/SetSocialImg";
+import Logout from "../Logout";
 
 export default function MyPageContent(){
     const [mode, setMode] = useState('profile');
@@ -96,7 +97,7 @@ export default function MyPageContent(){
                 </div>
 
                 <div className='MyPage-footer'>
-                    <span>로그아웃</span>
+                    <span onClick={Logout}>로그아웃</span>
                     <span>|</span>
                     <span>개인정보처리방침</span>
                     <span>|</span>
