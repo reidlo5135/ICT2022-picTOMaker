@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import emailjs from '@emailjs/browser';
+import {useHistory} from "react-router";
 import Logo from "../image/Logo.png";
 import "../css/SignUp.css"
 import "../css/font.css"
@@ -7,6 +7,7 @@ import axios from "axios";
 
 export default function SignUp(){
 
+    const history = useHistory();
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [nickName, setNickName] = useState("");
@@ -52,17 +53,6 @@ export default function SignUp(){
         }
     }
 
-    const sendEmail = (event) => {
-        event.preventDefault();
-
-        emailjs.sendForm('service_nz8k095', 'template_xh1rx6r', email)
-            .then((response) => {
-                console.log(response);
-            }, (error) => {
-                console.error(error.text);
-            });
-    }
-
     const localSignUp = () => {
         try {
             axios.post('/v1/user/signUp', {
@@ -76,6 +66,8 @@ export default function SignUp(){
             }).then((response) => {
                 console.log('res data ', response.data);
                 console.log('res data.data ', response.data.data);
+
+                history.push("/");
             });
         } catch (err) {
             console.error(err);
