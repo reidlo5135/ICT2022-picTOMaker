@@ -5,17 +5,41 @@ import "../../css/font.css"
 import { Link } from "react-router-dom";
 import MyPic from './MyPage-Mypic';
 import MyPageProfile from './MyPage-profile';
+import SetSocialImg from "../oauth2/SetSocialImg";
 
 export default function MyPageContent(){
-    const [mode, setMode] = useState("profile");
+    const [mode, setMode] = useState('profile');
+
+    const getProfile = localStorage.getItem('profile');
+
+    const [email, setEmail] = useState();
+    const [nickName, setNickName] = useState();
+    const [profileImage, setProfileImage] = useState();
 
     function confirmMode(Paramode) {
         setMode(Paramode);
     }
 
+    const getProf = () => {
+        try {
+            const jsonProf = JSON.parse(getProfile);
+            console.log('jProf : ', jsonProf);
+
+            setEmail(jsonProf.email);
+            setNickName(jsonProf.nickname);
+            setProfileImage(jsonProf.profile_image_url);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     useEffect(()=> {
-        console.log(mode)
-    },[mode])
+        console.log('mode : ', mode);
+    },[mode]);
+
+    useEffect(() => {
+        getProf();
+    }, []);
 
     function conditionRender(conditionMode) {
         if (conditionMode === "profile") {
@@ -28,8 +52,6 @@ export default function MyPageContent(){
 
     }
 
-    
-    
     return (
         <div className='MyPage-Content'>
             <div className='MyPage-Left'>
@@ -41,14 +63,16 @@ export default function MyPageContent(){
 
                 <div className='Profile'>
                     <div className='Pro-Img'>
+                        <img className={'p-img'} src={profileImage} alt='p-image' />
+                        <SetSocialImg />
                     </div>
 
                     <div className='Pro-Txt'>
                         <div className='Pro-Title'>
-                            홍길동님, 반갑습니다!
+                            {nickName}님, 반갑습니다!
                         </div>
                         <div className='Pro-Email'>
-                            ehdrh321@naver.com
+                            {email}
                         </div>
                     </div>
                 </div>

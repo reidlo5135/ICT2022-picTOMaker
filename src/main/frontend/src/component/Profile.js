@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import '../css/Top.css'
+import {Link} from "react-router-dom";
 
 const Profile = () => {
     const access_token = localStorage.getItem('access_token');
@@ -29,6 +30,8 @@ const Profile = () => {
                 setEmail(response.data.data.email);
                 setNickName(response.data.data.nickname);
                 setProfileImage(response.data.data.profile_image_url);
+
+                localStorage.setItem("profile", JSON.stringify(response.data.data));
             });
         } catch (err) {
             console.error(err);
@@ -42,12 +45,14 @@ const Profile = () => {
 
     if(isLogged) {
         return (
-            <div>
-                <section>
-                    <img src={profileImage} className='img_profile' alt={'p-image'} />
-                    {nickName}님 환영합니다!
-                </section>
-            </div>
+            <Link to='/myPage'>
+                <div>
+                    <section>
+                        <img src={profileImage} className='img_profile' alt={'p-image'} />
+                        {nickName}님 환영합니다!
+                    </section>
+                </div>
+            </Link>
         );
     }
 }

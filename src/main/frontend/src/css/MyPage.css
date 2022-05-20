@@ -27,13 +27,24 @@
     height: 100%;
 }
 /*MyPage-Left 프로필*/
-.Pro-Img{
+
+.Pro-Img {
+    position: relative;
+}
+
+.p-img{
     width: 150px;
     height: 150px;
-    margin: 0 auto;
+    margin-left: 30%;
     background-color: #d6d6d6;
     border-radius: 50%;
 }
+.s-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
 
 .Pro-Txt{
     margin: 5%;
@@ -52,7 +63,7 @@
 
 .MyPage-Menu{
     line-height: 150%;
-    margin: 30% 0 0 10%;
+    margin: 15% 0 0 10%;
     font-weight: bold;
 }
 
