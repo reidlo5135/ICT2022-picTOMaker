@@ -7,51 +7,26 @@ import axios from "axios";
 
 export default function SignUp(){
 
-    const history = useHistory();
-    const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
-    const [nickName, setNickName] = useState("");
-    const [password, setPassword] = useState("");
-    const [checkPassword, setCheckPassword] = useState("");
+    const [inputValue, setInputValue] = useState({
+        email: '',
+        name: '',
+        nickName: '',
+        password: '',
+    });
 
-    const emailInputCheck = (event) => {
-        setEmail(event.target.value);
-    }
+    const {email, name, nickName, password } = inputValue;
 
-    const nameInputCheck = (event) => {
-        setName(event.target.value);
-    }
+    const isValidEmail = email.includes('@') && email.includes('.');
+    const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+    const isValidPassword = password.length >= 8 && specialLetter >= 1;
 
-    const nickNameInputCheck = (event) => {
-        setNickName(event.target.value);
-    }
-
-    const pwInputCheck = (event) => {
-        setPassword(event.target.value);
-    }
-
-    const checkPwInputCheck = (event) => {
-        setCheckPassword(event.target.value);
-    }
-
-    const pwCheck = (event) => {
-        const password = pwCheck(event);
-        const checkPassword = checkPwInputCheck(event);
-
-        if(password.length < 1 || checkPassword.length < 1) {
-            this.setState({
-                checkPassword: '패스워드 입력',
-            });
-        } else if(password === checkPassword) {
-            this.setState({
-                checkPassword: '일치',
-            });
-        } else {
-            this.setState({
-                checkPassword: '불일치',
-            });
-        }
-    }
+    const handleInput = event => {
+        const { name, value } = event.target;
+        setInputValue({
+            ...inputValue,
+            [name]: value,
+        });
+    };
 
     const localSignUp = () => {
         try {
@@ -66,13 +41,34 @@ export default function SignUp(){
             }).then((response) => {
                 console.log('res data ', response.data);
                 console.log('res data.data ', response.data.data);
-
-                history.push("/");
             });
         } catch (err) {
             console.error(err);
         }
     }
+
+    const [checkBoxActive, setCheckBoxActive] = useState(false);
+    const isCheckBoxClicked = () => {
+        setCheckBoxActive(!checkBoxActive);
+    };
+
+    const isValidInput = email.length >= 1 && name.length >= 1 && nickName.length >= 1;
+
+    const getIsActive =
+        isValidEmail && isValidPassword && isValidInput && checkBoxActive === true;
+
+    const handleButtonValid = () => {
+        if (
+            !isValidInput ||
+            !isValidEmail ||
+            !isValidPassword ||
+            !isCheckBoxClicked()
+        ) {
+            alert('please fill in the blanks');
+        } else {
+            localSignUp();
+        }
+    };
 
     return (
         <div className='SignUp'>
@@ -84,32 +80,35 @@ export default function SignUp(){
                     <form>
                         <div className='SU-Form'>
                             <div className='Label-txt'>이메일</div>
-                            <input type={'email'} onChange={emailInputCheck} placeholder="exmaple@picTOMaker.com"/>
+                            <input type={'email'} onChange={handleInput} placeholder="exmaple@picTOMaker.com"/>
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>이름</div>
-                            <input type={'text'} onChange={nickNameInputCheck} placeholder="EX) 김픽토"/>
+                            <input type={'text'} onChange={handleInput} placeholder="EX) 김픽토"/>
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>닉네임</div>
-                            <input type={'text'} onChange={nameInputCheck} placeholder="EX) 픽토메이커"/>
+                            <input type={'text'} onChange={handleInput} placeholder="EX) 픽토메이커"/>
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>비밀번호</div>
-                            <input type={'password'} onChange={pwInputCheck} placeholder="*******"/>
+                            <input type={'password'} onChange={handleInput} placeholder="*******"/>
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>비밀번호 확인</div>
-                            <input type={'password'} onChange={pwCheck} placeholder="*******"/>
+                            <input type={'password'} onChange={handleInput} placeholder="*******"/>
                         </div>
 
-                        <button className='SU-Button' onClick={localSignUp}>
+                        <button className={getIsActive ? 'signUpButtonAction' : 'signUpButtonInaction'} onClick={handleButtonValid}>
                             가입완료
                         </button>
                     </form>
                 </div>
                 <div className='SU-Caution'>
-                    <p>가입시에 <span>이용약관</span>과 <span>개인정보취급방침</span>에 동의한 것으로 간주합니다.</p>
+                    <p>
+                        <input type={'checkbox'} className={'checkbox'} onClick={isCheckBoxClicked} />
+                        가입시에 <span>이용약관</span>과 <span>개인정보취급방침</span>에 동의한 것으로 간주합니다.
+                    </p>
                 </div>
             </div>
         </div>
