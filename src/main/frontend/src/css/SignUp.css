@@ -43,7 +43,7 @@
     outline: solid 1.5px #979797;
 }
 
-.SU-Button{
+.signUpButtonAction{
     width: 411px;
     height: 42px;
     position: relative;
@@ -58,7 +58,7 @@
     margin-left:2%;
 }
 
-.SU-Button:hover {
+.signUpButtonAction:hover {
     letter-spacing: 2px;
     transform: scale(1.05);
     cursor: pointer;
