@@ -29,14 +29,20 @@ public class LocalUserController {
     @ApiOperation(value = "로그인", notes = "Login By Email")
     @PostMapping(value = "/login")
     public SingleResult<BaseAccessToken> loginAndCreateToken(@ApiParam(value = "Login Req DTO", required = true) @RequestBody LocalUserLoginRequestDto localUserLoginRequestDto) {
-
+        SingleResult<BaseAccessToken> result = null;
         log.info("Local User Login Controller localReqDto : " + localUserLoginRequestDto.getEmail() + ", " + localUserLoginRequestDto.getPassword());
-        BaseAccessToken baseAccessToken = userService.login(localUserLoginRequestDto);
 
-        SingleResult<BaseAccessToken> result = responseService.getSingleResult(baseAccessToken);
+        try {
+            BaseAccessToken baseAccessToken = userService.login(localUserLoginRequestDto);
 
-        log.info("Local User Controller login Token : " + baseAccessToken);
-        log.info("Local User Controller login result : " + result);
+            result = responseService.getSingleResult(baseAccessToken);
+
+            log.info("Local User Controller login Token : " + baseAccessToken);
+            log.info("Local User Controller login result : " + result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
 
         return result;
     }
@@ -44,12 +50,18 @@ public class LocalUserController {
     @ApiOperation(value = "회원 등록", notes = "회원 가입")
     @PostMapping(value = "/signUp")
     public SingleResult<Long> save(@ApiParam(value = "Sign Req DTO", required = true) @RequestBody LocalUserSignUpRequestDto localUserSignUpRequestDto) {
-
+        SingleResult<Long> result = null;
         log.info("Local User Sign Controller localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
-        Long signUpId = userService.signUp(localUserSignUpRequestDto);
 
-        SingleResult<Long> result = responseService.getSingleResult(signUpId);
-        log.info("Local User Controller result : " + result);
+        try {
+            Long signUpId = userService.signUp(localUserSignUpRequestDto);
+
+            result = responseService.getSingleResult(signUpId);
+            log.info("Local User Controller result : " + result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
 
         return result;
     }
