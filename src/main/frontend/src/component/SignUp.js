@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {useHistory} from "react-router";
+import { Link } from "react-router-dom";
 import Logo from "../image/Logo.png";
 import "../css/SignUp.css"
 import "../css/font.css"
@@ -73,9 +73,11 @@ export default function SignUp(){
     return (
         <div className='SignUp'>
             <div className='SU-Content'>
-                <div className='SU-Logo'>
-                    <img src={Logo} alt="PictoMaker-Logo" style={{width:"278px",height:"142px"}}/>
-                </div>
+                <Link to='/'>
+                    <div className='SU-Logo'>
+                        <img src={Logo} alt="PictoMaker-Logo" style={{width:"278px",height:"142px"}}/>
+                    </div>
+                </Link>
                 <div className='SU-Input'>
                     <form>
                         <div className='SU-Form'>
