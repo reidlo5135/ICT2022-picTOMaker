@@ -64,6 +64,27 @@
     cursor: pointer;
 }
 
+.signUpButtonInAction{
+    width: 411px;
+    height: 42px;
+    position: relative;
+    border-radius: 13px;
+    border: #ffffff solid 1px;
+    color: #ffffff;
+    background: linear-gradient(to left,#282c34, #ffffff);
+    text-decoration: none;
+    transition: 0.25s;
+    cursor: pointer;
+    margin-top:4%;
+    margin-left:2%;
+}
+
+.signUpButtonInAction:hover {
+    letter-spacing: 2px;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
 .SU-Caution{
     width: 100%;
     margin: 0 50% 0 60%;

@@ -57,7 +57,7 @@ public class LocalUserController {
             Long signUpId = userService.signUp(localUserSignUpRequestDto);
 
             result = responseService.getSingleResult(signUpId);
-            log.info("Local User Controller result : " + result);
+            log.info("Local User Controller signUp result : " + result);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
