@@ -1,12 +1,9 @@
 import React from "react";
 
-const Logout = async () => {
-
+export default function Logout() {
     try {
         localStorage.clear();
     } catch (err) {
         console.error(err);
     }
 }
-
-export default Logout;
