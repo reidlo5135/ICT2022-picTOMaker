@@ -30,15 +30,15 @@ public class LocalUserController {
     @PostMapping(value = "/login")
     public SingleResult<BaseAccessToken> loginAndCreateToken(@ApiParam(value = "Login Req DTO", required = true) @RequestBody LocalUserLoginRequestDto localUserLoginRequestDto) {
         SingleResult<BaseAccessToken> result = null;
-        log.info("Local User Login Controller localReqDto : " + localUserLoginRequestDto.getEmail() + ", " + localUserLoginRequestDto.getPassword());
+        log.info("Local User Controller Login localReqDto : " + localUserLoginRequestDto.getEmail() + ", " + localUserLoginRequestDto.getPassword());
 
         try {
             BaseAccessToken baseAccessToken = userService.login(localUserLoginRequestDto);
 
             result = responseService.getSingleResult(baseAccessToken);
 
-            log.info("Local User Controller login Token : " + baseAccessToken);
-            log.info("Local User Controller login result : " + result);
+            log.info("Local User Controller Login Token : " + baseAccessToken);
+            log.info("Local User Controller Login result : " + result);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
@@ -51,13 +51,13 @@ public class LocalUserController {
     @PostMapping(value = "/signUp")
     public SingleResult<Long> save(@ApiParam(value = "Sign Req DTO", required = true) @RequestBody LocalUserSignUpRequestDto localUserSignUpRequestDto) {
         SingleResult<Long> result = null;
-        log.info("Local User Sign Controller localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
+        log.info("Local Use Controller Sign localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
 
         try {
             Long signUpId = userService.signUp(localUserSignUpRequestDto);
 
             result = responseService.getSingleResult(signUpId);
-            log.info("Local User Controller signUp result : " + result);
+            log.info("Local User Controller Sign result : " + result);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());

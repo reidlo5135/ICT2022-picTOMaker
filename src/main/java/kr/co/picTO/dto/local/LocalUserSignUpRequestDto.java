@@ -26,7 +26,7 @@ public class LocalUserSignUpRequestDto {
     public BaseLocalUser toEntity(PasswordEncoder passwordEncoder) {
         String provider = null;
 
-        if(email.equals("picTOadmin@picTOMaker.com") && email != null) {
+        if((email.equals("picTOadmin@picTOMaker.com") && email != null) && (password.equals("admin@1234") && password != null)) {
             provider = BaseAuthRole.ADMIN.toString();
             log.info("Local User SRUDTO provider : " + provider);
 
