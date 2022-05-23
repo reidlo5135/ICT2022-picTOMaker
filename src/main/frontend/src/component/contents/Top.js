@@ -1,9 +1,9 @@
 import React from 'react';
-import Logo from "../image/Logo.png";
-import "../css/Top.css"
+import Logo from "../../image/Logo.png";
+import "../../css/Top.css"
 import { Link } from "react-router-dom";
-import "../css/font.css"
-import Profile from "./MyPage/Profile";
+import "../../css/font.css"
+import Profile from "../user/Profile";
 
 export default function Top(){
 

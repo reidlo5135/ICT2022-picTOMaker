@@ -1,8 +1,8 @@
 import React from 'react';
 import emailjs from 'emailjs-com';
-import Logo from "../image/Logo.png";
-import "../App.css"
-import "../css/QnA.css"
+import Logo from "../../image/Logo.png";
+import "../../App.css"
+import "../../css/QnA.css"
 import { Link } from "react-router-dom";
 
 
