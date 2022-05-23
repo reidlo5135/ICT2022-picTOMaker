@@ -1,26 +1,25 @@
 package kr.co.picTO.config.security;
 
+import kr.co.picTO.advice.exception.CustomAccessDeniedHandler;
+import kr.co.picTO.advice.exception.RestAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        securedEnabled = true,
-        jsr250Enabled = true,
-        prePostEnabled = true
-)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private final LocalUserJwtProvider localUserJwtProvider;
 
     @Bean
     @Override
@@ -37,14 +36,36 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
                 .and()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .csrf().disable()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                    .formLogin().disable()
+                    .httpBasic().disable()
+                    .addFilterBefore(new LocalUserJwtAuthenticationFilter(localUserJwtProvider), UsernamePasswordAuthenticationFilter.class)
+                    .exceptionHandling()
+                        .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                        .accessDeniedHandler(new CustomAccessDeniedHandler())
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
-                    .antMatchers(HttpMethod.POST, "/v1/sign/signup", "/v1/sign/login", "/v1/sign/reissue", "/v1/sign/social/**").permitAll()
-                    .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
-                    .antMatchers("/oauth2/**", "/", "/social/login", "/social/login/**", "/account/**", "/api/**").permitAll()
+                        .antMatchers("/",
+                            "/error",
+                            "/favicon.ico",
+                            "/**/*.png",
+                            "/**/*.gif",
+                            "/**/*.svg",
+                            "/**/*.jpg",
+                            "/**/*.html",
+                            "/**/*.css",
+                            "/**/*.js",
+                            "/**/*.json",
+                            "/**/*.otf",
+                            "/**/content.js.map",
+                            "/requestProvider.js.map").permitAll()
+                .antMatchers(HttpMethod.POST, "/v1/user/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
+                .antMatchers("/v1/board/**").authenticated()
+                .antMatchers("/v1/admin/**").hasRole("ADMIN")
+                    .antMatchers("/oauth2/**", "/oauth2/redirect/**", "/", "/social/login", "/social/login/**").permitAll()
                     .antMatchers("/index").permitAll()
                     .mvcMatchers("/v3/api-docs/**",
                         "/configuration/**",
@@ -54,11 +75,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()
                 .and()
                     .logout()
-                        .logoutSuccessUrl("/logout")
-                        .deleteCookies()
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .deleteCookies("JSESSIONID", "remember-me")
                 .and()
-                    .formLogin().disable()
-                    .oauth2Login().userInfoEndpoint();
+                    .oauth2Login()
+                    .userInfoEndpoint();
 
     }
 }

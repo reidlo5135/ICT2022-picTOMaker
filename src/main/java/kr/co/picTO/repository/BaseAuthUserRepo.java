@@ -1,6 +1,6 @@
 package kr.co.picTO.repository;
 
-import kr.co.picTO.entity.oauth.BaseAuthUser;
+import kr.co.picTO.entity.oauth2.BaseAuthUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

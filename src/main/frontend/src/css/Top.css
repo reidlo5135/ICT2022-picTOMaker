@@ -1,0 +1,49 @@
+.topMenu{
+	margin: 0 auto;
+	width:1280px;
+	display: flex;
+	border-bottom: solid 1px #F2F2F2;
+}
+
+.topMenu .img_logo {
+	margin-top: 10px;
+}
+
+
+.topMenu div{
+	font-family:"Noto Sans KR";
+	display: inline-block;
+	font-size: 14px;
+	font-weight: bold;
+	color: #191919;
+	line-height:5;
+	padding-right: 10px;
+	cursor: pointer;
+	margin-left: 50px;
+}
+
+.img_profile {
+	border-radius: 50px;
+	width: 40px;
+	height: 40px;
+}
+
+.topMenu section {
+	margin-left: 50px;
+}
+
+.Top{
+	width:1280px;
+	margin: 0 auto;
+}
+
+.Top .logo img{
+	display:block;
+	margin: 24px auto 33px;
+	width:174px;
+	height:41px;
+}
+
+.Sign{
+	margin-left: 30%;
+}
