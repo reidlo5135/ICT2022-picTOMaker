@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { Link, useHistory } from "react-router-dom";
 import Logo from "../../image/Logo.png";
 import "../../css/SignUp.css"
@@ -61,11 +61,12 @@ export default function SignUp(){
                     baseURL: 'http://localhost:8080',
                     withCredentials: true
                 }).then((response) => {
+                    console.log('response : ', response.data);
                     alert(nickName + ' 픽토메이커님 환영합니다!');
                     history.push("/");
                 });
             } catch (err) {
-                console.error(err);
+                console.error('err : ', err.response);
             }
         }
     };
