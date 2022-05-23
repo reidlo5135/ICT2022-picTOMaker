@@ -12,9 +12,9 @@ import kakaotalk from "../image/kakaotalk.png";
 import naver from "../image/naver.png";
 import google from "../image/google.png";
 import {Link} from "react-router-dom";
-import Top from "./Top";
-import Footer from "./Footer";
-import Best from "./Main-best";
+import Top from "./contents/Top";
+import Footer from "./contents/Footer";
+import Best from "./contents/Main-best";
 
 export default function Main(){
     const [email, setEmail] = useState("");
