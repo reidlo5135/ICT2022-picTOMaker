@@ -20,7 +20,6 @@ export default function Main(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
-    const history = useHistory();
 
     const openModal = () => {
         setModalOpen(true);
