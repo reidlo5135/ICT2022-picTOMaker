@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import Logo from "../../image/Logo.png";
 import "../../css/MyPage.css"
 import "../../css/font.css"
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import MyPic from './MyPage-Mypic';
 import MyPageProfile from './MyPage-profile';
 import GetProfile from "./GetProfile";
