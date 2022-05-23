@@ -5,8 +5,8 @@ import "../../css/font.css"
 import {Link, useHistory} from "react-router-dom";
 import MyPic from './MyPage-Mypic';
 import MyPageProfile from './MyPage-profile';
-import GetProfile from "./GetProfile";
-import Logout from "../Logout";
+import GetProfile from "../user/GetProfile";
+import Logout from "../user/Logout";
 
 export default function MyPageContent(){
     const [mode, setMode] = useState('profile');
@@ -27,7 +27,6 @@ export default function MyPageContent(){
         } else if (conditionMode === "sharepic") {
             return <h1>SharePic</h1>
         }
-
     }
 
     return (
