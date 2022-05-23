@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class GoogleProfile {
     private String email;
     private String name;
-    private String imgUrl;
+    private String picture;
 }
