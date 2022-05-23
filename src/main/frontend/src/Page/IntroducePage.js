@@ -1,8 +1,8 @@
 import React from "react";
 import "../css/Introduce.css";
-import Top from "../component/Top"
-import Introduce from "../component/Introduce"
-import Footer from "../component/Footer"
+import Top from "../component/contents/Top"
+import Introduce from "../component/contents/Introduce"
+import Footer from "../component/contents/Footer"
 
 function SelectPage() {
   return (
