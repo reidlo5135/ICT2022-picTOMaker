@@ -3,11 +3,11 @@ import '../App.css';
 import {Route, Switch} from 'react-router-dom';
 import Main from "./Main";
 import SelectContent from "../Page/SelectPage";
-import SignUp from "./SignUp";
+import SignUp from "./user/SignUp";
 import Introduce from "../Page/IntroducePage";
-import QnA from "./QnA";
+import QnA from "./contents/QnA";
 import Callback from "./oauth2/callback";
-import MyPageContent from "./MyPage/MyPage";
+import MyPageContent from "./myPage/MyPage";
 import {AnimatePresence} from "framer-motion";
 
 
