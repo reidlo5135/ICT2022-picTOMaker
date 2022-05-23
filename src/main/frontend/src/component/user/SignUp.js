@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from "react-router-dom";
-import Logo from "../image/Logo.png";
-import "../css/SignUp.css"
-import "../css/font.css"
+import Logo from "../../image/Logo.png";
+import "../../css/SignUp.css"
+import "../../css/font.css"
 import axios from "axios";
 
 export default function SignUp(){
