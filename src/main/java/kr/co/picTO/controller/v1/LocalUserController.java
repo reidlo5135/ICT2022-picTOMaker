@@ -11,6 +11,10 @@ import kr.co.picTO.service.local.LocalUserService;
 import kr.co.picTO.service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,42 +32,58 @@ public class LocalUserController {
 
     @ApiOperation(value = "로그인", notes = "Login By Email")
     @PostMapping(value = "/login")
-    public SingleResult<BaseAccessToken> loginAndCreateToken(@ApiParam(value = "Login Req DTO", required = true) @RequestBody LocalUserLoginRequestDto localUserLoginRequestDto) {
-        SingleResult<BaseAccessToken> result = null;
+    public ResponseEntity<SingleResult<BaseAccessToken>> loginAndCreateToken(@ApiParam(value = "Login Req DTO", required = true) @RequestBody LocalUserLoginRequestDto localUserLoginRequestDto) {
+        ResponseEntity<SingleResult<BaseAccessToken>> ett = null;
         log.info("Local User Controller Login localReqDto : " + localUserLoginRequestDto.getEmail() + ", " + localUserLoginRequestDto.getPassword());
 
         try {
             BaseAccessToken baseAccessToken = userService.login(localUserLoginRequestDto);
 
-            result = responseService.getSingleResult(baseAccessToken);
+            SingleResult<BaseAccessToken> result = responseService.getSingleResult(baseAccessToken);
 
             log.info("Local User Controller Login Token : " + baseAccessToken);
-            log.info("Local User Controller Login result : " + result);
+            log.info("Local User Controller Login result getC : " + result.getCode());
+            log.info("Local User Controller Login result getD : " + result.getData());
+            log.info("Local User Controller Login result getM : " + result.getMsg());
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            log.info("Local Controller SingUp ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
         }
 
-        return result;
+        return ett;
     }
 
     @ApiOperation(value = "회원 등록", notes = "회원 가입")
     @PostMapping(value = "/signUp")
-    public SingleResult<Long> save(@ApiParam(value = "Sign Req DTO", required = true) @RequestBody LocalUserSignUpRequestDto localUserSignUpRequestDto) {
-        SingleResult<Long> result = null;
+    public ResponseEntity<SingleResult<Long>> save(@ApiParam(value = "Sign Req DTO", required = true) @RequestBody LocalUserSignUpRequestDto localUserSignUpRequestDto) {
+        ResponseEntity<SingleResult<Long>> ett = null;
         log.info("Local Use Controller Sign localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
 
         try {
             Long signUpId = userService.signUp(localUserSignUpRequestDto);
 
-            result = responseService.getSingleResult(signUpId);
-            log.info("Local User Controller Sign result : " + result);
+            SingleResult<Long> result = responseService.getSingleResult(signUpId);
+            log.info("Local User Controller Sign result getC : " + result.getCode());
+            log.info("Local User Controller Sign result getD : " + result.getData());
+            log.info("Local User Controller Sign result getM : " + result.getMsg());
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            log.info("Local Controller SingUp ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
         }
 
-        return result;
+        return ett;
     }
 
 //    @ApiOperation(value = "Access, Refresh Token Reissue", notes = "Token Reissue")
