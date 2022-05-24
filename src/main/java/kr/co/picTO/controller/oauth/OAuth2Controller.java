@@ -37,7 +37,9 @@ public class OAuth2Controller {
             log.info("Prov Controller prov : " + provider);
 
             SingleResult<BaseAccessToken> result = responseService.getSingleResult(baseAccessToken);
-            log.info("Prov Controller token result : " + result);
+            log.info("Prov Controller token result getC : " + result.getCode());
+            log.info("Prov Controller token result getD : " + result.getData());
+            log.info("Prov Controller token result getM : " + result.getMsg());
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -69,7 +71,9 @@ public class OAuth2Controller {
             }
 
             SingleResult result = responseService.getSingleResult(profileDTO);
-            log.info("Prov Controller result GET DATA : " + result.getData());
+            log.info("Prov Controller prof result getC : " + result.getCode());
+            log.info("Prov Controller prof result getD : " + result.getData());
+            log.info("Prov Controller prof result getM : " + result.getMsg());
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);

@@ -36,11 +36,13 @@ export default function SignUp(){
 
     const getIsActive = isValidEmail && isValidPassword && isValidInput && isEqualsPassword === true;
 
-    const handleButtonValid = () => {
+    const handleButtonValid = (e) => {
+        e.preventDefault();
         console.log('isInput : ', isValidInput);
         console.log('isEmail : ', isValidEmail);
         console.log('isPassword : ', isValidPassword);
         console.log('isEqualsPassword : ', isEqualsPassword);
+        console.log('Input : ', inputValue);
 
         if (!isValidInput) {
             alert('빈 칸을 모두 채워주십시오.');
@@ -62,8 +64,14 @@ export default function SignUp(){
                     withCredentials: true
                 }).then((response) => {
                     console.log('response : ', response.data);
-                    alert(nickName + ' 픽토메이커님 환영합니다!');
-                    history.push("/");
+                    console.log('response : ', response.data.data);
+
+                    if(response.data.code === 0){
+                        alert(nickName + ' 픽토메이커님 환영합니다!');
+                        history.push("/");
+                    } else {
+                        alert('An Error Occurred code : ' + response.data.code);
+                    }
                 });
             } catch (err) {
                 console.error('err : ', err.response);
