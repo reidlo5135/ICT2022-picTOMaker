@@ -38,12 +38,6 @@ export default function SignUp(){
 
     const handleButtonValid = (e) => {
         e.preventDefault();
-        console.log('isInput : ', isValidInput);
-        console.log('isEmail : ', isValidEmail);
-        console.log('isPassword : ', isValidPassword);
-        console.log('isEqualsPassword : ', isEqualsPassword);
-        console.log('Input : ', inputValue);
-
         if (!isValidInput) {
             alert('빈 칸을 모두 채워주십시오.');
         } else if(!isValidEmail) {
@@ -103,11 +97,11 @@ export default function SignUp(){
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>비밀번호</div>
-                            <input type={'password'} name={'password'} onChange={handleInput} placeholder="*******"/>
+                            <input type={'password'} name={'password'} onChange={handleInput} placeholder="특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요."/>
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>비밀번호 확인</div>
-                            <input type={'password'} name={'confirmPassword'} onChange={handleInput} placeholder="*******"/>
+                            <input type={'password'} name={'confirmPassword'} onChange={handleInput} placeholder="한 번 더 입력해주세요."/>
                         </div>
 
                         <button className={getIsActive ? 'signUpButtonAction' : 'signUpButtonInAction'} onClick={handleButtonValid}>
