@@ -8,6 +8,7 @@ import Introduce from "../Page/IntroducePage";
 import QnA from "./contents/QnA";
 import Callback from "./oauth2/callback";
 import MyPageContent from "./myPage/MyPage";
+import PoseWebStudio from "./studio/PoseWebStudio"
 import {AnimatePresence} from "framer-motion";
 
 
@@ -26,6 +27,7 @@ export default function App(){
                     <Route path = '/oauth2/redirect/kakao' component={Callback} />
                     <Route path='/oauth2/redirect/naver' component={Callback} />
                     <Route path='/oauth2/redirect/google' component={Callback} />
+                    <Route path='/studio/pose/web' component={PoseWebStudio}/>
                 </Switch>
             </AnimatePresence>
        </div>
