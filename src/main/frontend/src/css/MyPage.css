@@ -28,10 +28,6 @@
 }
 /*MyPage-Left 프로필*/
 
-.Pro-Img {
-    position: relative;
-}
-
 .p-img{
     width: 150px;
     height: 150px;
@@ -40,9 +36,11 @@
     border-radius: 50%;
 }
 .s-img {
+    position: relative;
     width: 35px;
     height: 35px;
     border-radius: 50%;
+    right: 33px;
 }
 
 
