@@ -58,8 +58,10 @@ export default function TestPose(props) {
 
     return (
         <>
-            <img src={testImage} id="test-image"></img>
-            <canvas ref={canvasRef} id="draw-canvas" width="640px" height="480px"></canvas>
+            <div className="test-pose">
+                <img src={testImage} id="test-image"></img>
+                <canvas ref={canvasRef} id="draw-canvas" width="640px" height="480px"></canvas>
+            </div>
         </>
     )
 }
