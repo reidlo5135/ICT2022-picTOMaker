@@ -17,13 +17,15 @@ export function drawLine (startX,startY,endX,endY,context,width,height,thick,col
 }
 
 export function drawHead(x,y,context,width,height,thick,color) {
+    const weight = 25;
+
     let convertStartX = (Math.round(width*x) / 10) * 10;
     let convertStartY = Math.round(height*y);
 
     context.strokeStyle= "#" + color;
     context.lineCap = "round";
     context.lineJoin = "round";
-    context.lineWidth = parseInt(thick) + 20;
+    context.lineWidth = parseInt(thick) + weight;
     context.beginPath();
     context.moveTo(convertStartX,convertStartY);
     context.lineTo(convertStartX,convertStartY);
