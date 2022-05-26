@@ -5,6 +5,8 @@
   "dependencies": {
     "@babel/core": "^7.17.10",
     "@emailjs/browser": "^3.6.2",
+    "@mediapipe/camera_utils": "^0.3.1640029074",
+    "@mediapipe/pose": "^0.5.1635988162",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.6",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.4",
