@@ -22,10 +22,10 @@ export default function SignUp(){
     const isValidEmail = email.includes('@') && email.includes('.');
     const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
     const isValidPassword = password.length >= 8 && specialLetter >= 1;
-    const isEqualsPassword = password === confirmPassword;
+    const isEqualsPassword = (password === confirmPassword);
 
-    const handleInput = event => {
-        const { name, value } = event.target;
+    const handleInput = e => {
+        const { name, value } = e.target;
         setInputValue({
             ...inputValue,
             [name]: value,
@@ -41,7 +41,7 @@ export default function SignUp(){
         if (!isValidInput) {
             alert('빈 칸을 모두 채워주십시오.');
         } else if(!isValidEmail) {
-            alert('유호하지 않은 이메일입니다.');
+            alert('유호하지 않은 이메일 형식입니다.');
         } else if(!isValidPassword) {
             alert('비밀번호는 특수문자를 포함하여 8자 이상이어야합니다.');
         }else if(!isEqualsPassword) {
