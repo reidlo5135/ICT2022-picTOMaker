@@ -37,4 +37,8 @@ public class BaseAccessToken extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String provider;
+
+    public void refreshToken(String refresh_token) {
+        this.refresh_token = refresh_token;
+    }
 }
