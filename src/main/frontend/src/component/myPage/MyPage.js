@@ -59,7 +59,7 @@ export default function MyPageContent(){
                 </div>
 
                 <div className='MyPage-footer'>
-                    <span onClick={Logout}>로그아웃</span>
+                    <p onClick={Logout}>로그아웃</p>
                     <span>|</span>
                     <span>개인정보처리방침</span>
                     <span>|</span>
@@ -69,6 +69,5 @@ export default function MyPageContent(){
             </div>
             {conditionRender(mode)}
             </div>
-
     );
 }
