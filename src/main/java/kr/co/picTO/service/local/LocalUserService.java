@@ -9,7 +9,6 @@ import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.dto.local.LocalUserRequestDto;
 import kr.co.picTO.dto.local.LocalUserResponseDto;
 import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
-import kr.co.picTO.dto.token.LocalTokenDto;
 import kr.co.picTO.entity.local.BaseLocalUser;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
 import kr.co.picTO.repository.BaseLocalUserRepo;
@@ -62,10 +61,10 @@ public class LocalUserService {
     }
 
     @Transactional
-    public BaseAccessToken reissue(BaseAccessToken bat) throws Exception{
+    public BaseAccessToken reissue(BaseAccessToken bat) {
 
         if (!localUserJwtProvider.validationToken(bat.getRefresh_token())) {
-            throw new IllegalAccessException();
+            throw new CustomRefreshTokenException();
         }
 
         String accessToken = bat.getAccess_token();
@@ -73,15 +72,12 @@ public class LocalUserService {
 
         log.info("Local User SVC reissue accToken, authen : " + accessToken + ", " + authentication);
 
-        BaseLocalUser user = userJpaRepo.findById(Long.parseLong(authentication.getName()))
+        BaseLocalUser user = userJpaRepo.findByEmail(authentication.getName())
                 .orElseThrow(CustomUserNotFoundException::new);
 
-        BaseAccessToken originToken = tokenRepo.findByKey(user.getId()).orElseThrow(NullPointerException::new);
+        BaseAccessToken originToken = tokenRepo.findById(user.getId()).orElseThrow(CustomRefreshTokenException::new);
 
         log.info("Local User SVC reissue user, refreshToken : " + user + ", " + originToken);
-
-        if (!originToken.equals(bat.getRefresh_token()))
-            throw new NullPointerException();
 
         BaseAccessToken newRefreshToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getRoles());
         bat.refreshToken(newRefreshToken.toString());
