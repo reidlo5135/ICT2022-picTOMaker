@@ -1,6 +1,6 @@
 
-import "../../css/stuido/topbar.css"
-import "../../css/stuido/posewebstudio.css"
+import "../../../css/stuido/topbar.css"
+import "../../../css/stuido/posewebstudio.css"
 
 import {useRef,useEffect,useState} from 'react';
 import * as cam from '@mediapipe/camera_utils'
