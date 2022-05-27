@@ -5,9 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface BaseTokenRepo extends JpaRepository<BaseAccessToken, String> {
+public interface BaseTokenRepo extends JpaRepository<BaseAccessToken, Long> {
 
-    Optional<BaseAccessToken> findByKey(Long id);
-
-    Long update(BaseAccessToken bat);
+    Optional<BaseAccessToken> findById(Long id);
 }

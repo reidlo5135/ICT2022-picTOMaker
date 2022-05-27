@@ -3,7 +3,6 @@ package kr.co.picTO.config.security;
 import io.jsonwebtoken.*;
 import kr.co.picTO.advice.exception.CustomAuthenticationEntryPointException;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
-import kr.co.picTO.entity.oauth2.BaseAuthRole;
 import kr.co.picTO.repository.BaseTokenRepo;
 import kr.co.picTO.service.local.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
