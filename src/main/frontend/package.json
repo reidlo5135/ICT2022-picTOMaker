@@ -31,6 +31,7 @@
     "eslint": "^8.15.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-webpack-plugin": "^3.1.1",
+    "fabric": "^5.2.1",
     "file-loader": "^6.2.0",
     "framer-motion": "^6.3.3",
     "fs-extra": "^10.0.0",
