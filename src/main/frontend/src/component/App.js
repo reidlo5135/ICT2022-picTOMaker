@@ -8,7 +8,7 @@ import Introduce from "../Page/IntroducePage";
 import QnA from "./contents/QnA";
 import Callback from "./oauth2/callback";
 import MyPageContent from "./myPage/MyPage";
-import PoseWebStudio from "./studio/PoseWebStudio"
+import PoseWebStudio from "./studio/poseweb/PoseWebStudio"
 import {AnimatePresence} from "framer-motion";
 
 
