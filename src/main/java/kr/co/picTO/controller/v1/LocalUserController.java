@@ -89,7 +89,7 @@ public class LocalUserController {
 
     @ApiOperation(value = "Access, Refresh Token Reissue", notes = "Token Reissue")
     @PostMapping(value = "/reissue")
-    public ResponseEntity<SingleResult<BaseAccessToken>> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody LocalTokenDto tokenDto) throws Exception {
+    public ResponseEntity<SingleResult<BaseAccessToken>> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody LocalTokenDto tokenDto) {
         ResponseEntity<SingleResult<BaseAccessToken>> ett = null;
         log.info("Local Controller Reissue tokenDto : ", tokenDto.getAccessToken() + ", " + tokenDto.getRefreshToken());
 
