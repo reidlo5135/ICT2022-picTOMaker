@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 @Component
 public class AopConfiguration {
 
-    @Pointcut("execution(* kr.co.picTO.controller..*.*(..))")
+    @Pointcut("execution(* kr.co.picTO.controller..*.*(..)), execution(* kr.co.picTO.service..*.*(..))")
     private void cut() {}
 
     @Before("cut()")
@@ -35,6 +35,8 @@ public class AopConfiguration {
 
     @AfterReturning(value = "cut()", returning = "returnObj")
     public void afterRun(JoinPoint joinPoint, Object returnObj) {
-        log.info("Return Obj returnObj : " + returnObj);
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        Method method = methodSignature.getMethod();
+        log.info("Return Obj returnObj : " + method.getName() + ", " + returnObj);
     }
 }
