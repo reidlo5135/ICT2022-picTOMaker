@@ -40,7 +40,6 @@
     width: 150px;
     height: 150px;
     margin-left: 30%;
-    border-radius: 50%;
 }
 
 .s-img {
@@ -48,6 +47,13 @@
     width: 35px;
     height: 35px;
     border-radius: 50%;
+    right: 33px;
+}
+
+.s-img-local {
+    position: relative;
+    width: 35px;
+    height: 35px;
     right: 33px;
 }
 
