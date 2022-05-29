@@ -21,6 +21,9 @@ public class BaseAccessToken extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
+    private Long user_id;
+
+    @Column(nullable = false)
     private String access_token;
 
     @Column(nullable = false)

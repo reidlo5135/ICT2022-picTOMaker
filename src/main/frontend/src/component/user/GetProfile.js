@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import SetSocialImg from "../oauth2/SetSocialImg";
+import Human from '../../image/Human.png';
 import "../../css/MyPage.css";
 import "../../css/font.css";
 
@@ -18,7 +19,11 @@ const GetProfile = () => {
 
             setEmail(jsonProf.email);
             setNickName(jsonProf.nickname);
-            setProfileImage(jsonProf.profile_image_url);
+            if(jsonProf.profile_image_url === null) {
+                setProfileImage(null);
+            } else {
+                setProfileImage(jsonProf.profile_image_url);
+            }
         } catch (err) {
             console.error(err);
         }
@@ -31,7 +36,10 @@ const GetProfile = () => {
     return (
         <div className='Profile'>
             <div className='Pro-Img'>
-                <img className={'p-img'} src={profileImage} alt='p-image' />
+                {profileImage === null ?
+                    <img src={Human} className='p-img-local' alt={'p-image'} /> :
+                    <img src={profileImage} className='p-img' alt={'p-image'} />
+                }
                 <SetSocialImg />
             </div>
 
