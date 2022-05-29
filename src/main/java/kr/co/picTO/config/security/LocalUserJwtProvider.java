@@ -38,7 +38,7 @@ public class LocalUserJwtProvider {
         log.info("Local Jwt Prov : " + secretKey);
     }
 
-    public BaseAccessToken createToken(String userPk, List<String> roles) {
+    public BaseAccessToken createToken(String userPk, Long userId, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(String.valueOf(userPk));
         claims.put(ROLES, roles);
 
@@ -65,6 +65,7 @@ public class LocalUserJwtProvider {
         log.info("Local Jwt Prov accessToken : " + accessToken);
 
         BaseAccessToken baseAccessToken = BaseAccessToken.builder()
+                .user_id(userId)
                 .access_token(accessToken)
                 .expires_in(expire_access.getTime())
                 .token_type("bearer")
