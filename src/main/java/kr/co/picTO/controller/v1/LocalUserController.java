@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
+import kr.co.picTO.dto.social.ProfileDTO;
+import kr.co.picTO.dto.token.LocalTokenDto;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
 import kr.co.picTO.model.response.SingleResult;
 import kr.co.picTO.service.local.LocalUserService;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @Api(tags = {"1. Local User"})
 @Log4j2
@@ -86,13 +90,57 @@ public class LocalUserController {
         return ett;
     }
 
-//    @ApiOperation(value = "Access, Refresh Token Reissue", notes = "Token Reissue")
-//    @PostMapping(value = "/reissue")
-//    public SingleResult<TokenDto> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody TokenRequestDto tokenRequestDto) {
-//
-//        SingleResult<TokenDto> result = responseService.getSingleResult(userService.reissue(tokenRequestDto));
-//        log.info("Local User Controller reissue result : " + result);
-//
-//        return result;
-//    }
+    @PostMapping(value = "/profile")
+    public ResponseEntity<SingleResult<ProfileDTO>> getProfile(@RequestBody Map<String, String> access_token) {
+        ResponseEntity<SingleResult<ProfileDTO>> ett = null;
+        log.info("Local Controller access_token : " + access_token.get("access_token"));
+
+        try {
+            ProfileDTO profileDTO = userService.getProfileLocal(access_token.get("access_token"));
+            log.info("Local Controller pDTO : " + profileDTO);
+
+            SingleResult result = responseService.getSingleResult(profileDTO);
+            log.info("Local Controller prof result getC : " + result.getCode());
+            log.info("Local Controller prof result getD : " + result.getData());
+            log.info("Local Controller prof result getM : " + result.getMsg());
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            log.info("Local Controller ett : " + ett);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
+        return ett;
+    }
+
+    @ApiOperation(value = "Access, Refresh Token Reissue", notes = "Token Reissue")
+    @PostMapping(value = "/reissue")
+    public ResponseEntity<SingleResult<BaseAccessToken>> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody LocalTokenDto tokenDto) {
+        ResponseEntity<SingleResult<BaseAccessToken>> ett = null;
+        log.info("Local Controller Reissue tokenDto : ", tokenDto.getAccessToken() + ", " + tokenDto.getRefreshToken());
+
+        try {
+            BaseAccessToken bat = tokenDto.toEntity(tokenDto.getAccessToken(), tokenDto.getRefreshToken());
+            SingleResult<BaseAccessToken> result = responseService.getSingleResult(userService.reissue(bat));
+
+            log.info("Local Controller Reissue bat : " + bat.getAccess_token() + ", " + bat.getRefresh_token());
+            log.info("Local User Controller Reissue result getC : " + result.getCode());
+            log.info("Local User Controller Reissue result getD : " + result.getData());
+            log.info("Local User Controller Reissue result getM : " + result.getMsg());
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            log.info("Local Controller SingUp ett : " + ett);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
+
+        return ett;
+    }
 }
