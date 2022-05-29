@@ -3,7 +3,6 @@ package kr.co.picTO.config.security;
 import io.jsonwebtoken.*;
 import kr.co.picTO.advice.exception.CustomAuthenticationEntryPointException;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
-import kr.co.picTO.entity.oauth2.BaseAuthRole;
 import kr.co.picTO.repository.BaseTokenRepo;
 import kr.co.picTO.service.local.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +38,7 @@ public class LocalUserJwtProvider {
         log.info("Local Jwt Prov : " + secretKey);
     }
 
-    public BaseAccessToken createToken(String userPk, List<String> roles) {
+    public BaseAccessToken createToken(String userPk, Long userId, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(String.valueOf(userPk));
         claims.put(ROLES, roles);
 
@@ -66,6 +65,7 @@ public class LocalUserJwtProvider {
         log.info("Local Jwt Prov accessToken : " + accessToken);
 
         BaseAccessToken baseAccessToken = BaseAccessToken.builder()
+                .user_id(userId)
                 .access_token(accessToken)
                 .expires_in(expire_access.getTime())
                 .token_type("bearer")

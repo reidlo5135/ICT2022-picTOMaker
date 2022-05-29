@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import '../../css/Top.css'
 import {Link} from "react-router-dom";
+import Human from '../../image/Human.png';
 
 const Profile = () => {
     const access_token = localStorage.getItem('access_token');
@@ -12,7 +13,7 @@ const Profile = () => {
     const [nickName, setNickName] = useState();
     const [profileImage, setProfileImage] = useState();
 
-    const getProf = async () => {
+    const getOAuthProf = async () => {
         try {
             await axios.post(`/oauth2/profile/${provider}`, {
                 access_token
@@ -20,12 +21,11 @@ const Profile = () => {
                 baseURL: 'http://localhost:8080',
                 withCredentials: true
             }).then((response) => {
-                console.log('profile res data.data : ', response.data.data);
-
-                console.log('get profile : ', response.data.data);
-                console.log('get profile : ', response.data.data.email);
-                console.log('get profile : ', response.data.data.nickname);
-                console.log('get profile : ', response.data.data.profile_image_url);
+                console.log('OAuth profile res data.data : ', response.data.data);
+                console.log('OAuth get profile : ', response.data.data);
+                console.log('OAuth get profile email : ', response.data.data.email);
+                console.log('OAuth get profile nickname : ', response.data.data.nickname);
+                console.log('OAuth get profile profile_image_url : ', response.data.data.profile_image_url);
 
                 setEmail(response.data.data.email);
                 setNickName(response.data.data.nickname);
@@ -38,9 +38,43 @@ const Profile = () => {
         }
     }
 
+    const getLocalProf = async () => {
+        try {
+            await axios.post('/v1/user/profile', {
+                access_token
+            },{
+                baseURL: 'http://localhost:8080',
+                withCredentials: true
+            }).then((response) => {
+                console.log('Local profile res data.data : ', response.data.data);
+                console.log('Local get profile : ', response.data.data);
+                console.log('Local get profile email : ', response.data.data.email);
+                console.log('Local get profile nickname : ', response.data.data.nickname);
+                console.log('Local get profile profile_image_url : ', response.data.data.profile_image_url);
+
+                setEmail(response.data.data.email);
+                setNickName(response.data.data.nickname);
+
+                if(response.data.data.profile_image_url === null){
+                    setProfileImage(null);
+                }
+
+                localStorage.setItem("profile", JSON.stringify(response.data.data));
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     useEffect(() => {
-        getProf();
-        setIsLogged(true);
+        if(provider != 'LOCAL') {
+            getOAuthProf();
+        } else if(provider === 'LOCAL') {
+            getLocalProf();
+        }
+        if(access_token != null) {
+            setIsLogged(true);
+        }
     }, []);
 
     if(isLogged) {
@@ -48,11 +82,18 @@ const Profile = () => {
             <Link to='/myPage'>
                 <div>
                     <section>
-                        <img src={profileImage} className='img_profile' alt={'p-image'} />
+                        {profileImage === null ?
+                            <img src={Human} className='img_profile' alt={'p-image'} /> :
+                            <img src={profileImage} className='img_profile' alt={'p-image'} />
+                        }
                         {nickName}님 환영합니다!
                     </section>
                 </div>
             </Link>
+        );
+    } else {
+        return(
+            <div></div>
         );
     }
 }

@@ -2,6 +2,7 @@ import React from "react";
 import kakaotalk from '../../image/kakaotalk.png';
 import naver from '../../image/naver.png';
 import google from '../../image/google.png';
+import Logo from '../../image/Logo.png';
 
 export default function SetSocialImg () {
 
@@ -18,6 +19,10 @@ export default function SetSocialImg () {
     } else if (provider === 'google') {
         return (
             <img className='s-img' src={google} alt='s-image'/>
+        );
+    } else if (provider === 'LOCAL') {
+        return (
+            <img className='s-img' src={Logo} alt='s-image'/>
         );
     } else {
         return (
