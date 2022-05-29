@@ -20,10 +20,6 @@ export default function SetSocialImg () {
         return (
             <img className='s-img' src={google} alt='s-image'/>
         );
-    } else if (provider === 'LOCAL') {
-        return (
-            <img className='s-img' src={Logo} alt='s-image'/>
-        );
     } else {
         return (
             <div></div>
