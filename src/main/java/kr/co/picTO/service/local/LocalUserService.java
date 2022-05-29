@@ -9,6 +9,7 @@ import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.dto.local.LocalUserRequestDto;
 import kr.co.picTO.dto.local.LocalUserResponseDto;
 import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
+import kr.co.picTO.dto.social.ProfileDTO;
 import kr.co.picTO.entity.local.BaseLocalUser;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
 import kr.co.picTO.repository.BaseLocalUserRepo;
@@ -44,7 +45,7 @@ public class LocalUserService {
         if (!passwordEncoder.matches(localUserLoginRequestDto.getPassword(), user.getPassword()))
             throw new CustomEmailLoginFailedException();
 
-        BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getRoles());
+        BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
 
         log.info("Local User SVC Login bAToken : " + baseAccessToken);
 
@@ -58,6 +59,22 @@ public class LocalUserService {
             throw new CustomEmailSignUpFailedException();
 
         return userJpaRepo.save(localUserSignUpRequestDto.toEntity(passwordEncoder)).getId();
+    }
+
+    @Transactional
+    public ProfileDTO getProfileLocal(String access_token) {
+        log.info("Local User SVC Profile access_token : " + access_token);
+
+        BaseAccessToken bat = tokenRepo.findByAccessToken(access_token).orElseThrow(CustomUserNotFoundException::new);
+        BaseLocalUser user = userJpaRepo.findById(bat.getUser_id()).orElseThrow(CustomUserNotFoundException::new);
+
+        log.info("Local User SVC Profile bat isNull : " + (bat == null));
+        log.info("Local User SVC Profile user isNull : " + (user == null));
+
+        ProfileDTO profileDTO = new ProfileDTO(user.getEmail(), user.getNickName(), user.getProfile_image_url());
+        log.info("Local User SVC Profile pDTO isNull : " + (profileDTO == null));
+
+        return profileDTO;
     }
 
     @Transactional
@@ -79,7 +96,7 @@ public class LocalUserService {
 
         log.info("Local User SVC reissue user, refreshToken : " + user + ", " + originToken);
 
-        BaseAccessToken newRefreshToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getRoles());
+        BaseAccessToken newRefreshToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
         bat.refreshToken(newRefreshToken.toString());
 
         log.info("Local User SVC reissue newRefreshToken " + newRefreshToken);
