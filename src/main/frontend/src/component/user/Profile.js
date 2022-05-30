@@ -74,6 +74,7 @@ const Profile = () => {
         }
         if(access_token != null) {
             setIsLogged(true);
+            localStorage.setItem("isLogged", isLogged.toString());
         }
     }, []);
 
