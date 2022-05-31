@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import Logo from "../../image/Logo.png";
-import "../../css/MyPage.css"
-import "../../css/font.css"
+import "../../css/MyPage.css";
+import "../../css/font.css";
 import {Link} from "react-router-dom";
 import MyPic from './MyPage-Mypic';
 import MyPageProfile from './MyPage-profile';
@@ -59,7 +59,7 @@ export default function MyPageContent(){
                 </div>
 
                 <div className='MyPage-footer'>
-                    <p onClick={Logout}>로그아웃</p>
+                    <span onClick={Logout}>로그아웃</span>
                     <span>|</span>
                     <span>개인정보처리방침</span>
                     <span>|</span>
