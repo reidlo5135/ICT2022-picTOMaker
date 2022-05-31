@@ -1,0 +1,19 @@
+cloud:
+  aws:
+    credentials:
+      instance-profile: true
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: ict2022-picto-bucket
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+  config:
+    activate:
+      on-profile: s3

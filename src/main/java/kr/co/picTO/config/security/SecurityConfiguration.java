@@ -61,7 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                             "/**/*.otf",
                             "/**/content.js.map",
                             "/requestProvider.js.map").permitAll()
-                .antMatchers(HttpMethod.POST, "/v1/user/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/v1/user/**", "/api/v1/upload").permitAll()
                 .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
                 .antMatchers("/v1/board/**").authenticated()
                 .antMatchers("/v1/admin/**").hasRole("ADMIN")
