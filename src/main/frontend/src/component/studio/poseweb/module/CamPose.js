@@ -1,11 +1,24 @@
 import {Pose} from '@mediapipe/pose'
 import * as cam from '@mediapipe/camera_utils'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState,forwardRef,useImperativeHandle } from 'react'
 import {drawHead, drawLine} from '../util/DrawingUtils'
 
 // Static Image를 통해 인체 모델을 테스트합니다.
-export default function CamPose(props) {
-    let [result, setResult] = useState(null);
+const CamPose = forwardRef((props,ref)=> {
+
+    useImperativeHandle(ref,()=> ({
+        capture() {
+            console.log(result)
+            window.localStorage.setItem("pictogram_result",JSON.stringify(result));
+
+            // const item = window.localStorage.getItem("pictogram_result")
+            // console.log(JSON.parse(item));
+            document.location.href = "/edit"
+        }
+    }))
+
+
+    let result = null;
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
 
@@ -103,4 +116,6 @@ export default function CamPose(props) {
             </div>
         </>
     )
-}
+})
+
+export default CamPose;
