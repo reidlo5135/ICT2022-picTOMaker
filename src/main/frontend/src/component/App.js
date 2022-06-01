@@ -9,6 +9,7 @@ import QnA from "./contents/QnA";
 import Callback from "./oauth2/callback";
 import MyPageContent from "./myPage/MyPage";
 import PoseWebStudio from "./studio/poseweb/PoseWebStudio"
+import EditTool from './studio/edittool/EditTool';
 import {AnimatePresence} from "framer-motion";
 
 
@@ -28,6 +29,7 @@ export default function App(){
                     <Route path='/oauth2/redirect/naver' component={Callback} />
                     <Route path='/oauth2/redirect/google' component={Callback} />
                     <Route path='/studio/pose/web' component={PoseWebStudio}/>
+                    <Route path='/edit' component={EditTool}/>
                 </Switch>
             </AnimatePresence>
        </div>
