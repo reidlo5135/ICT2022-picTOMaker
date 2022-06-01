@@ -22,7 +22,6 @@ const Profile = () => {
                 withCredentials: true
             }).then((response) => {
                 console.log('OAuth profile res data.data : ', response.data.data);
-                console.log('OAuth get profile : ', response.data.data);
                 console.log('OAuth get profile email : ', response.data.data.email);
                 console.log('OAuth get profile nickname : ', response.data.data.nickname);
                 console.log('OAuth get profile profile_image_url : ', response.data.data.profile_image_url);
@@ -47,7 +46,6 @@ const Profile = () => {
                 withCredentials: true
             }).then((response) => {
                 console.log('Local profile res data.data : ', response.data.data);
-                console.log('Local get profile : ', response.data.data);
                 console.log('Local get profile email : ', response.data.data.email);
                 console.log('Local get profile nickname : ', response.data.data.nickname);
                 console.log('Local get profile profile_image_url : ', response.data.data.profile_image_url);
@@ -71,9 +69,12 @@ const Profile = () => {
             getOAuthProf();
         } else if(provider === 'LOCAL') {
             getLocalProf();
+        } else if(provider == null) {
+            setIsLogged(false);
         }
         if(access_token != null) {
             setIsLogged(true);
+            localStorage.setItem("isLogged", isLogged.toString());
         }
     }, []);
 

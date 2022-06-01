@@ -3,6 +3,7 @@ package kr.co.picTO.controller.v1;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
 import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
 import kr.co.picTO.dto.social.ProfileDTO;
@@ -136,7 +137,7 @@ public class LocalUserController {
 
             ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
             log.info("Local Controller SingUp ett : " + ett);
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
         }
