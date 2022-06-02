@@ -20,6 +20,7 @@ export default function Main(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
+    const history = useHistory();
 
     const openModal = () => {
         setModalOpen(true);
@@ -36,7 +37,8 @@ export default function Main(){
         setPassword(event.target.value);
     }
 
-    const localLogin = () => {
+    const localLogin = (e) => {
+        e.preventDefault();
         if(email === ""){
             alert('아이디를 입력해주세요.');
         } else if(password === "") {
@@ -54,6 +56,21 @@ export default function Main(){
                 }).then((response) => {
                     console.log('res data ', response.data);
                     console.log('res data.data ', response.data.data);
+
+                    if(response.data.code === 0){
+                        alert('어서오세요, ' + email + ' 픽토메이커님!');
+                        const access_token = response.data.data.access_token;
+                        const refresh_token = response.data.data.refresh_token;
+
+                        localStorage.setItem("access_token", access_token);
+                        localStorage.setItem("refresh_token", refresh_token);
+                        localStorage.setItem("provider", "LOCAL");
+
+                        closeModal();
+                        history.push("/");
+                    } else {
+                        alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
+                    }
                 });
             } catch (err) {
                 console.error(err);

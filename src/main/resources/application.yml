@@ -1,6 +1,6 @@
 spring:
   profiles:
-    include: private, local
+    include: private, local, s3, credentials
 
   messages:
     basename: i18n/exception

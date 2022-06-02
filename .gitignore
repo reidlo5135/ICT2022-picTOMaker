@@ -37,7 +37,9 @@ out/
 .vscode/
 
 src/main/resources/application-private.yml
+src/main/resources/application-credentials.yml
 application-private.yml
+application-credentials.yml
 env.js
 
 # dependencies

@@ -2,17 +2,21 @@ package kr.co.picTO.service.local;
 
 import kr.co.picTO.advice.exception.CustomEmailLoginFailedException;
 import kr.co.picTO.advice.exception.CustomEmailSignUpFailedException;
+import kr.co.picTO.advice.exception.CustomRefreshTokenException;
 import kr.co.picTO.advice.exception.CustomUserNotFoundException;
 import kr.co.picTO.config.security.LocalUserJwtProvider;
 import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.dto.local.LocalUserRequestDto;
 import kr.co.picTO.dto.local.LocalUserResponseDto;
 import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
+import kr.co.picTO.dto.social.ProfileDTO;
 import kr.co.picTO.entity.local.BaseLocalUser;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
 import kr.co.picTO.repository.BaseLocalUserRepo;
+import kr.co.picTO.repository.BaseTokenRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +30,7 @@ import java.util.stream.Collectors;
 public class LocalUserService {
 
     private final BaseLocalUserRepo userJpaRepo;
+    private final BaseTokenRepo tokenRepo;
     private final PasswordEncoder passwordEncoder;
     private final LocalUserJwtProvider localUserJwtProvider;
 
@@ -40,7 +45,7 @@ public class LocalUserService {
         if (!passwordEncoder.matches(localUserLoginRequestDto.getPassword(), user.getPassword()))
             throw new CustomEmailLoginFailedException();
 
-        BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getRoles());
+        BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
 
         log.info("Local User SVC Login bAToken : " + baseAccessToken);
 
@@ -56,38 +61,48 @@ public class LocalUserService {
         return userJpaRepo.save(localUserSignUpRequestDto.toEntity(passwordEncoder)).getId();
     }
 
-//    @Transactional
-//    public TokenDto reissue(TokenRequestDto tokenRequestDto) {
-//
-//        if (!localUserJwtProvider.validationToken(tokenRequestDto.getRefreshToken())) {
-//            throw new CRefreshTokenException();
-//        }
-//
-//        String accessToken = tokenRequestDto.getAccessToken();
-//        Authentication authentication = localUserJwtProvider.getAuthentication(accessToken);
-//
-//        log.info("Local User SVC accToken, authen : " + accessToken + ", " + authentication);
-//
-//        BaseLocalUser user = userJpaRepo.findById(Long.parseLong(authentication.getName()))
-//                .orElseThrow(CUserNotFoundException::new);
-//
-//        BaseLocalRefreshToken refreshToken = baseRefreshTokenRepo.findByKey(user.getId())
-//                .orElseThrow(CRefreshTokenException::new);
-//
-//        log.info("Local User SVC user, refreshToken : " + user + ", " + refreshToken);
-//
-//        if (!refreshToken.getToken().equals(tokenRequestDto.getRefreshToken()))
-//            throw new CRefreshTokenException();
-//
-//        TokenDto newCreatedToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getRoles());
-//
-//        BaseLocalRefreshToken updateRefreshToken = refreshToken.updateToken(newCreatedToken.getRefreshToken());
-//        baseRefreshTokenRepo.save(updateRefreshToken);
-//
-//        log.info("Local User SVC newCreatedToken, updateRefreshToken : " + newCreatedToken + ", " + updateRefreshToken);
-//
-//        return newCreatedToken;
-//    }
+    @Transactional
+    public ProfileDTO getProfileLocal(String access_token) {
+        log.info("Local User SVC Profile access_token : " + access_token);
+
+        BaseAccessToken bat = tokenRepo.findByAccessToken(access_token).orElseThrow(CustomUserNotFoundException::new);
+        BaseLocalUser user = userJpaRepo.findById(bat.getUser_id()).orElseThrow(CustomUserNotFoundException::new);
+
+        log.info("Local User SVC Profile bat isNull : " + (bat == null));
+        log.info("Local User SVC Profile user isNull : " + (user == null));
+
+        ProfileDTO profileDTO = new ProfileDTO(user.getEmail(), user.getNickName(), user.getProfile_image_url());
+        log.info("Local User SVC Profile pDTO isNull : " + (profileDTO == null));
+
+        return profileDTO;
+    }
+
+    @Transactional
+    public BaseAccessToken reissue(BaseAccessToken bat) {
+
+        if (!localUserJwtProvider.validationToken(bat.getRefresh_token())) {
+            throw new CustomRefreshTokenException();
+        }
+
+        String accessToken = bat.getAccess_token();
+        Authentication authentication = localUserJwtProvider.getAuthentication(accessToken);
+
+        log.info("Local User SVC reissue accToken, authen : " + accessToken + ", " + authentication);
+
+        BaseLocalUser user = userJpaRepo.findByEmail(authentication.getName())
+                .orElseThrow(CustomUserNotFoundException::new);
+
+        BaseAccessToken originToken = tokenRepo.findById(user.getId()).orElseThrow(CustomRefreshTokenException::new);
+
+        log.info("Local User SVC reissue user, refreshToken : " + user + ", " + originToken);
+
+        BaseAccessToken newRefreshToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
+        bat.refreshToken(newRefreshToken.toString());
+
+        log.info("Local User SVC reissue newRefreshToken " + newRefreshToken);
+
+        return newRefreshToken;
+    }
 
     @Transactional(readOnly = true)
     public LocalUserResponseDto findById(Long id) {

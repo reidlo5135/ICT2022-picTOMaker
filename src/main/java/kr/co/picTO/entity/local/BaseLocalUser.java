@@ -44,6 +44,9 @@ public class BaseLocalUser extends BaseTimeEntity implements UserDetails {
     @Column(length = 100)
     private String provider;
 
+    @Column(length = 455)
+    private String profile_image_url;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
