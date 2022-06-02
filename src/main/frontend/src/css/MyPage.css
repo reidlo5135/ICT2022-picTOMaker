@@ -96,7 +96,7 @@
     color: #d6d6d6;
 }
 
-/*MyPage-Right*/
+/*MyPage-Profile*/
 
 .Right-Contents{
     margin:25% 0 0 5%;
@@ -123,4 +123,76 @@
     margin-bottom: 3%;
     border: 2px solid #E72D71;
     border-radius: 15px;
+}
+
+/*MyPage-Mypic*/
+.right-flex{
+    display: flex;
+    justify-content: space-between;
+}
+.mypics{
+    margin: 25% 0 0 5%;
+}
+
+.pic-div{
+    width: 300px;
+    height: 250px;
+    border: #E72D71 1px solid;
+    position: absolute;
+    border-radius: 10%;
+    overflow: hidden;
+}
+.pic-colorbox{
+    width: 100%;
+    height: 20%;
+    background: linear-gradient(to left,#EB5D38, #E72D71);
+    position: absolute;
+    z-index: -1;
+ 
+}
+
+.pic-cont{
+    text-align:center;
+
+}
+
+.pic-img{
+    width: 150px;
+    height: 100px;
+    border: #E72D71 solid 1px;
+    border-radius: 10%;
+    margin: 0 auto;
+    z-index: 1;
+    background-color:#ffffff;
+    position: relative;
+    top: 20px;
+}
+
+.pic-name{
+    position: relative;
+    top: 15px;
+}
+
+.pic-btns{
+    display: flex;
+    justify-content: space-around;
+}
+
+.pic-download,.pic-edit{
+    margin-top: 20px;
+    position: relative;
+    padding: 10px 15px;
+    border-radius: 35px;
+    background: linear-gradient(to left, #EB5D38, #E72D71);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.25s;
+    border-style: none;
+}
+
+.pic-download:hover,.pic-edit:hover {
+    letter-spacing: 2px;
+    transform: scale(1.2);
+    cursor: pointer;
 }
