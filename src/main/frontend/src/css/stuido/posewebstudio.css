@@ -1,0 +1,24 @@
+/*Studio */
+
+.studio_container {
+    width : 1280px;
+  margin : 0 auto;
+}
+
+/* CamPose.js */
+
+.cam-pose {
+  width : 640px;
+  height : 960px;
+  float : left;
+  margin : 0;
+  padding : 0;
+}
+
+.test-pose {
+  width : 640px;
+  height : 960px;
+  float : left;
+  margin : 0;
+  padding : 0;
+}
