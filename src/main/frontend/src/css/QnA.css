@@ -2,48 +2,82 @@
     text-align: center;
 }
 .qna-logo > img{
-    margin-top: 3%;
+    margin-top: 2%;
 }
 .qnapage{
-    background: linear-gradient(315deg, hsla(348, 88%, 66%, 1) 0%, hsla(36, 89%, 68%, 1) 100%);
+    background: linear-gradient(140deg, hsla(348, 88%, 66%, 1) 0%, hsla(36, 89%, 68%, 1) 100%);
+    width: 100%;
+    height: 100%;
 }
-.qna-content{
-    width: 1280px;
-    height: 1080px;
-    margin: 0% auto;
+/*스마트폰 */
+.phone {
+  width: 402px;
+  height: 800px;
+  margin: 2% auto;
+  border-radius: 30px;
+  background-color: #fff;
+  border: 3px solid rgba(0, 0, 0, 1);
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 8px rgb(134, 134, 134);
 }
-.qna-form{
-    position: relative;
-    top: 50px;
-    width: 1200px;
-    height: 750px;
-    margin: 0 auto;
-    display: flex;
-    box-shadow: 2px 4px 11px 0px #e72d71;
-    border-radius: 5%;
-    background-color: #ffffff;
 
+.notch {
+  width: 80px;
+  height: 20px;
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  /* border-radius: 30px; */
+  border-bottom-left-radius: 13px;
+  border-bottom-right-radius: 13px;
+  border: 1px solid rgb(88, 88, 88);
+  transform: translate(-50%);
+  left: 50%;
 }
+
+.mic {
+  position: absolute;
+  top: 7px;
+  left: 48%;
+  transform: translate(-50%);
+  width: 30px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: rgb(68, 68, 68);
+}
+
+.camera {
+  position: absolute;
+  top: 3px;
+  left: 82%;
+  transform: translate(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  background-color: rgb(68, 68, 68);
+}
+
+
+/*문의 컨텐츠*/
+
 
 .qna-left{
-    margin:10% 0 0 5%;
-    width: 40%;
-    height: 500px;
-    border: 2px solid #E72D71;
-    border-radius: 5%;
-    line-height: 45px;
-    color: #E72D71;
-    font-size: 24px;
-    font-weight: bold;
+  text-align: center;
+  line-height: 45px;
+  color: #E72D71;
+  font-size: 24px;
+  font-weight: bold;
+
 }
 
 .left-input{
-    margin: 10% 0 0 5%;
+    margin: 10% 0 0 2%;
 }
 
 .qna-left input{
     height: 35px;
-    padding: 1% 50% 0 3%;
+    padding: 1% 25% 0 3%;
     border: 2px solid #E72D71;
     border-radius: 15px;
     padding-bottom: 1%;
@@ -54,31 +88,25 @@
 }
 
 .qna-right{
-    margin:10% 0 0 10%;
-    width: 40%;
-    height: 500px;
-    border: 2px solid #E72D71;
-    border-radius: 5%;
     text-align: center;
-    line-height: 60px;
+    line-height: 45px;
     color: #E72D71;
     font-size: 24px;
     font-weight: bold;
 }
 
 .qna-right textarea{
-    width: 400px;
-    height: 370px;
+    width: 250px;
+    height: 300px;
     padding: 5% 0 0 3%;
     border: 2px solid #E72D71;
     border-radius: 15px;
     padding-bottom: 1%;
-    margin-right: 5%;
     resize: none;
 }
 
 .right-input{
-    margin: 2% 0 0 5%;
+    margin: 2% 0 0 2%;
 }
 
 .qna-right textarea::placeholder{
@@ -88,10 +116,8 @@
 
 /*버튼*/
 
-.qna-form > input {
-    bottom: 5%;
-    left: 45%;
-    position: absolute;
+.sendbutton {
+    margin: 0 auto;
     padding: 15px 30px;
     border-radius: 35px;
     background: linear-gradient(to left,#EB5D38, #E72D71);
@@ -102,13 +128,19 @@
     border-style: none;
 }
 
-.qna-form > input:hover {
+.sendbutton:hover {
     letter-spacing: 2px;
     transform: scale(1.2);
     cursor: pointer;
 }
 
 /*form 애니메이션*/
+
+.sendmail{
+  width: 50px;
+  height: 50px;
+  background-color: black;
+}
 .qna-form { animation: 0.6s ease-in-out loadEffect2; }
 
 @keyframes loadEffect2 {
