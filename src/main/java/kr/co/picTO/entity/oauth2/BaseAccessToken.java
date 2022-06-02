@@ -18,7 +18,10 @@ public class BaseAccessToken extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long token_id;
+    private Long id;
+
+    @Column
+    private Long user_id;
 
     @Column(nullable = false)
     private String access_token;
@@ -37,4 +40,8 @@ public class BaseAccessToken extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String provider;
+
+    public void refreshToken(String refresh_token) {
+        this.refresh_token = refresh_token;
+    }
 }

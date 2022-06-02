@@ -22,10 +22,10 @@ export default function SignUp(){
     const isValidEmail = email.includes('@') && email.includes('.');
     const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
     const isValidPassword = password.length >= 8 && specialLetter >= 1;
-    const isEqualsPassword = password === confirmPassword;
+    const isEqualsPassword = (password === confirmPassword);
 
-    const handleInput = event => {
-        const { name, value } = event.target;
+    const handleInput = e => {
+        const { name, value } = e.target;
         setInputValue({
             ...inputValue,
             [name]: value,
@@ -36,16 +36,12 @@ export default function SignUp(){
 
     const getIsActive = isValidEmail && isValidPassword && isValidInput && isEqualsPassword === true;
 
-    const handleButtonValid = () => {
-        console.log('isInput : ', isValidInput);
-        console.log('isEmail : ', isValidEmail);
-        console.log('isPassword : ', isValidPassword);
-        console.log('isEqualsPassword : ', isEqualsPassword);
-
+    const handleButtonValid = (e) => {
+        e.preventDefault();
         if (!isValidInput) {
             alert('빈 칸을 모두 채워주십시오.');
         } else if(!isValidEmail) {
-            alert('유호하지 않은 이메일입니다.');
+            alert('유호하지 않은 이메일 형식입니다.');
         } else if(!isValidPassword) {
             alert('비밀번호는 특수문자를 포함하여 8자 이상이어야합니다.');
         }else if(!isEqualsPassword) {
@@ -62,8 +58,14 @@ export default function SignUp(){
                     withCredentials: true
                 }).then((response) => {
                     console.log('response : ', response.data);
-                    alert(nickName + ' 픽토메이커님 환영합니다!');
-                    history.push("/");
+                    console.log('response : ', response.data.data);
+
+                    if(response.data.code === 0){
+                        alert(nickName + ' 픽토메이커님 환영합니다!');
+                        history.push("/");
+                    } else {
+                        alert('An Error Occurred code : ' + response.data.code);
+                    }
                 });
             } catch (err) {
                 console.error('err : ', err.response);
@@ -95,11 +97,11 @@ export default function SignUp(){
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>비밀번호</div>
-                            <input type={'password'} name={'password'} onChange={handleInput} placeholder="*******"/>
+                            <input type={'password'} name={'password'} onChange={handleInput} placeholder="특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요."/>
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>비밀번호 확인</div>
-                            <input type={'password'} name={'confirmPassword'} onChange={handleInput} placeholder="*******"/>
+                            <input type={'password'} name={'confirmPassword'} onChange={handleInput} placeholder="한 번 더 입력해주세요."/>
                         </div>
 
                         <button className={getIsActive ? 'signUpButtonAction' : 'signUpButtonInAction'} onClick={handleButtonValid}>
