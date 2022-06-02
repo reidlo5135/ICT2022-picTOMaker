@@ -3,8 +3,6 @@ import React,{useEffect, useState} from 'react';
 import Logo from "../../image/Logo.png";
 import "../../css/MyPage.css";
 import "../../css/font.css";
-import ReactFancyBox from "react-fancybox";
-import 'react-fancybox/lib/fancybox.css';
 
 const Mypic = () => {
     return(
@@ -13,10 +11,7 @@ const Mypic = () => {
                        <div className='pic-cont'>
                            <div className='pic-colorbox'/>
                            <div className='pic-img'>
-                           <ReactFancyBox
-                                thumbnail={Logo}
-                                image={Logo}
-                            />
+
                            </div>
                            <p className='pic-name'>picname</p>
                            <div className='pic-btns'>
