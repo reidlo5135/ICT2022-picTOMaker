@@ -134,6 +134,18 @@
     cursor: pointer;
 }
 
+.sendinbutton {
+  margin: 0 auto;
+  padding: 15px 30px;
+  border-radius: 35px;
+  background: linear-gradient(to left,#282c34, #ffffff);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  transition: 0.25s;
+  border-style: none;
+}
+
 /*form 애니메이션*/
 
 .sendmail{
@@ -158,6 +170,15 @@
     }
 }
 
+.mail-ani{
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  background-color: black;
+  position: absolute;
+  left:100;
+  bottom: 500;
+}
 /*background 애니메이션*/
 html, body {
     height: 100%;
