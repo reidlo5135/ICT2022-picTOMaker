@@ -26,6 +26,8 @@ public class FileUploadService {
         objectMetadata.setContentLength(file.getSize());
         objectMetadata.setContentType(file.getContentType());
 
+        log.info("File SVC uploadImg objectMetaData contentType : " + objectMetadata.getContentType());
+
         String fileUrl = null;
 
         try (InputStream inputStream = file.getInputStream()) {
