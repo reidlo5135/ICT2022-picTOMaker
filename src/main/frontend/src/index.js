@@ -7,18 +7,9 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-      <React.StrictMode>
+  <BrowserRouter>      
           <App />
-      </React.StrictMode>
   </BrowserRouter>
 );
 
 reportWebVitals();
-
-// ReactDOM.render(
-//     <Router>
-//         <App />
-//     </Router>,
-//     document.getElementById('root')
-// );

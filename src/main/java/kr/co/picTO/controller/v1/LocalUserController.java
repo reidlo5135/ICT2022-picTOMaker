@@ -3,8 +3,10 @@ package kr.co.picTO.controller.v1;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
 import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
+import kr.co.picTO.dto.social.ProfileDTO;
 import kr.co.picTO.dto.token.LocalTokenDto;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
 import kr.co.picTO.model.response.SingleResult;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @Api(tags = {"1. Local User"})
 @Log4j2
@@ -87,9 +91,35 @@ public class LocalUserController {
         return ett;
     }
 
+    @PostMapping(value = "/profile")
+    public ResponseEntity<SingleResult<ProfileDTO>> getProfile(@RequestBody Map<String, String> access_token) {
+        ResponseEntity<SingleResult<ProfileDTO>> ett = null;
+        log.info("Local Controller access_token : " + access_token.get("access_token"));
+
+        try {
+            ProfileDTO profileDTO = userService.getProfileLocal(access_token.get("access_token"));
+            log.info("Local Controller pDTO : " + profileDTO);
+
+            SingleResult result = responseService.getSingleResult(profileDTO);
+            log.info("Local Controller prof result getC : " + result.getCode());
+            log.info("Local Controller prof result getD : " + result.getData());
+            log.info("Local Controller prof result getM : " + result.getMsg());
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            log.info("Local Controller ett : " + ett);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
+        return ett;
+    }
+
     @ApiOperation(value = "Access, Refresh Token Reissue", notes = "Token Reissue")
     @PostMapping(value = "/reissue")
-    public ResponseEntity<SingleResult<BaseAccessToken>> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody LocalTokenDto tokenDto) throws Exception {
+    public ResponseEntity<SingleResult<BaseAccessToken>> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody LocalTokenDto tokenDto) {
         ResponseEntity<SingleResult<BaseAccessToken>> ett = null;
         log.info("Local Controller Reissue tokenDto : ", tokenDto.getAccessToken() + ", " + tokenDto.getRefreshToken());
 
@@ -107,7 +137,7 @@ public class LocalUserController {
 
             ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
             log.info("Local Controller SingUp ett : " + ett);
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
         }
