@@ -6,6 +6,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.ResourceHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -13,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -50,6 +57,18 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         ms.setFallbackToSystemLocale(true);
         return ms;
     }
+
+//    @Override
+//    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        HttpMessageConverter<Object> jackson = new MappingJackson2HttpMessageConverter();
+//        HttpMessageConverter<Resource> resource = new ResourceHttpMessageConverter();
+//        FormHttpMessageConverter formHttpMessageConverter = new FormHttpMessageConverter();
+//        formHttpMessageConverter.addPartConverter(jackson);
+//        formHttpMessageConverter.addPartConverter(resource);
+//
+//        converters.removeIf(v -> v.getSupportedMediaTypes().contains(MediaType.APPLICATION_JSON));
+//        converters.add(formHttpMessageConverter);
+//    }
 
     private static class YamlMessageSource extends ResourceBundleMessageSource {
         @Override
