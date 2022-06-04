@@ -5,6 +5,8 @@ import {fabric} from 'fabric';
 
 import DetailComponent from './detail/DetailComponent';
 import { color } from '@mui/system';
+import Top from "../../contents/Top";
+import React from "react";
 
 let canvas = null;
 
@@ -110,10 +112,6 @@ export default function EditTool(props) {
                 stroke: color
             })
 
-                
-
-            
-
         canvas.add(shoulder,leftUpperArm,leftLowerArm,rightUpperArm,rightLowerArm,leftUpperBody,rightUpperBody,waist,leftUpperLeg,leftLowerLeg
             ,rightUpperLeg,rightLowerLeg,head);
 
@@ -126,11 +124,7 @@ export default function EditTool(props) {
         canvas.requestRenderAll();
 
         window.localStorage.setItem('pictogram_result',null);
-
         }
-        
-
-
     }
 
     function download() {
@@ -139,7 +133,6 @@ export default function EditTool(props) {
         link.download = "my-image.png";
         link.href = image;
         link.click();
-
     }
     
     function pencilMode () {
@@ -185,6 +178,7 @@ export default function EditTool(props) {
 
     return (
         <>
+            <Top />
             <div id="edit-box">
                 <div  id="topbar" ></div>
                 <div id="middle-view">
