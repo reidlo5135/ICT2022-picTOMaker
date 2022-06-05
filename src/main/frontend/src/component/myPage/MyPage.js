@@ -6,10 +6,11 @@ import {Link} from "react-router-dom";
 import MyPic from './MyPage-Mypic';
 import MyPageProfile from './MyPage-profile';
 import GetProfile from "../user/GetProfile";
-import Logout from "../user/Logout";
+import {useHistory} from "react-router";
 
 export default function MyPageContent(){
     const [mode, setMode] = useState('profile');
+    const history = useHistory();
 
     function confirmMode(Paramode) {
         setMode(Paramode);
@@ -26,6 +27,17 @@ export default function MyPageContent(){
             return <MyPic/>
         } else if (conditionMode === "sharepic") {
             return <h1>SharePic</h1>
+        }
+    }
+
+    function Logout() {
+        try {
+            console.clear();
+            localStorage.clear();
+            alert('성공적으로 로그아웃 되었습니다!!');
+            history.push("/");
+        } catch (err) {
+            console.error(err);
         }
     }
 
@@ -68,6 +80,6 @@ export default function MyPageContent(){
                 </div>
             </div>
             {conditionRender(mode)}
-            </div>
+        </div>
     );
 }
