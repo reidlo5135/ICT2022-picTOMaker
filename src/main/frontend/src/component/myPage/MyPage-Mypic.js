@@ -1,4 +1,3 @@
-
 import React,{useEffect, useState} from 'react';
 import Logo from "../../image/Logo.png";
 import "../../css/MyPage.css";
@@ -32,7 +31,6 @@ export default function MyPageMyPic(){
             <div className='MyPage-Right'>
                 <div className='right-flex'>
                     <Mypic/>
-
                </div>
             </div>
     )

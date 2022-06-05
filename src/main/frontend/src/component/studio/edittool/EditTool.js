@@ -1,12 +1,10 @@
 import '../../../css/stuido/topbar.css'
 import '../../../css/stuido/edittool.css'
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {fabric} from 'fabric';
-
 import DetailComponent from './detail/DetailComponent';
 import { color } from '@mui/system';
 import Top from "../../contents/Top";
-import React from "react";
 
 let canvas = null;
 
