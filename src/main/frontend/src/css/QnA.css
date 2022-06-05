@@ -146,6 +146,52 @@
   border-style: none;
 }
 
+/*문의하기 클릭 후 애니메이션*/
+.mail-ani{
+
+}
+.postcar{
+  position: absolute;
+  bottom: 300px;
+  right: 2000px;
+  animation:fadeOut 1s 1s linear,
+            transX 1s 1s linear;
+  animation-fill-mode: forwards;
+  z-index: 3;
+}
+
+.postmail{
+  position: absolute;
+  bottom: 435px;
+  right: 2600px;
+  animation: transX2 .5s linear,
+              fadeOut .1s .5s linear;
+  animation-fill-mode: forwards;
+  z-index: 1;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes transX {
+  to{
+  transform: translateX(500px)
+  }
+}
+
+@keyframes transX2 {
+  to{
+  transform: translateX(300px);
+  }
+}
+
+
 /*form 애니메이션*/
 
 .sendmail{
@@ -170,15 +216,7 @@
     }
 }
 
-.mail-ani{
-  width: 50px;
-  height: 50px;
-  margin: 0 auto;
-  background-color: black;
-  position: absolute;
-  left:100;
-  bottom: 500;
-}
+
 /*background 애니메이션*/
 html, body {
     height: 100%;

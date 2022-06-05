@@ -5,7 +5,9 @@ import "../../App.css"
 import "../../css/QnA.css"
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
+import ReactPlayer from 'react-player/lazy';
+import Postani1 from "../../image/postcar.png";
+import Postani2 from "../../image/email.png";
 
 export default function QnA() {
     const [isOpen, setIsOpen] = useState(false)
@@ -32,29 +34,15 @@ export default function QnA() {
     const isValidInput = name.length >= 1 && email.length >= 1 &&  qna.length >= 1;
 
     const getIsActive = isValidEmail && isValidName && isValidQna === true;
+    const getIsOpen = isOpen === true;
 
-    const handleButtonValid = (e) => {
-        e.preventDefault();
-        if (!isValidInput) {
-            alert('성함을 입력해 주십시오');
-        } else if(!isValidEmail) {
-            alert('이메일을 입력해 주십시오');
-        } else if(!isValidQna) {
-            alert('문의 내용을 입력해 주십시오');
-        }
-        };
-    
-
-    /* const onChangeIsopen = () =>{
-        setIsOpen(!isOpen)
-    } */
     function onChangeIsopen() {
         setIsOpen(!isOpen);
         alert("문의가 전송 되었습니다.");
         
-        setTimeout(() => {
+        /* setTimeout(() => {
             window.location.reload();
-        }, 3000);
+        }, 2500); */
         
         
     }
@@ -102,7 +90,7 @@ export default function QnA() {
              animate={isOpen ? "open" : "closed"}
              variants={{
              open: {  opacity: 0, x: 0 },
-             closed: {  opacity: 1, x: 100 }
+             closed: {  opacity: 1, x: 0 }
              }} >
             <div class="center">
                 <div class="phone">
@@ -128,7 +116,7 @@ export default function QnA() {
                             <textarea name='qna' rows='50' className='textareat' placeholder="문의사항을 입력하세요."  onChange={handleInput}/>
                         </div>
                     </div>
-                    <input type='submit' value='문의하기' className={getIsActive ? 'sendbutton' : 'sendinbutton'} disabled={getIsActive ?  false : true} onClick={onChangeIsopen} onBlur={handleButtonValid}
+                    <input type='submit' value='문의하기' className={getIsActive ? 'sendbutton' : 'sendinbutton'} disabled={getIsActive ?  false : true} onClick={onChangeIsopen}
                    
                     />
                 </div>
@@ -141,9 +129,13 @@ export default function QnA() {
             onSubmit={sendEmail}
              animate={isOpen ? "open" : "closed"}
              variants={{
-             open: {  opacity: 1, x: 1000 },
-             closed: {  opacity: 0, x: 0 }
-             }} ></motion.div>
+             open: {  opacity: 1,x: 1500},
+             closed: {  opacity: 0, x:0}
+             }} >
+                 <img src={Postani1} alt="Post-animation" className={getIsOpen ? 'postcar' : 'postcar2'}/>
+                 <img src={Postani2} alt="Post-animation" className={getIsOpen ? 'postmail' : 'postmail2'} style={{width:"150px",height:"70px"}}/>
+             </motion.div>
+             
         </div>
         </div>
     );
