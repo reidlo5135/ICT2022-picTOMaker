@@ -1,10 +1,10 @@
-import '../../../css/stuido/topbar.css'
-import '../../../css/stuido/edittool.css'
 import React, { useEffect, useState } from 'react';
 import {fabric} from 'fabric';
 import DetailComponent from './detail/DetailComponent';
 import { color } from '@mui/system';
 import Top from "../../contents/Top";
+import '../../../css/stuido/topbar.css';
+import '../../../css/stuido/edittool.css';
 
 let canvas = null;
 
@@ -24,7 +24,6 @@ export default function EditTool(props) {
                 result[i].x = result[i].x * 640;
                 result[i].y = result[i].y * 480;
             }
-
             console.log(result);
 
             // 어깨
@@ -32,75 +31,76 @@ export default function EditTool(props) {
                 strokeLineCap : 'round',
                 strokeWidth : thick,
                 stroke : color
-            })
+            });
             // 좌측 팔 (Upper, Lower)
             const leftUpperArm = new fabric.Line([result[12].x,result[12].y,result[14].x,result[14].y], {
                 strokeLineCap : 'round',
                 strokeWidth : thick,
                 stroke : color
-            })
+            });
             const leftLowerArm = new fabric.Line([result[14].x,result[14].y,result[16].x,result[16].y], {
                 strokeLineCap : 'round',
                 strokeWidth : thick,
                 stroke : color
-            })
+            });
 
             // 우측 팔 (Upper,Lower)
             const rightUpperArm = new fabric.Line([result[11].x,result[11].y,result[13].x,result[13].y], {
                 strokeLineCap : 'round',
                 strokeWidth : thick,
                 stroke : color
-            })
+            });
             const rightLowerArm = new fabric.Line([result[13].x,result[13].y,result[15].x,result[15].y], {
                 strokeLineCap : 'round',
                 strokeWidth : thick,
                 stroke : color
-            })
+            });
 
             // 좌측 상체
             const leftUpperBody = new fabric.Line([result[12].x,result[12].y,result[24].x,result[24].y], {
                 strokeLineCap : 'round',
                 strokeWidth : thick,
                 stroke : color
-            })
+            });
             // 우측 상체
             const rightUpperBody = new fabric.Line([result[11].x,result[11].y,result[23].x,result[23].y], {
                 strokeLineCap : 'round',
                 strokeWidth : thick,
                 stroke : color
-            })
+            });
 
             // 허리
             const waist = new fabric.Line([result[24].x,result[24].y,result[23].x,result[23].y], {
                 strokeLineCap : 'round',
                 strokeWidth : thick,
                 stroke : color
-            })
+            });
             
             // 좌측 다리 (Upper, Lower)
             const leftUpperLeg = new fabric.Line([result[24].x,result[24].y,result[26].x,result[26].y], {
                 strokeLineCap : 'round',
                 strokeWidth : thick,
                 stroke : color
-            })
+            });
+
             const leftLowerLeg = new fabric.Line([result[26].x,result[26].y,result[28].x,result[28].y], {
                 strokeLineCap : 'round',
                 strokeWidth : thick,
                 stroke : color
-            })
+            });
 
             // 우측 다리 (Upper, Lower)
             const rightUpperLeg = new fabric.Line([result[23].x,result[23].y,result[25].x,result[25].y], {
                 strokeLineCap : 'round',
                 strokeWidth : thick,
                 stroke : color
-            })
+            });
 
             const rightLowerLeg = new fabric.Line([result[25].x,result[25].y,result[27].x,result[27].y], {
                 strokeLineCap : 'round',
                 strokeWidth : thick,
                 stroke : color
-            })
+            });
 
             // 머리
             const head = new fabric.Circle({
@@ -108,7 +108,7 @@ export default function EditTool(props) {
                 left : result[0].x - 20,
                 radius : 25,
                 stroke: color
-            })
+            });
 
         canvas.add(shoulder,leftUpperArm,leftLowerArm,rightUpperArm,rightLowerArm,leftUpperBody,rightUpperBody,waist,leftUpperLeg,leftLowerLeg
             ,rightUpperLeg,rightLowerLeg,head);
@@ -199,6 +199,5 @@ export default function EditTool(props) {
                 </div>
             </div>
         </>
-    )
-
+    );
 }
