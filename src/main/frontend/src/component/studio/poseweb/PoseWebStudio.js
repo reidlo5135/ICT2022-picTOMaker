@@ -1,6 +1,3 @@
-import "../../../css/stuido/topbar.css"
-import "../../../css/stuido/posewebstudio.css"
-
 import React,{useRef,useEffect,useState} from 'react';
 import * as cam from '@mediapipe/camera_utils'
 import {DeviceCheck, getStream} from './util/DevicesCheck'
@@ -8,6 +5,8 @@ import TestPose from './module/test/TestPose'
 import CamPose from './module/CamPose';
 import Button from '@mui/material/Button';
 import Top from "../../contents/Top";
+import "../../../css/stuido/topbar.css";
+import "../../../css/stuido/posewebstudio.css";
 
 export default function PoseWebStudio() {
     const childRef = useRef();
@@ -54,6 +53,5 @@ export default function PoseWebStudio() {
                 </div>
             </div>
         </>
-    )
-
+    );
 }
