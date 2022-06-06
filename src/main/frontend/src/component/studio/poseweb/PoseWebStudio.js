@@ -36,7 +36,7 @@ export default function PoseWebStudio() {
             console.log("디바이스 인식 성공")
             const deviceStream = getStream();
         } */
-    },[])
+    },[]);
 
     return (
         <>

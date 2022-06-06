@@ -171,7 +171,7 @@ export default function EditTool(props) {
     useEffect(()=> {
         canvas = new fabric.Canvas('edit-canvas');
         drawingPictogram();
-    },[])
+    },[]);
 
 
     return (
@@ -192,7 +192,6 @@ export default function EditTool(props) {
                         <button id="open-btn" onClick = {()=> {openMode()}}> </button>
                         <button id="share-btn" onClick = {()=> {shareMode()}}></button>
                     </div>
-                   
                 </div>
                 <div id="tool-detail-view">
                    <DetailComponent mode={selectMode} canvas={canvas}/>

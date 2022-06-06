@@ -8,5 +8,5 @@ export const theme = createTheme({
         contrastText: '#fff',
       },
     },
-  });
+});
   
