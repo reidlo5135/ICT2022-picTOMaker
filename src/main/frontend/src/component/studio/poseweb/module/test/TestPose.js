@@ -1,9 +1,8 @@
 import testImage from '../..//resource/human_pose.png'
 import {Pose} from '@mediapipe/pose'
-import { useEffect, useRef, useState } from 'react'
 import {drawLine, drawHead} from '../../util/DrawingUtils'
-
-import React,{forwardRef,useImperativeHandle} from 'react';
+import "../../../../../css/stuido/posewebstudio.css"
+import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState} from 'react';
 
 // Static Image를 통해 인체 모델을 테스트합니다.
 
@@ -94,13 +93,17 @@ const TestPose = forwardRef((props,ref) => {
         pose.onResults(onResults);
 
         pose.send({image : imageElement});
-    });
+    },[]);
 
     return (
         <>
             <div className="test-pose">
-                <img src={testImage} id="test-image"></img>
-                <canvas ref={canvasRef} id="draw-canvas" width="640px" height="480px"></canvas>
+                <div className='left-content'>
+                    <img src={testImage} id="test-image"></img>
+                </div>
+                <div className='right-content'>
+                    <canvas ref={canvasRef} id="draw-canvas" width="640px" height="480px"></canvas>
+                </div>
             </div>
         </>
     )

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @Api(tags = {"2. OAuth2 User"})
-@RestController
 @Log4j2
+@RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/oauth2")
 public class OAuth2Controller {
@@ -32,9 +32,11 @@ public class OAuth2Controller {
         log.info("Prov Controller code : " + code.get("code"));
 
         try {
-            BaseAccessToken baseAccessToken = OAuth2ProviderService.getAndSaveAccessToken(code.get("code"), provider);
+            BaseAccessToken baseAccessToken = OAuth2ProviderService.generateAccessToken(code.get("code"), provider);
             log.info("Prov Controller ACCESS TOKEN : " + baseAccessToken);
             log.info("Prov Controller prov : " + provider);
+
+            OAuth2ProviderService.saveAccessToken(baseAccessToken);
 
             SingleResult<BaseAccessToken> result = responseService.getSingleResult(baseAccessToken);
             log.info("Prov Controller token result getC : " + result.getCode());
@@ -81,6 +83,31 @@ public class OAuth2Controller {
             ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
             log.info("Prov Controller ett : " + ett);
         }catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
+        return ett;
+    }
+
+    @DeleteMapping(value = "/token/invalid/{access_token}")
+    public ResponseEntity<SingleResult<Long>> inValidAndRefreshToken(@PathVariable String access_token) {
+        ResponseEntity<SingleResult<Long>> ett = null;
+        log.info("Prov Controller access_token : " + access_token);
+
+        try {
+            Integer id = OAuth2ProviderService.deleteToken(access_token);
+
+            SingleResult result = responseService.getSingleResult(id);
+            log.info("Prov Controller prof result getC : " + result.getCode());
+            log.info("Prov Controller prof result getD : " + result.getData());
+            log.info("Prov Controller prof result getM : " + result.getMsg());
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            log.info("Prov Controller ett : " + ett);
+        } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
         }

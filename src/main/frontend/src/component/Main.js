@@ -14,7 +14,7 @@ import google from "../image/google.png";
 import {Link} from "react-router-dom";
 import Top from "./contents/Top";
 import Footer from "./contents/Footer";
-import Best from "./contents/Main-best";
+import Introduce from "./contents/Introduce";
 
 export default function Main(){
     const [email, setEmail] = useState("");
@@ -148,7 +148,9 @@ export default function Main(){
                     </div>
                 </div>
             </div>
-            <Best />
+
+            <Introduce/>
+
             <Footer />
         </React.Fragment>
     );

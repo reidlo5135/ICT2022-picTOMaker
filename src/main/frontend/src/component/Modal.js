@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Modal(props){
     const { open, close, header } = props;
-
+    console.log("뿡")
     return (
         <div className={open ? 'openModal modal' : 'modal'}>
             {open ? (
@@ -20,6 +20,6 @@ export default function Modal(props){
                     </main>
                 </section>
             ) : null}
-        </div>
+        </div> 
     );
 }
