@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "base_access_token")
 @Data
 @Builder
-@AllArgsConstructor
+@Entity
+@Table(name = "base_access_token")
 @NoArgsConstructor
+@AllArgsConstructor
 public class BaseAccessToken extends BaseTimeEntity {
 
     @Id
@@ -21,7 +21,7 @@ public class BaseAccessToken extends BaseTimeEntity {
     private Long id;
 
     @Column
-    private Long user_id;
+    private Long local_user_id;
 
     @Column(nullable = false)
     private String access_token;

@@ -16,8 +16,8 @@ import java.util.List;
 
 @Api(tags = {"3. Only Admin - User"})
 @Log4j2
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/v1/admin")
 public class AdminController {
 

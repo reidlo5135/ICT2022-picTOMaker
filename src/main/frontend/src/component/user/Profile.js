@@ -80,15 +80,13 @@ const Profile = () => {
 
     if(isLogged) {
         return (
-            <Link to='/myPage'>
-                <div>
-                    <section>
+            <Link to='/myPage' className="profile-link">
+                <div className="profile-content">
                         {profileImage === null ?
                             <img src={Human} className='img_profile' alt={'p-image'} /> :
                             <img src={profileImage} className='img_profile' alt={'p-image'} />
                         }
                         {nickName}님 환영합니다!
-                    </section>
                 </div>
             </Link>
         );

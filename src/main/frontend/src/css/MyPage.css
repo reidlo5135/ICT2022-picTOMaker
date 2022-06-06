@@ -8,7 +8,7 @@
 
 .MyPage-Content{
     width: 1280px;
-    height: 100%;
+    height: 1080px;
     margin: 0 auto;
     display: flex;
 }
@@ -127,29 +127,19 @@
 }
 
 /*MyPage-Mypic*/
-.right-flex{
-    display: flex;
-    justify-content: space-between;
-}
 .mypics{
-    margin: 25% 0 0 5%;
+    margin: 5% 0 0 5%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .pic-div{
     width: 300px;
-    height: 250px;
-    border: #E72D71 1px solid;
-    position: absolute;
-    border-radius: 10%;
+    height: 400px;
     overflow: hidden;
-}
-.pic-colorbox{
-    width: 100%;
-    height: 20%;
-    background: linear-gradient(to left,#EB5D38, #E72D71);
-    position: absolute;
-    z-index: -1;
- 
+    box-shadow: 10px 12px 5px #eeeeee;
+    margin-bottom: 50px;
 }
 
 .pic-cont{
@@ -158,20 +148,26 @@
 }
 
 .pic-img{
-    width: 150px;
+    width: 100px;
     height: 100px;
-    border: #E72D71 solid 1px;
-    border-radius: 10%;
+    border-radius: 100%;
     margin: 0 auto;
     z-index: 1;
-    background-color:#ffffff;
     position: relative;
-    top: 20px;
+    bottom:50px;
+}
+
+.pic-img > img{
+    width: 80px;
+    height: 80px;
+    border-radius: 75px;
+    position: absolute;
+    transform: translate(-45%, 6%);
 }
 
 .pic-name{
     position: relative;
-    top: 15px;
+    bottom:60px;
 }
 
 .pic-btns{
@@ -180,20 +176,80 @@
 }
 
 .pic-download,.pic-edit{
-    margin-top: 20px;
     position: relative;
-    padding: 10px 15px;
-    border-radius: 35px;
+    padding: 0px 0px;
+    border-radius: 100%;
+    bottom: 50px;
     background: linear-gradient(to left, #EB5D38, #E72D71);
     color: #ffffff;
     text-decoration: none;
     font-weight: 700;
-    transition: 0.25s;
     border-style: none;
 }
 
+.pic-txt{
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    bottom: 48px;
+}
+
+.pic-dtxt,.pic-etxt{
+
+}
+
+.pic-download{
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: url("../image/studio_image/download_btn.png") no-repeat;
+    background-size: cover;
+}
+
+.pic-edit{
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: url("../image/studio_image/pencil_btn.png") no-repeat;
+    background-size: cover;
+}
+
 .pic-download:hover,.pic-edit:hover {
-    letter-spacing: 2px;
-    transform: scale(1.2);
+    cursor: pointer;
+}
+
+button > p{
+    position: relative;
+    bottom: 13px;
+}
+
+.pic-backimg{
+    height: 230px;
+ background-image: url(../image/mockup.png);
+ background-size: cover;
+}
+
+/*페이지네이션*/
+.pagenation{
+  float: left;
+  list-style: none;
+  text-align: center;
+  border-radius: 3px;
+  color: white;
+  padding: 1px;
+  border-top: #E72D71 1px solid;
+  border-bottom: #E72D71 1px solid;
+}
+
+.page-item {
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 5px;
+    width: 25px;
+    background: linear-gradient(to left, #EB5D38, #E72D71);
+    margin-left: 5px;
+}
+.page-item:hover{
     cursor: pointer;
 }

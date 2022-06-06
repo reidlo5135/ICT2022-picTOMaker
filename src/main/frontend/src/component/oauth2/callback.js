@@ -48,15 +48,14 @@ export default function Callback(){
 
                 history.push("/");
             } else {
-                alert("An ERROR OCCURRED" + response.data.code);
+                alert("An ERROR OCCURRED : " + response.data.code);
             }
         });
-
-        console.log('resp : ', {resp});
     } catch (err) {
         alert(err);
         console.error(err);
     }
+
     return (
         <center>
             <div className='loading'>

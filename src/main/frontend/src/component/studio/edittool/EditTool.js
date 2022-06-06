@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import {useHistory} from "react-router-dom";
+import axios from "axios";
 import {fabric} from 'fabric';
 import DetailComponent from './detail/DetailComponent';
 import { color } from '@mui/system';
@@ -9,7 +11,10 @@ import '../../../css/stuido/edittool.css';
 let canvas = null;
 
 export default function EditTool(props) {
+    const history = useHistory();
     const [selectMode, setSelectMode] = useState("none");
+    const profile = localStorage.getItem("profile");
+    const provider = localStorage.getItem("provider");
 
     const pictogramImage = props.pictogramImage;
 
@@ -17,8 +22,8 @@ export default function EditTool(props) {
         const nonResult = window.localStorage.getItem('pictogram_result');
         if (nonResult !== "null") {
             const result = JSON.parse(nonResult);
-            const thick = 15;
-            const color = '#000000'
+            const thick = window.localStorage.getItem("lineThick");
+            const color = '#' + window.localStorage.getItem("lineColor");
 
             for (let i=0; i<33; i++) {
                 result[i].x = result[i].x * 640;
@@ -110,30 +115,48 @@ export default function EditTool(props) {
                 stroke: color
             });
 
-        canvas.add(shoulder,leftUpperArm,leftLowerArm,rightUpperArm,rightLowerArm,leftUpperBody,rightUpperBody,waist,leftUpperLeg,leftLowerLeg
-            ,rightUpperLeg,rightLowerLeg,head);
+            canvas.add(shoulder,leftUpperArm,leftLowerArm,rightUpperArm,rightLowerArm,leftUpperBody,rightUpperBody,waist,leftUpperLeg,leftLowerLeg, rightUpperLeg,rightLowerLeg,head);
 
-        canvas.discardActiveObject();
-        let sel = new fabric.ActiveSelection(canvas.getObjects(), {
-            canvas : canvas,
-        });
-        canvas.setActiveObject(sel);
-        canvas.getActiveObject().toGroup();
-        canvas.requestRenderAll();
+            canvas.discardActiveObject();
+            let sel = new fabric.ActiveSelection(canvas.getObjects(), {
+                canvas : canvas,
+            });
+            canvas.setActiveObject(sel);
+            canvas.getActiveObject().toGroup();
+            canvas.requestRenderAll();
 
-        window.localStorage.setItem('pictogram_result',null);
+            window.localStorage.setItem('pictogram_result',null);
         }
     }
 
     function download() {
         const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-        var link = document.createElement('a');
-        link.download = "my-image.png";
-        link.href = image;
-        link.click();
+        console.log('image : ', image);
+
+        const jsonProf = JSON.parse(profile);
+        const email = jsonProf.email;
+        try {
+            axios.post(`/v1/upload/register/${email}/${provider}`, {
+                image
+            }, {
+                baseURL: 'http://localhost:8080',
+                withCredentials: true
+            }).then((response) => {
+                console.log('response data : ', response.data);
+                console.log('response data.data : ', response.data.data);
+
+                if(response.data.code === 0) {
+                    localStorage.setItem("picTOUrl", response.data.data);
+                    alert('성공적으로 저장되었습니다!');
+                    history.push("/");
+                }
+            });
+        } catch (err) {
+            console.error(err);
+        }
     }
-    
-    function pencilMode () {
+
+    function pencilMode() {
         setSelectMode("pencil");
         if (selectMode !== "pencil")  {
             canvas.isDrawingMode = true;
@@ -181,7 +204,7 @@ export default function EditTool(props) {
                 <div  id="topbar" ></div>
                 <div id="middle-view">
                     <div id="edit-view">
-                        <canvas id="edit-canvas" width ="640px" height = "480px"></canvas>    
+                        <canvas id="edit-canvas" width ="640px" height = "480px"></canvas>
                     </div>
                     <div id="tool-view">
                         <button id="pencil-btn" onClick = {()=> {pencilMode()}}></button>

@@ -66,7 +66,7 @@ public class LocalUserService {
         log.info("Local User SVC Profile access_token : " + access_token);
 
         BaseAccessToken bat = tokenRepo.findByAccessToken(access_token).orElseThrow(CustomUserNotFoundException::new);
-        BaseLocalUser user = userJpaRepo.findById(bat.getUser_id()).orElseThrow(CustomUserNotFoundException::new);
+        BaseLocalUser user = userJpaRepo.findById(bat.getLocal_user_id()).orElseThrow(CustomUserNotFoundException::new);
 
         log.info("Local User SVC Profile bat isNull : " + (bat == null));
         log.info("Local User SVC Profile user isNull : " + (user == null));

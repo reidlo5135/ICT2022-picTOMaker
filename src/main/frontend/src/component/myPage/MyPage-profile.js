@@ -13,7 +13,7 @@ export default function MyPageProfile(){
     const getProf = () => {
         try {
             const jsonProf = JSON.parse(getProfile);
-            console.log('jProf : ', jsonProf);
+            console.log('MyPage-profile jProf : ', jsonProf);
 
             setEmail(jsonProf.email);
             setNickName(jsonProf.nickname);

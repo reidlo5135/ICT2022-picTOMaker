@@ -65,7 +65,7 @@ public class LocalUserJwtProvider {
         log.info("Local Jwt Prov accessToken : " + accessToken);
 
         BaseAccessToken baseAccessToken = BaseAccessToken.builder()
-                .user_id(userId)
+                .local_user_id(userId)
                 .access_token(accessToken)
                 .expires_in(expire_access.getTime())
                 .token_type("bearer")

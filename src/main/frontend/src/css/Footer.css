@@ -49,3 +49,8 @@
 	margin-top:-60px;
 	background-size: contain;
 }
+
+p > a ,a:visited{
+	text-decoration: none;
+	color: black;
+}

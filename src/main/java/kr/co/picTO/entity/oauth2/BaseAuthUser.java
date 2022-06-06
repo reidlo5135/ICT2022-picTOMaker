@@ -1,21 +1,25 @@
 package kr.co.picTO.entity.oauth2;
 
 import kr.co.picTO.entity.BaseTimeEntity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor
+@Setter
 @Entity
 @Table(name = "base_auth_user")
+@NoArgsConstructor
+@AllArgsConstructor
 public class BaseAuthUser extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+//    @ManyToOne
+//    @JoinColumn(name = "bat_id", referencedColumnName = "id")
+//    private BaseAccessToken bat;
 
     @Column(nullable = false)
     private String name;
