@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useHistory} from "react-router";
 import axios from "axios";
 import '../../css/Callback.css';
 
 export default function Callback(){
     const history = useHistory();
+    const [isLogged, setIsLogged] = useState(true);
     const url = new URL(window.location.href);
     let provider;
     const code = new URL(window.location.href).searchParams.get("code");
@@ -36,14 +37,15 @@ export default function Callback(){
             console.log('res data : ', response.data);
             console.log('res data.data : ', response.data.data);
 
-            const access_token = response.data.data.access_token;
-            const refresh_token = response.data.data.refresh_token;
-
-            localStorage.setItem("access_token", access_token);
-            localStorage.setItem("refresh_token", refresh_token);
-            localStorage.setItem("provider", provider);
-
             if(response.data.code === 0) {
+                const access_token = response.data.data.access_token;
+                const refresh_token = response.data.data.refresh_token;
+
+                setIsLogged(true);
+                localStorage.setItem("access_token", access_token);
+                localStorage.setItem("refresh_token", refresh_token);
+                localStorage.setItem("provider", provider);
+
                 history.push("/");
             } else {
                 alert("An ERROR OCCURRED" + response.data.code);
