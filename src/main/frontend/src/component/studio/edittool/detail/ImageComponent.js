@@ -19,7 +19,7 @@ export default function ImageComponent(props) {
                 })
             }
         }
-    })
+    });
 
     const Input = styled('input')({
         display: 'none',
@@ -37,5 +37,5 @@ export default function ImageComponent(props) {
                 </ThemeProvider>
             </label>
         </>
-    )
+    );
 }

@@ -17,8 +17,7 @@ const TestPose = forwardRef((props,ref) => {
             // console.log(JSON.parse(item));
             document.location.href = "/edit"
         }
-    }))
-
+    }));
 
     let [result, setResult] = useState(null);
 
@@ -70,7 +69,6 @@ const TestPose = forwardRef((props,ref) => {
             // 머리
             drawHead(result[0].x,result[0].y,canvasCtx,640,480,"15","000000");
         }
-
         console.log(result)
     }
 
@@ -96,7 +94,7 @@ const TestPose = forwardRef((props,ref) => {
         pose.onResults(onResults);
 
         pose.send({image : imageElement});
-    }) 
+    });
 
     return (
         <>

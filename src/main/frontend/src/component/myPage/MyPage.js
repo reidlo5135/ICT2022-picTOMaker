@@ -49,9 +49,7 @@ export default function MyPageContent(){
                         <img src={Logo} alt="Logo" style={{width:"40%",height:"40%"}}/>
                     </div>
                 </Link>
-
                 <GetProfile />
-
                 <div className='MyPage-Menu'>
                     <p onClick={()=> {
                         confirmMode("profile")
@@ -65,7 +63,7 @@ export default function MyPageContent(){
                         confirmMode("sharepic")
                     }}>공유한 픽토그램</p>
                     <Link to="/qna" className='qna-link'>
-                    <p>문의하기</p>
+                        <p>문의하기</p>
                     </Link>
                     <p>회원탈퇴</p>
                 </div>

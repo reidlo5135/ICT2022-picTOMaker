@@ -13,8 +13,8 @@ export function DeviceCheck() {
                 devices.forEach((device)=> {
                     // 인식된 디바이스에 관한 정보 출력
                     console.log(device.kind + ": " + device.label + " id = " + device.devicId);
-                })
-            })
+                });
+            });
         }
        
         return true;
@@ -26,8 +26,7 @@ export function DeviceCheck() {
 
 export function getStream() {
     return "디바이스 스트림"
-    navigator.mediaDevices.getUserMedia({audio:false, video:true})
-    .then((stream)=> {
+    navigator.mediaDevices.getUserMedia({audio:false, video:true}).then((stream)=> {
         return stream;
-    })
+    });
 }
