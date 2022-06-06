@@ -1,6 +1,6 @@
 import {Pose} from '@mediapipe/pose'
 import * as cam from '@mediapipe/camera_utils'
-import { useEffect, useRef, useState,forwardRef,useImperativeHandle } from 'react'
+import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
 import {drawHead, drawLine} from '../util/DrawingUtils'
 
 // Static Image를 통해 인체 모델을 테스트합니다.
@@ -15,8 +15,7 @@ const CamPose = forwardRef((props,ref)=> {
             // console.log(JSON.parse(item));
             document.location.href = "/edit"
         }
-    }))
-
+    }));
 
     let result = null;
     const webcamRef = useRef(null);
@@ -48,7 +47,6 @@ const CamPose = forwardRef((props,ref)=> {
             // 우측 팔
             drawLine(result[11].x,result[11].y,result[13].x,result[13].y,canvasCtx,640,480,"15","000000") // 어깨 -> 팔꿈치
             drawLine(result[13].x,result[13].y,result[15].x,result[15].y,canvasCtx,640,480,"15","000000") // 팔꿈치 -> 손목
-            
 
             // 좌측 상체
             drawLine(result[12].x,result[12].y,result[24].x,result[24].y,canvasCtx,640,480,"15","000000")
@@ -67,21 +65,17 @@ const CamPose = forwardRef((props,ref)=> {
 
             // 머리
             drawHead(result[0].x,result[0].y,canvasCtx,640,480,"15","000000");
-
         }
-
-        
     }
 
     useEffect(()=> {
-        
         console.log("CamPose Mounting Start")
 
         const userVideoElement = document.getElementById("user-video");
 
         const pose = new Pose({locateFile : (file) => {
-            return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
-          }})
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
+        }});
 
         // 포즈 설정값
         pose.setOptions({
@@ -102,11 +96,8 @@ const CamPose = forwardRef((props,ref)=> {
             width : 640,
             height : 480
         });
-
         camera.start();
-
-        
-    }) 
+    });
 
     return (
         <>
