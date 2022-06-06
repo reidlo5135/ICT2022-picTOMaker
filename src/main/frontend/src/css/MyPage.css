@@ -89,6 +89,7 @@
 }
 .MyPage-footer span{
     margin: 0 2% 0 2%;
+    cursor: pointer;
 }
 
 .Copyright{
