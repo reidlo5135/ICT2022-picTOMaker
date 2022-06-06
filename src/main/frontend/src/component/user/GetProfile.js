@@ -5,7 +5,6 @@ import "../../css/MyPage.css";
 import "../../css/font.css";
 
 const GetProfile = () => {
-
     const getProfile = localStorage.getItem('profile');
 
     const [email, setEmail] = useState();

@@ -9,8 +9,7 @@ const Mypic = () => {
             <div className='pic-div'>
                 <div className='pic-cont'>
                     <div className='pic-colorbox'/>
-                    <div className='pic-img'>
-                    </div>
+                    <div className='pic-img'></div>
                     <p className='pic-name'>picname</p>
                     <div className='pic-btns'>
                         <button className='pic-download pic-btn'>
@@ -27,10 +26,10 @@ const Mypic = () => {
 }
 export default function MyPageMyPic(){
     return (
-            <div className='MyPage-Right'>
-                <div className='right-flex'>
-                    <Mypic/>
-               </div>
+        <div className='MyPage-Right'>
+            <div className='right-flex'>
+                <Mypic/>
             </div>
+        </div>
     );
 }
