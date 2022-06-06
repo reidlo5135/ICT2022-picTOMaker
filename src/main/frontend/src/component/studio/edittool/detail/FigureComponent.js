@@ -27,7 +27,7 @@ export default function FigureComponent(props) {
                 fill : hex,
                 width : 20,
                 height : 20
-            }))
+            }));
         } else if (figure === "사각형") {
             canvas.add(new fabric.Rect({
                 left : 0,
@@ -35,7 +35,7 @@ export default function FigureComponent(props) {
                 fill : hex,
                 width : 20,
                 height : 20
-            }))
+            }));
         } else if (figure ==="둥근 사각형") {
             canvas.add(new fabric.Rect({
                 left : 0,
@@ -45,7 +45,7 @@ export default function FigureComponent(props) {
                 height : 20,
                 rx : 5,
                 ry : 5
-            }))
+            }));
         } else if (figure === "원") {
             console.log("원 추가")
             canvas.add(new fabric.Circle({
@@ -53,7 +53,7 @@ export default function FigureComponent(props) {
                 top : 0,
                 fill : hex,
                 radius: 30
-            }))
+            }));
         } else if (figure === "타원") {
             console.log("타원 추가")
             canvas.add(new fabric.Ellipse({
@@ -64,7 +64,7 @@ export default function FigureComponent(props) {
                 rx : 80,
                 ry : 40
                 
-            }))
+            }));
         }
     }
     
@@ -115,8 +115,7 @@ export default function FigureComponent(props) {
                 }}>추가</Button>
                 </ThemeProvider>
                 </div>
-               
             </div>
         </>
-    )
+    );
 }

@@ -20,10 +20,21 @@ export default function Main(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
+    const [isLogged, setIsLogged] = useState(false);
+
     const history = useHistory();
+    const access_token = localStorage.getItem("access_token");
 
     const openModal = () => {
-        setModalOpen(true);
+        if(access_token === null && isLogged === false) {
+            console.log('access_token : ', access_token);
+            console.log('Main isLogged : ', isLogged);
+            setModalOpen(true);
+        } else {
+            console.log('access_token : ', access_token);
+            console.log('Main isLogged : ', isLogged);
+            history.push("/select");
+        }
     }
     const closeModal = () => {
         setModalOpen(false);
@@ -62,6 +73,7 @@ export default function Main(){
                         const access_token = response.data.data.access_token;
                         const refresh_token = response.data.data.refresh_token;
 
+                        setIsLogged(true);
                         localStorage.setItem("access_token", access_token);
                         localStorage.setItem("refresh_token", refresh_token);
                         localStorage.setItem("provider", "LOCAL");

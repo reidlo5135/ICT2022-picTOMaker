@@ -17,7 +17,6 @@ export default function PencilComponent(props) {
     const thickChange = (event,newValue) => {
         canvas.freeDrawingBrush.width = newValue;
     }
-    
 
     const handleChange = (event) => {
         const colorName = event.target.value;
@@ -87,5 +86,5 @@ export default function PencilComponent(props) {
                 </div>
             </div>
         </>
-    )
+    );
 }
