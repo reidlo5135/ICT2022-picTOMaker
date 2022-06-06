@@ -11,7 +11,7 @@ export default function Modal(props){
                         {header}
                     </header>
                     <main>
-                            <span className={'modal-span'}>
+                        <span className={'modal-span'}>
                                 <button className="close" onClick={close}>
                                     &times;
                                 </button>

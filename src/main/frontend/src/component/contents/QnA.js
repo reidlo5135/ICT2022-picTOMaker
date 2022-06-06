@@ -1,17 +1,56 @@
-import React from 'react';
+import React , {useState}from 'react';
 import emailjs from 'emailjs-com';
 import Logo from "../../image/Logo.png";
 import "../../App.css"
 import "../../css/QnA.css"
 import { Link } from "react-router-dom";
-
+import { motion } from "framer-motion";
+import ReactPlayer from 'react-player/lazy';
+import Postani1 from "../../image/postcar.png";
+import Postani2 from "../../image/email.png";
 
 export default function QnA() {
+    const [isOpen, setIsOpen] = useState(false)
+    const [inputValue, setInputValue] = useState({
+        name: '',
+        email: '',
+        qna: ''
+    });
+
+    const { name, email, qna} = inputValue;
+
+    const isValidName = name.length >= 1;
+    const isValidEmail = email.includes('@') && email.includes('.');
+    const isValidQna = qna.length >= 1;
+
+    const handleInput = e => {
+        const { name, value } = e.target;
+        setInputValue({
+            ...inputValue,
+            [name]: value,
+        });
+    };
+
+    const isValidInput = name.length >= 1 && email.length >= 1 &&  qna.length >= 1;
+
+    const getIsActive = isValidEmail && isValidName && isValidQna === true;
+    const getIsOpen = isOpen === true;
+
+    function onChangeIsopen() {
+        setIsOpen(!isOpen);
+        alert("문의가 전송 되었습니다.");
+        
+        /* setTimeout(() => {
+            window.location.reload();
+        }, 2500); */
+        
+        
+    }
 
     function sendEmail(e){
         e.preventDefault();
 
-        emailjs.sendForm(
+    /*  emailjs.sendForm(
             'service_kdh',
             'template_xw0dnqc',
             e.target,
@@ -19,8 +58,8 @@ export default function QnA() {
             ).then(res=>{
                 console.log(res);
                 alert('문의내용이 전송 되었습니다.');
-                window.location.reload();
-            }).catch(err => console.log(err));
+                console.log(isOpen);
+            }).catch(err => console.log(err));  */
     }
 
     return(
@@ -47,27 +86,56 @@ export default function QnA() {
                 </div>
             </Link>
 
-            <form onSubmit={sendEmail}>
-                <div className='qna-form'>
+            <motion.form onSubmit={sendEmail}
+             animate={isOpen ? "open" : "closed"}
+             variants={{
+             open: {  opacity: 0, x: 0 },
+             closed: {  opacity: 1, x: 0 }
+             }} >
+            <div class="center">
+                <div class="phone">
+                    <div class="notch">
+                        <div class="mic" />
+                        <div class="camera" />
+                    </div>
+
+                    <div className='qna-form'>
                     <div className='qna-left'>
                         <div className='left-input'>
                             <label>성함</label><br/>
-                            <input type="text" name="user_name" placeholder="성함을 입력하세요"/><br/>
+                            <input type="text" name="name" placeholder="성함을 입력하세요" onChange={handleInput}/><br/>
 
                             <label>이메일</label><br/>
-                            <input type="email" name="user_email" placeholder="이메일을 입력하세요"/>
+                            <input type="email" name="email" placeholder="이메일을 입력하세요" onChange={handleInput}/>
                         </div>
                         </div>
 
                         <div className='qna-right'>
                             <div className='right-input'>
                             <label>문의사항</label><br/>
-                            <textarea name='message' rows='50' className='textareat' placeholder="문의사항을 입력하세요."/>
+                            <textarea name='qna' rows='50' className='textareat' placeholder="문의사항을 입력하세요."  onChange={handleInput}/>
                         </div>
                     </div>
-                    <input type='submit' value='문의하기' className='sendbutton'/>
+                    <input type='submit' value='문의하기' className={getIsActive ? 'sendbutton' : 'sendinbutton'} disabled={getIsActive ?  false : true} onClick={onChangeIsopen}
+                   
+                    />
                 </div>
-            </form>
+                </div>
+            </div>
+                
+            </motion.form>
+
+            <motion.div className='mail-ani'
+            onSubmit={sendEmail}
+             animate={isOpen ? "open" : "closed"}
+             variants={{
+             open: {  opacity: 1,x: 1500},
+             closed: {  opacity: 0, x:0}
+             }} >
+                 <img src={Postani1} alt="Post-animation" className={getIsOpen ? 'postcar' : 'postcar2'}/>
+                 <img src={Postani2} alt="Post-animation" className={getIsOpen ? 'postmail' : 'postmail2'} style={{width:"150px",height:"70px"}}/>
+             </motion.div>
+             
         </div>
         </div>
     );

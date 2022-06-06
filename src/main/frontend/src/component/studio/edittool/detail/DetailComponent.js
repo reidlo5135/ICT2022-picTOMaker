@@ -6,7 +6,6 @@ import TextComponent from "./TextComponent";
 export default function DetailComponent (props) {
     const mode = props.mode;
     const canvas = props.canvas;
-
     
     if (mode === "pencil") 
         return (<PencilComponent canvas={canvas}/>);
@@ -18,5 +17,4 @@ export default function DetailComponent (props) {
         return (<TextComponent/>);
     else 
         return (<></>)
-    
 }
