@@ -29,7 +29,7 @@
 <img src="https://img.shields.io/badge/Adobe XD-FF61F6?style=for-the-badge&logo=Adobe XD&logoColor=white">
 
 - Design - Figma, Adobe Xd
-- Frontend - React.js, HTML5, CSS3, JavaScript
+- Frontend - React.js, HTML5, CSS3, JavaScript, MediaPipe
 - Backend - Spring Boot, Spring Security, OAuth2.0, REST API, Swagger, Json Web Token, JAVA
 - Database - MySQL, Spring Data JPA, AWS RDS, AWS S3
 - WAS - Apache Tomcat, AWS EC2
