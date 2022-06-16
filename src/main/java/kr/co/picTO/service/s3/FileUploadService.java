@@ -88,10 +88,12 @@ public class FileUploadService {
         List<String> result = new ArrayList<>();
         try {
             if(provider.equals("LOCAL")) {
-                BaseLocalUser blu = localUserRepo.findByEmail(email).orElseThrow(CustomUserExistException::new);
+                BaseLocalUser blu = localUserRepo.findByEmailAndProvider(email, provider).orElseThrow(CustomUserExistException::new);
+                log.info("File SVC getPicTo findByEmail&Prov blu : " + blu);
                 email = blu.getEmail();
             } else {
-                BaseAuthUser bau = authUserRepo.findByEmail(email).orElseThrow(CustomUserNotFoundException::new);
+                BaseAuthUser bau = authUserRepo.findByEmailAndProvider(email, provider).orElseThrow(CustomUserNotFoundException::new);
+                log.info("File SVC getPicTo findByEmail&Prov bau : " + bau);
                 email = bau.getEmail();
             }
             baseS3Image = imageRepo.findByEmail(email).orElseThrow();
