@@ -3,6 +3,7 @@ package kr.co.picTO.controller.v1;
 import io.swagger.annotations.Api;
 import kr.co.picTO.model.response.ListResult;
 import kr.co.picTO.model.response.SingleResult;
+import kr.co.picTO.service.response.ResponseLoggingService;
 import kr.co.picTO.service.response.ResponseService;
 import kr.co.picTO.service.s3.FileUploadService;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,11 @@ import java.util.Map;
 @RequestMapping(value = "/v1/upload")
 public class FileUploadController {
 
+    private static final String className = FileUploadController.class.toString();
+
     private final FileUploadService fileUploadService;
     private final ResponseService responseService;
+    private final ResponseLoggingService loggingService;
 
     @PostMapping(value = "/register/{email}/{provider}")
     public ResponseEntity<SingleResult<String>> uploadFile(@RequestBody Map<String, String> octet, @PathVariable String email, @PathVariable String provider) {
@@ -94,9 +98,7 @@ public class FileUploadController {
             log.info("File Upload Controller uploadFile file : " + file);
 
             SingleResult<String> result = responseService.getSingleResult(file);
-            log.info("File Upload Controller uploadFile result getC : " + result.getCode());
-            log.info("File Upload Controller uploadFile result getD : " + result.getData());
-            log.info("File Upload Controller uploadFile result getM : " + result.getMsg());
+            loggingService.singleResultLogging(className, "uploadFile", result);
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -120,9 +122,7 @@ public class FileUploadController {
             log.info("File Upload Controller getPicTo list : " + list);
 
             ListResult<String> result = responseService.getListResult(list);
-            log.info("File Upload Controller getPicTo result getC : " + result.getCode());
-            log.info("File Upload Controller getPicTo result getL : " + result.getList());
-            log.info("File Upload Controller getPicTo result getM : " + result.getMsg());
+            loggingService.listResultLogging(className, "getPicTo", result);
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);

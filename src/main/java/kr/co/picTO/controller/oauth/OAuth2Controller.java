@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import kr.co.picTO.dto.social.ProfileDTO;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
 import kr.co.picTO.model.response.SingleResult;
+import kr.co.picTO.service.response.ResponseLoggingService;
 import kr.co.picTO.service.response.ResponseService;
 import kr.co.picTO.service.security.OAuth2ProviderService;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,11 @@ import java.util.Map;
 @RequestMapping(value = "/oauth2")
 public class OAuth2Controller {
 
+    private static final String className = OAuth2Controller.class.toString();
+
     private final OAuth2ProviderService OAuth2ProviderService;
     private final ResponseService responseService;
+    private final ResponseLoggingService loggingService;
 
     @PostMapping(value = "/token/{provider}")
     public ResponseEntity<SingleResult<BaseAccessToken>> generateToken(@RequestBody Map<String, String> code, @PathVariable String provider) {
@@ -39,9 +43,7 @@ public class OAuth2Controller {
             OAuth2ProviderService.saveAccessToken(baseAccessToken);
 
             SingleResult<BaseAccessToken> result = responseService.getSingleResult(baseAccessToken);
-            log.info("Prov Controller token result getC : " + result.getCode());
-            log.info("Prov Controller token result getD : " + result.getData());
-            log.info("Prov Controller token result getM : " + result.getMsg());
+            loggingService.singleResultLogging(className, "generateToken", result);
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -73,9 +75,7 @@ public class OAuth2Controller {
             }
 
             SingleResult result = responseService.getSingleResult(profileDTO);
-            log.info("Prov Controller prof result getC : " + result.getCode());
-            log.info("Prov Controller prof result getD : " + result.getData());
-            log.info("Prov Controller prof result getM : " + result.getMsg());
+            loggingService.singleResultLogging(className, "getProfile", result);
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -98,9 +98,7 @@ public class OAuth2Controller {
             Integer id = OAuth2ProviderService.deleteToken(access_token);
 
             SingleResult result = responseService.getSingleResult(id);
-            log.info("Prov Controller prof result getC : " + result.getCode());
-            log.info("Prov Controller prof result getD : " + result.getData());
-            log.info("Prov Controller prof result getM : " + result.getMsg());
+            loggingService.singleResultLogging(className, "inValidRefreshToken", result);
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
