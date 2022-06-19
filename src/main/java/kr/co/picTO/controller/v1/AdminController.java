@@ -7,6 +7,7 @@ import kr.co.picTO.model.response.CommonResult;
 import kr.co.picTO.model.response.ListResult;
 import kr.co.picTO.model.response.SingleResult;
 import kr.co.picTO.service.local.LocalUserService;
+import kr.co.picTO.service.response.ResponseLoggingService;
 import kr.co.picTO.service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -21,8 +22,11 @@ import java.util.List;
 @RequestMapping(value = "/v1/admin")
 public class AdminController {
 
+    private static final String className = AdminController.class.toString();
+
     private final LocalUserService userService;
     private final ResponseService responseService;
+    private final ResponseLoggingService loggingService;
 
     @ApiImplicitParams({
             @ApiImplicitParam(
@@ -39,7 +43,9 @@ public class AdminController {
         LocalUserResponseDto localUserResponseDto = userService.findById(userId);
         log.info("Admin Controller read by Id : " + localUserResponseDto);
 
-        return responseService.getSingleResult(localUserResponseDto);
+        SingleResult result = responseService.getSingleResult(localUserResponseDto);
+        loggingService.singleResultLogging(className, "findUserById", result);
+        return result;
     }
 
     @ApiImplicitParams({
@@ -57,7 +63,10 @@ public class AdminController {
         LocalUserResponseDto localUserResponseDto = userService.findByEmail(email);
         log.info("Admin Controller read by Email : " + localUserResponseDto);
 
-        return responseService.getSingleResult(localUserResponseDto);
+        SingleResult result = responseService.getSingleResult(localUserResponseDto);
+        loggingService.singleResultLogging(className, "findUserByEmail", result);
+
+        return result;
     }
 
     @ApiImplicitParams({
@@ -73,7 +82,10 @@ public class AdminController {
         List<LocalUserResponseDto> list = userService.findAllUser();
         log.info("Admin Controller read Entire List : " + list);
 
-        return responseService.getListResult(list);
+        ListResult result = responseService.getListResult(list);
+        loggingService.listResultLogging(className, "findAllUser", result);
+
+        return result;
     }
 
     @ApiImplicitParams({
@@ -94,7 +106,10 @@ public class AdminController {
         Long result = userService.update(userId, userRequestDto);
         log.info("Admin Controller DTO, result : " + userRequestDto + ", " + result);
 
-        return responseService.getSingleResult(result);
+        SingleResult result1 = responseService.getSingleResult(result);
+        loggingService.singleResultLogging(className, "update", result1);
+
+        return result1;
     }
 
     @ApiImplicitParams({

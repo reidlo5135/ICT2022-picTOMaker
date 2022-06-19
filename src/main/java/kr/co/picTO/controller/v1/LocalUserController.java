@@ -11,6 +11,7 @@ import kr.co.picTO.dto.token.LocalTokenDto;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
 import kr.co.picTO.model.response.SingleResult;
 import kr.co.picTO.service.local.LocalUserService;
+import kr.co.picTO.service.response.ResponseLoggingService;
 import kr.co.picTO.service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -32,8 +33,11 @@ import java.util.Map;
 @RequestMapping(value = "/v1/user")
 public class LocalUserController {
 
+    private static final String className = LocalUserController.class.toString();
+
     private final LocalUserService userService;
     private final ResponseService responseService;
+    private final ResponseLoggingService loggingService;
 
     @ApiOperation(value = "로그인", notes = "Login By Email")
     @PostMapping(value = "/login")
@@ -43,13 +47,10 @@ public class LocalUserController {
 
         try {
             BaseAccessToken baseAccessToken = userService.login(localUserLoginRequestDto);
+            log.info("Local User Controller Login Token : " + baseAccessToken);
 
             SingleResult<BaseAccessToken> result = responseService.getSingleResult(baseAccessToken);
-
-            log.info("Local User Controller Login Token : " + baseAccessToken);
-            log.info("Local User Controller Login result getC : " + result.getCode());
-            log.info("Local User Controller Login result getD : " + result.getData());
-            log.info("Local User Controller Login result getM : " + result.getMsg());
+            loggingService.singleResultLogging(className, "loginAndCreateToken", result);
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -74,9 +75,7 @@ public class LocalUserController {
             Long signUpId = userService.signUp(localUserSignUpRequestDto);
 
             SingleResult<Long> result = responseService.getSingleResult(signUpId);
-            log.info("Local User Controller Sign result getC : " + result.getCode());
-            log.info("Local User Controller Sign result getD : " + result.getData());
-            log.info("Local User Controller Sign result getM : " + result.getMsg());
+            loggingService.singleResultLogging(className, "save", result);
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -101,9 +100,7 @@ public class LocalUserController {
             log.info("Local Controller pDTO : " + profileDTO);
 
             SingleResult result = responseService.getSingleResult(profileDTO);
-            log.info("Local Controller prof result getC : " + result.getCode());
-            log.info("Local Controller prof result getD : " + result.getData());
-            log.info("Local Controller prof result getM : " + result.getMsg());
+            loggingService.singleResultLogging(className, "getProfile", result);
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -125,12 +122,10 @@ public class LocalUserController {
 
         try {
             BaseAccessToken bat = tokenDto.toEntity(tokenDto.getAccessToken(), tokenDto.getRefreshToken());
-            SingleResult<BaseAccessToken> result = responseService.getSingleResult(userService.reissue(bat));
-
             log.info("Local Controller Reissue bat : " + bat.getAccess_token() + ", " + bat.getRefresh_token());
-            log.info("Local User Controller Reissue result getC : " + result.getCode());
-            log.info("Local User Controller Reissue result getD : " + result.getData());
-            log.info("Local User Controller Reissue result getM : " + result.getMsg());
+
+            SingleResult<BaseAccessToken> result = responseService.getSingleResult(userService.reissue(bat));
+            loggingService.singleResultLogging(className, "reissue", result);
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
