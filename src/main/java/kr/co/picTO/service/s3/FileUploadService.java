@@ -78,7 +78,7 @@ public class FileUploadService {
             }
             imageRepo.save(image);
         } catch (IOException e) {
-            throw new IllegalArgumentException(String.format("파일 변환 중 에러가 발생했습니다 (%s) : ", file.getOriginalFilename()));
+            throw new IllegalArgumentException(String.format("FILE SVC uploadImg 파일 변환 중 에러가 발생했습니다 파일명 -> (%s) : ", file.getOriginalFilename()));
         }
         return fileUrl;
     }
@@ -119,7 +119,7 @@ public class FileUploadService {
             log.info("File SVC getFileExtension Ext : " + ext);
             return ext;
         } catch (StringIndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(String.format("잘못된 형식의 파일 (%s) 입니다", fileName));
+            throw new IllegalArgumentException(String.format("FILE SVC getFileExtension 잘못된 형식의 파일입니다 파일명 -> (%s)", fileName));
         }
     }
 }

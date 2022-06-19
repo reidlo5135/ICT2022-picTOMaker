@@ -52,6 +52,7 @@ public class BaseTokenRepoTest {
 
         assertEquals(bat, testEntityManager.find(BaseAccessToken.class, bat.getId()));
         assertEquals("BAT equals", bat.getAccess_token(), TEST_BAT);
+        assertEquals("BAT tokenRepo : ", bat, tokenRepo.findByAccessToken(TEST_BAT));
         LOGGER.info("BAT : " + bat);
     }
 }
