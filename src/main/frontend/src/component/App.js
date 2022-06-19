@@ -7,6 +7,7 @@ import SignUp from "./user/SignUp";
 import Introduce from "../Page/IntroducePage";
 import QnA from "./contents/QnA";
 import Community from "./contents/Community";
+import Terms from "./contents/terms";
 import Callback from "./oauth2/callback";
 import MyPageContent from "./myPage/MyPage";
 import PoseWebStudio from "./studio/poseweb/PoseWebStudio"
@@ -24,7 +25,8 @@ export default function App(){
                     <Route path = '/myPage' component={MyPageContent}/>
                     <Route path = '/introduce' component={Introduce}/>
                     <Route path = '/qna' component={QnA}/>
-                    <Route path = 'community' component={Community}/>
+                    <Route path = '/community' component={Community}/>
+                    <Route path = '/terms' component={Terms}/>
                     <Route path = '/oauth2/redirect/kakao' component={Callback} />
                     <Route path='/oauth2/redirect/naver' component={Callback} />
                     <Route path='/oauth2/redirect/google' component={Callback} />
