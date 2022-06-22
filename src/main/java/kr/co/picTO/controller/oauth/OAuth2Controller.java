@@ -33,7 +33,7 @@ public class OAuth2Controller {
     @PostMapping(value = "/token/{provider}")
     public ResponseEntity<SingleResult<BaseAccessToken>> generateToken(@RequestBody Map<String, String> code, @PathVariable String provider) {
         ResponseEntity<SingleResult<BaseAccessToken>> ett = null;
-        log.info("Prov Controller code : " + code.get("code"));
+        loggingService.httpPathStrLoggingWithRequest(className, "generateToken", code.get("code"), provider, "");
 
         try {
             BaseAccessToken baseAccessToken = OAuth2ProviderService.generateAccessToken(code.get("code"), provider);
@@ -60,8 +60,7 @@ public class OAuth2Controller {
     @PostMapping(value = "/profile/{provider}")
     public ResponseEntity<SingleResult<ProfileDTO>> getProfile(@RequestBody Map<String, String> access_token, @PathVariable String provider) {
         ResponseEntity<SingleResult<ProfileDTO>> ett = null;
-        log.info("Prov Controller access_token : " + access_token.get("access_token"));
-        log.info("Prov Controller prov : " + provider);
+        loggingService.httpPathStrLoggingWithRequest(className, "getProfile", access_token.get("access_token"), provider, "");
 
         try {
             ProfileDTO profileDTO;
@@ -92,7 +91,7 @@ public class OAuth2Controller {
     @DeleteMapping(value = "/token/invalid/{access_token}")
     public ResponseEntity<SingleResult<Long>> inValidAndRefreshToken(@PathVariable String access_token) {
         ResponseEntity<SingleResult<Long>> ett = null;
-        log.info("Prov Controller access_token : " + access_token);
+        loggingService.httpPathStrLogging(className, "inValidAndRefreshToken", access_token, "");
 
         try {
             Integer id = OAuth2ProviderService.deleteToken(access_token);
