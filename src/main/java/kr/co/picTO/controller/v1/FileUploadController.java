@@ -43,9 +43,7 @@ public class FileUploadController {
     @PostMapping(value = "/register/{email}/{provider}")
     public ResponseEntity<SingleResult<String>> uploadFile(@RequestBody Map<String, String> octet, @PathVariable String email, @PathVariable String provider) {
         ResponseEntity<SingleResult<String>> ett = null;
-        log.info("File Upload Controller uploadFile octet : " + octet);
-        log.info("File Upload Controller uploadFile email : " + email);
-        log.info("File Upload Controller uploadFile provider : " + provider);
+        loggingService.httpPathStrLoggingWithRequest(className, "uploadFile", octet.get("image"), email, provider);
 
         String[] strings = octet.get("image").split(",");
         String extension;
@@ -115,8 +113,8 @@ public class FileUploadController {
     @PostMapping(value = "/get/picTO/{email}/{provider}")
     public ResponseEntity<ListResult<String>> getPicTo(@PathVariable String email, @PathVariable String provider) {
         ResponseEntity<ListResult<String>> ett = null;
-        log.info("File Upload Controller getPicTo email : " + email);
-        log.info("File Upload Controller getPicTo provider : " + provider);
+        loggingService.httpPathStrLogging(className, "getPicTo", email, provider);
+
         try {
             List<String> list = fileUploadService.getPicToByEmail(email, provider);
             log.info("File Upload Controller getPicTo list : " + list);
