@@ -11,12 +11,6 @@ spring:
     activate:
       on-profile: local
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://ict2022-picto-db.cxogw3mpnveh.ap-northeast-2.rds.amazonaws.com/picTODB?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&useUnicode=true&serverTimezone=Asia/Seoul
-    username: picTOAdmin
-    password: III!2022
-
   jpa:
     show-sql: true
     hibernate:
