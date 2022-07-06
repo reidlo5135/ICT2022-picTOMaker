@@ -5,8 +5,6 @@ import kr.co.picTO.model.response.SingleResult;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 @Log4j2
 @Service
 public class ResponseLoggingService {
