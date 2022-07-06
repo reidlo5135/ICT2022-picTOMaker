@@ -1,9 +1,10 @@
 # **픽토메이커(22_HF168)**
 2022년 한이음 ICT 멘토링 프로젝트<br><br>
-2022-03-02 ~ 2022-11-30<br><br>
+2022-03-02 ~ <br>
 멘토: 오은석<br>
 멘티: 진승범, 강준모, 김동호, 서동근<br>
-<b>VERSION: 1.1.0</b>
+<b>VERSION: 1.1.0</b><br>
+<b><a href="https://github.com/reidlo5135/ICT2022-picTOMaker-v2.0.0">-> Node-Express.js Version(v2.0.0)</a></b>
 
 ## **픽토메이커란?**
 <b>픽토그램(pictogram)</b>이란 그림문자 또는 픽토는 의미하고자 하는 바를 직접적으로 묘사한 그림을 통해 의미를 전달하는 표의 문자입니다. <br><br>
@@ -14,23 +15,25 @@
 <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white">
 <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white"></span>
 <img src="https://img.shields.io/badge/Swagger-6DB33F?style=for-the-badge&logo=Swagger&logoColor=white"></span>
-<img src="https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=JUnit5&logoColor=white"><br>
+<img src="https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=JUnit5&logoColor=white">
 <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"><br>
 <img src="https://img.shields.io/badge/JAVASCRIPT-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
 <img src="https://img.shields.io/badge/react-0769AD?style=for-the-badge&logo=react&logoColor=White">
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-<img src="https://img.shields.io/badge/git kraken-179287?style=for-the-badge&logo=gitkraken&logoColor=white"><br>
+<img src="https://img.shields.io/badge/git kraken-179287?style=for-the-badge&logo=gitkraken&logoColor=white">
 <img src="https://img.shields.io/badge/GRADLE-efefef?style=for-the-badge&logo=gradle&logoColor=white">
-<img src="https://img.shields.io/badge/AMAZON AWS-232F3E?style=for-the-badge&logo=amazon AWS&logoColor=white">
+<img src="https://img.shields.io/badge/AMAZON AWS-232F3E?style=for-the-badge&logo=amazon AWS&logoColor=white"><br>
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
 <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white">
 <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
 <img src="https://img.shields.io/badge/Adobe XD-FF61F6?style=for-the-badge&logo=Adobe XD&logoColor=white">
+<img src="https://img.shields.io/badge/Intellij IDEA-000000?style=for-the-badge&logo=IntelliJ Idea&logoColor=white">
+<img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white"></span>
 
 - Design - Figma, Adobe Xd
-- Frontend - React.js, HTML5, CSS3, JavaScript, MediaPipe
+- Frontend - React.js, HTML5, CSS3, JavaScript, MediaPipe, TensorFlow
 - Backend - Spring Boot, Spring Security, OAuth2.0, REST API, Swagger, Json Web Token, JAVA
 - Database - MySQL, Spring Data JPA, AWS RDS, AWS S3
 - WAS - Apache Tomcat, AWS EC2
