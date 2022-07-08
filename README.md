@@ -4,7 +4,8 @@
 멘토: 오은석<br>
 멘티: 진승범, 강준모, 김동호, 서동근<br>
 <b>VERSION: 1.1.0</b><br>
-<b><a href="https://github.com/reidlo5135/ICT2022-picTOMaker-v2.0.0">-> Node-Express.js Version(v2.0.0)</a></b>
+<b><a href="https://github.com/reidlo5135/ICT2022-picTOMaker-v2.0.0">-> Node-Express.js Version(v2.0.0)</a></b><br>
+<b><a href="https://github.com/reidlo5135/ICT2022-picTOMaker-v2.0.0/tree/dev-2.1.0">-> Node-Express.ts Version(v2.1.0)</a></b><br>
 
 ## **픽토메이커란?**
 <b>픽토그램(pictogram)</b>이란 그림문자 또는 픽토는 의미하고자 하는 바를 직접적으로 묘사한 그림을 통해 의미를 전달하는 표의 문자입니다. <br><br>
