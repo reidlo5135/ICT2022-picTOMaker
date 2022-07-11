@@ -12,3 +12,7 @@ th{
     width: 200px;
     border: 1px solid rebeccapurple;
 }
+td{
+    width: 200px;
+    border-right: 1px solid rebeccapurple;
+}
