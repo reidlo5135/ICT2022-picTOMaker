@@ -47,17 +47,21 @@ export default function Community(){
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+
                                 {users.map(user => {
-                                        return (<td key={user.id}>
-                                            {user.name}
-                                        </td>)
+                                        return (<tr key={user.id}>
+                                            <th>{user.name}</th>
+                                            <th>{user.username}</th>
+                                            <th>{user.email}</th>
+                                            <th>{user.address.street}</th>
+                                            <th>{user.company.name}</th>
+                                            <th>{user.company.catchPhrase}</th>
+                                        </tr>)
                                     })}
 {/*                                     <td> 1 </td>
                                     <td> 2 </td>
                                     <td> 3</td>
-                                    <td> 4 </td> */}
-                                </tr>     
+                                    <td> 4 </td> */}     
                             </tbody>
                         </table>
                     </div>
