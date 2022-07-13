@@ -1,0 +1,18 @@
+.Community{
+    width: 1280px;
+    margin: 0 auto;
+    text-align:center;
+}
+
+.commu-table{
+    margin: 0 auto;
+}
+
+th{
+    width: 200px;
+    border: 1px solid rebeccapurple;
+}
+td{
+    width: 200px;
+    border-right: 1px solid rebeccapurple;
+}
