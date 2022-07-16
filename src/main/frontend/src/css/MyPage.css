@@ -162,7 +162,8 @@
     height: 80px;
     border-radius: 75px;
     position: absolute;
-    transform: translate(-45%, 6%);
+    transform: translate(-50%, 0%);
+    object-fit: cover;
 }
 
 .pic-name{
