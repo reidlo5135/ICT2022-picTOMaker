@@ -71,7 +71,7 @@ public class LocalUserService {
         log.info("Local User SVC Profile bat isNull : " + (bat == null));
         log.info("Local User SVC Profile user isNull : " + (user == null));
 
-        ProfileDTO profileDTO = new ProfileDTO(user.getEmail(), user.getNickName(), user.getProfile_image_url());
+        ProfileDTO profileDTO = new ProfileDTO(user.getEmail(), user.getName(), user.getNickName(), user.getProfile_image_url());
         log.info("Local User SVC Profile pDTO isNull : " + (profileDTO == null));
 
         return profileDTO;
@@ -102,6 +102,17 @@ public class LocalUserService {
         log.info("Local User SVC reissue newRefreshToken " + newRefreshToken);
 
         return newRefreshToken;
+    }
+
+    public String findNickNameByEmail(String email) {
+        log.info("Local User SVC findNickNameByEmail email : " + email);
+
+        BaseLocalUser user = userJpaRepo.findByEmail(email)
+                .orElseThrow(CustomUserNotFoundException::new);
+        String nickName = user.getNickName();
+        log.info("Local User SVC findNickNameByEmail nickName : ", nickName);
+
+        return nickName;
     }
 
     @Transactional(readOnly = true)
