@@ -66,7 +66,6 @@ export default function Main(){
                     console.log('res data.data ', response.data.data);
 
                     if(response.data.code === 0){
-                        alert('어서오세요, ' + email + ' 픽토메이커님!');
                         const access_token = response.data.data.access_token;
                         const refresh_token = response.data.data.refresh_token;
 
@@ -75,8 +74,20 @@ export default function Main(){
                         localStorage.setItem("refresh_token", refresh_token);
                         localStorage.setItem("provider", "LOCAL");
 
-                        closeModal();
-                        history.push("/");
+                        axios.post('/v1/api/user/nickname', {
+                            email
+                        }).then((response) => {
+                            console.log('NICKNAME res data : ', response.data);
+                            console.log('NICKNAME res data.data : ', response.data.data);
+                            if(response.data.code === 0) {
+                                const nickName = response.data.data;
+                                alert('어서오세요, ' + nickName + ' 픽토메이커님!');
+                                closeModal();
+                                history.push("/");
+                            } else if(response.data.code === -1) {
+                                alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
+                            }
+                        });
                     } else {
                         alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
                     }

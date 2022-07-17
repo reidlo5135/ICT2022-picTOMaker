@@ -56,7 +56,7 @@ public class LocalUserController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
             ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
-            log.info("Local Controller SingUp ett : " + ett);
+            log.info("Local User Controller SingUp ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
@@ -69,7 +69,7 @@ public class LocalUserController {
     @PostMapping(value = "/signUp")
     public ResponseEntity<SingleResult<Long>> save(@ApiParam(value = "Sign Req DTO", required = true) @RequestBody LocalUserSignUpRequestDto localUserSignUpRequestDto) {
         ResponseEntity<SingleResult<Long>> ett = null;
-        log.info("Local Use Controller Sign localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
+        log.info("Local User Controller Sign localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
 
         try {
             Long signUpId = userService.signUp(localUserSignUpRequestDto);
@@ -81,7 +81,7 @@ public class LocalUserController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
             ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
-            log.info("Local Controller SingUp ett : " + ett);
+            log.info("Local User Controller SingUp ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
@@ -93,11 +93,11 @@ public class LocalUserController {
     @PostMapping(value = "/profile")
     public ResponseEntity<SingleResult<ProfileDTO>> getProfile(@RequestBody Map<String, String> access_token) {
         ResponseEntity<SingleResult<ProfileDTO>> ett = null;
-        log.info("Local Controller access_token : " + access_token.get("access_token"));
+        log.info("Local User Controller access_token : " + access_token.get("access_token"));
 
         try {
             ProfileDTO profileDTO = userService.getProfileLocal(access_token.get("access_token"));
-            log.info("Local Controller pDTO : " + profileDTO);
+            log.info("Local User Controller pDTO : " + profileDTO);
 
             SingleResult result = responseService.getSingleResult(profileDTO);
             loggingService.singleResultLogging(className, "getProfile", result);
@@ -106,7 +106,7 @@ public class LocalUserController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
             ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
-            log.info("Local Controller ett : " + ett);
+            log.info("Local User Controller ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
@@ -118,11 +118,11 @@ public class LocalUserController {
     @PostMapping(value = "/reissue")
     public ResponseEntity<SingleResult<BaseAccessToken>> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody LocalTokenDto tokenDto) {
         ResponseEntity<SingleResult<BaseAccessToken>> ett = null;
-        log.info("Local Controller Reissue tokenDto : ", tokenDto.getAccessToken() + ", " + tokenDto.getRefreshToken());
+        log.info("Local User Controller Reissue tokenDto : ", tokenDto.getAccessToken() + ", " + tokenDto.getRefreshToken());
 
         try {
             BaseAccessToken bat = tokenDto.toEntity(tokenDto.getAccessToken(), tokenDto.getRefreshToken());
-            log.info("Local Controller Reissue bat : " + bat.getAccess_token() + ", " + bat.getRefresh_token());
+            log.info("Local User Controller Reissue bat : " + bat.getAccess_token() + ", " + bat.getRefresh_token());
 
             SingleResult<BaseAccessToken> result = responseService.getSingleResult(userService.reissue(bat));
             loggingService.singleResultLogging(className, "reissue", result);
@@ -131,12 +131,37 @@ public class LocalUserController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
             ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
-            log.info("Local Controller SingUp ett : " + ett);
+            log.info("Local User Controller SingUp ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
         }
 
+        return ett;
+    }
+
+    @PostMapping(value = "/nickname")
+    public ResponseEntity<SingleResult<String>> getNickNameByEmail(@RequestBody Map<String, String> reqBody) {
+        ResponseEntity<SingleResult<String>> ett = null;
+        String email = reqBody.get("email");
+        log.info("Local User Controller getNickNameByEmail email : ", email);
+
+        try {
+            String nickName = userService.findNickNameByEmail(email);
+            log.info("Local User Controller getNickNameByEmaiil nickName : ", nickName);
+
+            SingleResult<String> result = responseService.getSingleResult(nickName);
+            loggingService.singleResultLogging(className, "getNickNameByEmail", result);
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            log.info("Local User Controller getNickNameByEmail ett : " + ett);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Local User Controller getNickNameByEmail error occurred : ", e.getMessage());
+        }
         return ett;
     }
 }

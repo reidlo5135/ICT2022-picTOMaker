@@ -48,6 +48,7 @@ const Profile = () => {
             }).then((response) => {
                 console.log('Local profile res data.data : ', response.data.data);
                 console.log('Local get profile email : ', response.data.data.email);
+                console.log('Local get profile name : ', response.data.data.name);
                 console.log('Local get profile nickname : ', response.data.data.nickname);
                 console.log('Local get profile profile_image_url : ', response.data.data.profile_image_url);
 

@@ -8,6 +8,7 @@ export default function MyPageProfile(){
     const provider = localStorage.getItem('provider');
 
     const [email, setEmail] = useState();
+    const [name, setName] = useState();
     const [nickName, setNickName] = useState();
     const [profileImage, setProfileImage] = useState();
     const [count, setCount] = useState(0);
@@ -31,6 +32,7 @@ export default function MyPageProfile(){
                     console.error(e);
                 });
 
+            setName(jsonProf.name);
             setNickName(jsonProf.nickname);
             setProfileImage(jsonProf.profile_image_url);
         } catch (err) {
@@ -51,6 +53,14 @@ export default function MyPageProfile(){
                 <div className='MenuBox'>
                     <div className='Name'>
                         이름
+                    </div>
+                    <div className='MenuBox-props'>
+                        <b>{name}</b>
+                    </div>
+                </div>
+                <div className='MenuBox'>
+                    <div className='Name'>
+                        닉네임
                     </div>
                     <div className='MenuBox-props'>
                         <b>{nickName}</b>
