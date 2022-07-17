@@ -35,7 +35,7 @@ export default function MyPageContent(){
 
     function Logout() {
         try {
-            axios.delete(`/v1/api//oauth2/token/invalid/${access_token}`)
+            axios.delete(`/v1/api/oauth2/token/invalid/${access_token}`)
                 .then((response) => {
                     console.log('res data : ', response.data);
                     console.log('res data.data : ', response.data.data);

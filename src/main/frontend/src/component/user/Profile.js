@@ -12,6 +12,7 @@ const Profile = () => {
     const [email, setEmail] = useState();
     const [nickName, setNickName] = useState();
     const [profileImage, setProfileImage] = useState();
+    let profile = null;
 
     const getOAuthProf = async () => {
         try {
@@ -23,16 +24,22 @@ const Profile = () => {
                 console.log('OAuth get profile nickname : ', response.data.data.nickname);
                 console.log('OAuth get profile profile_image_url : ', response.data.data.profile_image_url);
 
-                setEmail(response.data.data.email);
-                setNickName(response.data.data.nickname);
-                setProfileImage(response.data.data.profile_image_url);
+                profile = JSON.parse(JSON.stringify(response.data.data));
+                setEmail(profile.email);
+                setNickName(profile.nickname);
+
+                if(profile.profile_image_url === null){
+                    setProfileImage(null);
+                } else {
+                    setProfileImage(profile.profile_image_url);
+                }
 
                 localStorage.setItem("profile", JSON.stringify(response.data.data));
             });
         } catch (err) {
             console.error(err);
         }
-    }
+    };
 
     const getLocalProf = async () => {
         try {
@@ -44,11 +51,14 @@ const Profile = () => {
                 console.log('Local get profile nickname : ', response.data.data.nickname);
                 console.log('Local get profile profile_image_url : ', response.data.data.profile_image_url);
 
-                setEmail(response.data.data.email);
-                setNickName(response.data.data.nickname);
+                profile = JSON.parse(JSON.stringify(response.data.data));
+                setEmail(profile.email);
+                setNickName(profile.nickname);
 
-                if(response.data.data.profile_image_url === null){
+                if(profile.profile_image_url === null){
                     setProfileImage(null);
+                } else {
+                    setProfileImage(profile.profile_image_url);
                 }
 
                 localStorage.setItem("profile", JSON.stringify(response.data.data));
@@ -56,7 +66,7 @@ const Profile = () => {
         } catch (err) {
             console.error(err);
         }
-    }
+    };
 
     useEffect(() => {
         if(provider != 'LOCAL') {
