@@ -30,7 +30,7 @@ import java.util.Map;
 @Log4j2
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/v1/user")
+@RequestMapping(value = "/v1/api/user")
 public class LocalUserController {
 
     private static final String className = LocalUserController.class.toString();
