@@ -1,21 +1,36 @@
 import React, {useEffect, useState} from 'react';
-import "../../css/MyPage.css"
-import "../../css/font.css"
+import axios from "axios";
+import "../../css/MyPage.css";
+import "../../css/font.css";
 
 export default function MyPageProfile(){
-
     const getProfile = localStorage.getItem('profile');
+    const provider = localStorage.getItem('provider');
 
     const [email, setEmail] = useState();
     const [nickName, setNickName] = useState();
     const [profileImage, setProfileImage] = useState();
+    const [count, setCount] = useState(0);
 
     const getProf = () => {
         try {
             const jsonProf = JSON.parse(getProfile);
             console.log('MyPage-profile jProf : ', jsonProf);
 
-            setEmail(jsonProf.email);
+            const email = jsonProf.email;
+            setEmail(email);
+            axios.post(`/v1/api/picTO/count/${email}/${provider}`)
+                .then((response) => {
+                    console.log('MyPage-profile getPicToCount : ', response.data);
+                    if(response.data.code === 0) {
+                        console.log('MyPage-profile getPicToCount count : ', response.data.data);
+                        setCount(response.data.data);
+                    }
+                })
+                .catch((e) => {
+                    console.error(e);
+                });
+
             setNickName(jsonProf.nickname);
             setProfileImage(jsonProf.profile_image_url);
         } catch (err) {
@@ -38,7 +53,7 @@ export default function MyPageProfile(){
                         이름
                     </div>
                     <div className='MenuBox-props'>
-                        {nickName}
+                        <b>{nickName}</b>
                     </div>
                 </div>
                 <div className='MenuBox'>
@@ -46,7 +61,7 @@ export default function MyPageProfile(){
                         이메일
                     </div>
                     <div className='MenuBox-props'>
-                        {email}
+                        <b>{email}</b>
                     </div>
                 </div>
                 <div className='MenuBox'>
@@ -54,7 +69,7 @@ export default function MyPageProfile(){
                         제작한 픽토
                     </div>
                     <div className='MenuBox-props'>
-                        0
+                        <b>{count}</b>
                     </div>
                 </div>
             </div>

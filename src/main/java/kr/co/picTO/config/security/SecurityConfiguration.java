@@ -61,22 +61,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                             "/**/*.otf",
                             "/**/content.js.map",
                             "/requestProvider.js.map").permitAll()
-                .antMatchers(HttpMethod.POST, "/v1/user/**", "/v1/upload/**/**/**", "/v1/qna/**/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/v1/api/user/**", "/v1/api/picTO/**/**/**", "/v1/api/qna/**/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/oauth2/token/invalid").permitAll()
-                .antMatchers("/v1/board/**").authenticated()
-                .antMatchers("/v1/admin/**").hasRole("ADMIN")
-                .antMatchers("/oauth2/**", "/oauth2/redirect/**", "/", "/social/login", "/social/login/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/v1/api/oauth2/token/invalid").permitAll()
+                .antMatchers("/v1/api/board/**").authenticated()
+                .antMatchers("/v1/api/admin/**").hasRole("ADMIN")
+                .antMatchers("/v1/api/oauth2/**", "/v1/api/oauth2/redirect/**", "/").permitAll()
                 .antMatchers("/index").permitAll()
                 .mvcMatchers("/v3/api-docs/**",
                         "/configuration/**",
                         "/swagger*/**",
                         "/webjars/**",
                         "/swagger-resources/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                    .oauth2Login()
-                    .userInfoEndpoint();
-
+                .anyRequest().authenticated();
     }
 }

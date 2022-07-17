@@ -3,6 +3,10 @@ import Pic from "../../image/Human.png";
 import '../../css/Callback.css';
 
 const Posts = ({ posts, loading }) => {
+    console.log('POST posts : ', posts);
+    console.log('POST posts Map : ', posts.map((post) => {
+        console.log('post : ', post);
+    }));
   return (
     <>
       {
@@ -20,9 +24,9 @@ const Posts = ({ posts, loading }) => {
                 <div className='pic-cont'>
                     <div className='pic-backimg'></div>
                     <div className='pic-img'>
-                        <img src={post} alt={"픽토이미지"} />
+                        <img src={post.fileUrl} alt={"픽토이미지"} />
                     </div>
-                    <p className='pic-name'>{post.id}Pickname</p>
+                    <p className='pic-name'>{post.fileName}</p>
                     <div className='pic-btns'>
                         <button className='pic-download pic-btn'>
                         </button>
