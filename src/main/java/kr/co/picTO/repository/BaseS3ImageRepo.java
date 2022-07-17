@@ -11,4 +11,6 @@ public interface BaseS3ImageRepo extends JpaRepository<BaseS3Image, Long> {
     Optional<BaseS3Image> findByEmail(String email);
 
     List<BaseS3Image> findAllByEmail(String email);
+
+    Long countByEmailAndProvider(String email, String provider);
 }
