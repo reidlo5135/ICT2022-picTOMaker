@@ -22,7 +22,7 @@ export default function MyPageMyPic(){
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await axios.post(`/v1/api/upload/get/picTO/${email}/${provider}`)
+            await axios.post(`/v1/api/picTO/get/${email}/${provider}`)
                 .then((response) => {
                     console.log('response data : ' + response.data);
                     console.log('response data.list : ' + response.data.list);

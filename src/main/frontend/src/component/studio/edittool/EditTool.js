@@ -136,7 +136,7 @@ export default function EditTool(props) {
         const jsonProf = JSON.parse(profile);
         const email = jsonProf.email;
         try {
-            axios.post(`/v1/api/upload/register/${email}/${provider}`, {
+            axios.post(`/v1/api/picTO/register/${email}/${provider}`, {
                 image
             }).then((response) => {
                 console.log('response data : ', response.data);
