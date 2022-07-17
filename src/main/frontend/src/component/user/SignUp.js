@@ -48,14 +48,11 @@ export default function SignUp(){
             alert('비밀번호가 일치하지 않습니다.');
         } else {
             try {
-                axios.post('/v1/user/signUp', {
+                axios.post('/v1/api/user/signUp', {
                     email: email,
                     name: name,
                     nickName: nickName,
                     password: password
-                },{
-                    baseURL: 'http://localhost:8080',
-                    withCredentials: true
                 }).then((response) => {
                     console.log('response : ', response.data);
                     console.log('response : ', response.data.data);

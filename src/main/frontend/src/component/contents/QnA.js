@@ -56,13 +56,10 @@ export default function QnA() {
 
     function onChangeIsOpen() {
         try {
-            axios.post(`/v1/qna/register/${provider}`, {
+            axios.post(`/v1/api/qna/register/${provider}`, {
                 email: profEmail,
                 name: profNickName,
                 qna: qna
-            }, {
-                baseURL: 'http://localhost:8080',
-                withCredentials: true
             }).then((response) => {
                 console.log('response : ', response.data);
                 console.log('response : ', response.data.data);

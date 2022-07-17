@@ -15,11 +15,8 @@ const Profile = () => {
 
     const getOAuthProf = async () => {
         try {
-            await axios.post(`/oauth2/profile/${provider}`, {
+            await axios.post(`/v1/api/oauth2/profile/${provider}`, {
                 access_token
-            },{
-                baseURL: 'http://localhost:8080',
-                withCredentials: true
             }).then((response) => {
                 console.log('OAuth profile res data.data : ', response.data.data);
                 console.log('OAuth get profile email : ', response.data.data.email);
@@ -39,11 +36,8 @@ const Profile = () => {
 
     const getLocalProf = async () => {
         try {
-            await axios.post('/v1/user/profile', {
+            await axios.post('/v1/api/user/profile', {
                 access_token
-            },{
-                baseURL: 'http://localhost:8080',
-                withCredentials: true
             }).then((response) => {
                 console.log('Local profile res data.data : ', response.data.data);
                 console.log('Local get profile email : ', response.data.data.email);
