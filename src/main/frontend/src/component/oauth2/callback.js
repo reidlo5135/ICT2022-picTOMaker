@@ -28,11 +28,8 @@ export default function Callback(){
     console.log('provider : ', provider);
 
     try {
-        const resp = axios.post(`/oauth2/token/${provider}`, {
+        const resp = axios.post(`/v1/api/oauth2/token/${provider}`, {
             code
-        },{
-            baseURL: 'http://localhost:8080',
-            withCredentials: true
         }).then((response) => {
             console.log('res data : ', response.data);
             console.log('res data.data : ', response.data.data);

@@ -1,6 +1,7 @@
 package kr.co.picTO.controller.v1;
 
 import io.swagger.annotations.Api;
+import kr.co.picTO.entity.s3.BaseS3Image;
 import kr.co.picTO.model.response.ListResult;
 import kr.co.picTO.model.response.SingleResult;
 import kr.co.picTO.service.response.ResponseLoggingService;
@@ -31,7 +32,7 @@ import java.util.Map;
 @Log4j2
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/v1/upload")
+@RequestMapping(value = "/v1/api/upload")
 public class FileUploadController {
 
     private static final String className = FileUploadController.class.toString();
@@ -111,15 +112,15 @@ public class FileUploadController {
     }
 
     @PostMapping(value = "/get/picTO/{email}/{provider}")
-    public ResponseEntity<ListResult<String>> getPicTo(@PathVariable String email, @PathVariable String provider) {
-        ResponseEntity<ListResult<String>> ett = null;
+    public ResponseEntity<ListResult<BaseS3Image>> getPicTo(@PathVariable String email, @PathVariable String provider) {
+        ResponseEntity<ListResult<BaseS3Image>> ett = null;
         loggingService.httpPathStrLogging(className, "getPicTo", email, provider);
 
         try {
-            List<String> list = fileUploadService.getPicToByEmail(email, provider);
+            List<BaseS3Image> list = fileUploadService.getPicToByEmail(email, provider);
             log.info("File Upload Controller getPicTo list : " + list);
 
-            ListResult<String> result = responseService.getListResult(list);
+            ListResult<BaseS3Image> result = responseService.getListResult(list);
             loggingService.listResultLogging(className, "getPicTo", result);
 
             HttpHeaders httpHeaders = new HttpHeaders();

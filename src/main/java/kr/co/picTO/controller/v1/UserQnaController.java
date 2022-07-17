@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/v1/qna")
+@RequestMapping(value = "/v1/api/qna")
 public class UserQnaController {
 
     private static final String className = UserQnaController.class.toString();

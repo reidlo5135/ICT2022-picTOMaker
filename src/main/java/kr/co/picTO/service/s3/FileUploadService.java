@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -83,9 +84,8 @@ public class FileUploadService {
         return fileUrl;
     }
 
-    public List<String> getPicToByEmail(String email, String provider) {
-        BaseS3Image baseS3Image = null;
-        List<String> result = new ArrayList<>();
+    public List<BaseS3Image> getPicToByEmail(String email, String provider) {
+        List<BaseS3Image> result = new ArrayList<>();
         try {
             if(provider.equals("LOCAL")) {
                 BaseLocalUser blu = localUserRepo.findByEmailAndProvider(email, provider).orElseThrow(CustomUserExistException::new);
@@ -96,10 +96,10 @@ public class FileUploadService {
                 log.info("File SVC getPicTo findByEmail&Prov bau : " + bau);
                 email = bau.getEmail();
             }
-            baseS3Image = imageRepo.findByEmail(email).orElseThrow();
-            result.add(baseS3Image.getFileUrl());
-            log.info("File SVC getPicTo bSI : " + baseS3Image);
-            log.info("File SVC getPicTo result List : " + result);
+            result = imageRepo.findAllByEmail(email);
+            for(int i=0;i<result.size();i++) {
+                log.info("File SVC getPicTo result List : " + Arrays.toString(result.toArray()));
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error("File SVC getPicTOByEmail : " + e.getMessage());

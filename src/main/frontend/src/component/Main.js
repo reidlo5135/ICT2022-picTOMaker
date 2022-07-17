@@ -58,12 +58,9 @@ export default function Main(){
             alert('아이디와 비밀번호를 입력해주세요.');
         } else {
             try {
-                axios.post('/v1/user/login', {
-                    email: email,
-                    password: password
-                },{
-                    baseURL: 'http://localhost:8080',
-                    withCredentials: true
+                axios.post('/v1/api/user/login', {
+                    email,
+                    password
                 }).then((response) => {
                     console.log('res data ', response.data);
                     console.log('res data.data ', response.data.data);

@@ -19,7 +19,7 @@ import java.util.List;
 @Log4j2
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/v1/admin")
+@RequestMapping(value = "/v1/api/admin")
 public class AdminController {
 
     private static final String className = AdminController.class.toString();
