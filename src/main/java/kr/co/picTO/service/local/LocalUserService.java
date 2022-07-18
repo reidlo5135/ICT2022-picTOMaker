@@ -1,9 +1,6 @@
 package kr.co.picTO.service.local;
 
-import kr.co.picTO.advice.exception.CustomEmailLoginFailedException;
-import kr.co.picTO.advice.exception.CustomEmailSignUpFailedException;
-import kr.co.picTO.advice.exception.CustomRefreshTokenException;
-import kr.co.picTO.advice.exception.CustomUserNotFoundException;
+import kr.co.picTO.advice.exception.*;
 import kr.co.picTO.config.security.LocalUserJwtProvider;
 import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.dto.local.LocalUserRequestDto;
@@ -113,6 +110,21 @@ public class LocalUserService {
         log.info("Local User SVC findNickNameByEmail nickName : ", nickName);
 
         return nickName;
+    }
+
+    @Transactional
+    public Integer deleteToken(String access_token) {
+        log.info("Local User SVC delT at : " + access_token);
+        Integer id = null;
+        try {
+            id = userJpaRepo.deleteByAccessToken(access_token);
+            log.info("Local User SVC delT bat id : " + id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Local User SVC delT Error Occurred : " + e.getMessage());
+            throw new CustomCommunicationException();
+        }
+        return id;
     }
 
     @Transactional(readOnly = true)

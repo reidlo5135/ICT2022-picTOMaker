@@ -19,10 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -161,6 +158,29 @@ public class LocalUserController {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Local User Controller getNickNameByEmail error occurred : ", e.getMessage());
+        }
+        return ett;
+    }
+
+    @DeleteMapping(value = "/token/invalid/{access_token}")
+    public ResponseEntity<SingleResult<Long>> inValidToken(@PathVariable String access_token) {
+        ResponseEntity<SingleResult<Long>> ett = null;
+        loggingService.httpPathStrLogging(className, "inValidToken", access_token, "");
+
+        try {
+            Integer id = userService.deleteToken(access_token);
+
+            SingleResult result = responseService.getSingleResult(id);
+            loggingService.singleResultLogging(className, "inValidToken", result);
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            log.info("Local User Controller inValidToken ett : ", ett);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Local User Controller inValidAndRefreshToken error occurred : ", e.getMessage());
         }
         return ett;
     }
