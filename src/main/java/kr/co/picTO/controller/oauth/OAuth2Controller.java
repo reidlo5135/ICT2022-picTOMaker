@@ -89,15 +89,15 @@ public class OAuth2Controller {
     }
 
     @DeleteMapping(value = "/token/invalid/{access_token}")
-    public ResponseEntity<SingleResult<Long>> inValidAndRefreshToken(@PathVariable String access_token) {
+    public ResponseEntity<SingleResult<Long>> inValidToken(@PathVariable String access_token) {
         ResponseEntity<SingleResult<Long>> ett = null;
-        loggingService.httpPathStrLogging(className, "inValidAndRefreshToken", access_token, "");
+        loggingService.httpPathStrLogging(className, "inValidToken", access_token, "");
 
         try {
             Integer id = OAuth2ProviderService.deleteToken(access_token);
 
             SingleResult result = responseService.getSingleResult(id);
-            loggingService.singleResultLogging(className, "inValidRefreshToken", result);
+            loggingService.singleResultLogging(className, "inValidToken", result);
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
