@@ -1,6 +1,7 @@
 import React from "react";
 import Pic from "../../image/Human.png";
 import '../../css/Callback.css';
+import {Link} from "react-router-dom";
 
 const Posts = ({ posts, loading }) => {
     console.log('POST posts : ', posts);
@@ -28,10 +29,15 @@ const Posts = ({ posts, loading }) => {
                     </div>
                     <p className='pic-name'>{post.fileName}</p>
                     <div className='pic-btns'>
-                        <button className='pic-download pic-btn'>
-                        </button>
-                        <button className='pic-edit pic-btn'>
-                        </button>
+                        <button className='pic-download pic-btn' />
+                        <Link to={{
+                            pathname: '/edit',
+                            state: {
+                                post: post
+                            }
+                        }}>
+                            <button className='pic-edit pic-btn' />
+                        </Link>
                     </div>
                     <div className='pic-txt'>
                         <span className='pic-dtxt'>다운로드</span>
