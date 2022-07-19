@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import axios from "axios";
 import {fabric} from 'fabric';
 import DetailComponent from './detail/DetailComponent';
@@ -12,9 +12,22 @@ let canvas = null;
 
 export default function EditTool(props) {
     const history = useHistory();
+    const location = useLocation();
+
     const [selectMode, setSelectMode] = useState("none");
+    const [isDrawingMode, setIsDrawingMode] = useState(false);
+
+    const poseMode = localStorage.getItem("poseMode");
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
+
+    if(poseMode === "true") {
+        console.log('EditTool poseMode true : ', poseMode);
+        setIsDrawingMode(true);
+    } else if(poseMode === null || poseMode !== "true") {
+        console.log('EditTool poseMode false : ', poseMode);
+        setIsDrawingMode(false);
+    }
 
     const pictogramImage = props.pictogramImage;
 
@@ -129,6 +142,19 @@ export default function EditTool(props) {
         }
     }
 
+    function drawImage() {
+        const post = location.state.post;
+        console.log('EditTool drawImage post : ', post);
+        const image = new Image();
+        image.src = post.fileUrl;
+        image.onload = () => {
+            const imageInstance = new fabric.Image.fromURL(image.src,function(oImg) {
+                canvas.add(oImg)
+            });
+            console.log('EditTool imageInstance : ', imageInstance);
+        }
+    }
+
     function download() {
         const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
         console.log('image : ', image);
@@ -190,7 +216,12 @@ export default function EditTool(props) {
 
     useEffect(()=> {
         canvas = new fabric.Canvas('edit-canvas');
-        drawingPictogram();
+        console.log('EditTool useEffect isDrawingMode : ', isDrawingMode);
+        if(isDrawingMode === true) {
+            drawingPictogram();
+        } else {
+            drawImage();
+        }
     },[]);
 
 
