@@ -56,6 +56,7 @@ export default function PoseWebStudio() {
         window.localStorage.setItem('thick',50);
         window.localStorage.setItem('lineColor',"FF03030");
         window.localStorage.setItem('backgroundColor',"FFFFFF");
+        window.localStorage.setItem("poseMode", "true");
         /*
         if (DeviceCheck()) {
             console.log("디바이스 인식 성공")
