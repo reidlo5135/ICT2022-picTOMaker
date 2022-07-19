@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import axios from "axios";
 import {fabric} from 'fabric';
 import DetailComponent from './detail/DetailComponent';
@@ -12,9 +12,14 @@ let canvas = null;
 
 export default function EditTool(props) {
     const history = useHistory();
+    const location = useLocation();
+
     const [selectMode, setSelectMode] = useState("none");
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
+
+    console.log('EditTool location : ', location);
+    console.log('EditTool state : ', location.state);
 
     const pictogramImage = props.pictogramImage;
 
@@ -80,7 +85,7 @@ export default function EditTool(props) {
                 strokeWidth : thick,
                 stroke : color
             });
-            
+
             // 좌측 다리 (Upper, Lower)
             const leftUpperLeg = new fabric.Line([result[24].x,result[24].y,result[26].x,result[26].y], {
                 strokeLineCap : 'round',
@@ -129,6 +134,19 @@ export default function EditTool(props) {
         }
     }
 
+    function drawImage() {
+        const post = location.state.post;
+        console.log('EditImageTool drawImage post : ', post);
+        const image = new Image();
+        image.src = post.fileUrl;
+        image.onload = () => {
+            const imageInstance = new fabric.Image.fromURL(image.src,function(oImg) {
+                canvas.add(oImg)
+            });
+            console.log('EditImageTool imageInstance : ', imageInstance);
+        }
+    }
+
     function download() {
         const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
         console.log('image : ', image);
@@ -170,11 +188,11 @@ export default function EditTool(props) {
     function imageMode() {
         setSelectMode("image");
     }
-    
+
     function textMode() {
         setSelectMode("text");
     }
-    
+
     function downloadMode() {
         setSelectMode("download");
     }
@@ -186,11 +204,18 @@ export default function EditTool(props) {
     function shareMode() {
         setSelectMode("share");
     }
-    
+
 
     useEffect(()=> {
         canvas = new fabric.Canvas('edit-canvas');
-        drawingPictogram();
+        if(location.state === null) {
+            console.log('EditTool drawingPicTo');
+            drawingPictogram();
+        } else {
+            console.log('EditTool drawImage');
+            drawImage();
+        }
+
     },[]);
 
 
@@ -214,7 +239,7 @@ export default function EditTool(props) {
                     </div>
                 </div>
                 <div id="tool-detail-view">
-                   <DetailComponent mode={selectMode} canvas={canvas}/>
+                    <DetailComponent mode={selectMode} canvas={canvas}/>
                 </div>
             </div>
         </>
