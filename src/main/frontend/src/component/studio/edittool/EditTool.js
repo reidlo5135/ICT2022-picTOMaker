@@ -15,19 +15,11 @@ export default function EditTool(props) {
     const location = useLocation();
 
     const [selectMode, setSelectMode] = useState("none");
-    const [isDrawingMode, setIsDrawingMode] = useState(false);
-
-    const poseMode = localStorage.getItem("poseMode");
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
 
-    if(poseMode === "true") {
-        console.log('EditTool poseMode true : ', poseMode);
-        setIsDrawingMode(true);
-    } else if(poseMode === null || poseMode !== "true") {
-        console.log('EditTool poseMode false : ', poseMode);
-        setIsDrawingMode(false);
-    }
+    console.log('EditTool location : ', location);
+    console.log('EditTool state : ', location.state);
 
     const pictogramImage = props.pictogramImage;
 
@@ -93,7 +85,7 @@ export default function EditTool(props) {
                 strokeWidth : thick,
                 stroke : color
             });
-            
+
             // 좌측 다리 (Upper, Lower)
             const leftUpperLeg = new fabric.Line([result[24].x,result[24].y,result[26].x,result[26].y], {
                 strokeLineCap : 'round',
@@ -144,14 +136,14 @@ export default function EditTool(props) {
 
     function drawImage() {
         const post = location.state.post;
-        console.log('EditTool drawImage post : ', post);
+        console.log('EditImageTool drawImage post : ', post);
         const image = new Image();
         image.src = post.fileUrl;
         image.onload = () => {
             const imageInstance = new fabric.Image.fromURL(image.src,function(oImg) {
                 canvas.add(oImg)
             });
-            console.log('EditTool imageInstance : ', imageInstance);
+            console.log('EditImageTool imageInstance : ', imageInstance);
         }
     }
 
@@ -196,11 +188,11 @@ export default function EditTool(props) {
     function imageMode() {
         setSelectMode("image");
     }
-    
+
     function textMode() {
         setSelectMode("text");
     }
-    
+
     function downloadMode() {
         setSelectMode("download");
     }
@@ -212,16 +204,18 @@ export default function EditTool(props) {
     function shareMode() {
         setSelectMode("share");
     }
-    
+
 
     useEffect(()=> {
         canvas = new fabric.Canvas('edit-canvas');
-        console.log('EditTool useEffect isDrawingMode : ', isDrawingMode);
-        if(isDrawingMode === true) {
+        if(location.state === null) {
+            console.log('EditTool drawingPicTo');
             drawingPictogram();
         } else {
+            console.log('EditTool drawImage');
             drawImage();
         }
+
     },[]);
 
 
@@ -245,7 +239,7 @@ export default function EditTool(props) {
                     </div>
                 </div>
                 <div id="tool-detail-view">
-                   <DetailComponent mode={selectMode} canvas={canvas}/>
+                    <DetailComponent mode={selectMode} canvas={canvas}/>
                 </div>
             </div>
         </>
