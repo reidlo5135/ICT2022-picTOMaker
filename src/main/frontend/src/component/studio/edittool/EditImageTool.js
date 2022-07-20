@@ -21,9 +21,10 @@ export default function EditImageTool() {
 
     const post = location.state.post;
     console.log('EditImageTool drawImage post : ', post);
+    const image = new Image();
 
-    function drawImage() {
-        const image = new Image();
+    function getImage() {
+        console.log('EditTool drawImage image : ', image);
         image.src = post.fileUrl;
         image.onload = () => {
             const imageInstance = new fabric.Image.fromURL(image.src,function(img) {
@@ -33,21 +34,19 @@ export default function EditImageTool() {
         }
     }
 
-    function download() {
-        const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-        console.log('image : ', image);
+    function update() {
+        console.log('EditTool update image : ', image);
 
         const jsonProf = JSON.parse(profile);
         const email = jsonProf.email;
         try {
-            axios.post(`/v1/api/picTO/register/${email}/${provider}`, {
-                image
+            axios.put(`/v1/api/picTO/update/${email}/${provider}`, {
+
             }).then((response) => {
-                console.log('response data : ', response.data);
-                console.log('response data.data : ', response.data.data);
+                console.log('EditImageTool update response data : ', response.data);
+                console.log('EditImageTool update response data.data : ', response.data.data);
 
                 if(response.data.code === 0) {
-                    localStorage.setItem("picTOUrl", response.data.data);
                     alert('성공적으로 저장되었습니다!');
                     history.push("/");
                 }
@@ -94,7 +93,7 @@ export default function EditImageTool() {
 
     useEffect(()=> {
         canvas = new fabric.Canvas('edit-canvas');
-        drawImage();
+        getImage();
     },[]);
 
 
@@ -112,7 +111,7 @@ export default function EditImageTool() {
                         <button id="figure-btn" onClick = {()=> {figureMode()}}></button>
                         <button id="image-btn" onClick = {()=> {imageMode()}}></button>
                         <button id="text-btn" onClick = {()=> {textMode()}}></button>
-                        <button id="download-btn" onClick={()=> {download()}} ></button>
+                        <button id="download-btn" onClick={()=> {update()}} ></button>
                         <button id="open-btn" onClick = {()=> {openMode()}}> </button>
                         <button id="share-btn" onClick = {()=> {shareMode()}}></button>
                     </div>

@@ -105,4 +105,17 @@ public class FileUploadController {
         }
         return ett;
     }
+
+    @PutMapping(value = "/update/{email}/{provider}")
+    public ResponseEntity<SingleResult<Long>> updatePicTo(@PathVariable String email, @PathVariable String provider) {
+        ResponseEntity<SingleResult<Long>> ett = null;
+        loggingService.httpPathStrLogging(className, "updatePicTo", email, provider);
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("File Upload Controller updatePicTo error occurred : " + e.getMessage());
+        }
+        return ett;
+    }
 }
