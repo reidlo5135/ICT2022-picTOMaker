@@ -56,6 +56,8 @@ const Profile = () => {
                 setEmail(profile.email);
                 setNickName(profile.nickname);
 
+                console.log('Local get profile expires_in : ', profile.expires_in);
+
                 if(profile.profile_image_url === null){
                     setProfileImage(null);
                 } else {
