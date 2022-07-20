@@ -12,6 +12,7 @@ import Callback from "./oauth2/callback";
 import MyPageContent from "./myPage/MyPage";
 import PoseWebStudio from "./studio/poseweb/PoseWebStudio";
 import EditTool from './studio/edittool/EditTool';
+import EditImageTool from "./studio/edittool/EditImageTool";
 import {AnimatePresence} from "framer-motion";
 
 export default function App(){
@@ -32,6 +33,7 @@ export default function App(){
                     <Route path='/oauth2/redirect/google' component={Callback} />
                     <Route path='/studio/pose/web' component={PoseWebStudio}/>
                     <Route path='/edit' component={EditTool} />
+                    <Route path='/tool/image' component={EditImageTool} />
                 </Switch>
             </AnimatePresence>
        </div>
