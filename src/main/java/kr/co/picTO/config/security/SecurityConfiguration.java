@@ -61,8 +61,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                             "/**/*.otf",
                             "/**/content.js.map",
                             "/requestProvider.js.map").permitAll()
-                .antMatchers(HttpMethod.POST, "/v1/api/user/**", "/v1/api/picTO/**/**/**", "/v1/api/qna/**/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/v1/api/user/**", "/v1/api/picTO/**/**/**", "/v1/api/qna/**/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/v1/api/picTO/**/**/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/v1/api/oauth2/token/invalid", "/v1/api/user/token/invalid").permitAll()
                 .antMatchers("/v1/api/board/**").authenticated()
                 .antMatchers("/v1/api/admin/**").hasRole("ADMIN")
