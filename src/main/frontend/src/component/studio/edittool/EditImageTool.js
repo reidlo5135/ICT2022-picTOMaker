@@ -21,9 +21,10 @@ export default function EditImageTool() {
 
     const post = location.state.post;
     console.log('EditImageTool drawImage post : ', post);
+    const image = new Image();
 
-    function drawImage() {
-        const image = new Image();
+    function getImage() {
+        console.log('EditTool drawImage image : ', image);
         image.src = post.fileUrl;
         image.onload = () => {
             const imageInstance = new fabric.Image.fromURL(image.src,function(img) {
@@ -34,7 +35,7 @@ export default function EditImageTool() {
     }
 
     function update() {
-        console.log('EditImageTool update canvas : ', canvas);
+        console.log('EditTool update image : ', image);
 
         const jsonProf = JSON.parse(profile);
         const email = jsonProf.email;
@@ -92,7 +93,7 @@ export default function EditImageTool() {
 
     useEffect(()=> {
         canvas = new fabric.Canvas('edit-canvas');
-        drawImage();
+        getImage();
     },[]);
 
 
