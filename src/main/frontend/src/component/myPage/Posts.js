@@ -31,7 +31,7 @@ const Posts = ({ posts, loading }) => {
                     <div className='pic-btns'>
                         <button className='pic-download pic-btn' />
                         <Link to={{
-                            pathname: '/edit',
+                            pathname: '/tool/image',
                             state: {
                                 post: post
                             }
