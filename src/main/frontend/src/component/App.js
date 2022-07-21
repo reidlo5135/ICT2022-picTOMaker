@@ -13,6 +13,7 @@ import MyPageContent from "./myPage/MyPage";
 import PoseWebStudio from "./studio/poseweb/PoseWebStudio";
 import EditTool from './studio/edittool/EditTool';
 import EditImageTool from "./studio/edittool/EditImageTool";
+import EditTransfer from "./studio/EditTransfer";
 import {AnimatePresence} from "framer-motion";
 
 export default function App(){
@@ -34,6 +35,7 @@ export default function App(){
                     <Route path='/studio/pose/web' component={PoseWebStudio}/>
                     <Route path='/edit' component={EditTool} />
                     <Route path='/tool/image' component={EditImageTool} />
+                    <Route path='/transfer/edit' component={EditTransfer} />
                 </Switch>
             </AnimatePresence>
        </div>
