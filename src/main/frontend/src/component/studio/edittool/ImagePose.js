@@ -93,7 +93,7 @@ const ImagePose = forwardRef((props,ref) => {
 
     return (
         <>
-            <img id="imgElement" src={picToJson.fileUrl} alt={"t-image"} crossOrigin='anonymous' />
+            <img id="imgElement" src={picToJson.fileUrl} alt={"t-image"} />
         </>
     )
 })
