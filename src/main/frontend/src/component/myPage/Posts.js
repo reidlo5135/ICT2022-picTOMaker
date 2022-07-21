@@ -5,9 +5,10 @@ import {Link} from "react-router-dom";
 
 const Posts = ({ posts, loading }) => {
     console.log('POST posts : ', posts);
-    console.log('POST posts Map : ', posts.map((post) => {
+    posts.map((post) => {
         console.log('post : ', post);
-    }));
+    });
+
   return (
     <>
       {
@@ -31,7 +32,7 @@ const Posts = ({ posts, loading }) => {
                     <div className='pic-btns'>
                         <button className='pic-download pic-btn' />
                         <Link to={{
-                            pathname: '/tool/image',
+                            pathname: '/transfer/edit',
                             state: {
                                 post: post
                             }
