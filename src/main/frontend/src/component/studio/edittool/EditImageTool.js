@@ -14,7 +14,6 @@ export default function EditImageTool() {
     const history = useHistory();
     const location = useLocation();
 
-    const [copyCanvas, setCopyCanvas] = useState();
     const [selectMode, setSelectMode] = useState("none");
     const [changedUrl, setChangedUrl] = useState();
 
