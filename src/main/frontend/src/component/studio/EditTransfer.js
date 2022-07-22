@@ -1,6 +1,9 @@
 import React, {useEffect, useRef} from 'react';
 import {useLocation} from "react-router-dom";
 import ImagePose from "./edittool/ImagePose";
+import Top from '../../component/contents/Top';
+import '../../css/stuido/topbar.css';
+import '../../css/stuido/posewebstudio.css';
 
 export default function EditTransfer(){
     const location = useLocation();
@@ -18,7 +21,11 @@ export default function EditTransfer(){
 
     return (
       <>
-          <ImagePose ref={childRef} />
+          <Top />
+          <div id="topbar"></div>
+          <div className ="studio_container">
+            <ImagePose ref={childRef} />
+          </div>
       </>
     );
 }

@@ -2,6 +2,7 @@ import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState} fro
 import {Pose} from '@mediapipe/pose';
 import {drawLine, drawHead} from '../poseweb/util/DrawingUtils';
 import '../../../css/stuido/posewebstudio.css';
+import testImage from '../poseweb/resource/human_pose.png';
 
 const ImagePose = forwardRef((props,ref) => {
     const userPicTo = localStorage.getItem('userPicTo');
@@ -28,6 +29,9 @@ const ImagePose = forwardRef((props,ref) => {
     }
 
     function draw() {
+        canvasRef.current.width = 640;
+        canvasRef.current.height = 480;
+
         const canvasElement = canvasRef.current;
         const canvasCtx = canvasElement.getContext('2d');
 
@@ -93,7 +97,15 @@ const ImagePose = forwardRef((props,ref) => {
 
     return (
         <>
-            <img id="imgElement" src={picToJson.fileUrl} alt={"t-image"} />
+            <div className="test-pose">
+                <div className='left-content'>
+                    <img id="imgElement" src={picToJson.fileUrl} alt={"t-image"} />
+                    {/*<img id="imgElement" src={testImage} alt={"t-image"} />*/}
+                </div>
+                <div className='right-content'>
+                    <canvas ref={canvasRef} id="draw-canvas" width="640px" height="480px"></canvas>
+                </div>
+            </div>
         </>
     )
 })

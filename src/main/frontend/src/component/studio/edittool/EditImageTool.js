@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {useHistory, useLocation} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {fabric} from 'fabric';
 import DetailComponent from './detail/DetailComponent';
@@ -12,28 +12,14 @@ let canvas = null;
 
 export default function EditImageTool() {
     const history = useHistory();
-    const location = useLocation();
 
     const [selectMode, setSelectMode] = useState("none");
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
 
-    // const post = location.state.post;
-    // console.log('EditImageTool drawImage post : ', post);
-    //
-    // const image = new Image();
-    // console.log('EditImageTool field image : ', image);
-
     function getImage() {
-        // console.log('EditTool drawImage image : ', image);
-        // image.src = post.fileUrl;
-        // image.onload = () => {
-        //     const imageInstance = new fabric.Image.fromURL(image.src,function(img) {
-        //         canvas.add(img);
-        //     });
-        //     console.log('EditImageTool imageInstance : ', imageInstance);
-        // }
         const nonResult = window.localStorage.getItem('pictogram_result');
+        console.log('EditImageTool getImage nonResult : ', nonResult);
         if (nonResult !== "null") {
             const result = JSON.parse(nonResult);
             const thick = window.localStorage.getItem("lineThick");
@@ -139,15 +125,11 @@ export default function EditImageTool() {
             canvas.getActiveObject().toGroup();
             canvas.requestRenderAll();
 
-            window.localStorage.setItem('pictogram_result', null);
+            // window.localStorage.setItem('pictogram_result', null);
         }
     }
 
     function update() {
-        // console.log('EditTool update image : ', image);
-        // const encoded = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-        // console.log('EditImageTool update encoded : ', encoded);
-
         const jsonProf = JSON.parse(profile);
         const email = jsonProf.email;
         try {
