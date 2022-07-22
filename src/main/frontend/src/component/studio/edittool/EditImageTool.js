@@ -48,6 +48,7 @@ export default function EditImageTool() {
     }
 
     function update() {
+        getImage();
         console.log('EditTool update image : ', image);
         console.log('EditTool getImage changedUrl : ', changedUrl);
 
@@ -55,7 +56,7 @@ export default function EditImageTool() {
         const email = jsonProf.email;
         try {
             axios.put(`/v1/api/picTO/update/${email}/${provider}`, {
-
+                octet: changedUrl
             }).then((response) => {
                 console.log('EditImageTool update response data : ', response.data);
                 console.log('EditImageTool update response data.data : ', response.data.data);
