@@ -107,9 +107,9 @@ public class FileUploadController {
     }
 
     @PutMapping(value = "/update/{email}/{provider}")
-    public ResponseEntity<SingleResult<Long>> updatePicTo(@PathVariable String email, @PathVariable String provider) {
+    public ResponseEntity<SingleResult<Long>> updatePicTo(@RequestBody Map<String, String> octet, @PathVariable String email, @PathVariable String provider) {
         ResponseEntity<SingleResult<Long>> ett = null;
-        loggingService.httpPathStrLogging(className, "updatePicTo", email, provider);
+        loggingService.httpPathStrLoggingWithRequest(className, "updatePicTo", octet.get("image"), email, provider);
         try {
 
         } catch (Exception e) {
