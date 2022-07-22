@@ -14,7 +14,10 @@ export default function EditImageTool() {
     const history = useHistory();
     const location = useLocation();
 
+    const [copyCanvas, setCopyCanvas] = useState();
     const [selectMode, setSelectMode] = useState("none");
+    const [changedUrl, setChangedUrl] = useState();
+
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
     console.log('EditTool state : ', location.state);
@@ -27,15 +30,27 @@ export default function EditImageTool() {
         console.log('EditTool drawImage image : ', image);
         image.src = post.fileUrl;
         image.onload = () => {
-            const imageInstance = new fabric.Image.fromURL(image.src,function(img) {
-                canvas.add(img);
+            const imageInstance = new fabric.Image.fromURL(image.src,function(oImg) {
+                canvas.add(oImg);
             });
             console.log('EditImageTool imageInstance : ', imageInstance);
         }
+        canvas.discardActiveObject();
+        let sel = new fabric.ActiveSelection(canvas.getObjects(), {
+            canvas: canvas,
+        });
+        canvas.setActiveObject(sel);
+        canvas.getActiveObject().toGroup();
+        canvas.requestRenderAll();
+
+        const url = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        setChangedUrl(url);
+        console.log('EditTool getImage url : ', url);
     }
 
     function update() {
         console.log('EditTool update image : ', image);
+        console.log('EditTool getImage changedUrl : ', changedUrl);
 
         const jsonProf = JSON.parse(profile);
         const email = jsonProf.email;
