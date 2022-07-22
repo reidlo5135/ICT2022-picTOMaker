@@ -48,7 +48,6 @@ export default function EditImageTool() {
     }
 
     function update() {
-        getImage();
         console.log('EditTool update image : ', image);
         console.log('EditTool getImage changedUrl : ', changedUrl);
 
