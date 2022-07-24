@@ -176,7 +176,7 @@
     justify-content: space-around;
 }
 
-.pic-download,.pic-edit{
+.pic-download,.pic-edit,.pict-delete{
     position: relative;
     padding: 0px 0px;
     border-radius: 100%;
@@ -212,6 +212,14 @@
     height: 35px;
     border: none;
     background: url("../image/studio_image/pencil_btn.png") no-repeat;
+    background-size: cover;
+}
+
+.pic-delete{
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: url("../image/studio_image/trash-can-solid.svg") no-repeat;
     background-size: cover;
 }
 
