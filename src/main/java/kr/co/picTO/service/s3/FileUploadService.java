@@ -1,6 +1,7 @@
 package kr.co.picTO.service.s3;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import kr.co.picTO.advice.exception.CustomCommunicationException;
 import kr.co.picTO.advice.exception.CustomUserExistException;
 import kr.co.picTO.advice.exception.CustomUserNotFoundException;
 import kr.co.picTO.entity.local.BaseLocalUser;
@@ -182,6 +183,21 @@ public class FileUploadService {
             log.error("File SVC getPicToCountByEmailAndProvider error occurred : " + e.getMessage());
             return -1L;
         }
+    }
+
+    @Transactional
+    public Integer deletePicToByFileName(String name) {
+        log.info("File SVC deletePicToByFileName name : " + name);
+        Integer result = null;
+        try {
+            result = imageRepo.deleteByFileName(name);
+            log.info("File SVC deletePicToByFileName result : ", result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("File SVC deletePicToByFileName error occurred : " + e.getMessage());
+            throw new CustomCommunicationException();
+        }
+        return result;
     }
 
     private String createFileName(String originalFileName) {

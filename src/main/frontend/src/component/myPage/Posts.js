@@ -1,13 +1,34 @@
 import React from "react";
-import Pic from "../../image/Human.png";
-import '../../css/Callback.css';
 import {Link} from "react-router-dom";
+import axios from 'axios';
+import '../../css/Callback.css';
 
 const Posts = ({ posts, loading }) => {
     console.log('POST posts : ', posts);
-    console.log('POST posts Map : ', posts.map((post) => {
+    posts.map((post) => {
         console.log('post : ', post);
-    }));
+    });
+
+    const deletePicTo = (name) => {
+        console.log('Posts deletePicTo url : ', name);
+        try {
+            axios.delete(`/v1/api/picTO/delete/${name}`)
+                .then((response) => {
+                    console.log('Posts deletePicTo response data : ' + response.data);
+                    console.log('Posts deletePicTo response data.data : ' + response.data.data);
+
+                    if(response.data.code === 0) {
+                        alert('성공적으로 삭제되었습니다.');
+                    }
+                })
+                .catch((e) => {
+                    console.error(e);
+                });
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
   return (
     <>
       {
@@ -38,10 +59,14 @@ const Posts = ({ posts, loading }) => {
                         }}>
                             <button className='pic-edit pic-btn' />
                         </Link>
+                        <button className='pic-delete pic-btn' onClick={() => {
+                            deletePicTo(post.fileName);
+                        }} />
                     </div>
                     <div className='pic-txt'>
                         <span className='pic-dtxt'>다운로드</span>
                         <span className='pic-etxt'>편집하기</span>
+                        <span className='pic-etxt'>삭제하기</span>
                     </div>
                 </div>
             </div>

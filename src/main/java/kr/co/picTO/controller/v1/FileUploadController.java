@@ -62,7 +62,7 @@ public class FileUploadController {
     @PostMapping(value = "/get/{email}/{provider}")
     public ResponseEntity<ListResult<BaseS3Image>> getPicTo(@PathVariable String email, @PathVariable String provider) {
         ResponseEntity<ListResult<BaseS3Image>> ett = null;
-        loggingService.httpPathStrLogging(className, "getPicTo", email, provider);
+        loggingService.httpPathStrLogging(className, "getPicTo", email, provider, "");
 
         try {
             List<BaseS3Image> list = fileUploadService.getPicToByEmail(email, provider);
@@ -86,7 +86,7 @@ public class FileUploadController {
     @PostMapping(value = "/count/{email}/{provider}")
     public ResponseEntity<SingleResult<Long>> getPicToCount(@PathVariable String email, @PathVariable String provider) {
         ResponseEntity<SingleResult<Long>> ett = null;
-        loggingService.httpPathStrLogging(className, "getPicToCount", email, provider);
+        loggingService.httpPathStrLogging(className, "getPicToCount", email, provider, "");
         try {
             Long count = fileUploadService.getPicToCountByEmailAndProvider(email, provider);
             log.info("File Upload Controller getPicToCount result : ", count);
@@ -102,6 +102,42 @@ public class FileUploadController {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("File Upload Controller getPicToCount error occurred : " + e.getMessage());
+        }
+        return ett;
+    }
+
+    @PutMapping(value = "/update/{email}/{provider}")
+    public ResponseEntity<SingleResult<Long>> updatePicTo(@RequestBody Map<String, String> octet, @PathVariable String email, @PathVariable String provider) {
+        ResponseEntity<SingleResult<Long>> ett = null;
+        loggingService.httpPathStrLoggingWithRequest(className, "updatePicTo", octet.get("image"), email, provider);
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("File Upload Controller updatePicTo error occurred : " + e.getMessage());
+        }
+        return ett;
+    }
+
+    @DeleteMapping(value = "/delete/{name}")
+    public ResponseEntity<SingleResult<Integer>> deletePicTo(@PathVariable String name) {
+        ResponseEntity<SingleResult<Integer>> ett = null;
+        loggingService.httpPathStrLogging(className, "deletePicTo", name, "", "");
+        try {
+            Integer deleteId = fileUploadService.deletePicToByFileName(name);
+            log.info("File Upload Controller deletePicTo result : ", deleteId);
+
+            SingleResult<Integer> result = responseService.getSingleResult(deleteId);
+            loggingService.singleResultLogging(className, "deletePicTo", result);
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            log.info("File Upload Controller deletePicTo ett : " + ett);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("File Upload Controller deletePicTo error occurred : " + e.getMessage());
         }
         return ett;
     }

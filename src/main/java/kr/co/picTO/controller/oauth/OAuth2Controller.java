@@ -91,7 +91,7 @@ public class OAuth2Controller {
     @DeleteMapping(value = "/token/invalid/{access_token}")
     public ResponseEntity<SingleResult<Long>> inValidToken(@PathVariable String access_token) {
         ResponseEntity<SingleResult<Long>> ett = null;
-        loggingService.httpPathStrLogging(className, "inValidToken", access_token, "");
+        loggingService.httpPathStrLogging(className, "inValidToken", access_token, "", "");
 
         try {
             Integer id = OAuth2ProviderService.deleteToken(access_token);
