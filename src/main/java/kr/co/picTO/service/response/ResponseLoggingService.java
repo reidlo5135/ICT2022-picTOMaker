@@ -35,12 +35,13 @@ public class ResponseLoggingService {
         }
     }
 
-    public void httpPathStrLogging(String className, String methodName, String str, String str2) {
+    public void httpPathStrLogging(String className, String methodName, String str, String str2, String str3) {
         try {
             log.info("Response Logging SVC httpPathStrLogging ClassName : " + className);
             log.info("Response Logging SVC httpPathStrLogging MethodName : " + methodName);
             log.info("Response Logging SVC httpPathStrLogging logging str : " + str);
             log.info("Response Logging SVC httpPathStrLogging logging str2 : " + str2);
+            log.info("Response Logging SVC httpPathStrLogging logging str3 : " + str3);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Response Logging SVC httpPathStrLogging logging error occurred : " + e.getMessage());
