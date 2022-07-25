@@ -38,8 +38,8 @@ public class FileUploadController {
         loggingService.httpPathStrLoggingWithRequest(className, "uploadFile", octet.get("image"), email, provider);
 
         try {
-            MultipartFile multipartFile = fileUploadService.decodeAndConvertFile(octet);
-            log.info("File Upload Controller multipartFile : " + multipartFile);
+            MultipartFile multipartFile = fileUploadService.decodeAndConvertFile(octet.get("image"));
+            log.info("File Upload Controller uploadFile multipartFile : " + multipartFile);
 
             String file = fileUploadService.uploadImage(multipartFile, email, provider);
             log.info("File Upload Controller uploadFile file : " + file);
@@ -55,6 +55,32 @@ public class FileUploadController {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("File Upload Controller uploadFile error occurred : " + e.getMessage());
+        }
+        return ett;
+    }
+
+    @PutMapping(value = "/update/{email}/{id}")
+    public ResponseEntity<SingleResult<Integer>> updatePicTo(@RequestBody Map<String, String> octet, @PathVariable String email, @PathVariable Long id) {
+        ResponseEntity<SingleResult<Integer>> ett = null;
+        loggingService.httpPathStrLoggingWithRequest(className, "updatePicTo", octet.get("octet"), email, String.valueOf(id));
+        try {
+            MultipartFile multipartFile = fileUploadService.decodeAndConvertFile(octet.get("octet"));
+            log.info("File Upload Controller updatePicTo multipartFile : " + multipartFile);
+
+            Integer updateId = fileUploadService.updatePicToByEmailAndId(multipartFile, email, id);
+            log.info("File Upload Controller updatePicTo updateId : ", updateId);
+
+            SingleResult<Integer> result = responseService.getSingleResult(updateId);
+            loggingService.singleResultLogging(className, "updatePicTo", result);
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            log.info("File Upload Controller uploadFile ett : " + ett);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("File Upload Controller updatePicTo error occurred : " + e.getMessage());
         }
         return ett;
     }
@@ -102,19 +128,6 @@ public class FileUploadController {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("File Upload Controller getPicToCount error occurred : " + e.getMessage());
-        }
-        return ett;
-    }
-
-    @PutMapping(value = "/update/{email}/{provider}")
-    public ResponseEntity<SingleResult<Long>> updatePicTo(@RequestBody Map<String, String> octet, @PathVariable String email, @PathVariable String provider) {
-        ResponseEntity<SingleResult<Long>> ett = null;
-        loggingService.httpPathStrLoggingWithRequest(className, "updatePicTo", octet.get("image"), email, provider);
-        try {
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("File Upload Controller updatePicTo error occurred : " + e.getMessage());
         }
         return ett;
     }
