@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
+@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "base_local_user")
 public class BaseLocalUser extends BaseTimeEntity implements UserDetails {
 

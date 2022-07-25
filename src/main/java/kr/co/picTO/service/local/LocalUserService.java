@@ -21,9 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class LocalUserService {
 
     private final BaseLocalUserRepo userJpaRepo;

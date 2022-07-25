@@ -26,9 +26,9 @@ import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class FileUploadService {
 
     private final BaseS3ImageRepo imageRepo;

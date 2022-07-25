@@ -9,9 +9,9 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LocalUserLoginRequestDto {
     private String email;
     private String password;

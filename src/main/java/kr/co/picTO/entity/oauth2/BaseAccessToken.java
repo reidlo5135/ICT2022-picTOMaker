@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@Builder
 @Entity
-@Table(name = "base_access_token")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "base_access_token")
 public class BaseAccessToken extends BaseTimeEntity {
 
     @Id
