@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "base_user_qna")
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Getter
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "base_user_qna")
 public class BaseUserQna extends BaseTimeEntity {
 
     @Id

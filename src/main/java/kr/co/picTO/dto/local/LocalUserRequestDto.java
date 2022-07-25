@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class LocalUserRequestDto {
 
     private String email;

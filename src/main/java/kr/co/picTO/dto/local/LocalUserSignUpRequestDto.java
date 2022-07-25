@@ -11,11 +11,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
 
+@Log4j2
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@Log4j2
+@AllArgsConstructor
 public class LocalUserSignUpRequestDto {
 
     private String email;
