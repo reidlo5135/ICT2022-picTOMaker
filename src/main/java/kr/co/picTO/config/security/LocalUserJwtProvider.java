@@ -19,9 +19,9 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
-@RequiredArgsConstructor
-@Component
 @Log4j2
+@Component
+@RequiredArgsConstructor
 public class LocalUserJwtProvider {
 
     @Value("${spring.jwt.secret}")

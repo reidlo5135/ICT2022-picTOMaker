@@ -21,8 +21,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Locale;
 
-@Service
 @Log4j2
+@Service
 @RequiredArgsConstructor
 public class OAuth2ProviderService {
 

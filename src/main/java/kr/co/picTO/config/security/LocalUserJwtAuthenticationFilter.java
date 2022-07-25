@@ -13,8 +13,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@RequiredArgsConstructor
 @Log4j2
+@RequiredArgsConstructor
 public class LocalUserJwtAuthenticationFilter extends GenericFilterBean {
 
     private final LocalUserJwtProvider localUserJwtProvider;
