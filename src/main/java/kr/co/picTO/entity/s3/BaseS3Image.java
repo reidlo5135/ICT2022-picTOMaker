@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@Builder
 @Entity
-@Table(name = "base_s3_image")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "base_s3_image")
 public class BaseS3Image extends BaseTimeEntity {
 
     @Id

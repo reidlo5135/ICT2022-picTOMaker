@@ -8,9 +8,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "base_auth_user")
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "base_auth_user")
 public class BaseAuthUser extends BaseTimeEntity {
 
     @Id
