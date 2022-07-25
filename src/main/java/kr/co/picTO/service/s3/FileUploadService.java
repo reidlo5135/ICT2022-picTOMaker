@@ -37,8 +37,8 @@ public class FileUploadService {
     private final UploadService uploadService;
 
     @Transactional
-    public MultipartFile decodeAndConvertFile(Map<String, String> octet) {
-        String[] strings = octet.get("image").split(",");
+    public MultipartFile decodeAndConvertFile(String octet) {
+        String[] strings = octet.split(",");
         String extension;
         switch (strings[0]) {
             case "data:image/jpeg;base64":
@@ -143,6 +143,33 @@ public class FileUploadService {
             throw new IllegalArgumentException(String.format("FILE SVC uploadImage 파일 변환 중 에러가 발생했습니다 파일명 -> (%s) : ", file.getOriginalFilename()));
         }
         return fileUrl;
+    }
+
+    @Transactional
+    public Integer updatePicToByEmailAndId(MultipartFile file, String email, Long id) {
+        log.info("File SVC updatePicToByEmailAndProvider email : " + email);
+        log.info("File SVC updatePicToByEmailAndProvider id : " + id);
+        Integer result = null;
+
+        String fileName = createFileName(file.getOriginalFilename());
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(file.getSize());
+        objectMetadata.setContentType(file.getContentType());
+
+        log.info("File SVC updatePicToByEmailAndProvider objectMetaData contentType : " + objectMetadata.getContentType());
+
+        String fileUrl = null;
+
+        try (InputStream inputStream = file.getInputStream()) {
+            log.info("File SVC updatePicToByEmailAndProvider fileName : " + fileName);
+            uploadService.uploadFile(inputStream, objectMetadata, fileName);
+            fileUrl = uploadService.getFileUrl(fileName);
+
+            result = imageRepo.updateByEmailAndId(fileUrl, email, id);
+        } catch (IOException e) {
+            throw new IllegalArgumentException(String.format("FILE SVC updatePicToByEmailAndProvider 파일 변환 중 에러가 발생했습니다 파일명 -> (%s) : ", file.getOriginalFilename()));
+        }
+        return result;
     }
 
     public List<BaseS3Image> getPicToByEmail(String email, String provider) {
