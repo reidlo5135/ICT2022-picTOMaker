@@ -21,6 +21,6 @@ public interface BaseS3ImageRepo extends JpaRepository<BaseS3Image, Long> {
     Integer updateByEmailAndId(String fileUrl, String email, Long id);
 
     @Modifying
-    @Query(value = "DELETE FROM BaseS3Image bsi WHERE bsi.fileName = :name")
-    Integer deleteByFileName(String name);
+    @Query(value = "DELETE FROM BaseS3Image bsi WHERE bsi.id = :id")
+    Integer deleteByFileName(Long id);
 }
