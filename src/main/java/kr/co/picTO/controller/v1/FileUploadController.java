@@ -132,12 +132,12 @@ public class FileUploadController {
         return ett;
     }
 
-    @DeleteMapping(value = "/delete/{name}")
-    public ResponseEntity<SingleResult<Integer>> deletePicTo(@PathVariable String name) {
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<SingleResult<Integer>> deletePicTo(@PathVariable Long id) {
         ResponseEntity<SingleResult<Integer>> ett = null;
-        loggingService.httpPathStrLogging(className, "deletePicTo", name, "", "");
+        loggingService.httpPathStrLogging(className, "deletePicTo", String.valueOf(id), "", "");
         try {
-            Integer deleteId = fileUploadService.deletePicToByFileName(name);
+            Integer deleteId = fileUploadService.deletePicToById(id);
             log.info("File Upload Controller deletePicTo result : ", deleteId);
 
             SingleResult<Integer> result = responseService.getSingleResult(deleteId);

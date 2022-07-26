@@ -213,15 +213,15 @@ public class FileUploadService {
     }
 
     @Transactional
-    public Integer deletePicToByFileName(String name) {
-        log.info("File SVC deletePicToByFileName name : " + name);
+    public Integer deletePicToById(Long id) {
+        log.info("File SVC deletePicToById id : " + id);
         Integer result = null;
         try {
-            result = imageRepo.deleteByFileName(name);
-            log.info("File SVC deletePicToByFileName result : ", result);
+            result = imageRepo.deleteByFileName(id);
+            log.info("File SVC deletePicToById result : ", result);
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("File SVC deletePicToByFileName error occurred : " + e.getMessage());
+            log.error("File SVC deletePicToById error occurred : " + e.getMessage());
             throw new CustomCommunicationException();
         }
         return result;
