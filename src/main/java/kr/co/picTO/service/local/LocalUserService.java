@@ -9,10 +9,17 @@ import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
 import kr.co.picTO.dto.social.ProfileDTO;
 import kr.co.picTO.entity.local.BaseLocalUser;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
+import kr.co.picTO.model.response.CommonResult;
+import kr.co.picTO.model.response.SingleResult;
 import kr.co.picTO.repository.BaseLocalUserRepo;
 import kr.co.picTO.repository.BaseTokenRepo;
+import kr.co.picTO.service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,9 +37,11 @@ public class LocalUserService {
     private final BaseTokenRepo tokenRepo;
     private final PasswordEncoder passwordEncoder;
     private final LocalUserJwtProvider localUserJwtProvider;
+    private final ResponseService responseService;
 
     @Transactional
-    public BaseAccessToken login(LocalUserLoginRequestDto localUserLoginRequestDto) {
+    public ResponseEntity<?> login(LocalUserLoginRequestDto localUserLoginRequestDto) {
+        ResponseEntity<?> ett = null;
 
         log.info("Local User SVC Login localReqDto : " + localUserLoginRequestDto.getEmail() + ", " + localUserLoginRequestDto.getPassword());
 
@@ -42,11 +51,23 @@ public class LocalUserService {
         if (!passwordEncoder.matches(localUserLoginRequestDto.getPassword(), user.getPassword()))
             throw new CustomEmailLoginFailedException();
 
-        BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        log.info("Local User SVC Login bAToken : " + baseAccessToken);
+        if(user != null){
+            BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
+            log.info("Local User SVC Login bAToken : " + baseAccessToken);
 
-        return baseAccessToken;
+            SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(baseAccessToken);
+            log.info("Local User SVC login singleResult : " + singleResult);
+            ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
+            log.info("Local User SVC login ett : " + ett);
+        } else {
+            CommonResult failResult = responseService.getFailResult(-1, "회원정보가 존재하지 않습니다.");
+            ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error("Local User SVC login failResult : " + failResult);
+        }
+        return ett;
     }
 
     @Transactional
