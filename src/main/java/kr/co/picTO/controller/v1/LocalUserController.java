@@ -3,21 +3,15 @@ package kr.co.picTO.controller.v1;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-
 import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
-import kr.co.picTO.dto.social.ProfileDTO;
 import kr.co.picTO.dto.token.LocalTokenDto;
 import kr.co.picTO.entity.oauth2.BaseAccessToken;
-import kr.co.picTO.model.response.SingleResult;
 import kr.co.picTO.service.local.LocalUserService;
 import kr.co.picTO.service.response.ResponseLoggingService;
 import kr.co.picTO.service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,46 +49,28 @@ public class LocalUserController {
 
     @ApiOperation(value = "회원 등록", notes = "회원 가입")
     @PostMapping(value = "/signUp")
-    public ResponseEntity<SingleResult<Long>> save(@ApiParam(value = "Sign Req DTO", required = true) @RequestBody LocalUserSignUpRequestDto localUserSignUpRequestDto) {
-        ResponseEntity<SingleResult<Long>> ett = null;
+    public ResponseEntity<?> save(@ApiParam(value = "Sign Req DTO", required = true) @RequestBody LocalUserSignUpRequestDto localUserSignUpRequestDto) {
+        ResponseEntity<?> ett = null;
         log.info("Local User Controller Sign localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
 
         try {
-            Long signUpId = userService.signUp(localUserSignUpRequestDto);
-
-            SingleResult<Long> result = responseService.getSingleResult(signUpId);
-            loggingService.singleResultLogging(className, "save", result);
-
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
-            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
-            log.info("Local User Controller SingUp ett : " + ett);
+            ett = userService.signUp(localUserSignUpRequestDto);
+            log.info("Local User Controller SignUp ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
         }
-
         return ett;
     }
 
     @PostMapping(value = "/profile")
-    public ResponseEntity<SingleResult<ProfileDTO>> getProfile(@RequestBody Map<String, String> access_token) {
-        ResponseEntity<SingleResult<ProfileDTO>> ett = null;
+    public ResponseEntity<?> getProfile(@RequestBody Map<String, String> access_token) {
+        ResponseEntity<?> ett = null;
         log.info("Local User Controller access_token : " + access_token.get("access_token"));
 
         try {
-            ProfileDTO profileDTO = userService.getProfileLocal(access_token.get("access_token"));
-            log.info("Local User Controller pDTO : " + profileDTO);
-
-            SingleResult result = responseService.getSingleResult(profileDTO);
-            loggingService.singleResultLogging(className, "getProfile", result);
-
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
-            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
-            log.info("Local User Controller ett : " + ett);
+            ett = userService.getProfileLocal(access_token.get("access_token"));
+            log.info("Local User Controller getProfile ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
@@ -104,47 +80,31 @@ public class LocalUserController {
 
     @ApiOperation(value = "Access, Refresh Token Reissue", notes = "Token Reissue")
     @PostMapping(value = "/reissue")
-    public ResponseEntity<SingleResult<BaseAccessToken>> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody LocalTokenDto tokenDto) {
-        ResponseEntity<SingleResult<BaseAccessToken>> ett = null;
+    public ResponseEntity<?> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody LocalTokenDto tokenDto) {
+        ResponseEntity<?> ett = null;
         log.info("Local User Controller Reissue tokenDto : ", tokenDto.getAccessToken() + ", " + tokenDto.getRefreshToken());
 
         try {
             BaseAccessToken bat = tokenDto.toEntity(tokenDto.getAccessToken(), tokenDto.getRefreshToken());
             log.info("Local User Controller Reissue bat : " + bat.getAccess_token() + ", " + bat.getRefresh_token());
 
-            SingleResult<BaseAccessToken> result = responseService.getSingleResult(userService.reissue(bat));
-            loggingService.singleResultLogging(className, "reissue", result);
-
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
-            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
-            log.info("Local User Controller SingUp ett : " + ett);
+            ett = userService.reissue(bat);
+            log.info("Local User Controller Reissue ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
         }
-
         return ett;
     }
 
     @PostMapping(value = "/nickname")
-    public ResponseEntity<SingleResult<String>> getNickNameByEmail(@RequestBody Map<String, String> reqBody) {
-        ResponseEntity<SingleResult<String>> ett = null;
+    public ResponseEntity<?> getNickNameByEmail(@RequestBody Map<String, String> reqBody) {
+        ResponseEntity<?> ett = null;
         String email = reqBody.get("email");
         log.info("Local User Controller getNickNameByEmail email : ", email);
 
         try {
-            String nickName = userService.findNickNameByEmail(email);
-            log.info("Local User Controller getNickNameByEmaiil nickName : ", nickName);
-
-            SingleResult<String> result = responseService.getSingleResult(nickName);
-            loggingService.singleResultLogging(className, "getNickNameByEmail", result);
-
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
-            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            ett = userService.findNickNameByEmail(email);
             log.info("Local User Controller getNickNameByEmail ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
@@ -154,20 +114,12 @@ public class LocalUserController {
     }
 
     @DeleteMapping(value = "/token/invalid/{access_token}")
-    public ResponseEntity<SingleResult<Long>> inValidToken(@PathVariable String access_token) {
-        ResponseEntity<SingleResult<Long>> ett = null;
+    public ResponseEntity<?> inValidToken(@PathVariable String access_token) {
+        ResponseEntity<?> ett = null;
         loggingService.httpPathStrLogging(className, "inValidToken", access_token, "", "");
 
         try {
-            Integer id = userService.deleteToken(access_token);
-
-            SingleResult result = responseService.getSingleResult(id);
-            loggingService.singleResultLogging(className, "inValidToken", result);
-
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
-            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            ett = userService.deleteToken(access_token);
             log.info("Local User Controller inValidToken ett : ", ett);
         } catch (Exception e) {
             e.printStackTrace();
