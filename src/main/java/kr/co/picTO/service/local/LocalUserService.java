@@ -42,110 +42,199 @@ public class LocalUserService {
     @Transactional
     public ResponseEntity<?> login(LocalUserLoginRequestDto localUserLoginRequestDto) {
         ResponseEntity<?> ett = null;
-
-        log.info("Local User SVC Login localReqDto : " + localUserLoginRequestDto.getEmail() + ", " + localUserLoginRequestDto.getPassword());
-
-        BaseLocalUser user = userJpaRepo.findByEmail(localUserLoginRequestDto.getEmail())
-                .orElseThrow(CustomEmailLoginFailedException::new);
-
-        if (!passwordEncoder.matches(localUserLoginRequestDto.getPassword(), user.getPassword()))
-            throw new CustomEmailLoginFailedException();
-
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        if(user != null){
-            BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
-            log.info("Local User SVC Login bAToken : " + baseAccessToken);
+        log.info("Local User SVC Login localReqDto : " + localUserLoginRequestDto.getEmail() + ", " + localUserLoginRequestDto.getPassword());
 
-            SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(baseAccessToken);
-            log.info("Local User SVC login singleResult : " + singleResult);
-            ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
-            log.info("Local User SVC login ett : " + ett);
-        } else {
-            CommonResult failResult = responseService.getFailResult(-1, "회원정보가 존재하지 않습니다.");
-            ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-            log.error("Local User SVC login failResult : " + failResult);
+        try {
+            BaseLocalUser user = userJpaRepo.findByEmail(localUserLoginRequestDto.getEmail()).orElse(null);
+
+            if(user == null) {
+                CommonResult failResult = responseService.getFailResult(-1, "가입하지 않은 아이디입니다.");
+                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+                log.error("Local User SVC login userIsNull failResult : " + failResult);
+            } else if(!passwordEncoder.matches(localUserLoginRequestDto.getPassword(), user.getPassword())) {
+                CommonResult failResult = responseService.getFailResult(-1, "비밀번호가 일치하지 않습니다.");
+                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+                log.error("Local User SVC login passwordDoNotMatch failResult : " + failResult);
+            } else {
+                BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
+                log.info("Local User SVC login bAToken : " + baseAccessToken);
+
+                SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(baseAccessToken);
+                log.info("Local User SVC login singleResult : " + singleResult);
+                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
+                log.info("Local User SVC login ett : " + ett);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return ett;
     }
 
     @Transactional
-    public Long signUp(LocalUserSignUpRequestDto localUserSignUpRequestDto) {
-        log.info("Local User SVC Sign localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
-        if (userJpaRepo.findByEmail(localUserSignUpRequestDto.getEmail()).isPresent())
-            throw new CustomEmailSignUpFailedException();
+    public ResponseEntity<?> signUp(LocalUserSignUpRequestDto localUserSignUpRequestDto) {
+        ResponseEntity<?> ett = null;
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        return userJpaRepo.save(localUserSignUpRequestDto.toEntity(passwordEncoder)).getId();
+        log.info("Local User SVC Sign localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
+
+        try {
+            if (userJpaRepo.findByEmail(localUserSignUpRequestDto.getEmail()) != null) {
+                CommonResult failResult = responseService.getFailResult(-1, "이미 존재하는 회원입니다.");
+                log.error("Local User SVC SignUp failResult : " + failResult);
+                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                Long resultId = userJpaRepo.save(localUserSignUpRequestDto.toEntity(passwordEncoder)).getId();
+                log.info("Local User SVC SignUp resultId : " + resultId);
+
+                SingleResult<Long> singleResult = responseService.getSingleResult(resultId);
+                log.info("Local User SVC SignUp singleResult : " + singleResult);
+                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ett;
     }
 
     @Transactional
-    public ProfileDTO getProfileLocal(String access_token) {
+    public ResponseEntity<?> getProfileLocal(String access_token) {
+        ResponseEntity<?> ett = null;
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         log.info("Local User SVC Profile access_token : " + access_token);
 
-        BaseAccessToken bat = tokenRepo.findByAccessToken(access_token).orElseThrow(CustomUserNotFoundException::new);
-        BaseLocalUser user = userJpaRepo.findById(bat.getLocal_user_id()).orElseThrow(CustomUserNotFoundException::new);
+        try {
+            BaseAccessToken bat = tokenRepo.findByAccessToken(access_token).orElse(null);
+            BaseLocalUser user = userJpaRepo.findById(bat.getLocal_user_id()).orElse(null);
 
-        log.info("Local User SVC Profile bat isNull : " + (bat == null));
-        log.info("Local User SVC Profile user isNull : " + (user == null));
+            log.info("Local User SVC Profile bat isNull : " + (bat == null));
+            log.info("Local User SVC Profile user isNull : " + (user == null));
 
-        ProfileDTO profileDTO = new ProfileDTO(user.getEmail(), user.getName(), user.getNickName(), user.getProfile_image_url());
-        log.info("Local User SVC Profile pDTO isNull : " + (profileDTO == null));
+            if(bat != null && user != null) {
+                ProfileDTO profileDTO = new ProfileDTO(user.getEmail(), user.getName(), user.getNickName(), user.getProfile_image_url());
+                log.info("Local User SVC Profile pDTO isNull : " + (profileDTO == null));
 
-        return profileDTO;
+                SingleResult<ProfileDTO> singleResult = responseService.getSingleResult(profileDTO);
+                log.info("Local User SVC Profile singleResult : " + singleResult);
+
+                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
+            } else {
+                CommonResult failResult = responseService.getFailResult(-1, "Get Profile Local Error Occurred");
+                log.error("Local User SVC Profile failResult : " + failResult);
+
+                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ett;
     }
 
     @Transactional
-    public BaseAccessToken reissue(BaseAccessToken bat) {
+    public ResponseEntity<?> reissue(BaseAccessToken bat) {
+        ResponseEntity<?> ett = null;
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        log.info("Local User SVC reissue bat : " + bat);
 
-        if (!localUserJwtProvider.validationToken(bat.getRefresh_token())) {
-            throw new CustomRefreshTokenException();
+        try {
+            if (!localUserJwtProvider.validationToken(bat.getRefresh_token())) {
+                throw new CustomRefreshTokenException();
+            } else {
+                String accessToken = bat.getAccess_token();
+                Authentication authentication = localUserJwtProvider.getAuthentication(accessToken);
+
+                log.info("Local User SVC reissue accToken, authen : " + accessToken + ", " + authentication);
+
+                BaseLocalUser user = userJpaRepo.findByEmail(authentication.getName()).orElse(null);
+                BaseAccessToken originToken = tokenRepo.findById(user.getId()).orElse(null);
+
+                if(user != null && originToken != null) {
+                    log.info("Local User SVC reissue user, refreshToken : " + user + ", " + originToken);
+
+                    BaseAccessToken newRefreshToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
+                    bat.refreshToken(newRefreshToken.toString());
+                    log.info("Local User SVC reissue newRefreshToken " + newRefreshToken);
+
+                    SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(newRefreshToken);
+                    log.info("Local User SVC reissue singleResult : " + singleResult);
+
+                    ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
+                } else {
+                    CommonResult failResult = responseService.getFailResult(-1, "Reissue Error Occurred");
+                    log.error("Local User SVC reissue failResult : " + failResult);
+
+                    ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        String accessToken = bat.getAccess_token();
-        Authentication authentication = localUserJwtProvider.getAuthentication(accessToken);
-
-        log.info("Local User SVC reissue accToken, authen : " + accessToken + ", " + authentication);
-
-        BaseLocalUser user = userJpaRepo.findByEmail(authentication.getName())
-                .orElseThrow(CustomUserNotFoundException::new);
-
-        BaseAccessToken originToken = tokenRepo.findById(user.getId()).orElseThrow(CustomRefreshTokenException::new);
-
-        log.info("Local User SVC reissue user, refreshToken : " + user + ", " + originToken);
-
-        BaseAccessToken newRefreshToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
-        bat.refreshToken(newRefreshToken.toString());
-
-        log.info("Local User SVC reissue newRefreshToken " + newRefreshToken);
-
-        return newRefreshToken;
+        return ett;
     }
 
-    public String findNickNameByEmail(String email) {
+    public ResponseEntity<?> findNickNameByEmail(String email) {
+        ResponseEntity<?> ett = null;
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         log.info("Local User SVC findNickNameByEmail email : " + email);
 
-        BaseLocalUser user = userJpaRepo.findByEmail(email)
-                .orElseThrow(CustomUserNotFoundException::new);
-        String nickName = user.getNickName();
-        log.info("Local User SVC findNickNameByEmail nickName : ", nickName);
+        try {
+            BaseLocalUser user = userJpaRepo.findByEmail(email).orElse(null);
 
-        return nickName;
+            if(user != null) {
+                String nickName = user.getNickName();
+                log.info("Local User SVC findNickNameByEmail nickName : ", nickName);
+
+                SingleResult<String> singleResult = responseService.getSingleResult(nickName);
+                log.info("Local User SVC findNickNameByEmail singleResult : " + singleResult);
+
+                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
+            } else {
+                CommonResult failResult = responseService.getFailResult(-1, "FindNickNameByEmail Error Occurred");
+                log.info("Local User SVC findByNickNameByEmail failResult : " + failResult);
+
+                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ett;
     }
 
     @Transactional
-    public Integer deleteToken(String access_token) {
+    public ResponseEntity<?> deleteToken(String access_token) {
+        ResponseEntity<?> ett = null;
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         log.info("Local User SVC delT at : " + access_token);
+
         Integer id = null;
         try {
             id = userJpaRepo.deleteByAccessToken(access_token);
             log.info("Local User SVC delT bat id : " + id);
+
+            if(id != 1) {
+                SingleResult<Integer> singleResult = responseService.getSingleResult(id);
+                log.info("Local User SVC delT singleResult : " + singleResult);
+
+                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
+            } else {
+                CommonResult failResult = responseService.getFailResult(-1, "DeleteToken Error Occurred");
+                log.error("Local User SVC delT failResult : " + failResult);
+
+                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Local User SVC delT Error Occurred : " + e.getMessage());
             throw new CustomCommunicationException();
         }
-        return id;
+        return ett;
     }
 
     @Transactional(readOnly = true)
@@ -157,8 +246,7 @@ public class LocalUserService {
 
     @Transactional(readOnly = true)
     public LocalUserResponseDto findByEmail(String email) {
-        BaseLocalUser user = userJpaRepo.findByEmail(email)
-                .orElseThrow(CustomUserNotFoundException::new);
+        BaseLocalUser user = userJpaRepo.findByEmail(email).orElse(null);
         return new LocalUserResponseDto(user);
     }
 
