@@ -48,6 +48,9 @@ export default function MyPageContent(){
                             alert('성공적으로 로그아웃 되었습니다!!');
                             history.push("/");
                         }
+                    }).catch((err) => {
+                        console.error('err : ', JSON.stringify(err));
+                        alert(err.response.data.msg);
                     });
             } else {
                 axios.delete(`/v1/api/oauth2/token/invalid/${access_token}`)
@@ -61,6 +64,9 @@ export default function MyPageContent(){
                             alert('성공적으로 로그아웃 되었습니다!!');
                             history.push("/");
                         }
+                    }).catch((err) => {
+                        console.error('err : ', JSON.stringify(err));
+                        alert(err.response.data.msg);
                     });
             }
         } catch (err) {

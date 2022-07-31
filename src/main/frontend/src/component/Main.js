@@ -84,13 +84,12 @@ export default function Main(){
                                 alert('어서오세요, ' + nickName + ' 픽토메이커님!');
                                 closeModal();
                                 history.push("/");
-                            } else if(response.data.code === -1) {
-                                alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
                             }
                         });
-                    } else {
-                        alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
                     }
+                }).catch((err) => {
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
                 });
             } catch (err) {
                 console.error(err);
