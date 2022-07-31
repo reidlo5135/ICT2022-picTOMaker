@@ -2,7 +2,6 @@ package kr.co.picTO.controller.oauth;
 
 import io.swagger.annotations.Api;
 import kr.co.picTO.dto.social.ProfileDTO;
-import kr.co.picTO.entity.oauth2.BaseAccessToken;
 import kr.co.picTO.model.response.SingleResult;
 import kr.co.picTO.service.response.ResponseLoggingService;
 import kr.co.picTO.service.response.ResponseService;
@@ -31,25 +30,14 @@ public class OAuth2Controller {
     private final ResponseLoggingService loggingService;
 
     @PostMapping(value = "/token/{provider}")
-    public ResponseEntity<SingleResult<BaseAccessToken>> generateToken(@RequestBody Map<String, String> code, @PathVariable String provider) {
-        ResponseEntity<SingleResult<BaseAccessToken>> ett = null;
+    public ResponseEntity<?> generateToken(@RequestBody Map<String, String> code, @PathVariable String provider) {
+        ResponseEntity<?> ett = null;
         loggingService.httpPathStrLoggingWithRequest(className, "generateToken", code.get("code"), provider, "");
 
         try {
-            BaseAccessToken baseAccessToken = OAuth2ProviderService.generateAccessToken(code.get("code"), provider);
-            log.info("Prov Controller ACCESS TOKEN : " + baseAccessToken);
-            log.info("Prov Controller prov : " + provider);
-
-            OAuth2ProviderService.saveAccessToken(baseAccessToken);
-
-            SingleResult<BaseAccessToken> result = responseService.getSingleResult(baseAccessToken);
-            loggingService.singleResultLogging(className, "generateToken", result);
-
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
-            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
-            log.info("Prov Controller ett : " + ett);
+            ett = OAuth2ProviderService.generateAccessToken(code.get("code"), provider);
+            log.info("OAuth2Controller gAT ett : " + ett);
+            log.info("OAuth2Controller gAT provider : " + provider);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
