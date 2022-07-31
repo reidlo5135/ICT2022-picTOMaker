@@ -44,8 +44,6 @@ export default function Callback(){
                 localStorage.setItem("provider", provider);
 
                 history.push("/");
-            } else {
-                alert("An ERROR OCCURRED : " + response.data.code);
             }
         });
     } catch (err) {
