@@ -38,21 +38,12 @@ public class LocalUserController {
 
     @ApiOperation(value = "로그인", notes = "Login By Email")
     @PostMapping(value = "/login")
-    public ResponseEntity<SingleResult<BaseAccessToken>> loginAndCreateToken(@ApiParam(value = "Login Req DTO", required = true) @RequestBody LocalUserLoginRequestDto localUserLoginRequestDto) {
-        ResponseEntity<SingleResult<BaseAccessToken>> ett = null;
+    public ResponseEntity<?> loginAndCreateToken(@ApiParam(value = "Login Req DTO", required = true) @RequestBody LocalUserLoginRequestDto localUserLoginRequestDto) {
+        ResponseEntity<?> ett = null;
         log.info("Local User Controller Login localReqDto : " + localUserLoginRequestDto.getEmail() + ", " + localUserLoginRequestDto.getPassword());
 
         try {
-            BaseAccessToken baseAccessToken = userService.login(localUserLoginRequestDto);
-            log.info("Local User Controller Login Token : " + baseAccessToken);
-
-            SingleResult<BaseAccessToken> result = responseService.getSingleResult(baseAccessToken);
-            loggingService.singleResultLogging(className, "loginAndCreateToken", result);
-
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
-            ett = new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+            ett = userService.login(localUserLoginRequestDto);
             log.info("Local User Controller SingUp ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
