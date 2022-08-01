@@ -35,13 +35,13 @@ public class LocalUserController {
         log.info("Local User Controller Login localReqDto : " + localUserLoginRequestDto.getEmail() + ", " + localUserLoginRequestDto.getPassword());
         try {
             ett = userService.login(localUserLoginRequestDto);
-            log.info("Local User Controller SingUp ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
+        } finally {
+            log.info("Local User Controller SingUp ett : " + ett);
+            return ett;
         }
-
-        return ett;
     }
 
     @ApiOperation(value = "회원 등록", notes = "회원 가입")
@@ -51,12 +51,13 @@ public class LocalUserController {
         log.info("Local User Controller Sign localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
         try {
             ett = userService.signUp(localUserSignUpRequestDto);
-            log.info("Local User Controller SignUp ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
+        } finally {
+            log.info("Local User Controller SignUp ett : " + ett);
+            return ett;
         }
-        return ett;
     }
 
     @PostMapping(value = "/profile")
@@ -65,12 +66,13 @@ public class LocalUserController {
         log.info("Local User Controller access_token : " + access_token.get("access_token"));
         try {
             ett = userService.getProfileLocal(access_token.get("access_token"));
-            log.info("Local User Controller getProfile ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
+        } finally {
+            log.info("Local User Controller getProfile ett : " + ett);
+            return ett;
         }
-        return ett;
     }
 
     @ApiOperation(value = "Access, Refresh Token Reissue", notes = "Token Reissue")
@@ -83,12 +85,13 @@ public class LocalUserController {
             log.info("Local User Controller Reissue bat : " + bat.getAccess_token() + ", " + bat.getRefresh_token());
 
             ett = userService.reissue(bat);
-            log.info("Local User Controller Reissue ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
+        } finally {
+            log.info("Local User Controller Reissue ett : " + ett);
+            return ett;
         }
-        return ett;
     }
 
     @PostMapping(value = "/nickname")
@@ -98,12 +101,13 @@ public class LocalUserController {
         log.info("Local User Controller getNickNameByEmail email : ", email);
         try {
             ett = userService.findNickNameByEmail(email);
-            log.info("Local User Controller getNickNameByEmail ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Local User Controller getNickNameByEmail error occurred : ", e.getMessage());
+        } finally {
+            log.info("Local User Controller getNickNameByEmail ett : " + ett);
+            return ett;
         }
-        return ett;
     }
 
     @DeleteMapping(value = "/token/invalid/{access_token}")
@@ -112,11 +116,12 @@ public class LocalUserController {
         loggingService.httpPathStrLogging(className, "inValidToken", access_token, "", "");
         try {
             ett = userService.deleteToken(access_token);
-            log.info("Local User Controller inValidToken ett : ", ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Local User Controller inValidAndRefreshToken error occurred : ", e.getMessage());
+        } finally {
+            log.info("Local User Controller inValidToken ett : ", ett);
+            return ett;
         }
-        return ett;
     }
 }
