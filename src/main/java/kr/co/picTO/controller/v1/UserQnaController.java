@@ -29,17 +29,15 @@ public class UserQnaController {
     @PostMapping(value = "/register/{provider}")
     public ResponseEntity<?> save(@ApiParam(value = "QnaReqDto", required = true) @RequestBody UserQnaRequestDto userQnaRequestDto, @PathVariable String provider) {
         ResponseEntity<?> ett = null;
-        log.info("User Qna Controller register userQnaRequestDto.getEmail() : " + userQnaRequestDto.getEmail());
-        log.info("User Qna Controller register provider : " + provider);
-
+        loggingService.httpPathStrLogging(className, "saveQnA", userQnaRequestDto.getEmail(), provider, "");
         try {
             ett = userQnaService.registerQnA(userQnaRequestDto, provider);
-            log.info("User Qna Controller register ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("User Qna Controller register Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("User Qna Controller register ett : " + ett);
+            return ett;
         }
-
-        return ett;
     }
 }
