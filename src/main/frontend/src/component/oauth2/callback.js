@@ -28,7 +28,7 @@ export default function Callback(){
     console.log('provider : ', provider);
 
     try {
-        const resp = axios.post(`/v1/api/oauth2/token/${provider}`, {
+        axios.post(`/v1/api/oauth2/token/${provider}`, {
             code
         }).then((response) => {
             console.log('res data : ', response.data);
@@ -45,6 +45,9 @@ export default function Callback(){
 
                 history.push("/");
             }
+        }).catch((err) => {
+            console.error('err : ', JSON.stringify(err));
+            alert(err.response.data.msg);
         });
     } catch (err) {
         alert(err);

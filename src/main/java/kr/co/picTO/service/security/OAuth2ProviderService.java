@@ -12,6 +12,7 @@ import kr.co.picTO.model.response.CommonResult;
 import kr.co.picTO.model.response.SingleResult;
 import kr.co.picTO.repository.BaseAuthUserRepo;
 import kr.co.picTO.repository.BaseTokenRepo;
+import kr.co.picTO.service.response.ResponseLoggingService;
 import kr.co.picTO.service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,12 +30,15 @@ import java.util.Locale;
 @RequiredArgsConstructor
 public class OAuth2ProviderService {
 
+    private static final String className = OAuth2ProviderService.class.toString();
+
     private final OAuthRequestFactory oAuthRequestFactory;
     private final RestTemplate restTemplate;
     private final Gson gson;
     private final BaseAuthUserRepo userRepo;
     private final BaseTokenRepo tokenRepo;
     private final ResponseService responseService;
+    private final ResponseLoggingService loggingService;
 
     @Transactional
     public ResponseEntity<?> generateAccessToken(String code, String provider) {
@@ -54,23 +58,21 @@ public class OAuth2ProviderService {
                 BaseAccessToken baseAccessToken = gson.fromJson(response.getBody(), BaseAccessToken.class);
                 baseAccessToken.setProvider(provider.toUpperCase(Locale.ROOT));
                 log.info("OAuth2ProvSVC gAT gson GetBody : " + baseAccessToken);
-
                 saveAccessToken(baseAccessToken);
 
                 SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(baseAccessToken);
+                loggingService.singleResultLogging(className, "generateAccessToken", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
-                log.info("OAuth2ProvSVC gAT ett : " + ett);
             } else {
                 CommonResult failResult = responseService.getFailResult(-1, provider + " 로그인 중 에러가 발생하였습니다.");
-                log.error("OAuth2ProvSVC gAT getBody : " + response.getBody());
-                log.error("OAuth2ProvSVC gAT failResult : " + failResult);
+                loggingService.commonResultLogging(className, "generateAccessToken", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (Exception e) {
             e.printStackTrace();
             log.error("OAuth2ProvSVC gAT CCommunicateException Occurred" + e.getMessage());
-            throw new CustomCommunicationException();
         }
+        log.info("OAuth2ProvSVC gAT ett : " + ett);
         return ett;
     }
 
@@ -88,47 +90,61 @@ public class OAuth2ProviderService {
     }
 
     @Transactional
-    public Integer deleteToken(String access_token) {
+    public ResponseEntity<?> deleteToken(String access_token) {
+        ResponseEntity<?> ett = null;
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
         log.info("OAuth2ProvSVC delT at : " + access_token);
-        Integer id = null;
         try {
-            id = tokenRepo.deleteByAccessToken(access_token);
-            log.info("OAuth2ProvSVC delT bat id : " + id);
+            if(access_token == null || access_token.equals("")) {
+                CommonResult failResult = responseService.getFailResult(-1, "OAuth2 DeleteToken Error Occurred");
+                loggingService.commonResultLogging(className, "deleteToken", failResult);
+                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                Integer id = tokenRepo.deleteByAccessToken(access_token);
+                log.info("OAuth2ProvSVC delT bat id : " + id);
+
+                SingleResult<Integer> singleResult = responseService.getSingleResult(id);
+                loggingService.singleResultLogging(className, "deleteToken", singleResult);
+                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error("OAuth2ProvSVC delT Error Occurred : " + e.getMessage());
-            throw new CustomCommunicationException();
         }
-        return id;
+        log.info("OAuth2ProvSVC delT ett : " + ett);
+        return ett;
     }
 
-    public ProfileDTO getProfile(String accessToken, String provider) {
+    public ResponseEntity<?> getProfile(String accessToken, String provider) {
+        ResponseEntity<?> ett = null;
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         httpHeaders.set("Authorization", "Bearer " + accessToken);
 
         String profileUrl = oAuthRequestFactory.getProfileUrl(provider);
-
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(httpHeaders);
-
         ResponseEntity<String> response = restTemplate.postForEntity(profileUrl, request, String.class);
 
-        log.info("OAuth2ProvSVC getProfile profileUrl : " + profileUrl);
-        log.info("OAuth2ProvSVC getProfile req : " + request);
-        log.info("OAuth2ProvSVC getProfile res : " + response);
-
         try {
-            log.info("OAuth2ProvSVC getProfile res statusCode : "+ response.getStatusCode());
-            log.info("OAuth2ProvSVC getProfile res getBody : " + response.getBody());
-            log.info("OAuth2ProvSVC getProfile res getHeaders : " + response.getHeaders());
-            if (response.getStatusCode() == HttpStatus.OK) {
-                return extractProfile(response, accessToken, provider);
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+            if (response.getStatusCode() != HttpStatus.OK) {
+                CommonResult failResult = responseService.getFailResult(-1, "OAuth2 getProfile Error Occurred");
+                loggingService.commonResultLogging(className, "getProfile", failResult);
+                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                ProfileDTO profileDTO = extractProfile(response, accessToken, provider);
+                SingleResult<ProfileDTO> singleResult = responseService.getSingleResult(profileDTO);
+                loggingService.singleResultLogging(className, "getProfile", singleResult);
+                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
-            log.error("COAuth2ProvSVC getProfile Communicate exception" + e.getMessage());
-            throw new CustomCommunicationException();
+            e.printStackTrace();
+            log.error("OAuth2ProvSVC getProfile Communicate exception" + e.getMessage());
         }
-        throw new CustomCommunicationException();
+        log.info("OAuth2ProvSVC getProfile ett : " + ett);
+        return ett;
     }
 
     public ProfileDTO getProfileForGoogle(String accessToken, String provider) {
