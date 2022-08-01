@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Log4j2
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LocalTokenDto {
 
     private String accessToken;

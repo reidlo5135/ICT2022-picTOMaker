@@ -18,28 +18,26 @@ export default function MyPageMyPic(){
     const prof = JSON.parse(getProfile);
     const email = prof.email;
     const provider = localStorage.getItem("provider");
-  
+
     useEffect(() => {
-      const fetchData = async () => {
-        setLoading(true);
-        // const response = await axios.get(
-        //   "https://jsonplaceholder.typicode.com/posts"
-        // );
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.post(`/v1/api/picTO/get/${email}/${provider}`)
+                .then((response) => {
+                    console.log('response data : ' + response.data);
+                    console.log('response data.list : ' + response.data.list);
+                    console.log('response data.list JSON : ', JSON.stringify(response.data.list));
 
-          const response = await axios.post(`/v1/upload/get/picTO/${email}/${provider}`, {}, {
-              baseURL: 'http://localhost:8080',
-              withCredentials: true
-          }).then((response) => {
-              console.log('response data : ' + response.data);
-              console.log('response data.list : ' + response.data.list);
-
-              if(response.data.code === 0) {
-                  setPosts(response.data.list);
-                  setLoading(false);
-              }
-          });
-      };
-      fetchData();
+                    if(response.data.code === 0) {
+                        setPosts(response.data.list);
+                        setLoading(false);
+                    }
+                }).catch((err) => {
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
+                });
+        };
+        fetchData();
     }, []);
   
 

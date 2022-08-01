@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "cloud.aws.s3")
 @Component
+@ConfigurationProperties(prefix = "cloud.aws.s3")
 public class S3Component {
 
     private String bucket;

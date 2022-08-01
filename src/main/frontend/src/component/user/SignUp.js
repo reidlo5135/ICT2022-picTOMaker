@@ -48,14 +48,11 @@ export default function SignUp(){
             alert('비밀번호가 일치하지 않습니다.');
         } else {
             try {
-                axios.post('/v1/user/signUp', {
+                axios.post('/v1/api/user/signUp', {
                     email: email,
                     name: name,
                     nickName: nickName,
                     password: password
-                },{
-                    baseURL: 'http://localhost:8080',
-                    withCredentials: true
                 }).then((response) => {
                     console.log('response : ', response.data);
                     console.log('response : ', response.data.data);
@@ -63,12 +60,14 @@ export default function SignUp(){
                     if(response.data.code === 0){
                         alert(nickName + ' 픽토메이커님 환영합니다!');
                         history.push("/");
-                    } else {
-                        alert('An Error Occurred code : ' + response.data.code);
                     }
+                }).catch((err) => {
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
                 });
             } catch (err) {
-                console.error('err : ', err.response);
+                console.error('err : ', JSON.stringify(err));
+
             }
         }
     };

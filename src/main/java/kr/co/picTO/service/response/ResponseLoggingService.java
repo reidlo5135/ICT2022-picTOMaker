@@ -1,5 +1,6 @@
 package kr.co.picTO.service.response;
 
+import kr.co.picTO.model.response.CommonResult;
 import kr.co.picTO.model.response.ListResult;
 import kr.co.picTO.model.response.SingleResult;
 import lombok.extern.log4j.Log4j2;
@@ -35,12 +36,26 @@ public class ResponseLoggingService {
         }
     }
 
-    public void httpPathStrLogging(String className, String methodName, String str, String str2) {
+    public void commonResultLogging(String className, String methodName, CommonResult result) {
+        try {
+            log.error("Response Logging SVC commonResult logging ClassName : " + className);
+            log.error("Response Logging SVC commonResult logging MethodName : " + methodName);
+            log.error(className + " " + methodName + " result getCode : " + result.getCode());
+            log.error(className + " " + methodName + " result isSuccess : " + result.isSuccess());
+            log.error(className + " " + methodName + " result getMSg : " + result.getMsg());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Response Logging SVC commonResult logging error occurred : " + e.getMessage());
+        }
+    }
+
+    public void httpPathStrLogging(String className, String methodName, String str, String str2, String str3) {
         try {
             log.info("Response Logging SVC httpPathStrLogging ClassName : " + className);
             log.info("Response Logging SVC httpPathStrLogging MethodName : " + methodName);
             log.info("Response Logging SVC httpPathStrLogging logging str : " + str);
             log.info("Response Logging SVC httpPathStrLogging logging str2 : " + str2);
+            log.info("Response Logging SVC httpPathStrLogging logging str3 : " + str3);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Response Logging SVC httpPathStrLogging logging error occurred : " + e.getMessage());

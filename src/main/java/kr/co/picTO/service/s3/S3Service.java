@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 
+@Log4j2
 @Component
 @RequiredArgsConstructor
-@Log4j2
 public class S3Service implements UploadService{
 
     private final AmazonS3 amazonS3;

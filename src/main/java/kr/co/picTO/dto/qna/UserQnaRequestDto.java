@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @Log4j2
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserQnaRequestDto {
 
     private String email;
