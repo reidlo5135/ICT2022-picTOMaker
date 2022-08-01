@@ -1,5 +1,6 @@
 package kr.co.picTO.service.response;
 
+import kr.co.picTO.model.response.CommonResult;
 import kr.co.picTO.model.response.ListResult;
 import kr.co.picTO.model.response.SingleResult;
 import lombok.extern.log4j.Log4j2;
@@ -32,6 +33,19 @@ public class ResponseLoggingService {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Response Logging SVC listResult logging error occurred : " + e.getMessage());
+        }
+    }
+
+    public void commonResultLogging(String className, String methodName, CommonResult result) {
+        try {
+            log.error("Response Logging SVC commonResult logging ClassName : " + className);
+            log.error("Response Logging SVC commonResult logging MethodName : " + methodName);
+            log.error(className + " " + methodName + " result getCode : " + result.getCode());
+            log.error(className + " " + methodName + " result isSuccess : " + result.isSuccess());
+            log.error(className + " " + methodName + " result getMSg : " + result.getMsg());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Response Logging SVC commonResult logging error occurred : " + e.getMessage());
         }
     }
 

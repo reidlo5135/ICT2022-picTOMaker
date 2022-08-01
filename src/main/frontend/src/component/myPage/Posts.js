@@ -20,9 +20,9 @@ const Posts = ({ posts, loading }) => {
                     if(response.data.code === 0) {
                         alert('성공적으로 삭제되었습니다.');
                     }
-                })
-                .catch((e) => {
-                    console.error(e);
+                }).catch((err) => {
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
                 });
         } catch (e) {
             console.error(e);
