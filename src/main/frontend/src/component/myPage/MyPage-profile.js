@@ -27,9 +27,9 @@ export default function MyPageProfile(){
                         console.log('MyPage-profile getPicToCount count : ', response.data.data);
                         setCount(response.data.data);
                     }
-                })
-                .catch((e) => {
-                    console.error(e);
+                }).catch((err) => {
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
                 });
 
             setName(jsonProf.name);

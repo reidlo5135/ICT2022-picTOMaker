@@ -32,6 +32,9 @@ export default function MyPageMyPic(){
                         setPosts(response.data.list);
                         setLoading(false);
                     }
+                }).catch((err) => {
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
                 });
         };
         fetchData();
