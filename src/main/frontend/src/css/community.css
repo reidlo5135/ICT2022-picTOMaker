@@ -1,18 +1,68 @@
-.Community{
-    width: 1280px;
-    margin: 0 auto;
-    text-align:center;
+.CommunityEditor{
+    border: 1px solid gray;
+    text-align: center;
+    padding: 20px;
 }
 
-.commu-table{
-    margin: 0 auto;
+.CommunityEditor span{
+    padding-right: 20px;
 }
 
-th{
-    width: 200px;
-    border: 1px solid rebeccapurple;
+.CommunityEditor input, textarea{
+    margin-bottom: 20px;
+    width: 500px;
+    padding: 10px;
 }
-td{
-    width: 200px;
-    border-rightg: 1px solid rebeccapurple;
+
+.CommunityEditor textarea{
+    height: 150px;
+}
+
+.CommunityEditor select{
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.CommunityEditor button{
+    width: 500px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* List */
+
+.DiaryList{
+    border: 1px solid gray;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.DiaryList h2 {
+    text-align: center;
+}
+
+/* Item */
+
+.DiaryItem{
+    background-color: rgb(240,240,240);
+    margin-bottom: 10px;
+    padding: 20px;
+}
+
+
+.DiaryItem .info{
+    border-bottom: 10x solid gray;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.DiaryItem .date{
+    color:gray;
+}
+
+.DiaryItem .content{
+    font-weight: bold;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
