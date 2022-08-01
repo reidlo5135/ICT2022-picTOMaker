@@ -35,6 +35,9 @@ const Profile = () => {
                 }
 
                 localStorage.setItem("profile", JSON.stringify(response.data.data));
+            }).catch((err) => {
+                console.error('err : ', JSON.stringify(err));
+                alert(err.response.data.msg);
             });
         } catch (err) {
             console.error(err);
@@ -65,6 +68,9 @@ const Profile = () => {
                 }
 
                 localStorage.setItem("profile", JSON.stringify(response.data.data));
+            }).catch((err) => {
+                console.error('err : ', JSON.stringify(err));
+                alert(err.response.data.msg);
             });
         } catch (err) {
             console.error(err);

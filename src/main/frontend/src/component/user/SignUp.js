@@ -60,12 +60,14 @@ export default function SignUp(){
                     if(response.data.code === 0){
                         alert(nickName + ' 픽토메이커님 환영합니다!');
                         history.push("/");
-                    } else {
-                        alert('An Error Occurred code : ' + response.data.code);
                     }
+                }).catch((err) => {
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
                 });
             } catch (err) {
-                console.error('err : ', err.response);
+                console.error('err : ', JSON.stringify(err));
+
             }
         }
     };

@@ -71,7 +71,10 @@ export default function QnA() {
                 } else {
                     alert('An Error Occurred code : ' + response.data.code);
                 }
-            });
+            }).catch((err) => {
+                console.error('err : ', JSON.stringify(err));
+                alert(err.response.data.msg);
+            });;
         } catch (err) {
             console.error(err);
         }

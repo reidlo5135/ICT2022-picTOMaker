@@ -148,6 +148,9 @@ export default function EditTool(props) {
                     alert('성공적으로 저장되었습니다!');
                     history.push("/");
                 }
+            }).catch((err) => {
+                console.error('err : ', JSON.stringify(err));
+                alert(err.response.data.msg);
             });
         } catch (err) {
             console.error(err);

@@ -9,10 +9,10 @@ const Posts = ({ posts, loading }) => {
         console.log('post : ', post);
     });
 
-    const deletePicTo = (name) => {
-        console.log('Posts deletePicTo url : ', name);
+    const deletePicTo = (id) => {
+        console.log('Posts deletePicTo id : ', id);
         try {
-            axios.delete(`/v1/api/picTO/delete/${name}`)
+            axios.delete(`/v1/api/picTO/delete/${id}`)
                 .then((response) => {
                     console.log('Posts deletePicTo response data : ' + response.data);
                     console.log('Posts deletePicTo response data.data : ' + response.data.data);
@@ -20,9 +20,9 @@ const Posts = ({ posts, loading }) => {
                     if(response.data.code === 0) {
                         alert('성공적으로 삭제되었습니다.');
                     }
-                })
-                .catch((e) => {
-                    console.error(e);
+                }).catch((err) => {
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
                 });
         } catch (e) {
             console.error(e);
@@ -60,7 +60,7 @@ const Posts = ({ posts, loading }) => {
                             <button className='pic-edit pic-btn' />
                         </Link>
                         <button className='pic-delete pic-btn' onClick={() => {
-                            deletePicTo(post.fileName);
+                            deletePicTo(post.id);
                         }} />
                     </div>
                     <div className='pic-txt'>
