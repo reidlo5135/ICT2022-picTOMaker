@@ -39,7 +39,7 @@ public class LocalUserController {
             e.printStackTrace();
             log.error(e.getMessage());
         } finally {
-            log.info("Local User Controller SingUp ett : " + ett);
+            log.info("Local User Controller Login ett : " + ett);
             return ett;
         }
     }
