@@ -32,12 +32,13 @@ public class FileUploadController {
             log.info("File Upload Controller uploadFile multipartFile : " + multipartFile);
 
             ett = fileUploadService.uploadImage(multipartFile, email, provider);
-            log.info("File Upload Controller uploadFile ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("File Upload Controller uploadFile error occurred : " + e.getMessage());
+        } finally {
+            log.info("File Upload Controller uploadFile ett : " + ett);
+            return ett;
         }
-        return ett;
     }
 
     @PutMapping(value = "/update/{email}/{id}")
@@ -49,12 +50,13 @@ public class FileUploadController {
             log.info("File Upload Controller updatePicTo multipartFile : " + multipartFile);
 
             ett = fileUploadService.updatePicToByEmailAndId(multipartFile, email, id);
-            log.info("File Upload Controller uploadFile ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("File Upload Controller updatePicTo error occurred : " + e.getMessage());
+        } finally {
+            log.info("File Upload Controller updatePicTo ett : " + ett);
+            return ett;
         }
-        return ett;
     }
 
     @PostMapping(value = "/get/{email}/{provider}")
@@ -63,12 +65,13 @@ public class FileUploadController {
         loggingService.httpPathStrLogging(className, "getPicTo", email, provider, "");
         try {
             ett = fileUploadService.getPicToByEmail(email, provider);
-            log.info("File Upload Controller uploadFile ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("File Upload Controller getPicTo error occurred : " + e.getMessage());
+        } finally {
+            log.info("File Upload Controller getPicTo ett : " + ett);
+            return ett;
         }
-        return ett;
     }
 
     @PostMapping(value = "/count/{email}/{provider}")
@@ -77,12 +80,13 @@ public class FileUploadController {
         loggingService.httpPathStrLogging(className, "getPicToCount", email, provider, "");
         try {
             ett = fileUploadService.getPicToCountByEmailAndProvider(email, provider);
-            log.info("File Upload Controller uploadFile ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("File Upload Controller getPicToCount error occurred : " + e.getMessage());
+        } finally {
+            log.info("File Upload Controller getPicToCount ett : " + ett);
+            return ett;
         }
-        return ett;
     }
 
     @DeleteMapping(value = "/delete/{id}")
@@ -91,11 +95,12 @@ public class FileUploadController {
         loggingService.httpPathStrLogging(className, "deletePicTo", String.valueOf(id), "", "");
         try {
             ett = fileUploadService.deletePicToById(id);
-            log.info("File Upload Controller deletePicTo ett : " + ett);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("File Upload Controller deletePicTo error occurred : " + e.getMessage());
+        } finally {
+            log.info("File Upload Controller deletePicTo ett : " + ett);
+            return ett;
         }
-        return ett;
     }
 }

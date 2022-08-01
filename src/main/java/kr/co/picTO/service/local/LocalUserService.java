@@ -2,11 +2,8 @@ package kr.co.picTO.service.local;
 
 import kr.co.picTO.advice.exception.CustomCommunicationException;
 import kr.co.picTO.advice.exception.CustomRefreshTokenException;
-import kr.co.picTO.advice.exception.CustomUserNotFoundException;
 import kr.co.picTO.config.security.LocalUserJwtProvider;
 import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
-import kr.co.picTO.dto.local.LocalUserRequestDto;
-import kr.co.picTO.dto.local.LocalUserResponseDto;
 import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
 import kr.co.picTO.dto.social.ProfileDTO;
 import kr.co.picTO.entity.local.BaseLocalUser;
@@ -27,9 +24,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -87,8 +81,10 @@ public class LocalUserService {
 
         log.info("Local User SVC Sign localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
 
+        BaseLocalUser user = userJpaRepo.findByEmail(localUserSignUpRequestDto.getEmail()).orElse(null);
+        log.info("Local User SVC SignUp user : " + user);
         try {
-            if (userJpaRepo.findByEmail(localUserSignUpRequestDto.getEmail()) != null) {
+            if (user != null) {
                 CommonResult failResult = responseService.getFailResult(-1, "이미 존재하는 회원입니다.");
                 loggingService.commonResultLogging(className, "SignUp", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -238,39 +234,5 @@ public class LocalUserService {
         }
         log.info("Local User SVC deleteToken ett : " + ett);
         return ett;
-    }
-
-    @Transactional(readOnly = true)
-    public LocalUserResponseDto findById(Long id) {
-        BaseLocalUser user = userJpaRepo.findById(id)
-                .orElseThrow(CustomUserNotFoundException::new);
-        return new LocalUserResponseDto(user);
-    }
-
-    @Transactional(readOnly = true)
-    public LocalUserResponseDto findByEmail(String email) {
-        BaseLocalUser user = userJpaRepo.findByEmail(email).orElse(null);
-        return new LocalUserResponseDto(user);
-    }
-
-    @Transactional(readOnly = true)
-    public List<LocalUserResponseDto> findAllUser() {
-        return userJpaRepo.findAll()
-                .stream()
-                .map(LocalUserResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public Long update(Long id, LocalUserRequestDto userRequestDto) {
-        BaseLocalUser modifiedUser = userJpaRepo
-                .findById(id).orElseThrow(CustomUserNotFoundException::new);
-        modifiedUser.updateNickName(userRequestDto.getNickName());
-        return id;
-    }
-
-    @Transactional
-    public void delete(Long id) {
-        userJpaRepo.deleteById(id);
     }
 }
