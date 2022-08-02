@@ -35,7 +35,7 @@ public class UserQnaService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        log.info("User Qna SVC Login UserQnaDto : " + userQnaRequestDto.getEmail());
+        log.info("User QnA SVC Login UserQnaDto : " + userQnaRequestDto.getEmail());
 
         try {
             if(provider != null && !provider.equals("LOCAL")) {
@@ -56,9 +56,10 @@ public class UserQnaService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("User QnA SVC registerQnA Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("User QnA SVC registerQnA ett : " + ett);
+            return ett;
         }
-
-        log.info("User Qna SVC registerQnA ett : " + ett);
-        return ett;
     }
 }

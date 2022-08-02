@@ -70,10 +70,11 @@ public class OAuth2ProviderService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("OAuth2ProvSVC gAT CCommunicateException Occurred" + e.getMessage());
+            log.error("OAuth2ProvSVC gAT Error Occurred" + e.getMessage());
+        } finally {
+            log.info("OAuth2ProvSVC gAT ett : " + ett);
+            return ett;
         }
-        log.info("OAuth2ProvSVC gAT ett : " + ett);
-        return ett;
     }
 
     public void saveAccessToken(BaseAccessToken baseAccessToken) {
@@ -85,7 +86,6 @@ public class OAuth2ProviderService {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("OAuth2ProvSVC sAT Error Occurred : " + e.getMessage());
-            throw new CustomCommunicationException();
         }
     }
 
@@ -95,7 +95,7 @@ public class OAuth2ProviderService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        log.info("OAuth2ProvSVC delT at : " + access_token);
+        log.info("OAuth2ProvSVC deleteToken at : " + access_token);
         try {
             if(access_token == null || access_token.equals("")) {
                 CommonResult failResult = responseService.getFailResult(-1, "OAuth2 DeleteToken Error Occurred");
@@ -103,7 +103,7 @@ public class OAuth2ProviderService {
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 Integer id = tokenRepo.deleteByAccessToken(access_token);
-                log.info("OAuth2ProvSVC delT bat id : " + id);
+                log.info("OAuth2ProvSVC deleteToken bat id : " + id);
 
                 SingleResult<Integer> singleResult = responseService.getSingleResult(id);
                 loggingService.singleResultLogging(className, "deleteToken", singleResult);
@@ -111,10 +111,11 @@ public class OAuth2ProviderService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("OAuth2ProvSVC delT Error Occurred : " + e.getMessage());
+            log.error("OAuth2ProvSVC deleteToken Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("OAuth2ProvSVC deleteToken ett : " + ett);
+            return ett;
         }
-        log.info("OAuth2ProvSVC delT ett : " + ett);
-        return ett;
     }
 
     public ResponseEntity<?> getProfile(String accessToken, String provider) {
@@ -141,10 +142,11 @@ public class OAuth2ProviderService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("OAuth2ProvSVC getProfile Communicate exception" + e.getMessage());
+            log.error("OAuth2ProvSVC getProfile Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("OAuth2ProvSVC getProfile ett : " + ett);
+            return ett;
         }
-        log.info("OAuth2ProvSVC getProfile ett : " + ett);
-        return ett;
     }
 
     public ProfileDTO getProfileForGoogle(String accessToken, String provider) {

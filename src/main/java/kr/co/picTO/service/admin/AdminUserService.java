@@ -52,9 +52,11 @@ public class AdminUserService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("AdminUserSVC findById Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("AdminUserSVC findById ett : " + ett);
+            return ett;
         }
-        log.info("AdminUserSVC findById ett : " + ett);
-        return ett;
     }
 
     @Transactional(readOnly = true)
@@ -78,9 +80,11 @@ public class AdminUserService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("AdminUserSVC findByEmail Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("AdminUserSVC findByEmail ett : " + ett);
+            return ett;
         }
-        log.info("AdminUserSVC findByEmail ett : " + ett);
-        return ett;
     }
 
     @Transactional(readOnly = true)
@@ -103,9 +107,11 @@ public class AdminUserService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("AdminUserSVC findAllUser Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("AdminUserSVC findAllUser ett : " + ett);
+            return ett;
         }
-        log.info("AdminUserSVC findAllUser ett : " + ett);
-        return ett;
     }
 
     @Transactional
@@ -133,8 +139,10 @@ public class AdminUserService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("AdminUserSVC delete Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("AdminUserSVC delete ett : " + ett);
+            return ett;
         }
-        log.info("AdminUserSVC delete ett : " + ett);
-        return ett;
     }
 }

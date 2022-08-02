@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiParam;
 import kr.co.picTO.dto.qna.UserQnaRequestDto;
 import kr.co.picTO.service.qna.UserQnaService;
 import kr.co.picTO.service.response.ResponseLoggingService;
-import kr.co.picTO.service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,6 @@ public class UserQnaController {
     private static final String className = UserQnaController.class.toString();
 
     private final UserQnaService userQnaService;
-    private final ResponseService responseService;
     private final ResponseLoggingService loggingService;
 
     @ApiOperation(value = "문의 등록", notes = "Register QnA")
