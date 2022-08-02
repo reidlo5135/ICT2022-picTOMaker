@@ -6,7 +6,7 @@ import SelectContent from "../Page/SelectPage";
 import SignUp from "./user/SignUp";
 import Introduce from "../Page/IntroducePage";
 import QnA from "./contents/QnA";
-import Community from "./contents/Community";
+import Community from "./community/Community";
 import Terms from "./contents/terms";
 import Callback from "./oauth2/callback";
 import MyPageContent from "./myPage/MyPage";
