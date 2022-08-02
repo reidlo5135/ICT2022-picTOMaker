@@ -1,6 +1,5 @@
 package kr.co.picTO.service.local;
 
-import kr.co.picTO.advice.exception.CustomCommunicationException;
 import kr.co.picTO.advice.exception.CustomRefreshTokenException;
 import kr.co.picTO.config.security.LocalUserJwtProvider;
 import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
@@ -68,9 +67,12 @@ public class LocalUserService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("Local User SVC login Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("Local User SVC login ett : " + ett);
+            return ett;
         }
-        log.info("Local User SVC login ett : " + ett);
-        return ett;
+
     }
 
     @Transactional
@@ -98,9 +100,11 @@ public class LocalUserService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("Local User SVC SignUp Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("Local User SVC SignUp ett : " + ett);
+            return ett;
         }
-        log.info("Local User SVC SignUp ett : " + ett);
-        return ett;
     }
 
     @Transactional
@@ -131,9 +135,11 @@ public class LocalUserService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("Local User SVC Profile Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("Local User SVC Profile ett : " + ett);
+            return ett;
         }
-        log.info("Local User SVC Profile ett : " + ett);
-        return ett;
     }
 
     @Transactional
@@ -173,9 +179,11 @@ public class LocalUserService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("Local User SVC reissue Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("Local User SVC reissue ett : " + ett);
+            return ett;
         }
-        log.info("Local User SVC login ett : " + ett);
-        return ett;
     }
 
     public ResponseEntity<?> findNickNameByEmail(String email) {
@@ -201,9 +209,11 @@ public class LocalUserService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("Local User SVC findByNickNameByEmail Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("Local User SVC findByNickNameByEmail ett : " + ett);
+            return ett;
         }
-        log.info("Local User SVC findByNickNameByEmail ett : " + ett);
-        return ett;
     }
 
     @Transactional
@@ -229,10 +239,10 @@ public class LocalUserService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("Local User SVC delT Error Occurred : " + e.getMessage());
-            throw new CustomCommunicationException();
+            log.error("Local User SVC deleteToken Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("Local User SVC deleteToken ett : " + ett);
+            return ett;
         }
-        log.info("Local User SVC deleteToken ett : " + ett);
-        return ett;
     }
 }
