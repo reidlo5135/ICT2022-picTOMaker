@@ -172,9 +172,11 @@ public class FileUploadService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("File SVC uploadImage Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("File SVC uploadImage ett : " + ett);
+            return ett;
         }
-        log.info("File SVC uploadImage ett : " + ett);
-        return ett;
     }
 
     @Transactional
@@ -217,9 +219,11 @@ public class FileUploadService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("File SVC updatePicToByEmailAndId Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("File SVC updatePicToByEmailAndId ett : " + ett);
+            return ett;
         }
-        log.info("File SVC updatePicToByEmailAndId ett : " + ett);
-        return ett;
     }
 
     public ResponseEntity<?> getPicToByEmail(String email, String provider) {
@@ -256,10 +260,11 @@ public class FileUploadService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("File SVC getPicTOByEmail error occurred : " + e.getMessage());
+            log.error("File SVC getPicTOByEmail Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("File SVC getPicToByEmail ett : " + ett);
+            return ett;
         }
-        log.info("File SVC getPicToByEmail ett : " + ett);
-        return ett;
     }
 
     public ResponseEntity<?> getPicToCountByEmailAndProvider(String email, String provider) {
@@ -285,10 +290,11 @@ public class FileUploadService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("File SVC getPicToCountByEmailAndProvider error occurred : " + e.getMessage());
+            log.error("File SVC getPicToCountByEmailAndProvider Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("File SVC getPicToByCountByEmailAndProvider ett : " + ett);
+            return ett;
         }
-        log.info("File SVC getPicToByCountByEmailAndProvider ett : " + ett);
-        return ett;
     }
 
     @Transactional
@@ -313,10 +319,11 @@ public class FileUploadService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("File SVC deletePicToById error occurred : " + e.getMessage());
+            log.error("File SVC deletePicToById Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("File SVC deletePicToById ett : " + ett);
+            return ett;
         }
-        log.info("File SVC deletePicToById ett : " + ett);
-        return ett;
     }
 
     private String createFileName(String originalFileName) {
