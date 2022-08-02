@@ -2,6 +2,7 @@ import {useRef, useState,useEffect, useMemo} from "react";
 import CEditor from "./CEditor";
 import CList from "./CList";
 import Top from "../contents/Top";
+import CPost from "./CPost";
 
 function Community() {
 
@@ -59,11 +60,13 @@ function Community() {
   }
 
   return (
-
       <>
       <Top/>
+      <CPost diaryList={data}/>
+      {/* <Top/>
       <CEditor onCreate={onCreate}/>
-      <CList onEdit={onEdit} onRemove={onRemove} diaryList={data}/>
+      <CList onEdit={onEdit} onRemove={onRemove} diaryList={data}/> */}
+      
       </>
   );
 }

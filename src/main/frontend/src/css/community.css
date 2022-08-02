@@ -1,3 +1,4 @@
+/*CEditor*/
 .CommunityEditor{
     border: 1px solid gray;
     text-align: center;
@@ -30,7 +31,7 @@
     cursor: pointer;
 }
 
-/* List */
+/* CList */
 
 .DiaryList{
     border: 1px solid gray;
@@ -42,7 +43,7 @@
     text-align: center;
 }
 
-/* Item */
+/* CItem */
 
 .DiaryItem{
     background-color: rgb(240,240,240);
@@ -65,4 +66,37 @@
     font-weight: bold;
     margin-bottom: 30px;
     margin-top: 30px;
+}
+
+/*CPost*/
+.notice{
+	width:1280px;
+    margin:0 auto;
+	
+}
+.notice .title{
+	font-size: 16px;
+	font-weight:500;
+	margin-bottom:20px;
+}
+
+.notice .title .moreBtn{
+	float:right;
+	font-size: 14px;
+	font-weight:400;
+}
+
+.notice .title .moreBtn img{
+	width:9px;
+	height:9px;
+}
+
+.notice .noticeList .listItem{
+	border-bottom:1px solid #eeeeee;
+	padding:11px 0;
+	font-size:14px;
+	color:#777777;
+	display:flex;
+	justify-content: space-between;
+	cursor:pointer;
 }
