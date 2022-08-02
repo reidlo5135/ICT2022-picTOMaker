@@ -12,7 +12,7 @@
 <b>픽토메이커</b>는 사용자가 원하는 <b>픽토그램(pictogram)</b>을 사용자가 직접 촬영 및 제작 후 사용 및 공유/배포를 가능하게 하는 웹 서비스입니다. <br><br>
 
 ## <b>사용기술</b>
-<span><img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=JAVA&logoColor=White">
+<span><img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white">
 <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white">
 <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white"></span>
 <img src="https://img.shields.io/badge/Swagger-6DB33F?style=for-the-badge&logo=Swagger&logoColor=white"></span>
@@ -35,9 +35,11 @@
 
 - Design - Figma, Adobe Xd
 - Frontend - React.js, HTML5, CSS3, JavaScript, MediaPipe, TensorFlow
-- Backend - Spring Boot, Spring Security, OAuth2.0, REST API, Swagger, Json Web Token, JAVA
+- Backend - Spring Boot, Spring Security, OAuth2.0, REST API, Swagger, Json Web Token, JAVA(11)
 - Database - MySQL, Spring Data JPA, AWS RDS, AWS S3
 - WAS - Apache Tomcat, AWS EC2
+- Version Control - Git, GitHub, Git Kraken
+- IDE - IntelliJ IDEA Ultimate, Visual Studio Code
 
 ## <b>주요기능</b>
 
