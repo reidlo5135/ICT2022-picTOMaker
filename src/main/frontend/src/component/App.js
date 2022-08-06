@@ -6,7 +6,7 @@ import SelectContent from "../Page/SelectPage";
 import SignUp from "./user/SignUp";
 import Introduce from "../Page/IntroducePage";
 import QnA from "./contents/QnA";
-import Community from "./contents/Community";
+import Community from "./community/Community";
 import Terms from "./contents/terms";
 import Callback from "./oauth2/callback";
 import MyPageContent from "./myPage/MyPage";
@@ -14,6 +14,7 @@ import PoseWebStudio from "./studio/poseweb/PoseWebStudio";
 import EditTool from './studio/edittool/EditTool';
 import EditImageTool from "./studio/edittool/EditImageTool";
 import {AnimatePresence} from "framer-motion";
+import CPost from './community/CPost';
 
 export default function App(){
     return (
@@ -27,6 +28,7 @@ export default function App(){
                     <Route path = '/introduce' component={Introduce}/>
                     <Route path = '/qna' component={QnA}/>
                     <Route path = '/community' component={Community}/>
+                    <Route path = ':CPost' component={CPost}/>
                     <Route path = '/terms' component={Terms}/>
                     <Route path = '/oauth2/redirect/kakao' component={Callback} />
                     <Route path='/oauth2/redirect/naver' component={Callback} />
