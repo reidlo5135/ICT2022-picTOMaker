@@ -14,7 +14,7 @@ import PoseWebStudio from "./studio/poseweb/PoseWebStudio";
 import EditTool from './studio/edittool/EditTool';
 import EditImageTool from "./studio/edittool/EditImageTool";
 import {AnimatePresence} from "framer-motion";
-import CPost from './community/CPost';
+import CPostview from './community/CPostView';
 
 export default function App(){
     return (
@@ -28,7 +28,7 @@ export default function App(){
                     <Route path = '/introduce' component={Introduce}/>
                     <Route path = '/qna' component={QnA}/>
                     <Route path = '/community' component={Community}/>
-                    <Route path = ':CPost' component={CPost}/>
+                    <Route path = '/cpostview/:id' component={CPostview}/>
                     <Route path = '/terms' component={Terms}/>
                     <Route path = '/oauth2/redirect/kakao' component={Callback} />
                     <Route path='/oauth2/redirect/naver' component={Callback} />
