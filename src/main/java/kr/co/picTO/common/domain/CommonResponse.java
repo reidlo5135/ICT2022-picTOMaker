@@ -1,4 +1,4 @@
-package kr.co.picTO.service.response;
+package kr.co.picTO.common.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

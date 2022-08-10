@@ -1,4 +1,4 @@
-package kr.co.picTO.model.response;
+package kr.co.picTO.common.domain;
 
 import lombok.Getter;
 import lombok.Setter;

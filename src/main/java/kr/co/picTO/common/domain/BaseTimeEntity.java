@@ -1,4 +1,4 @@
-package kr.co.picTO.entity;
+package kr.co.picTO.common.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

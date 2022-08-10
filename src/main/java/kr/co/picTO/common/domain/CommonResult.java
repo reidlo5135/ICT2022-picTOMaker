@@ -1,4 +1,4 @@
-package kr.co.picTO.model.response;
+package kr.co.picTO.common.domain;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
