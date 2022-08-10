@@ -1,4 +1,4 @@
-package kr.co.picTO.controller;
+package kr.co.picTO.common.presentation;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
