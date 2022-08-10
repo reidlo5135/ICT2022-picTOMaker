@@ -1,6 +1,6 @@
-package kr.co.picTO.dto.token;
+package kr.co.picTO.member.dto.local;
 
-import kr.co.picTO.entity.oauth2.BaseAccessToken;
+import kr.co.picTO.member.domain.oauth2.BaseAccessToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

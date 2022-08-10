@@ -1,6 +1,6 @@
-package kr.co.picTO.repository;
+package kr.co.picTO.member.domain;
 
-import kr.co.picTO.entity.oauth2.BaseAccessToken;
+import kr.co.picTO.member.domain.oauth2.BaseAccessToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
