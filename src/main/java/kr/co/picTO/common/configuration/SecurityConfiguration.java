@@ -1,7 +1,7 @@
-package kr.co.picTO.config.security;
+package kr.co.picTO.common.configuration;
 
-import kr.co.picTO.advice.exception.CustomAccessDeniedHandler;
-import kr.co.picTO.advice.exception.RestAuthenticationEntryPoint;
+import kr.co.picTO.common.exception.CustomAccessDeniedHandler;
+import kr.co.picTO.common.exception.RestAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,14 +12,11 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    private final LocalUserJwtProvider localUserJwtProvider;
 
     @Bean
     @Override
@@ -41,7 +38,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin().disable()
                     .httpBasic().disable()
-                    .addFilterBefore(new LocalUserJwtAuthenticationFilter(localUserJwtProvider), UsernamePasswordAuthenticationFilter.class)
                     .exceptionHandling()
                         .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                         .accessDeniedHandler(new CustomAccessDeniedHandler())
@@ -58,9 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                             "/**/*.css",
                             "/**/*.js",
                             "/**/*.json",
-                            "/**/*.otf",
-                            "/**/content.js.map",
-                            "/requestProvider.js.map").permitAll()
+                            "/**/*.otf").permitAll()
                 .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/api/user/**", "/v1/api/picTO/**/**/**", "/v1/api/qna/**/**").permitAll()
                 .antMatchers(HttpMethod.PUT, "/v1/api/picTO/**/**/**").permitAll()

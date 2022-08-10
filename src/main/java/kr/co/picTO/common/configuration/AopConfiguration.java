@@ -1,4 +1,4 @@
-package kr.co.picTO.config;
+package kr.co.picTO.common.configuration;
 
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;

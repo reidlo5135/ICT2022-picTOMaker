@@ -1,4 +1,4 @@
-package kr.co.picTO.config;
+package kr.co.picTO.common.configuration;
 
 import lombok.Getter;
 import lombok.Setter;

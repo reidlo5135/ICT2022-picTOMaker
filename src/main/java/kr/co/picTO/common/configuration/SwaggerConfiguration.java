@@ -1,4 +1,4 @@
-package kr.co.picTO.config;
+package kr.co.picTO.common.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(swaggerInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("kr.co.picTO.controller"))
+                .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()
                 .useDefaultResponseMessages(false);

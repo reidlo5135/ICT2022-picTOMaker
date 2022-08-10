@@ -1,4 +1,4 @@
-package kr.co.picTO.config;
+package kr.co.picTO.common.configuration;
 
 import net.rakugakibox.util.YamlResourceBundle;
 import org.springframework.beans.factory.annotation.Value;

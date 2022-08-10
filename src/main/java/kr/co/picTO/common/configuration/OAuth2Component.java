@@ -1,6 +1,6 @@
-package kr.co.picTO.config.security;
+package kr.co.picTO.common.configuration;
 
-import kr.co.picTO.dto.social.OAuthRequest;
+import kr.co.picTO.member.dto.social.OAuth2RequestDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -11,7 +11,7 @@ import org.springframework.util.LinkedMultiValueMap;
 @Log4j2
 @Component
 @RequiredArgsConstructor
-public class OAuthRequestFactory {
+public class OAuth2Component {
 
     private final KakaoInfo kakaoInfo;
     private final GoogleInfo googleInfo;
@@ -21,7 +21,7 @@ public class OAuthRequestFactory {
         log.info("OAuthFactory Fac Prov Map : " + map);
     }
 
-    public OAuthRequest getRequest(String code, String provider) {
+    public OAuth2RequestDto getRequest(String code, String provider) {
         LinkedMultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         log.info("OAuthFactory prov : " + provider);
         map.add("code", code);
@@ -33,7 +33,7 @@ public class OAuthRequestFactory {
 
             logRequest(map);
 
-            return new OAuthRequest(kakaoInfo.getKakaoTokenUrl(), map);
+            return new OAuth2RequestDto(kakaoInfo.getKakaoTokenUrl(), map);
 
         } else if(provider.equals("google")) {
 
@@ -44,7 +44,7 @@ public class OAuthRequestFactory {
 
             logRequest(map);
 
-            return new OAuthRequest(googleInfo.getGoogleTokenUrl(), map);
+            return new OAuth2RequestDto(googleInfo.getGoogleTokenUrl(), map);
         } else {
             map.add("grant_type", "authorization_code");
             map.add("client_id", naverInfo.getNaverClientId());
@@ -54,7 +54,7 @@ public class OAuthRequestFactory {
 
             logRequest(map);
 
-            return new OAuthRequest(naverInfo.getNaverTokenUrl(), map);
+            return new OAuth2RequestDto(naverInfo.getNaverTokenUrl(), map);
         }
     }
 
