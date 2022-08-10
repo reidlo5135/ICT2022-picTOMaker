@@ -1,8 +1,8 @@
-package kr.co.picTO.controller.v1;
+package kr.co.picTO.s3.presentation;
 
 import io.swagger.annotations.Api;
-import kr.co.picTO.service.response.ResponseLoggingService;
-import kr.co.picTO.service.s3.FileUploadService;
+import kr.co.picTO.common.application.ResponseLoggingService;
+import kr.co.picTO.s3.application.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;

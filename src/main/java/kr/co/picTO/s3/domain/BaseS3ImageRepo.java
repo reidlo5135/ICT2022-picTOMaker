@@ -1,6 +1,5 @@
-package kr.co.picTO.repository;
+package kr.co.picTO.s3.domain;
 
-import kr.co.picTO.entity.s3.BaseS3Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

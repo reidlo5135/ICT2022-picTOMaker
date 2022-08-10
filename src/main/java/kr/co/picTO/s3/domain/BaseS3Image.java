@@ -1,8 +1,8 @@
-package kr.co.picTO.entity.s3;
+package kr.co.picTO.s3.domain;
 
-import kr.co.picTO.entity.BaseTimeEntity;
-import kr.co.picTO.entity.local.BaseLocalUser;
-import kr.co.picTO.entity.oauth2.BaseAuthUser;
+import kr.co.picTO.common.domain.BaseTimeEntity;
+import kr.co.picTO.member.domain.local.BaseLocalUser;
+import kr.co.picTO.member.domain.oauth2.BaseAuthUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
