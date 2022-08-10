@@ -1,10 +1,9 @@
-import React from "react";
+import {useState,useEffect,useRef} from "react";
 import {Link} from "react-router-dom";
 import axios from 'axios';
 import '../../css/Callback.css';
 
-const Posts = ({diaryList}) => {
-
+const CPost = ({diaryList,match}) => {
   return (
     <div className="notice">
     <div className="title">
@@ -15,11 +14,10 @@ const Posts = ({diaryList}) => {
         </div>
     </div>
     <div className="noticeList">
-        
         <div>
-            {diaryList.map((it)=> (
+            {diaryList&&diaryList.map((it)=> (
                 <div className="listItem">
-                <Link to={`/cpostview/${it.id}`} key={it.id} ><div className="Ntitle">{it.id}</div></Link>
+                <Link to={`/cpostview/${it.id}`} key={it.id}><div className="Ntitle">{it.id}</div></Link>
                 <div className="Ndate">2022-01-15</div>
             </div>      
             ))}
@@ -28,4 +26,4 @@ const Posts = ({diaryList}) => {
 </div>
   );
 };
-export default Posts;
+export default CPost;
