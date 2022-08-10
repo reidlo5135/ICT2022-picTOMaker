@@ -1,8 +1,8 @@
-package kr.co.picTO.advice;
+package kr.co.picTO.common.presentation;
 
-import kr.co.picTO.advice.exception.*;
-import kr.co.picTO.model.response.CommonResult;
-import kr.co.picTO.service.response.ResponseService;
+import kr.co.picTO.common.exception.*;
+import kr.co.picTO.common.domain.CommonResult;
+import kr.co.picTO.common.application.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 

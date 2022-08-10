@@ -1,4 +1,4 @@
-package kr.co.picTO.advice.exception;
+package kr.co.picTO.common.exception;
 
 public class CustomUserNotFoundException extends RuntimeException{
 

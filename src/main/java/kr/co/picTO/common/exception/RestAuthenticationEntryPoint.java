@@ -1,4 +1,4 @@
-package kr.co.picTO.advice.exception;
+package kr.co.picTO.common.exception;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.AuthenticationException;

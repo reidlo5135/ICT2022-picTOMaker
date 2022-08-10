@@ -1,7 +1,7 @@
-package kr.co.picTO.controller.exception;
+package kr.co.picTO.common.presentation;
 
-import kr.co.picTO.advice.exception.CustomAuthenticationEntryPointException;
-import kr.co.picTO.model.response.CommonResult;
+import kr.co.picTO.common.exception.CustomAuthenticationEntryPointException;
+import kr.co.picTO.common.domain.CommonResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.GetMapping;

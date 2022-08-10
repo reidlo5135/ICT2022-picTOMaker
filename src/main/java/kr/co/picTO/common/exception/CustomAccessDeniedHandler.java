@@ -1,4 +1,4 @@
-package kr.co.picTO.advice.exception;
+package kr.co.picTO.common.exception;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
