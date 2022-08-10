@@ -1,6 +1,6 @@
-package kr.co.picTO.controller.v1;
+package kr.co.picTO.community.presentation;
 
-import kr.co.picTO.service.community.CommunityService;
+import kr.co.picTO.community.application.CommunityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.RequestMapping;
