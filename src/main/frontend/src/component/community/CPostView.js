@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState,useRef } from 'react';
 import getPostByNo from "./CPost";
-
+import { useParams } from "react-router-dom";
 const PostView = ({ history, diaryList,match}) => {
+  const { id } = useParams();
 
   const [data,setDate] = useState([]);
   const dataId = useRef(0)
@@ -25,7 +26,7 @@ const PostView = ({ history, diaryList,match}) => {
           id: dataId.current++
         };
       });
-      setDate(initData);
+      setDate(initData[`${match.params.id}`]);
     };
   
     useEffect(() => {
@@ -44,23 +45,23 @@ const PostView = ({ history, diaryList,match}) => {
             <>
               <div className="post-view-row">
                 <label>게시글 번호</label>
-                <label>{ data[`${match.params.id}`].author }</label>
+                <label>{ data.author }</label>
               </div>
               <div className="post-view-row">
                 <label>제목</label>
-                {/* <label>{ data[`${match.params.id}`].id }</label>  */}
+                <label>{ data.id }</label>
               </div>
               <div className="post-view-row">
                 <label>작성일</label>
-                {/* <label>{ data[`${match.params.id}`].created_date }</label> */}
+                <label>{ data.created_date }</label>
               </div>
               <div className="post-view-row">
                 <label>내용</label>
-                 {/* <div>
+                 <div>
                   {
-                    data[`${match.params.id}`].content
+                    data.content
                   }
-                </div>  */}
+                 </div>
               </div>
             </>
           ) : '해당 게시글을 찾을 수 없습니다.'
