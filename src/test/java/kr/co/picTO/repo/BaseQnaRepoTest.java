@@ -1,6 +1,6 @@
 package kr.co.picTO.repo;
 
-import kr.co.picTO.repository.BaseUserQnaRepo;
+import kr.co.picTO.community.domain.BaseUserQnaRepo;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
