@@ -1,4 +1,4 @@
-package kr.co.picTO.entity.oauth2;
+package kr.co.picTO.member.domain.oauth2;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

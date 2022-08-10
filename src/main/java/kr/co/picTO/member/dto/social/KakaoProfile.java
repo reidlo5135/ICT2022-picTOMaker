@@ -1,4 +1,4 @@
-package kr.co.picTO.dto.social;
+package kr.co.picTO.member.dto.social;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

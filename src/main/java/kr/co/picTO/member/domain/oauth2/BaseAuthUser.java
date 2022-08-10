@@ -1,6 +1,6 @@
-package kr.co.picTO.entity.oauth2;
+package kr.co.picTO.member.domain.oauth2;
 
-import kr.co.picTO.entity.BaseTimeEntity;
+import kr.co.picTO.common.domain.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
