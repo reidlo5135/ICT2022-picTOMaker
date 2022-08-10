@@ -1,10 +1,9 @@
-package kr.co.picTO.config.security;
+package kr.co.picTO.member.application;
 
 import io.jsonwebtoken.*;
-import kr.co.picTO.advice.exception.CustomAuthenticationEntryPointException;
-import kr.co.picTO.entity.oauth2.BaseAccessToken;
-import kr.co.picTO.repository.BaseTokenRepo;
-import kr.co.picTO.service.local.CustomUserDetailsService;
+import kr.co.picTO.common.exception.CustomAuthenticationEntryPointException;
+import kr.co.picTO.member.domain.BaseTokenRepo;
+import kr.co.picTO.member.domain.oauth2.BaseAccessToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;

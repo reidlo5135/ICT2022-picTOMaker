@@ -1,6 +1,6 @@
-package kr.co.picTO.repository;
+package kr.co.picTO.member.domain;
 
-import kr.co.picTO.entity.local.BaseLocalUser;
+import kr.co.picTO.member.domain.local.BaseLocalUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

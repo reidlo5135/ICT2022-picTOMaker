@@ -1,18 +1,17 @@
-package kr.co.picTO.service.local;
+package kr.co.picTO.member.application;
 
-import kr.co.picTO.advice.exception.CustomRefreshTokenException;
-import kr.co.picTO.config.security.LocalUserJwtProvider;
-import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
-import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
-import kr.co.picTO.dto.social.ProfileDTO;
-import kr.co.picTO.entity.local.BaseLocalUser;
-import kr.co.picTO.entity.oauth2.BaseAccessToken;
-import kr.co.picTO.model.response.CommonResult;
-import kr.co.picTO.model.response.SingleResult;
-import kr.co.picTO.repository.BaseLocalUserRepo;
-import kr.co.picTO.repository.BaseTokenRepo;
-import kr.co.picTO.service.response.ResponseLoggingService;
-import kr.co.picTO.service.response.ResponseService;
+import kr.co.picTO.common.exception.CustomRefreshTokenException;
+import kr.co.picTO.member.dto.local.LocalUserLoginRequestDto;
+import kr.co.picTO.member.dto.local.LocalUserSignUpRequestDto;
+import kr.co.picTO.member.dto.social.UserProfileDto;
+import kr.co.picTO.member.domain.local.BaseLocalUser;
+import kr.co.picTO.member.domain.oauth2.BaseAccessToken;
+import kr.co.picTO.common.domain.CommonResult;
+import kr.co.picTO.common.domain.SingleResult;
+import kr.co.picTO.member.domain.BaseLocalUserRepo;
+import kr.co.picTO.member.domain.BaseTokenRepo;
+import kr.co.picTO.common.application.ResponseLoggingService;
+import kr.co.picTO.common.application.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
@@ -122,10 +121,10 @@ public class LocalUserService {
             log.info("Local User SVC Profile user isNull : " + (user == null));
 
             if(bat != null && user != null) {
-                ProfileDTO profileDTO = new ProfileDTO(user.getEmail(), user.getName(), user.getNickName(), user.getProfile_image_url());
-                log.info("Local User SVC Profile pDTO isNull : " + (profileDTO == null));
+                UserProfileDto userProfileDto = new UserProfileDto(user.getEmail(), user.getName(), user.getNickName(), user.getProfile_image_url());
+                log.info("Local User SVC Profile pDTO isNull : " + (userProfileDto == null));
 
-                SingleResult<ProfileDTO> singleResult = responseService.getSingleResult(profileDTO);
+                SingleResult<UserProfileDto> singleResult = responseService.getSingleResult(userProfileDto);
                 loggingService.singleResultLogging(className, "getProfileLocal", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             } else {

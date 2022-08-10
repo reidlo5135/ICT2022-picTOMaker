@@ -1,7 +1,7 @@
-package kr.co.picTO.entity.local;
+package kr.co.picTO.member.domain.local;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import kr.co.picTO.entity.BaseTimeEntity;
+import kr.co.picTO.common.domain.BaseTimeEntity;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

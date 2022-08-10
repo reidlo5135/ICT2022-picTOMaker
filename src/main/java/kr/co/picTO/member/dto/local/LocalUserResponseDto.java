@@ -1,6 +1,6 @@
-package kr.co.picTO.dto.local;
+package kr.co.picTO.member.dto.local;
 
-import kr.co.picTO.entity.local.BaseLocalUser;
+import kr.co.picTO.member.domain.local.BaseLocalUser;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 

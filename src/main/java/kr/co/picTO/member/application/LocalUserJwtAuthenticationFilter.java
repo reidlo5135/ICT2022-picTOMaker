@@ -1,4 +1,4 @@
-package kr.co.picTO.config.security;
+package kr.co.picTO.member.application;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

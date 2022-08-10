@@ -1,14 +1,14 @@
-package kr.co.picTO.controller.v1;
+package kr.co.picTO.member.presentation;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import kr.co.picTO.dto.local.LocalUserLoginRequestDto;
-import kr.co.picTO.dto.local.LocalUserSignUpRequestDto;
-import kr.co.picTO.dto.token.LocalTokenDto;
-import kr.co.picTO.entity.oauth2.BaseAccessToken;
-import kr.co.picTO.service.local.LocalUserService;
-import kr.co.picTO.service.response.ResponseLoggingService;
+import kr.co.picTO.member.dto.local.LocalUserLoginRequestDto;
+import kr.co.picTO.member.dto.local.LocalUserSignUpRequestDto;
+import kr.co.picTO.member.dto.local.LocalTokenDto;
+import kr.co.picTO.member.domain.oauth2.BaseAccessToken;
+import kr.co.picTO.member.application.LocalUserService;
+import kr.co.picTO.common.application.ResponseLoggingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
