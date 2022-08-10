@@ -1,6 +1,5 @@
-package kr.co.picTO.repository;
+package kr.co.picTO.community.domain;
 
-import kr.co.picTO.entity.qna.BaseUserQna;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,6 +1,6 @@
-package kr.co.picTO.entity.qna;
+package kr.co.picTO.community.domain;
 
-import kr.co.picTO.entity.BaseTimeEntity;
+import kr.co.picTO.common.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
