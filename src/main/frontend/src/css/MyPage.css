@@ -162,7 +162,8 @@
     height: 80px;
     border-radius: 75px;
     position: absolute;
-    transform: translate(-45%, 6%);
+    transform: translate(-50%, 0%);
+    object-fit: cover;
 }
 
 .pic-name{
@@ -175,7 +176,7 @@
     justify-content: space-around;
 }
 
-.pic-download,.pic-edit{
+.pic-download,.pic-edit,.pict-delete{
     position: relative;
     padding: 0px 0px;
     border-radius: 100%;
@@ -214,6 +215,14 @@
     background-size: cover;
 }
 
+.pic-delete{
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: url("../image/studio_image/trash-can-solid.svg") no-repeat;
+    background-size: cover;
+}
+
 .pic-download:hover,.pic-edit:hover {
     cursor: pointer;
 }
@@ -231,14 +240,13 @@ button > p{
 
 /*페이지네이션*/
 .pagenation{
-  float: left;
   list-style: none;
   text-align: center;
   border-radius: 3px;
   color: white;
   padding: 1px;
-  border-top: #E72D71 1px solid;
-  border-bottom: #E72D71 1px solid;
+  /* border-top: #E72D71 1px solid;
+  border-bottom: #E72D71 1px solid; */
 }
 
 .page-item {

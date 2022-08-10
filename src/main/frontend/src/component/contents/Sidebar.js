@@ -12,19 +12,17 @@ export default function Sidebar(){
 
     function Logout() {
         try {
-            axios.delete(`/oauth2/token/invalid/${access_token}`,{
-                baseURL: 'http://localhost:8080',
-                withCredentials: true
-            }).then((response) => {
-                console.log('res data : ', response.data);
-                console.log('res data.data : ', response.data.data);
+            axios.delete(`/v1/api/oauth2/token/invalid/${access_token}`)
+                .then((response) => {
+                    console.log('res data : ', response.data);
+                    console.log('res data.data : ', response.data.data);
 
-                if(response.data.code === 0) {
-                    console.clear();
-                    localStorage.clear();
-                    alert('성공적으로 로그아웃 되었습니다!!');
-                    history.push("/");
-                }
+                    if(response.data.code === 0) {
+                        console.clear();
+                        localStorage.clear();
+                        alert('성공적으로 로그아웃 되었습니다!!');
+                        history.push("/");
+                    }
             });
         } catch (err) {
             console.error(err);
@@ -42,6 +40,7 @@ export default function Sidebar(){
                 <li><Link to='/mypage' className='menu__item'>마이페이지</Link></li>
                 <li><a class="menu__item" href="#" onClick={Logout}>로그아웃</a></li>
                 <li><Link to='/qna' className='menu__item'>문의하기</Link></li>
+                <li><Link to='/community' className='menu__item'>커뮤니티</Link></li>
             </ul>
         </div>
     );

@@ -68,7 +68,8 @@ export default function PoseWebStudio() {
             <Top/>
             <div id="topbar"></div>
             <div className ="studio_container">
-                <CamPose ref={childRef}/>
+                {/*<CamPose ref={childRef}/>*/}
+                <TestPose ref={childRef} />
                 <div className = 'button-group'>
                     <div className='camera-btn'>
                         <div>

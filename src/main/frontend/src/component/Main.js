@@ -58,18 +58,14 @@ export default function Main(){
             alert('아이디와 비밀번호를 입력해주세요.');
         } else {
             try {
-                axios.post('/v1/user/login', {
-                    email: email,
-                    password: password
-                },{
-                    baseURL: 'http://localhost:8080',
-                    withCredentials: true
+                axios.post('/v1/api/user/login', {
+                    email,
+                    password
                 }).then((response) => {
                     console.log('res data ', response.data);
                     console.log('res data.data ', response.data.data);
 
                     if(response.data.code === 0){
-                        alert('어서오세요, ' + email + ' 픽토메이커님!');
                         const access_token = response.data.data.access_token;
                         const refresh_token = response.data.data.refresh_token;
 
@@ -78,11 +74,22 @@ export default function Main(){
                         localStorage.setItem("refresh_token", refresh_token);
                         localStorage.setItem("provider", "LOCAL");
 
-                        closeModal();
-                        history.push("/");
-                    } else {
-                        alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
+                        axios.post('/v1/api/user/nickname', {
+                            email
+                        }).then((response) => {
+                            console.log('NICKNAME res data : ', response.data);
+                            console.log('NICKNAME res data.data : ', response.data.data);
+                            if(response.data.code === 0) {
+                                const nickName = response.data.data;
+                                alert('어서오세요, ' + nickName + ' 픽토메이커님!');
+                                closeModal();
+                                history.push("/");
+                            }
+                        });
                     }
+                }).catch((err) => {
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
                 });
             } catch (err) {
                 console.error(err);

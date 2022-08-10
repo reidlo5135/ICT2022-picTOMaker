@@ -28,11 +28,8 @@ export default function Callback(){
     console.log('provider : ', provider);
 
     try {
-        const resp = axios.post(`/oauth2/token/${provider}`, {
+        axios.post(`/v1/api/oauth2/token/${provider}`, {
             code
-        },{
-            baseURL: 'http://localhost:8080',
-            withCredentials: true
         }).then((response) => {
             console.log('res data : ', response.data);
             console.log('res data.data : ', response.data.data);
@@ -47,9 +44,10 @@ export default function Callback(){
                 localStorage.setItem("provider", provider);
 
                 history.push("/");
-            } else {
-                alert("An ERROR OCCURRED : " + response.data.code);
             }
+        }).catch((err) => {
+            console.error('err : ', JSON.stringify(err));
+            alert(err.response.data.msg);
         });
     } catch (err) {
         alert(err);

@@ -1,7 +1,7 @@
 package kr.co.picTO.repo;
 
-import kr.co.picTO.entity.oauth2.BaseAccessToken;
-import kr.co.picTO.repository.BaseTokenRepo;
+import kr.co.picTO.member.domain.oauth2.BaseAccessToken;
+import kr.co.picTO.member.domain.BaseTokenRepo;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -52,6 +52,7 @@ public class BaseTokenRepoTest {
 
         assertEquals(bat, testEntityManager.find(BaseAccessToken.class, bat.getId()));
         assertEquals("BAT equals", bat.getAccess_token(), TEST_BAT);
+        assertEquals("BAT tokenRepo : ", bat, tokenRepo.findByAccessToken(TEST_BAT));
         LOGGER.info("BAT : " + bat);
     }
 }
