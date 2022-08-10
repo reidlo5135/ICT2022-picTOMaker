@@ -1,13 +1,13 @@
-package kr.co.picTO.service.admin;
+package kr.co.picTO.member.application;
 
-import kr.co.picTO.dto.local.LocalUserResponseDto;
-import kr.co.picTO.entity.local.BaseLocalUser;
-import kr.co.picTO.model.response.CommonResult;
-import kr.co.picTO.model.response.ListResult;
-import kr.co.picTO.model.response.SingleResult;
-import kr.co.picTO.repository.BaseLocalUserRepo;
-import kr.co.picTO.service.response.ResponseLoggingService;
-import kr.co.picTO.service.response.ResponseService;
+import kr.co.picTO.member.dto.local.LocalUserResponseDto;
+import kr.co.picTO.member.domain.local.BaseLocalUser;
+import kr.co.picTO.common.domain.CommonResult;
+import kr.co.picTO.common.domain.ListResult;
+import kr.co.picTO.common.domain.SingleResult;
+import kr.co.picTO.member.domain.BaseLocalUserRepo;
+import kr.co.picTO.common.application.ResponseLoggingService;
+import kr.co.picTO.common.application.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;

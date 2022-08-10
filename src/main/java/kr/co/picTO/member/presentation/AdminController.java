@@ -1,8 +1,8 @@
-package kr.co.picTO.controller.v1;
+package kr.co.picTO.member.presentation;
 
 import io.swagger.annotations.*;
-import kr.co.picTO.service.admin.AdminUserService;
-import kr.co.picTO.service.response.ResponseLoggingService;
+import kr.co.picTO.member.application.AdminUserService;
+import kr.co.picTO.common.application.ResponseLoggingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
