@@ -220,21 +220,20 @@ public class LocalUserService {
         ResponseEntity<?> ett = null;
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        log.info("Local User SVC delT at : " + access_token);
+        log.info("Local User SVC deleteToken at : " + access_token);
 
-        Integer id = null;
         try {
-            id = userJpaRepo.deleteByAccessToken(access_token);
-            log.info("Local User SVC delT bat id : " + id);
+            if(access_token == null || access_token.equals("")) {
+                CommonResult failResult = responseService.getFailResult(-1, "Local DeleteToken Error Occurred");
+                loggingService.commonResultLogging(className, "deleteToken", failResult);
+                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                Integer id = tokenRepo.deleteByAccessToken(access_token);
+                log.info("Local User SVC deleteToken bat id : " + id);
 
-            if(id != 1) {
                 SingleResult<Integer> singleResult = responseService.getSingleResult(id);
                 loggingService.singleResultLogging(className, "deleteToken", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
-            } else {
-                CommonResult failResult = responseService.getFailResult(-1, "DeleteToken Error Occurred");
-                loggingService.commonResultLogging(className, "deleteToken", failResult);
-                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (Exception e) {
             e.printStackTrace();
