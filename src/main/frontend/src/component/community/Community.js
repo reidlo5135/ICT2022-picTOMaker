@@ -1,9 +1,9 @@
 import {useRef, useState,useEffect, useMemo} from "react";
 import CEditor from "./CEditor";
-import CList from "./CList";
+import Ccomment from "./Ccomment";
 import Top from "../contents/Top";
-import CPostView from "./CPostView";
-import CPost from "./CPost";
+import CDetail from "./CDetail";
+import CList from "./CList";
 import Pagination from "./Pagination";
 
 function Community() {
@@ -28,7 +28,7 @@ function Community() {
         emotion: Math.floor(Math.random() * 5) + 1,
         //Math.random()*5 = 0부터 4까지의 난수 생성(소수점까지 포함)
         //Math.floor = 소수점을 없애줌 , +1 = 5까지   
-        created_date: new Date().getTime() + 1,
+        create_date: new Date().getTime() + 1,
         id: dataId.current++
       };
     });
@@ -75,8 +75,8 @@ function Community() {
   return (
       <>
       <Top/>
-      {/* <CPost diaryList={data}/> */}
-      <CPost diaryList={currentPosts(data)}/>
+      {/* <CList diaryList={data}/> */}
+      <CList diaryList={currentPosts(data)}/>
                 <Pagination
                     postsPerPage={postsPerPage}
                     totalPosts={data.length}
