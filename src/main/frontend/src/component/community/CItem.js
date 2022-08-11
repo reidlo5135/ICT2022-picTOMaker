@@ -1,6 +1,6 @@
 import { useReducer, useRef, useState } from "react";
 
-const CItem = ({onEdit,onRemove,author, content, created_date, emotion, id}) => {
+const CItem = ({onEdit,onRemove,author, content, created_date, id}) => {
 
     const [isEdit,setIsEdit] = useState(false);
     const toggleIsEdit = () => setIsEdit(!isEdit);
