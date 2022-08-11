@@ -1,10 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState,useRef } from 'react';
-import getPostByNo from "./CPost";
-import { useParams } from "react-router-dom";
-const PostView = ({ history, diaryList,match}) => {
-  const { id } = useParams();
 
+const CDetail = ({ history, diaryList,match}) => {
   const [data,setDate] = useState([]);
   const dataId = useRef(0)
 
@@ -72,4 +69,4 @@ const PostView = ({ history, diaryList,match}) => {
   )
 }
 
-export default PostView;
+export default CDetail;

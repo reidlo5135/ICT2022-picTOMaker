@@ -1,19 +1,29 @@
-import CItem from "./CItem";
+import {useState,useEffect,useRef} from "react";
+import {Link} from "react-router-dom";
+import axios from 'axios';
+import '../../css/Callback.css';
+import getOAuthProf from "../user/Profile";
+import getLocalProf from "../user/Profile";
 
-const CList = ({onEdit,onRemove,diaryList}) =>{
-    return(
-        <div className="DiaryList">
-            <h4>{diaryList.length}개의 댓글이 있습니다.</h4>
+const CList = ({diaryList,match}) => {
+   
+  return (
+    <div className="notice">
+        <div className="title">
+            커뮤니티
+            
+        </div>
+        <div className="noticeList">
             <div>
-                {diaryList.map((it)=> (
-                    <CItem key={it.id} {...it} onRemove={onRemove} onEdit={onEdit}/>        
+                {diaryList&&diaryList.map((it)=> (
+                    <div className="listItem">
+                    <Link to={`/cdetail/${it.id}`} key={it.id}><div className="Ntitle">{it.id}</div></Link>
+                    <div className="Ndate">{it.create_date}</div>
+                </div>      
                 ))}
             </div>
         </div>
-    )
+    </div>
+  );
 };
-
-CList.defaultProps = {
-    diaryList:[],
-}
 export default CList;
