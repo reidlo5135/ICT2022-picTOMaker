@@ -4,13 +4,14 @@ import axios from 'axios';
 import '../../css/Callback.css';
 import getOAuthProf from "../user/Profile";
 import getLocalProf from "../user/Profile";
+import img from "../../image/naver.png";
 
 const CList = ({diaryList,match}) => {
     const access_token = localStorage.getItem('access_token');
     const provider = localStorage.getItem('provider');
     const [isLogged, setIsLogged] = useState(false);
 
-    useEffect(() => {
+    /* useEffect(() => {
         if(provider != 'LOCAL') {
             getOAuthProf();
         } else if(provider === 'LOCAL') {
@@ -22,31 +23,45 @@ const CList = ({diaryList,match}) => {
             setIsLogged(true);
             localStorage.setItem("isLogged", isLogged.toString());
         }
-    }, []);
+    }, []); */
   return (
     <div className="notice">
         <div className="title">
             커뮤니티
-            {
+           {/*  {
             access_token === null ? <></> : 
                 <Link to="/cposting">
                     <div className="moreBtn">
                         글쓰기
                     </div>
                 </Link>
-            }
-            
+            } */}
+            <Link to="/cposting">
+                    <div className="moreBtn">
+                        글쓰기
+                    </div>
+                </Link>
         </div>
-        <div className="noticeList">
-            <div>
+        <table className="noticeList">
+            <tr>
+                <th className="cnickname"><div>닉네임</div></th>
+                <th className="ctitle"><div>타이틀</div></th>
+                <th className="cdate"><div>작성일</div></th>
+            </tr>
                 {diaryList&&diaryList.map((it)=> (
+                    <Link to={`/cdetail/${it.id}`} key={it.id}>
                     <div className="listItem">
-                    <Link to={`/cdetail/${it.id}`} key={it.id}><div className="Ntitle">{it.id}</div></Link>
-                    <div className="Ndate">{it.create_date}</div>
-                </div>      
+                        <span class="left_top"></span>
+                        <span class="right_top"></span>
+                        <span class="right_bottom"></span>
+                        <span class="left_bottom"></span>
+                        <span className="temimg"><img className="itemImg" src={img} alt="게시글 첨부 이미지"/></span>
+                        <div className="Ntitle">{it.id}</div>
+                        <div className="Ndate">{it.create_date}</div>
+                    </div>  
+                    </Link>    
                 ))}
-            </div>
-        </div>
+        </table>
     </div>
   );
 };
