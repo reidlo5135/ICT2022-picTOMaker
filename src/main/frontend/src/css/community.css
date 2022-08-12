@@ -223,6 +223,27 @@
     transform: scale(1.2);
     cursor: pointer;
 }
+
+.upload{
+    display: none;
+}
+
+label > img{
+    cursor: pointer !important;
+}
+
+/*CPosting*/
+
+.postingarea{
+    border: 1px solid #777777;
+    height: 500px;
+}
+
+.ImgArea img{
+    width: 200px;
+    height: 200px;
+}
+
 /*CList 애니메이션*/
 .listItem:hover .left_top{height:100%;}
 .listItem:hover .right_top{width:100%;}
