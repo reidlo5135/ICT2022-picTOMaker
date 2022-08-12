@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping(value = "/v1/api/qna")
 public class UserQnaController {
-
     private static final String className = UserQnaController.class.toString();
-
     private final UserQnaService userQnaService;
     private final ResponseLoggingService loggingService;
 
