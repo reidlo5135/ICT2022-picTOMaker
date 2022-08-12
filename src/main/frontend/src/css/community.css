@@ -70,37 +70,37 @@
 
 /*CList*/
 .notice{
-	width:1280px;
+    width:1280px;
     margin:0 auto;
-	
+
 }
 .notice .title{
-	font-size: 16px;
-	font-weight:500;
-	margin-bottom:20px;
+    font-size: 16px;
+    font-weight:500;
+    margin-bottom:20px;
 }
 
 .notice .title .moreBtn{
-	float:right;
-	font-size: 14px;
-	font-weight:400;
+    float:right;
+    font-size: 14px;
+    font-weight:400;
 }
 
 .notice .title .moreBtn img{
-	width:9px;
-	height:9px;
+    width:9px;
+    height:9px;
 }
 
 .notice .noticeList .listItem{
 
     border-radius: 15px;
     height: 110px;
-	padding:11px 0;
-	font-size:14px;
-	color:#777777;
-	display:flex;
-	justify-content: space-between;
-	cursor:pointer;
+    padding:11px 0;
+    font-size:14px;
+    color:#777777;
+    display:flex;
+    justify-content: space-between;
+    cursor:pointer;
 }
 
 .notice .noticeList{
@@ -123,7 +123,7 @@
     width: 9%;
     background: linear-gradient(to left,#EB5D38, #E72D71);
     border-radius: 5px;
-    
+
 }
 
 .cnickname div, .ctitle div, .cdate div{
@@ -159,42 +159,106 @@
 
 }
 
+/*CDetail*/
+.cdetail{
+    width: 1280px;
+    height: 1280px;
+    margin: 0 auto;
+}
+
+.infocard{
+    padding: 1.5em 0;
+    box-shadow: 0 8px 15px rgb(0 0 0 / 10%);
+    display: flex;
+    border: 1px solid #e8ebee;
+    border-radius: 15px;
+}
+
+.dprofimg{
+    background-size: 220px 290px;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+    position: relative;
+}
+
+.profimg{
+    width: 220px;
+    height: 290px;
+    margin-left: 10%;
+}
+
+.postcont{
+    display: grid;
+    align-items: center;
+    align-content: space-evenly;
+    margin-left: 10%;
+}
+
+.contcard{
+    margin-top: 5%;
+    border-radius: 15px;
+    padding: 1.5em 0;
+    height: 500px;
+    box-shadow: 0 8px 15px rgb(0 0 0 / 10%);
+    display: flex;
+    border: 1px solid #e8ebee;
+}
+
+.post-view-go-list-btn{
+    left: 43%;
+    margin: 20px auto;
+    position: relative;
+    padding: 15px 30px;
+    border-radius: 35px;
+    background: linear-gradient(to left, #EB5D38, #E72D71);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.25s;
+    border-style: none;
+}
+
+.post-view-go-list-btn:hover {
+    letter-spacing: 2px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
 /*CList 애니메이션*/
 .listItem:hover .left_top{height:100%;}
 .listItem:hover .right_top{width:100%;}
 .listItem:hover .right_bottom{height:100%;}
 .listItem:hover .left_bottom{width:100%;}
 .left_top{
-  position:absolute; 
-  left:0; top:0; 
-  width:2px; 
-  height:0; 
-  transition:0.5s all; 
-  background:#EB5D38; 
+    position:absolute;
+    left:0; top:0;
+    width:2px;
+    height:0;
+    transition:0.5s all;
+    background:#EB5D38;
 }
 .right_top{
-  position:absolute; 
-  right:0; top:0; 
-  width:0; 
-  height:2px; 
-  transition:0.5s all; 
-  background:linear-gradient(to bottom,#EB5D38 50%, #E72D71);;
+    position:absolute;
+    right:0; top:0;
+    width:0;
+    height:2px;
+    transition:0.5s all;
+    background:linear-gradient(to bottom,#EB5D38 50%, #E72D71);;
 }
 .right_bottom{
-  position:absolute;
-  right:0; bottom:0; 
-  width:2px; 
-  height:0; 
-  transition:0.5s all;  
-  background:#E72D71;;
+    position:absolute;
+    right:0; bottom:0;
+    width:2px;
+    height:0;
+    transition:0.5s all;
+    background:#E72D71;;
 }
 .left_bottom{
-  position:absolute; 
-  left:0; bottom:0; 
-  width:0px; 
-  height:2px; 
-  transition:0.5s all;
-  background:linear-gradient(to bottom,#EB5D38 50%, #E72D71);;
+    position:absolute;
+    left:0; bottom:0;
+    width:0px;
+    height:2px;
+    transition:0.5s all;
+    background:linear-gradient(to bottom,#EB5D38 50%, #E72D71);;
 }
 
 .listItem:hover {
