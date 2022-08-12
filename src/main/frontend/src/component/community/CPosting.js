@@ -4,12 +4,19 @@ import axios from 'axios';
 import '../../css/Callback.css';
 import Top from "../contents/Top";
 import {useHistory} from "react-router-dom";
+import upload from "../../image/studio_image/image_btn.png"
+import "../../css/Community.css";
+
 const CPosting = () => {
     const history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
     const [profNickName, setProfNickName] = useState(null);
     const getProfile = localStorage.getItem('profile');
     const provider = localStorage.getItem('provider');
+    
+    const [ img, setImg ] = useState([])
+    const [ previewImg, setPreviewImg ] = useState([])
+
 
     const [inputValue, setInputValue] = useState({
         name: '',
@@ -70,6 +77,55 @@ const CPosting = () => {
         }, 2500); 
     } 
 
+    const insertImg = (e) => {
+        let reader = new FileReader()
+
+        if(e.target.files[0]) {
+            reader.readAsDataURL(e.target.files[0])
+            
+            setImg([...img, e.target.files[0]])
+        }
+
+        reader.onloadend = () => {
+            const previewImgUrl = reader.result
+
+            if(previewImgUrl) {
+            setPreviewImg([...previewImg, previewImgUrl])
+            }
+        }
+      }
+
+      const deleteImg = (index) => {
+        const imgArr = img.filter((el, idx) => idx !== index)
+        const imgNameArr = previewImg.filter((el, idx) => idx !== index )
+      
+        setImg([...imgArr])
+        setPreviewImg([...imgNameArr])
+      }
+
+      const getPreviewImg = () => {
+        if(img === null || img.length === 0) {
+          return (
+            <></>
+          )
+        } else {
+          return img.map((el, index) => {
+            const { name } = el
+      
+            return (
+              <div key={index}>
+                <div className="ImgArea">
+                  <img src={previewImg[index]} />
+                </div>
+                <div className="ImgName">{name}</div>
+                <button onClick={() => deleteImg(index)}>❌</button>
+              </div>
+              
+            )
+          })
+        }
+      }
+
   return (
     <>
     <Top/>
@@ -89,17 +145,26 @@ const CPosting = () => {
                       placeholder="제목을 입력하세요"
                        onChange={handleInput} 
                   />
+                  <form encType='multipart/form-data'>
+                    <label htmlFor='file'><img className="uploadimg" src={upload} alt="사진 업로드 버튼"/></label>
+                    <input className="upload" type="file" id='file' accept='image/jpg, image/jpeg, image/png' onChange={(e) => insertImg(e)}/>
+                  </form>
                   <div>
-                      <textarea
+                      <div 
+                            className="postingarea"
+                            contentEditable='true'
                           name="content"
                           type="text"
                           placeholder="내용을 입력하세요"
                            onChange={handleInput} 
-                      />
+                      >
+                         {getPreviewImg()}
+                        </div>
+                        
                   </div>
               </div>
               <div>
-                  <button  onClick={onChangeIsOpen} >저장하기</button>
+                  <button >저장하기</button>
               </div>
           </div>
     </>
