@@ -73,7 +73,7 @@ function Community() {
     };
 
   return (
-      <>
+      <div className="commu">
       <Top/>
       {/* <CList diaryList={data}/> */}
       <CList diaryList={currentPosts(data)}/>
@@ -86,7 +86,7 @@ function Community() {
       <CEditor onCreate={onCreate}/>
       <CList onEdit={onEdit} onRemove={onRemove} diaryList={data}/> */}
       
-      </>
+      </div>
   );
 }
 
