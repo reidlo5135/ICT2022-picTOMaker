@@ -21,9 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserQnaService {
-
     private static final String className = UserQnaService.class.toString();
-
     private final BaseUserQnaRepo baseUserQnaRepo;
     private final BaseLocalUserRepo userJpaRepo;
     private final BaseAuthUserRepo authUserRepo;
