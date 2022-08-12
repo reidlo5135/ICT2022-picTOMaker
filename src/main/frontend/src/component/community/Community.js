@@ -1,4 +1,4 @@
-import {useRef, useState,useEffect, useMemo} from "react";
+import React,{useRef, useState,useEffect} from "react";
 import CEditor from "./CEditor";
 import Ccomment from "./Ccomment";
 import Top from "../contents/Top";
@@ -10,8 +10,6 @@ function Community() {
   const [data,setDate] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(4);
-
-  
 
   const dataId = useRef(0)
 
@@ -77,11 +75,11 @@ function Community() {
       <Top/>
       {/* <CList diaryList={data}/> */}
       <CList diaryList={currentPosts(data)}/>
-                <Pagination
-                    postsPerPage={postsPerPage}
-                    totalPosts={data.length}
-                    paginate={setCurrentPage}
-                />
+      <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={data.length}
+          paginate={setCurrentPage}
+      />
       {/* <Top/>
       <CEditor onCreate={onCreate}/>
       <CList onEdit={onEdit} onRemove={onRemove} diaryList={data}/> */}
