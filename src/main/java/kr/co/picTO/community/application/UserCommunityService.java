@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserCommunityService {
     private static final String className = UserCommunityService.class.toString();
-    private BaseUserCommunityRepo communityRepo;
+    private final BaseUserCommunityRepo communityRepo;
     private final BaseLocalUserRepo userJpaRepo;
     private final BaseAuthUserRepo authUserRepo;
     private final ResponseService responseService;
@@ -40,19 +40,24 @@ public class UserCommunityService {
 
         BaseLocalUser blu = null;
         BaseAuthUser bau = null;
+        Long result = null;
         try {
             if(provider != null && provider.equals("LOCAL")) {
-                if(!userJpaRepo.findByEmail(userCommunityRequestDto.getEmail()).isPresent()) throw new CustomUserNotFoundException();
-                else blu = userJpaRepo.findByEmail(userCommunityRequestDto.getEmail()).orElse(null);
+                if(!userJpaRepo.findByEmail(userCommunityRequestDto.getEmail()).isPresent()) {
+                    throw new CustomUserNotFoundException();
+                } else {
+                    blu = userJpaRepo.findByEmail(userCommunityRequestDto.getEmail()).orElse(null);
+                    result = communityRepo.save(userCommunityRequestDto.toBluEntity(blu)).getId();
+                }
             } else {
-                if(!authUserRepo.findByEmail(userCommunityRequestDto.getEmail()).isPresent()) throw new CustomUserNotFoundException();
-                else bau = authUserRepo.findByEmail(userCommunityRequestDto.getEmail()).orElse(null);
+                if(!authUserRepo.findByEmail(userCommunityRequestDto.getEmail()).isPresent()) {
+                    throw new CustomUserNotFoundException();
+                } else {
+                    bau = authUserRepo.findByEmail(userCommunityRequestDto.getEmail()).orElse(null);
+                    result = communityRepo.save(userCommunityRequestDto.toBauEntity(bau)).getId();
+                }
             }
-
-            log.info("User Community SVC registerBoard blu : " + blu.getEmail());
-            log.info("User Community SVC registerBoard bau : " + bau.getEmail());
-
-            Long result = communityRepo.save(userCommunityRequestDto.toEntity(blu, bau, provider)).getId();
+            log.info("User Community SVC registerBoard result : " + result);
 
             if(result == null || result == 0) {
                 CommonResult failResult = responseService.getFailResult(-1, "registerBoard Error Occurred");
