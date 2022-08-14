@@ -35,7 +35,9 @@ public class UserCommunityService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        log.info("User Community SVC registerBoard UserCommunityDto : " + userCommunityRequestDto.getEmail());
+        log.info("User Community SVC registerBoard UserCommunityDto email : " + userCommunityRequestDto.getEmail());
+        log.info("User Community SVC registerBoard UserCommunityDto title : " + userCommunityRequestDto.getTitle());
+        log.info("User Community SVC registerBoard UserCommunityDto content : " + userCommunityRequestDto.getContent());
         log.info("User Community SVC registerBoard provider : " + provider);
 
         BaseLocalUser blu = null;
