@@ -169,24 +169,22 @@ const CPosting = () => {
                       name="title"
                       type="text"
                       placeholder="제목을 입력하세요"
-                       onChange={handleInput} 
+                      onChange={handleInput}
                   />
                   <form encType='multipart/form-data'>
                     <label htmlFor='file'><img className="uploadimg" src={upload} alt="사진 업로드 버튼"/></label>
                     <input className="upload" type="file" id='file' accept='image/jpg, image/jpeg, image/png' onChange={(e) => insertImg(e)}/>
                   </form>
                   <div>
-                      <div 
-                            className="postingarea"
-                            contentEditable='true'
+                      {getPreviewImg()}
+                      <input
+                          className="postingarea"
+                          contentEditable='true'
                           name="content"
                           type="text"
                           placeholder="내용을 입력하세요"
-                           onChange={handleInput} 
-                      >
-                         {getPreviewImg()}
-                        </div>
-                        
+                          onChange={handleInput}
+                      />
                   </div>
               </div>
               <div>
