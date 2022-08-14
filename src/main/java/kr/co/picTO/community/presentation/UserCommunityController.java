@@ -21,6 +21,21 @@ public class UserCommunityController {
     private final UserCommunityService userCommunityService;
     private final ResponseLoggingService loggingService;
 
+    @ApiOperation(value = "전체 게시물 조회", notes = "Select Board All")
+    @GetMapping(value = "/find/all")
+    public ResponseEntity<?> selectAll() {
+        ResponseEntity<?> ett = null;
+        try {
+            ett = userCommunityService.findBoardAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("User Community Controller selectAll Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("User Community Controller selectAll ett : " + ett);
+            return ett;
+        }
+    }
+
     @ApiOperation(value = "게시물 등록", notes = "Register Board")
     @PostMapping(value = "/register/{provider}")
     public ResponseEntity<?> save(@ApiParam(value = "CommunityReqDto", required = true) @RequestBody UserCommunityRequestDto userCommunityRequestDto, @PathVariable String provider) {
