@@ -11,6 +11,7 @@ const CPosting = () => {
     const history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
     const [profNickName, setProfNickName] = useState(null);
+    const [email, setEmail] = useState(null);
     const getProfile = localStorage.getItem('profile');
     const provider = localStorage.getItem('provider');
     
@@ -31,6 +32,7 @@ const CPosting = () => {
             const jsonProf = JSON.parse(getProfile);
             console.log('QNA jProf : ', jsonProf);
             setProfNickName(jsonProf.nickname);
+            setEmail(jsonProf.email);
         } catch (err) {
             console.error(err);
         }
@@ -67,7 +69,7 @@ const CPosting = () => {
             }).catch((err) => {
                 console.error('err : ', JSON.stringify(err));
                 alert(err.response.data.msg);
-            });;
+            });
         } catch (err) {
             console.error(err);
         }
@@ -126,6 +128,30 @@ const CPosting = () => {
         }
       }
 
+      const registerBoard = () => {
+          try {
+              axios.post(`/v1/api/community/register/${provider}`, {
+                  email,
+                  title,
+                  content
+              }).then((response) => {
+                  console.log('response : ', response.data);
+                  console.log('response : ', response.data.data);
+
+                  if(response.data.code === 0) {
+                      alert('게시물이 등록되었습니다.');
+                      setIsOpen(!isOpen);
+                      history.push("/");
+                  }
+              }).catch((err) => {
+                  console.error('err : ', JSON.stringify(err));
+                  alert(err.response.data.msg);
+              });
+          } catch (err) {
+              console.error(err);
+          }
+      }
+
   return (
     <>
     <Top/>
@@ -164,7 +190,7 @@ const CPosting = () => {
                   </div>
               </div>
               <div>
-                  <button >저장하기</button>
+                  <button onClick={() => {registerBoard();}}>저장하기</button>
               </div>
           </div>
     </>
