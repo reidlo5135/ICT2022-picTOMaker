@@ -55,7 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                             "/**/*.js",
                             "/**/*.json",
                             "/**/*.otf").permitAll()
-                .antMatchers(HttpMethod.GET,"/exception/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/exception/**", "/v1/api/community/**/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/api/user/**", "/v1/api/picTO/**/**/**", "/v1/api/qna/**/**", "/v1/api/community/**/**").permitAll()
                 .antMatchers(HttpMethod.PUT, "/v1/api/picTO/**/**/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/v1/api/oauth2/token/invalid/**", "/v1/api/user/token/invalid/**", "/v1/api/picTO/delete").permitAll()

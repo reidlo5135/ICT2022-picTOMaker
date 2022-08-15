@@ -88,19 +88,20 @@ const CList = ({diaryList}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {diaryList&&diaryList.map((it)=> (
-                    <Link to={`/cdetail/${it.id}`} key={it.id}>
-                        <div className="listItem">
-                            <span className="left_top"></span>
-                            <span className="right_top"></span>
-                            <span className="right_bottom"></span>
-                            <span className="left_bottom"></span>
-                            <span className="temimg"><img className="itemImg" src={img} alt="게시글 첨부 이미지"/></span>
-                            <div className="Ntitle">{it.id}</div>
-                            <div className="Ndate">{it.create_date}</div>
-                        </div>
-                    </Link>
-                ))}
+                    {diaryList&&diaryList.map((it)=> (
+                        <Link to={`/cdetail/${it.id}`} key={it.id}>
+                            <div className="listItem">
+                                <span className="left_top"></span>
+                                <span className="right_top"></span>
+                                <span className="right_bottom"></span>
+                                <span className="left_bottom"></span>
+                                {/*<span className="temimg"><img className="itemImg" src={img} alt="게시글 첨부 이미지"/></span>*/}
+                                <div className="Nauthor">{it.author}</div>
+                                <div className="Ntitle">{it.title}</div>
+                                <div className="Ndate">{it.create_date}</div>
+                            </div>
+                        </Link>
+                    ))}
                 </tbody>
             </table>
         </div>
