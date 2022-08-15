@@ -21,8 +21,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -41,17 +41,15 @@ public class UserCommunityService {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         try {
-            List<BaseUserCommunity> result = communityRepo.findAll();
+            List<BaseUserCommunity> communityList = communityRepo.findAll();
 
-            if(result.isEmpty()) {
+            if(communityList.isEmpty()) {
                 CommonResult failResult = responseService.getFailResult(-1, "등록된 게시물이 존재하지 않습니다.");
                 loggingService.commonResultLogging(className, "findBoardAll", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
-                for(int i=0;i<result.size();i++) {
-                    log.info("User Community SVC findBoardAll result : " + result.get(i));
-                }
-                ListResult<BaseUserCommunity> listResult = responseService.getListResult(result);
+                List<UserCommunityRequestDto> result = communityList.stream().map(UserCommunityRequestDto::new).collect(Collectors.toList());
+                ListResult<UserCommunityRequestDto> listResult = responseService.getListResult(result);
                 loggingService.listResultLogging(className, "findBoardAll", listResult);
                 ett = new ResponseEntity<>(listResult, httpHeaders, HttpStatus.OK);
             }
@@ -60,6 +58,34 @@ public class UserCommunityService {
             log.error("User Community SVC findBoardAll Error Occurred : " + e.getMessage());
         } finally {
             log.info("User Community SVC findBoardAll ett : " + ett);
+            return ett;
+        }
+    }
+
+    public ResponseEntity<?> findBoardById(long id) {
+        ResponseEntity<?> ett = null;
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        log.info("User Community SVC findBoardById id : " + id);
+
+        try {
+            BaseUserCommunity baseUserCommunity = communityRepo.findById(id).orElse(null);
+
+            if(baseUserCommunity == null) {
+                CommonResult failResult = responseService.getFailResult(-1, "등록된 게시물이 존재하지 않습니다.");
+                loggingService.commonResultLogging(className, "findBoardAll", failResult);
+                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                UserCommunityRequestDto userCommunityRequestDto = new UserCommunityRequestDto(baseUserCommunity);
+                SingleResult<UserCommunityRequestDto> singleResult = responseService.getSingleResult(userCommunityRequestDto);
+                loggingService.singleResultLogging(className, "findBoardById", singleResult);
+                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("User Community SVC findBoardById Error Occurred : " + e.getMessage());
+        } finally {
+            log.info("User Community SVC findBoardById ett : " + ett);
             return ett;
         }
     }
