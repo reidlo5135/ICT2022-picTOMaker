@@ -16,29 +16,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class UserCommunityRequestDto {
 
-    private long id;
     private String email;
-    private String nickname;
     private String title;
     private String content;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
-
-
-    public UserCommunityRequestDto(BaseUserCommunity baseUserCommunity) {
-        if(baseUserCommunity.getBlu() != null) {
-            email = baseUserCommunity.getBlu().getEmail();
-            nickname = baseUserCommunity.getBlu().getNickName();
-        } else if(baseUserCommunity.getBau() != null) {
-            email = baseUserCommunity.getBau().getEmail();
-            nickname = baseUserCommunity.getBau().getName();
-        }
-        id = baseUserCommunity.getId();
-        title = baseUserCommunity.getTitle();
-        content = baseUserCommunity.getContent();
-        createdDate = baseUserCommunity.getCreatedDate();
-        modifiedDate = baseUserCommunity.getModifiedDate();
-    }
 
     public BaseUserCommunity toBluEntity(BaseLocalUser blu) {
         return BaseUserCommunity.builder()
