@@ -9,6 +9,7 @@ import kr.co.picTO.common.exception.CustomUserNotFoundException;
 import kr.co.picTO.community.domain.BaseUserCommunity;
 import kr.co.picTO.community.domain.BaseUserCommunityRepo;
 import kr.co.picTO.community.dto.UserCommunityRequestDto;
+import kr.co.picTO.community.dto.UserCommunityResponseDto;
 import kr.co.picTO.member.domain.BaseAuthUserRepo;
 import kr.co.picTO.member.domain.BaseLocalUserRepo;
 import kr.co.picTO.member.domain.local.BaseLocalUser;
@@ -48,8 +49,8 @@ public class UserCommunityService {
                 loggingService.commonResultLogging(className, "findBoardAll", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
-                List<UserCommunityRequestDto> result = communityList.stream().map(UserCommunityRequestDto::new).collect(Collectors.toList());
-                ListResult<UserCommunityRequestDto> listResult = responseService.getListResult(result);
+                List<UserCommunityResponseDto> result = communityList.stream().map(UserCommunityResponseDto::new).collect(Collectors.toList());
+                ListResult<UserCommunityResponseDto> listResult = responseService.getListResult(result);
                 loggingService.listResultLogging(className, "findBoardAll", listResult);
                 ett = new ResponseEntity<>(listResult, httpHeaders, HttpStatus.OK);
             }
@@ -76,8 +77,8 @@ public class UserCommunityService {
                 loggingService.commonResultLogging(className, "findBoardAll", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
-                UserCommunityRequestDto userCommunityRequestDto = new UserCommunityRequestDto(baseUserCommunity);
-                SingleResult<UserCommunityRequestDto> singleResult = responseService.getSingleResult(userCommunityRequestDto);
+                UserCommunityResponseDto userCommunityResponseDto = new UserCommunityResponseDto(baseUserCommunity);
+                SingleResult<UserCommunityResponseDto> singleResult = responseService.getSingleResult(userCommunityResponseDto);
                 loggingService.singleResultLogging(className, "findBoardById", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
