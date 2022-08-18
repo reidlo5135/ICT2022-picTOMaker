@@ -22,13 +22,13 @@ public class BaseS3Image extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = BaseAuthUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "bau_email")
-    private BaseAuthUser bau;
-
     @ManyToOne(targetEntity = BaseLocalUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "blu_email")
+    @JoinColumn(name = "blu_id")
     private BaseLocalUser blu;
+
+    @ManyToOne(targetEntity = BaseAuthUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "bau_id")
+    private BaseAuthUser bau;
 
     @Column(nullable = false)
     private String email;

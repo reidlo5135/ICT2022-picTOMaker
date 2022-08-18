@@ -1,5 +1,6 @@
 package kr.co.picTO.community.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kr.co.picTO.common.domain.BaseTimeEntity;
 import kr.co.picTO.member.domain.local.BaseLocalUser;
 import kr.co.picTO.member.domain.oauth2.BaseAuthUser;
@@ -20,23 +21,19 @@ public class BaseUserCommunity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(targetEntity = BaseAuthUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "bau_email")
-    private BaseAuthUser bau;
-
+    @JsonIgnore
     @ManyToOne(targetEntity = BaseLocalUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "blu_email")
+    @JoinColumn(name = "blu_id")
     private BaseLocalUser blu;
 
-    @Column(nullable = false)
-    private String email;
+    @JsonIgnore
+    @ManyToOne(targetEntity = BaseAuthUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "bau_id")
+    private BaseAuthUser bau;
 
     @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
     private String content;
-
-    @Column(nullable = false)
-    private String provider;
 }
