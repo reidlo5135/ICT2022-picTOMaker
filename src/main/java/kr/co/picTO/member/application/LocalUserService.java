@@ -3,7 +3,7 @@ package kr.co.picTO.member.application;
 import kr.co.picTO.common.exception.CustomRefreshTokenException;
 import kr.co.picTO.member.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.member.dto.local.LocalUserSignUpRequestDto;
-import kr.co.picTO.member.dto.social.UserProfileDto;
+import kr.co.picTO.member.dto.social.UserProfileResponseDto;
 import kr.co.picTO.member.domain.local.BaseLocalUser;
 import kr.co.picTO.member.domain.oauth2.BaseAccessToken;
 import kr.co.picTO.common.domain.CommonResult;
@@ -121,10 +121,10 @@ public class LocalUserService {
             log.info("Local User SVC Profile user isNull : " + (user == null));
 
             if(bat != null && user != null) {
-                UserProfileDto userProfileDto = new UserProfileDto(user.getEmail(), user.getName(), user.getNickName(), user.getProfile_image_url());
-                log.info("Local User SVC Profile pDTO isNull : " + (userProfileDto == null));
+                UserProfileResponseDto userProfileResponseDto = new UserProfileResponseDto(user.getEmail(), user.getName(), user.getNickName(), user.getProfile_image_url());
+                log.info("Local User SVC Profile pDTO isNull : " + (userProfileResponseDto == null));
 
-                SingleResult<UserProfileDto> singleResult = responseService.getSingleResult(userProfileDto);
+                SingleResult<UserProfileResponseDto> singleResult = responseService.getSingleResult(userProfileResponseDto);
                 loggingService.singleResultLogging(className, "getProfileLocal", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             } else {
