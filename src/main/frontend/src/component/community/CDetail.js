@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState,useRef } from 'react';
 import Top from "../contents/Top";
 import img from "../../image/naver.png";
+import Ccomment from "./Ccomment";
+import Ccmt from "./Ccmt";
 
 const CDetail = ({ history, diaryList, match}) => {
     const [data,setData] = useState([]);
@@ -92,8 +94,13 @@ const CDetail = ({ history, diaryList, match}) => {
                         </>
                     ) : '해당 게시글을 찾을 수 없습니다.'
                 }
+                <div className='comment'>
+                    <Ccomment/>
+                    <Ccmt/>
+                </div>
                 <button className="post-view-go-list-btn" onClick={() => history.goBack()}>목록으로 돌아가기</button>
             </div>
+            
         </div>
         </>
     )
