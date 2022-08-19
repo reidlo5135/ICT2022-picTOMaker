@@ -98,7 +98,7 @@ const CList = ({diaryList}) => {
                                 {/*<span className="temimg"><img className="itemImg" src={img} alt="게시글 첨부 이미지"/></span>*/}
                                 <div className="Nauthor">{it.author}</div>
                                 <div className="Ntitle">{it.title}</div>
-                                <div className="Ndate">{it.create_date}</div>
+                                <div className="Ndate">{it.createdDate}</div>
                             </div>
                         </Link>
                     ))}
