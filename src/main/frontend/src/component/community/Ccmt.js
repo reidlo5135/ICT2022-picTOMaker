@@ -1,5 +1,4 @@
 import {useRef, useState} from "react";
-// import "../css/Diary.css";
 
 const Ccmt = ({onCreate}) => {
     const authorInput = useRef();
