@@ -1,7 +1,6 @@
 package kr.co.picTO.community.dto;
 
 import kr.co.picTO.community.domain.BaseUserCommunity;
-import kr.co.picTO.member.domain.local.BaseLocalUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
