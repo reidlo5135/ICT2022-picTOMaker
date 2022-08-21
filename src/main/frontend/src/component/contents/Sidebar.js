@@ -23,6 +23,9 @@ export default function Sidebar(){
                         alert('성공적으로 로그아웃 되었습니다!!');
                         history.push("/");
                     }
+            }).catch((err) => {
+                console.error('err : ', JSON.stringify(err));
+                alert(err.response.data.msg);
             });
         } catch (err) {
             console.error(err);

@@ -1,47 +1,39 @@
-package kr.co.picTO.s3.domain;
+package kr.co.picTO.community.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kr.co.picTO.common.domain.BaseTimeEntity;
 import kr.co.picTO.member.domain.local.BaseLocalUser;
 import kr.co.picTO.member.domain.oauth2.BaseAuthUser;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "base_s3_image")
-public class BaseS3Image extends BaseTimeEntity {
+@Table(name = "base_user_community")
+public class BaseUserCommunity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
+    @JsonIgnore
     @ManyToOne(targetEntity = BaseLocalUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "blu_id")
     private BaseLocalUser blu;
 
+    @JsonIgnore
     @ManyToOne(targetEntity = BaseAuthUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "bau_id")
     private BaseAuthUser bau;
 
     @Column(nullable = false)
-    private String email;
+    private String title;
 
     @Column(nullable = false)
-    private String fileName;
-
-    @Column(nullable = false)
-    private String fileUrl;
-
-    @Column(nullable = false)
-    private String extension;
-
-    @Column(nullable = false)
-    private String provider;
+    private String content;
 }

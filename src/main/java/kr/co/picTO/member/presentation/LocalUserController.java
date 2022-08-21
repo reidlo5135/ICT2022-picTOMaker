@@ -60,8 +60,9 @@ public class LocalUserController {
         }
     }
 
+    @ApiOperation(value = "회원 프로필 조회", notes = "프로필 조회")
     @PostMapping(value = "/profile")
-    public ResponseEntity<?> getProfile(@RequestBody Map<String, String> access_token) {
+    public ResponseEntity<?> getProfile(@ApiParam(value = "Access Token", required = true) @RequestBody Map<String, String> access_token) {
         ResponseEntity<?> ett = null;
         log.info("Local User Controller access_token : " + access_token.get("access_token"));
         try {

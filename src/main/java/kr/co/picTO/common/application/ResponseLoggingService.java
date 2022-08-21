@@ -28,7 +28,7 @@ public class ResponseLoggingService {
             log.info("Response Logging SVC listResult logging ClassName : " + className);
             log.info("Response Logging SVC listResult logging MethodName : " + methodName);
             log.info(className + " " + methodName + " result getCode : " + result.getCode());
-            log.info(className + " " + methodName + " result getData : " + result.getList());
+            log.info(className + " " + methodName + " result getList : " + result.getList());
             log.info(className + " " + methodName + " result getMSg : " + result.getMsg());
         } catch (Exception e) {
             e.printStackTrace();

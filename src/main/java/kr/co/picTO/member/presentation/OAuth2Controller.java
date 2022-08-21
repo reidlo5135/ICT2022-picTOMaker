@@ -18,7 +18,6 @@ import java.util.Map;
 public class OAuth2Controller {
 
     private static final String className = OAuth2Controller.class.toString();
-
     private final OAuth2ProviderService OAuth2ProviderService;
     private final ResponseLoggingService loggingService;
 
@@ -26,7 +25,6 @@ public class OAuth2Controller {
     public ResponseEntity<?> generateToken(@RequestBody Map<String, String> code, @PathVariable String provider) {
         ResponseEntity<?> ett = null;
         loggingService.httpPathStrLoggingWithRequest(className, "generateToken", code.get("code"), provider, "");
-
         try {
             ett = OAuth2ProviderService.generateAccessToken(code.get("code"), provider);
             log.info("OAuth2Controller gAT ett : " + ett);
@@ -42,7 +40,6 @@ public class OAuth2Controller {
     public ResponseEntity<?> getProfile(@RequestBody Map<String, String> access_token, @PathVariable String provider) {
         ResponseEntity<?> ett = null;
         loggingService.httpPathStrLoggingWithRequest(className, "getProfile", access_token.get("access_token"), provider, "");
-
         try {
             ett = OAuth2ProviderService.getProfile(access_token.get("access_token"), provider);
             log.info("Prov Controller ett : " + ett);
@@ -57,7 +54,6 @@ public class OAuth2Controller {
     public ResponseEntity<?> inValidToken(@PathVariable String access_token) {
         ResponseEntity<?> ett = null;
         loggingService.httpPathStrLogging(className, "inValidToken", access_token, "", "");
-
         try {
             ett = OAuth2ProviderService.deleteToken(access_token);
             log.info("Prov Controller ett : " + ett);

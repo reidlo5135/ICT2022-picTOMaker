@@ -135,8 +135,8 @@ public class OAuth2ProviderService {
                 loggingService.commonResultLogging(className, "getProfile", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
-                UserProfileDto userProfileDto = extractProfile(response, accessToken, provider);
-                SingleResult<UserProfileDto> singleResult = responseService.getSingleResult(userProfileDto);
+                UserProfileResponseDto userProfileResponseDto = extractProfile(response, accessToken, provider);
+                SingleResult<UserProfileResponseDto> singleResult = responseService.getSingleResult(userProfileResponseDto);
                 loggingService.singleResultLogging(className, "getProfile", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
@@ -149,7 +149,7 @@ public class OAuth2ProviderService {
         }
     }
 
-    public UserProfileDto getProfileForGoogle(String accessToken, String provider) {
+    public UserProfileResponseDto getProfileForGoogle(String accessToken, String provider) {
         String profileUrl = oAuth2Component.getProfileUrl(provider);
 
         ResponseEntity<String> response = null;
@@ -177,25 +177,25 @@ public class OAuth2ProviderService {
         throw new CustomCommunicationException();
     }
 
-    private UserProfileDto extractProfile(ResponseEntity<String> response, String accessToken, String provider) {
+    private UserProfileResponseDto extractProfile(ResponseEntity<String> response, String accessToken, String provider) {
         if (provider.equals("kakao")) {
             KakaoProfile kakaoProfile = gson.fromJson(response.getBody(), KakaoProfile.class);
             log.info("OAuth2ProvSVC " + provider + " extractProfile : " + kakaoProfile);
 
             saveUser(accessToken, kakaoProfile.getProperties().getNickname(), kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getProfile_image(), provider);
-            return new UserProfileDto(kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getNickname(), kakaoProfile.getProperties().getProfile_image());
+            return new UserProfileResponseDto(kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getNickname(), kakaoProfile.getProperties().getProfile_image());
         } else if(provider.equals("google")) {
             GoogleProfile googleProfile = gson.fromJson(response.getBody(), GoogleProfile.class);
             log.info("OAuth2ProvSVC " + provider + " extractProfile : " + googleProfile);
 
             saveUser(accessToken, googleProfile.getEmail(), googleProfile.getName(), googleProfile.getPicture(), provider);
-            return new UserProfileDto(googleProfile.getEmail(), googleProfile.getName(), googleProfile.getPicture());
+            return new UserProfileResponseDto(googleProfile.getEmail(), googleProfile.getName(), googleProfile.getPicture());
         } else {
             NaverProfile naverProfile = gson.fromJson(response.getBody(), NaverProfile.class);
             log.info("OAuth2ProvSVC " + provider + " extractProfile : " + naverProfile);
 
             saveUser(accessToken, naverProfile.getResponse().getName(), naverProfile.getResponse().getEmail(), naverProfile.getResponse().getProfile_image(), provider);
-            return new UserProfileDto(naverProfile.getResponse().getEmail(), naverProfile.getResponse().getName(), naverProfile.getResponse().getProfile_image());
+            return new UserProfileResponseDto(naverProfile.getResponse().getEmail(), naverProfile.getResponse().getName(), naverProfile.getResponse().getProfile_image());
         }
     }
 

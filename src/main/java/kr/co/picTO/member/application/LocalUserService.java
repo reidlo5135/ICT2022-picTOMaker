@@ -3,7 +3,7 @@ package kr.co.picTO.member.application;
 import kr.co.picTO.common.exception.CustomRefreshTokenException;
 import kr.co.picTO.member.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.member.dto.local.LocalUserSignUpRequestDto;
-import kr.co.picTO.member.dto.social.UserProfileDto;
+import kr.co.picTO.member.dto.social.UserProfileResponseDto;
 import kr.co.picTO.member.domain.local.BaseLocalUser;
 import kr.co.picTO.member.domain.oauth2.BaseAccessToken;
 import kr.co.picTO.common.domain.CommonResult;
@@ -121,10 +121,10 @@ public class LocalUserService {
             log.info("Local User SVC Profile user isNull : " + (user == null));
 
             if(bat != null && user != null) {
-                UserProfileDto userProfileDto = new UserProfileDto(user.getEmail(), user.getName(), user.getNickName(), user.getProfile_image_url());
-                log.info("Local User SVC Profile pDTO isNull : " + (userProfileDto == null));
+                UserProfileResponseDto userProfileResponseDto = new UserProfileResponseDto(user.getEmail(), user.getName(), user.getNickName(), user.getProfile_image_url());
+                log.info("Local User SVC Profile pDTO isNull : " + (userProfileResponseDto == null));
 
-                SingleResult<UserProfileDto> singleResult = responseService.getSingleResult(userProfileDto);
+                SingleResult<UserProfileResponseDto> singleResult = responseService.getSingleResult(userProfileResponseDto);
                 loggingService.singleResultLogging(className, "getProfileLocal", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             } else {
@@ -220,21 +220,20 @@ public class LocalUserService {
         ResponseEntity<?> ett = null;
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        log.info("Local User SVC delT at : " + access_token);
+        log.info("Local User SVC deleteToken at : " + access_token);
 
-        Integer id = null;
         try {
-            id = userJpaRepo.deleteByAccessToken(access_token);
-            log.info("Local User SVC delT bat id : " + id);
+            if(access_token == null || access_token.equals("")) {
+                CommonResult failResult = responseService.getFailResult(-1, "Local DeleteToken Error Occurred");
+                loggingService.commonResultLogging(className, "deleteToken", failResult);
+                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                Integer id = tokenRepo.deleteByAccessToken(access_token);
+                log.info("Local User SVC deleteToken bat id : " + id);
 
-            if(id != 1) {
                 SingleResult<Integer> singleResult = responseService.getSingleResult(id);
                 loggingService.singleResultLogging(className, "deleteToken", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
-            } else {
-                CommonResult failResult = responseService.getFailResult(-1, "DeleteToken Error Occurred");
-                loggingService.commonResultLogging(className, "deleteToken", failResult);
-                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (Exception e) {
             e.printStackTrace();
