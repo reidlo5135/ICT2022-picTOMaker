@@ -14,6 +14,8 @@ import PoseWebStudio from "./studio/poseweb/PoseWebStudio";
 import EditTool from './studio/edittool/EditTool';
 import EditImageTool from "./studio/edittool/EditImageTool";
 import {AnimatePresence} from "framer-motion";
+import CPostview from './community/CPostView';
+import HandWebStudio from './studio/handweb/HandWebStudio';
 import CDetail from './community/CDetail';
 import CPosting from './community/CPosting';
 
@@ -36,6 +38,7 @@ export default function App(){
                     <Route path='/oauth2/redirect/naver' component={Callback} />
                     <Route path='/oauth2/redirect/google' component={Callback} />
                     <Route path='/studio/pose/web' component={PoseWebStudio}/>
+                    <Route path='/studio/hand/web' component={HandWebStudio}/>
                     <Route path='/edit' component={EditTool} />
                     <Route path='/tool/image' component={EditImageTool} />
                 </Switch>
