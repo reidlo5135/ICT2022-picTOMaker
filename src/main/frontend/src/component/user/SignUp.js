@@ -49,21 +49,21 @@ export default function SignUp(){
         } else {
             try {
                 axios.post('/v1/api/user/signUp', {
-                    email: email,
-                    name: name,
-                    nickName: nickName,
-                    password: password
+                    email,
+                    name,
+                    nickName,
+                    password
                 }).then((response) => {
                     console.log('response : ', response.data);
-                    console.log('response : ', response.data.data);
+                    console.log('response : ', response.data.body.data);
 
-                    if(response.data.code === 0){
+                    if(response.data.body.code === 0){
                         alert(nickName + ' 픽토메이커님 환영합니다!');
                         history.push("/");
                     }
                 }).catch((err) => {
                     console.error('err : ', JSON.stringify(err));
-                    alert(err.response.data.msg);
+                    alert(err.response.data.body.msg);
                 });
             } catch (err) {
                 console.error('err : ', JSON.stringify(err));

@@ -23,13 +23,13 @@ export default function MyPageProfile(){
             axios.post(`/v1/api/picTO/count/${email}/${provider}`)
                 .then((response) => {
                     console.log('MyPage-profile getPicToCount : ', response.data);
-                    if(response.data.code === 0) {
-                        console.log('MyPage-profile getPicToCount count : ', response.data.data);
-                        setCount(response.data.data);
+                    if(response.data.body.code === 0) {
+                        console.log('MyPage-profile getPicToCount count : ', response.data.body.data);
+                        setCount(response.data.body.data);
                     }
                 }).catch((err) => {
                     console.error('err : ', JSON.stringify(err));
-                    alert(err.response.data.msg);
+                    alert(err.response.data.body.msg);
                 });
 
             setName(jsonProf.name);

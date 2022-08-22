@@ -25,11 +25,11 @@ export default function MyPageMyPic(){
             await axios.post(`/v1/api/picTO/get/${email}/${provider}`)
                 .then((response) => {
                     console.log('response data : ' + response.data);
-                    console.log('response data.list : ' + response.data.list);
-                    console.log('response data.list JSON : ', JSON.stringify(response.data.list));
+                    console.log('response data.list : ' + response.data.body.list);
+                    console.log('response data.list JSON : ', JSON.stringify(response.data.body.list));
 
-                    if(response.data.code === 0) {
-                        setPosts(response.data.list);
+                    if(response.data.body.code === 0) {
+                        setPosts(response.data.body.list);
                         setLoading(false);
                     }
                 }).catch((err) => {

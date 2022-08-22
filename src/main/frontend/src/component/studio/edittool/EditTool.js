@@ -141,16 +141,16 @@ export default function EditTool(props) {
                 image
             }).then((response) => {
                 console.log('response data : ', response.data);
-                console.log('response data.data : ', response.data.data);
+                console.log('response data.data : ', response.data.body.data);
 
-                if(response.data.code === 0) {
-                    localStorage.setItem("picTOUrl", response.data.data);
+                if(response.data.body.code === 0) {
+                    localStorage.setItem("picTOUrl", response.data.body.data);
                     alert('성공적으로 저장되었습니다!');
                     history.push("/");
                 }
             }).catch((err) => {
                 console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.msg);
+                alert(err.response.data.body.msg);
             });
         } catch (err) {
             console.error(err);

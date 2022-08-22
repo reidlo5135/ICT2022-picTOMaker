@@ -63,11 +63,11 @@ export default function Main(){
                     password
                 }).then((response) => {
                     console.log('res data ', response.data);
-                    console.log('res data.data ', response.data.data);
+                    console.log('res data.data ', response.data.body.data);
 
-                    if(response.data.code === 0){
-                        const access_token = response.data.data.access_token;
-                        const refresh_token = response.data.data.refresh_token;
+                    if(response.data.body.code === 0){
+                        const access_token = response.data.body.data.access_token;
+                        const refresh_token = response.data.body.data.refresh_token;
 
                         setIsLogged(true);
                         localStorage.setItem("access_token", access_token);
@@ -78,9 +78,9 @@ export default function Main(){
                             email
                         }).then((response) => {
                             console.log('NICKNAME res data : ', response.data);
-                            console.log('NICKNAME res data.data : ', response.data.data);
-                            if(response.data.code === 0) {
-                                const nickName = response.data.data;
+                            console.log('NICKNAME res data.data : ', response.data.body.data);
+                            if(response.data.body.code === 0) {
+                                const nickName = response.data.body.data;
                                 alert('어서오세요, ' + nickName + ' 픽토메이커님!');
                                 closeModal();
                                 history.push("/");

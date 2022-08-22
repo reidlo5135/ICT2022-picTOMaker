@@ -17,50 +17,25 @@ import java.util.Map;
 @RequestMapping(value = "/v1/api/oauth2")
 public class OAuth2Controller {
 
-    private static final String className = OAuth2Controller.class.toString();
-    private final OAuth2ProviderService OAuth2ProviderService;
+    private static final String ClassName = OAuth2Controller.class.toString();
+    private final OAuth2ProviderService oAuth2ProviderService;
     private final ResponseLoggingService loggingService;
 
     @PostMapping(value = "/token/{provider}")
     public ResponseEntity<?> generateToken(@RequestBody Map<String, String> code, @PathVariable String provider) {
-        ResponseEntity<?> ett = null;
-        loggingService.httpPathStrLoggingWithRequest(className, "generateToken", code.get("code"), provider, "");
-        try {
-            ett = OAuth2ProviderService.generateAccessToken(code.get("code"), provider);
-            log.info("OAuth2Controller gAT ett : " + ett);
-            log.info("OAuth2Controller gAT provider : " + provider);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error(e.getMessage());
-        }
-        return ett;
+        loggingService.httpPathStrLoggingWithRequest(ClassName, "generateToken", code.get("code"), provider, "");
+        return ResponseEntity.ok().body(oAuth2ProviderService.generateAccessToken(code.get("code"), provider));
     }
 
     @PostMapping(value = "/profile/{provider}")
     public ResponseEntity<?> getProfile(@RequestBody Map<String, String> access_token, @PathVariable String provider) {
-        ResponseEntity<?> ett = null;
-        loggingService.httpPathStrLoggingWithRequest(className, "getProfile", access_token.get("access_token"), provider, "");
-        try {
-            ett = OAuth2ProviderService.getProfile(access_token.get("access_token"), provider);
-            log.info("Prov Controller ett : " + ett);
-        }catch (Exception e) {
-            e.printStackTrace();
-            log.error(e.getMessage());
-        }
-        return ett;
+        loggingService.httpPathStrLoggingWithRequest(ClassName, "getProfile", access_token.get("access_token"), provider, "");
+        return ResponseEntity.ok().body(oAuth2ProviderService.getProfile(access_token.get("access_token"), provider));
     }
 
     @DeleteMapping(value = "/token/invalid/{access_token}")
     public ResponseEntity<?> inValidToken(@PathVariable String access_token) {
-        ResponseEntity<?> ett = null;
-        loggingService.httpPathStrLogging(className, "inValidToken", access_token, "", "");
-        try {
-            ett = OAuth2ProviderService.deleteToken(access_token);
-            log.info("Prov Controller ett : " + ett);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error(e.getMessage());
-        }
-        return ett;
+        loggingService.httpPathStrLogging(ClassName, "inValidToken", access_token, "", "");
+        return ResponseEntity.ok().body(oAuth2ProviderService.deleteToken(access_token));
     }
 }
