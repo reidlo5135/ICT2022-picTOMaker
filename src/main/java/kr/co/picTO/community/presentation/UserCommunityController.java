@@ -17,54 +17,27 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping(value = "/v1/api/community")
 public class UserCommunityController {
-    private static final String className = UserCommunityController.class.toString();
+    private static final String ClassName = UserCommunityController.class.toString();
     private final UserCommunityService userCommunityService;
     private final ResponseLoggingService loggingService;
 
     @ApiOperation(value = "전체 게시물 조회", notes = "Select Board All")
     @GetMapping(value = "/find/all")
-    public ResponseEntity<?> selectAll() {
-        ResponseEntity<?> ett = null;
-        try {
-            ett = userCommunityService.findBoardAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("User Community Controller selectAll Error Occurred : " + e.getMessage());
-        } finally {
-            log.info("User Community Controller selectAll ett : " + ett);
-            return ett;
-        }
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok().body(userCommunityService.findBoardAll());
     }
 
     @ApiOperation(value = "특정 게시물 조회", notes = "Select Board By Id")
     @GetMapping(value = "/find/{id}")
-    public ResponseEntity<?> selectById(@ApiParam(value = "board_id", required = true) @PathVariable long id) {
-        ResponseEntity<?> ett = null;
-        loggingService.httpPathStrLogging(className, "selectById", String.valueOf(id), "", "");
-        try {
-            ett = userCommunityService.findBoardById(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("User Community Controller selectById Error Occurred : " + e.getMessage());
-        } finally {
-            log.info("User Community Controller selectById ett : " + ett);
-            return ett;
-        }
+    public ResponseEntity<?> findById(@ApiParam(value = "board_id", required = true) @PathVariable long id) {
+        loggingService.httpPathStrLogging(ClassName, "selectById", String.valueOf(id), "", "");
+        return ResponseEntity.ok().body(userCommunityService.findBoardById(id));
     }
 
     @ApiOperation(value = "게시물 등록", notes = "Register Board")
     @PostMapping(value = "/register/{provider}")
     public ResponseEntity<?> save(@ApiParam(value = "CommunityReqDto", required = true) @RequestBody UserCommunityRequestDto userCommunityRequestDto, @PathVariable String provider) {
-        ResponseEntity<?> ett = null;
-        loggingService.httpPathStrLogging(className, "saveBoard", userCommunityRequestDto.getEmail(), provider, "");
-        try {
-            ett = userCommunityService.registerBoard(userCommunityRequestDto, provider);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("User Community Controller register Error Occurred : " + e.getMessage());
-        } finally {
-            log.info("User Community Controller register ett : " + ett);
-            return ett;
-        }
+        loggingService.httpPathStrLogging(ClassName, "saveBoard", userCommunityRequestDto.getEmail(), provider, "");
+        return ResponseEntity.ok().body(userCommunityService.registerBoard(userCommunityRequestDto, provider));
     }
 }

@@ -136,16 +136,16 @@ const CPosting = () => {
                   content
               }).then((response) => {
                   console.log('response : ', response.data);
-                  console.log('response : ', response.data.data);
+                  console.log('response : ', response.data.body.data);
 
-                  if(response.data.code === 0) {
+                  if(response.data.body.code === 0) {
                       alert('게시물이 등록되었습니다.');
                       setIsOpen(!isOpen);
                       history.push("/");
                   }
               }).catch((err) => {
                   console.error('err : ', JSON.stringify(err));
-                  alert(err.response.data.msg);
+                  alert(err.response.body.data.msg);
               });
           } catch (err) {
               console.error(err);

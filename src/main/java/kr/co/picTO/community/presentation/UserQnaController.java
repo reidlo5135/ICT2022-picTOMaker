@@ -17,23 +17,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping(value = "/v1/api/qna")
 public class UserQnaController {
-    private static final String className = UserQnaController.class.toString();
+    private static final String ClassName = UserQnaController.class.toString();
     private final UserQnaService userQnaService;
     private final ResponseLoggingService loggingService;
 
     @ApiOperation(value = "문의 등록", notes = "Register QnA")
     @PostMapping(value = "/register/{provider}")
     public ResponseEntity<?> save(@ApiParam(value = "QnaReqDto", required = true) @RequestBody UserQnaRequestDto userQnaRequestDto, @PathVariable String provider) {
-        ResponseEntity<?> ett = null;
-        loggingService.httpPathStrLogging(className, "saveQnA", userQnaRequestDto.getEmail(), provider, "");
-        try {
-            ett = userQnaService.registerQnA(userQnaRequestDto, provider);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("User Qna Controller register Error Occurred : " + e.getMessage());
-        } finally {
-            log.info("User Qna Controller register ett : " + ett);
-            return ett;
-        }
+        loggingService.httpPathStrLogging(ClassName, "saveQnA", userQnaRequestDto.getEmail(), provider, "");
+        return ResponseEntity.ok().body(userQnaService.registerQnA(userQnaRequestDto, provider));
     }
 }
