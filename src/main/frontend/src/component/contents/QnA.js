@@ -62,18 +62,16 @@ export default function QnA() {
                 qna: qna
             }).then((response) => {
                 console.log('response : ', response.data);
-                console.log('response : ', response.data.data);
+                console.log('response : ', response.data.body.data);
 
-                if(response.data.code === 0) {
+                if(response.data.body.code === 0) {
                     alert('문의사항이 접수되었습니다.');
                     setIsOpen(!isOpen);
                     history.push("/");
-                } else {
-                    alert('An Error Occurred code : ' + response.data.code);
                 }
             }).catch((err) => {
                 console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.msg);
+                alert(err.response.body.data.msg);
             });;
         } catch (err) {
             console.error(err);

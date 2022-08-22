@@ -15,14 +15,14 @@ const Posts = ({ posts, loading }) => {
             axios.delete(`/v1/api/picTO/delete/${id}`)
                 .then((response) => {
                     console.log('Posts deletePicTo response data : ' + response.data);
-                    console.log('Posts deletePicTo response data.data : ' + response.data.data);
+                    console.log('Posts deletePicTo response data.data : ' + response.data.body.data);
 
-                    if(response.data.code === 0) {
+                    if(response.data.body.code === 0) {
                         alert('성공적으로 삭제되었습니다.');
                     }
                 }).catch((err) => {
                     console.error('err : ', JSON.stringify(err));
-                    alert(err.response.data.msg);
+                    alert(err.response.data.body.msg);
                 });
         } catch (e) {
             console.error(e);
