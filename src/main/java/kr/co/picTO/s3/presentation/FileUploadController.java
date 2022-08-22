@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -18,89 +17,38 @@ import java.util.Map;
 @RequestMapping(value = "/v1/api/picTO")
 public class FileUploadController {
 
-    private static final String className = FileUploadController.class.toString();
+    private static final String ClassName = FileUploadController.class.toString();
 
     private final FileUploadService fileUploadService;
     private final ResponseLoggingService loggingService;
 
     @PostMapping(value = "/register/{email}/{provider}")
     public ResponseEntity<?> uploadFile(@RequestBody Map<String, String> octet, @PathVariable String email, @PathVariable String provider) {
-        ResponseEntity<?> ett = null;
-        loggingService.httpPathStrLoggingWithRequest(className, "uploadFile", octet.get("image"), email, provider);
-        try {
-            MultipartFile multipartFile = fileUploadService.decodeAndConvertFile(octet.get("image"));
-            log.info("File Upload Controller uploadFile multipartFile : " + multipartFile);
-
-            ett = fileUploadService.uploadImage(multipartFile, email, provider);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("File Upload Controller uploadFile error occurred : " + e.getMessage());
-        } finally {
-            log.info("File Upload Controller uploadFile ett : " + ett);
-            return ett;
-        }
+        loggingService.httpPathStrLoggingWithRequest(ClassName, "uploadFile", octet.get("image"), email, provider);
+        return ResponseEntity.ok().body(fileUploadService.uploadImage(fileUploadService.decodeAndConvertFile(octet.get("image")), email, provider));
     }
 
     @PutMapping(value = "/update/{email}/{id}")
     public ResponseEntity<?> updatePicTo(@RequestBody Map<String, String> octet, @PathVariable String email, @PathVariable Long id) {
-        ResponseEntity<?> ett = null;
-        loggingService.httpPathStrLoggingWithRequest(className, "updatePicTo", octet.get("octet"), email, String.valueOf(id));
-        try {
-            MultipartFile multipartFile = fileUploadService.decodeAndConvertFile(octet.get("octet"));
-            log.info("File Upload Controller updatePicTo multipartFile : " + multipartFile);
-
-            ett = fileUploadService.updatePicToByEmailAndId(multipartFile, email, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("File Upload Controller updatePicTo error occurred : " + e.getMessage());
-        } finally {
-            log.info("File Upload Controller updatePicTo ett : " + ett);
-            return ett;
-        }
+        loggingService.httpPathStrLoggingWithRequest(ClassName, "updatePicTo", octet.get("octet"), email, String.valueOf(id));
+        return ResponseEntity.ok().body(fileUploadService.updatePicToByEmailAndId(fileUploadService.decodeAndConvertFile(octet.get("octet")), email, id));
     }
 
     @PostMapping(value = "/get/{email}/{provider}")
     public ResponseEntity<?> getPicTo(@PathVariable String email, @PathVariable String provider) {
-        ResponseEntity<?> ett = null;
-        loggingService.httpPathStrLogging(className, "getPicTo", email, provider, "");
-        try {
-            ett = fileUploadService.getPicToByEmail(email, provider);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("File Upload Controller getPicTo error occurred : " + e.getMessage());
-        } finally {
-            log.info("File Upload Controller getPicTo ett : " + ett);
-            return ett;
-        }
+        loggingService.httpPathStrLogging(ClassName, "getPicTo", email, provider, "");
+        return ResponseEntity.ok().body(fileUploadService.getPicToByEmail(email, provider));
     }
 
     @PostMapping(value = "/count/{email}/{provider}")
     public ResponseEntity<?> getPicToCount(@PathVariable String email, @PathVariable String provider) {
-        ResponseEntity<?> ett = null;
-        loggingService.httpPathStrLogging(className, "getPicToCount", email, provider, "");
-        try {
-            ett = fileUploadService.getPicToCountByEmailAndProvider(email, provider);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("File Upload Controller getPicToCount error occurred : " + e.getMessage());
-        } finally {
-            log.info("File Upload Controller getPicToCount ett : " + ett);
-            return ett;
-        }
+        loggingService.httpPathStrLogging(ClassName, "getPicToCount", email, provider, "");
+        return ResponseEntity.ok().body(fileUploadService.getPicToCountByEmailAndProvider(email, provider));
     }
 
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<?> deletePicTo(@PathVariable Long id) {
-        ResponseEntity<?> ett = null;
-        loggingService.httpPathStrLogging(className, "deletePicTo", String.valueOf(id), "", "");
-        try {
-            ett = fileUploadService.deletePicToById(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("File Upload Controller deletePicTo error occurred : " + e.getMessage());
-        } finally {
-            log.info("File Upload Controller deletePicTo ett : " + ett);
-            return ett;
-        }
+        loggingService.httpPathStrLogging(ClassName, "deletePicTo", String.valueOf(id), "", "");
+        return ResponseEntity.ok().body(fileUploadService.deletePicToById(id));
     }
 }
