@@ -14,7 +14,6 @@ import PoseWebStudio from "./studio/poseweb/PoseWebStudio";
 import EditTool from './studio/edittool/EditTool';
 import EditImageTool from "./studio/edittool/EditImageTool";
 import {AnimatePresence} from "framer-motion";
-import CPostview from './community/CPostView';
 import HandWebStudio from './studio/handweb/HandWebStudio';
 import CDetail from './community/CDetail';
 import CPosting from './community/CPosting';
