@@ -18,7 +18,23 @@ public class UserCommunityRequestDto {
     private String title;
     private String content;
 
-    public BaseUserCommunity toBluEntity(BaseLocalUser blu) {
+//    public BaseUserCommunity toBluEntity(BaseLocalUser blu) {
+//        return BaseUserCommunity.builder()
+//                .blu(blu)
+//                .title(title)
+//                .content(content)
+//                .build();
+//    }
+//
+//    public BaseUserCommunity toBauEntity(BaseAuthUser bau) {
+//        return BaseUserCommunity.builder()
+//                .bau(bau)
+//                .title(title)
+//                .content(content)
+//                .build();
+//    }
+
+    public BaseUserCommunity toEntity(BaseLocalUser blu) {
         return BaseUserCommunity.builder()
                 .blu(blu)
                 .title(title)
@@ -26,7 +42,7 @@ public class UserCommunityRequestDto {
                 .build();
     }
 
-    public BaseUserCommunity toBauEntity(BaseAuthUser bau) {
+    public BaseUserCommunity toEntity(BaseAuthUser bau) {
         return BaseUserCommunity.builder()
                 .bau(bau)
                 .title(title)

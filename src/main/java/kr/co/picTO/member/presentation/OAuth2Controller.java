@@ -16,8 +16,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping(value = "/v1/api/oauth2")
 public class OAuth2Controller {
-
-    private static final String ClassName = OAuth2Controller.class.toString();
+    private final String ClassName = this.getClass().getName();
     private final OAuth2ProviderService oAuth2ProviderService;
     private final ResponseLoggingService loggingService;
 

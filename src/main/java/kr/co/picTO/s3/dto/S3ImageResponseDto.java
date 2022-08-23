@@ -1,6 +1,7 @@
 package kr.co.picTO.s3.dto;
 
 import kr.co.picTO.s3.domain.BaseS3Image;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +9,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class S3ImageResponseDto {
 
     private Long id;

@@ -6,8 +6,8 @@ import kr.co.picTO.s3.domain.BaseS3Image;
 import lombok.*;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class S3ImageRequestDto {
     private String email;
     private String fileName;

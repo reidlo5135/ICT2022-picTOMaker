@@ -110,14 +110,14 @@ public class UserCommunityService {
                     throw new CustomUserNotFoundException();
                 } else {
                     blu = userJpaRepo.findByEmail(userCommunityRequestDto.getEmail()).orElse(null);
-                    result = communityRepo.save(userCommunityRequestDto.toBluEntity(blu)).getId();
+                    result = communityRepo.save(userCommunityRequestDto.toEntity(blu)).getId();
                 }
             } else {
                 if(!authUserRepo.findByEmail(userCommunityRequestDto.getEmail()).isPresent()) {
                     throw new CustomUserNotFoundException();
                 } else {
                     bau = authUserRepo.findByEmail(userCommunityRequestDto.getEmail()).orElse(null);
-                    result = communityRepo.save(userCommunityRequestDto.toBauEntity(bau)).getId();
+                    result = communityRepo.save(userCommunityRequestDto.toEntity(bau)).getId();
                 }
             }
             log.info("User Community SVC registerBoard result : " + result);
