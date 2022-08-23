@@ -3,7 +3,6 @@ package kr.co.picTO.member.application;
 import com.google.gson.Gson;
 import kr.co.picTO.common.exception.CustomCommunicationException;
 import kr.co.picTO.common.exception.CustomUserNotFoundException;
-import kr.co.picTO.common.configuration.OAuth2Factory;
 import kr.co.picTO.member.domain.oauth2.BaseAccessToken;
 import kr.co.picTO.member.domain.oauth2.BaseAuthRole;
 import kr.co.picTO.member.domain.oauth2.BaseAuthUser;

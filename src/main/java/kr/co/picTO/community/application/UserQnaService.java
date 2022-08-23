@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserQnaService {
-    private static final String className = UserQnaService.class.toString();
+    private final String ClassName = this.getClass().getName();
     private final BaseUserQnaRepo baseUserQnaRepo;
     private final BaseLocalUserRepo userJpaRepo;
     private final BaseAuthUserRepo authUserRepo;
@@ -46,25 +46,25 @@ public class UserQnaService {
                     throw new CustomUserNotFoundException();
                 } else {
                     blu = userJpaRepo.findByEmail(userQnaRequestDto.getEmail()).orElse(null);
-                    result = baseUserQnaRepo.save(userQnaRequestDto.toBluEntity(blu)).getId();
+                    result = baseUserQnaRepo.save(userQnaRequestDto.toEntity(blu)).getId();
                 }
             } else {
                 if(!authUserRepo.findByEmail(userQnaRequestDto.getEmail()).isPresent()) {
                     throw new CustomUserNotFoundException();
                 } else {
                     bau = authUserRepo.findByEmail(userQnaRequestDto.getEmail()).orElse(null);
-                    result = baseUserQnaRepo.save(userQnaRequestDto.toBauEntity(bau)).getId();
+                    result = baseUserQnaRepo.save(userQnaRequestDto.toEntity(bau)).getId();
                 }
             }
             log.info("User Community SVC registerBoard result : " + result);
 
             if(result == null || result == 0) {
                 CommonResult failResult = responseService.getFailResult(-1, "registerQnA Error Occurred");
-                loggingService.commonResultLogging(className, "registerQnA", failResult);
+                loggingService.commonResultLogging(ClassName, "registerQnA", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 SingleResult<Long> singleResult = responseService.getSingleResult(result);
-                loggingService.singleResultLogging(className, "registerQnA", singleResult);
+                loggingService.singleResultLogging(ClassName, "registerQnA", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
