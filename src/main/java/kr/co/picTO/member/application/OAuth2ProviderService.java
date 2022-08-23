@@ -3,7 +3,7 @@ package kr.co.picTO.member.application;
 import com.google.gson.Gson;
 import kr.co.picTO.common.exception.CustomCommunicationException;
 import kr.co.picTO.common.exception.CustomUserNotFoundException;
-import kr.co.picTO.common.configuration.OAuth2Component;
+import kr.co.picTO.common.configuration.OAuth2Factory;
 import kr.co.picTO.member.domain.oauth2.BaseAccessToken;
 import kr.co.picTO.member.domain.oauth2.BaseAuthRole;
 import kr.co.picTO.member.domain.oauth2.BaseAuthUser;
@@ -32,7 +32,7 @@ public class OAuth2ProviderService {
 
     private static final String className = OAuth2ProviderService.class.toString();
 
-    private final OAuth2Component oAuth2Component;
+    private final OAuth2Factory oAuth2Factory;
     private final RestTemplate restTemplate;
     private final Gson gson;
     private final BaseAuthUserRepo userRepo;
@@ -46,7 +46,7 @@ public class OAuth2ProviderService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        OAuth2RequestDto oAuth2RequestDto = oAuth2Component.getRequest(code, provider);
+        OAuth2RequestDto oAuth2RequestDto = oAuth2Factory.getRequest(code, provider);
         HttpEntity<LinkedMultiValueMap<String, String>> request = new HttpEntity<>(oAuth2RequestDto.getMap(), httpHeaders);
 
         ResponseEntity<String> response = restTemplate.postForEntity(oAuth2RequestDto.getUrl(), request, String.class);
@@ -124,7 +124,7 @@ public class OAuth2ProviderService {
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         httpHeaders.set("Authorization", "Bearer " + accessToken);
 
-        String profileUrl = oAuth2Component.getProfileUrl(provider);
+        String profileUrl = oAuth2Factory.getProfileUrl(provider);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(httpHeaders);
         ResponseEntity<String> response = restTemplate.postForEntity(profileUrl, request, String.class);
 
@@ -150,7 +150,7 @@ public class OAuth2ProviderService {
     }
 
     public UserProfileResponseDto getProfileForGoogle(String accessToken, String provider) {
-        String profileUrl = oAuth2Component.getProfileUrl(provider);
+        String profileUrl = oAuth2Factory.getProfileUrl(provider);
 
         ResponseEntity<String> response = null;
 
