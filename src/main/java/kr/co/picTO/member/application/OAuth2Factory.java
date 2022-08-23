@@ -1,4 +1,4 @@
-package kr.co.picTO.common.configuration;
+package kr.co.picTO.member.application;
 
 import kr.co.picTO.member.dto.social.OAuth2RequestDto;
 import lombok.Getter;
