@@ -18,7 +18,7 @@ public class UserQnaRequestDto {
     private String name;
     private String qna;
 
-    public BaseUserQna toBluEntity(BaseLocalUser blu) {
+    public BaseUserQna toEntity(BaseLocalUser blu) {
         return BaseUserQna.builder()
                 .blu(blu)
                 .name(name)
@@ -26,7 +26,7 @@ public class UserQnaRequestDto {
                 .build();
     }
 
-    public BaseUserQna toBauEntity(BaseAuthUser bau) {
+    public BaseUserQna toEntity(BaseAuthUser bau) {
         return BaseUserQna.builder()
                 .bau(bau)
                 .name(name)
