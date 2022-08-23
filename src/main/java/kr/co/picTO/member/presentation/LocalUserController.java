@@ -21,9 +21,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping(value = "/v1/api/user")
 public class LocalUserController {
-
-    private static final String ClassName = LocalUserController.class.toString();
-
+    private final String ClassName = this.getClass().getName();
     private final LocalUserService userService;
     private final ResponseLoggingService loggingService;
 

@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping(value = "/v1/api/admin")
 public class AdminController {
-
-    private static final String ClassName = AdminController.class.toString();
-
+    private final String ClassName = this.getClass().getName();
     private final AdminUserService adminUserService;
     private final ResponseLoggingService loggingService;
 

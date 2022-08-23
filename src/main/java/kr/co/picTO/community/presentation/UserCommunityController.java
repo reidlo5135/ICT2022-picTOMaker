@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping(value = "/v1/api/community")
 public class UserCommunityController {
-    private static final String ClassName = UserCommunityController.class.toString();
+    private final String ClassName = this.getClass().getName();
     private final UserCommunityService userCommunityService;
     private final ResponseLoggingService loggingService;
 

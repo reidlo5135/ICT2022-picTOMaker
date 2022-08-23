@@ -16,9 +16,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping(value = "/v1/api/picTO")
 public class FileUploadController {
-
-    private static final String ClassName = FileUploadController.class.toString();
-
+    private final String ClassName = this.getClass().getName();
     private final FileUploadService fileUploadService;
     private final ResponseLoggingService loggingService;
 
