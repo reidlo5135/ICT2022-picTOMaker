@@ -40,7 +40,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class FileUploadService {
-    private final String ClassName = this.getClass().getName();
     private final BaseS3ImageRepo imageRepo;
     private final BaseAuthUserRepo authUserRepo;
     private final BaseLocalUserRepo localUserRepo;
@@ -118,7 +117,7 @@ public class FileUploadService {
         try {
             if(file == null || file.isEmpty()) {
                 CommonResult failResult = responseService.getFailResult(-1, "uploadImage Error Occurred : File is Null");
-                loggingService.commonResultLogging(ClassName, "uploadImage", failResult);
+                loggingService.commonResultLogging(this.getClass(), "uploadImage", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 String fileName = createFileName(file.getOriginalFilename());
@@ -153,7 +152,7 @@ public class FileUploadService {
 
                     Long result = imageRepo.save(image).getId();
                     SingleResult<Long> singleResult = responseService.getSingleResult(result);
-                    loggingService.singleResultLogging(ClassName, "uploadImage", singleResult);
+                    loggingService.singleResultLogging(this.getClass(), "uploadImage", singleResult);
                     ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
                 } catch (IOException e) {
                     throw new IllegalArgumentException(String.format("File SVC uploadImage 파일 변환 중 에러가 발생했습니다 파일명 -> (%s) : ", file.getOriginalFilename()));
@@ -179,7 +178,7 @@ public class FileUploadService {
         try {
             if(email == null || provider == null) {
                 CommonResult failResult = responseService.getFailResult(-1, "getPicToByEmail Error Occurred");
-                loggingService.commonResultLogging(ClassName, "getPicToByEmail", failResult);
+                loggingService.commonResultLogging(this.getClass(), "getPicToByEmail", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 if(provider.equals("LOCAL")) {
@@ -192,7 +191,7 @@ public class FileUploadService {
                 List<BaseS3Image> imageList = imageRepo.findByEmailAndProvider(email, provider);
                 List<S3ImageResponseDto> result = imageList.stream().map(S3ImageResponseDto::new).collect(Collectors.toList());
                 ListResult<S3ImageResponseDto> listResult = responseService.getListResult(result);
-                loggingService.listResultLogging(ClassName, "getPicToByEmail", listResult);
+                loggingService.listResultLogging(this.getClass(), "getPicToByEmail", listResult);
                 ett = new ResponseEntity<>(listResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -215,14 +214,14 @@ public class FileUploadService {
         try {
             if(email == null || provider == null) {
                 CommonResult failResult = responseService.getFailResult(-1, "getPicToCountByEmailAndProvider Error Occurred");
-                loggingService.commonResultLogging(ClassName, "getPicToCountByEmailAndProvider", failResult);
+                loggingService.commonResultLogging(this.getClass(), "getPicToCountByEmailAndProvider", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 Long result = imageRepo.countByEmailAndProvider(email, provider);
                 log.info("File SVC getPicToCountByEmailAndProvider result : ", result);
 
                 SingleResult<Long> singleResult = responseService.getSingleResult(result);
-                loggingService.singleResultLogging(ClassName, "getPicToCountByEmailAndProvider", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "getPicToCountByEmailAndProvider", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -245,7 +244,7 @@ public class FileUploadService {
         try {
             if(file == null || file.isEmpty()) {
                 CommonResult failResult = responseService.getFailResult(-1, "updatePicToByEmailAndId Error Occurred");
-                loggingService.commonResultLogging(ClassName, "updatePicToByEmailAndId", failResult);
+                loggingService.commonResultLogging(this.getClass(), "updatePicToByEmailAndId", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 Integer result = null;
@@ -264,7 +263,7 @@ public class FileUploadService {
                     fileUrl = uploadService.getFileUrl(fileName);
                     result = imageRepo.updateByEmailAndId(fileUrl, email, id);
                     SingleResult<Integer> singleResult = responseService.getSingleResult(result);
-                    loggingService.singleResultLogging(ClassName, "updatePicToByEmailAndId", singleResult);
+                    loggingService.singleResultLogging(this.getClass(), "updatePicToByEmailAndId", singleResult);
                     ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
                 } catch (IOException e) {
                     throw new IllegalArgumentException(String.format("File SVC updatePicToByEmailAndId 파일 변환 중 에러가 발생했습니다 파일명 -> (%s) : ", file.getOriginalFilename()));
@@ -289,14 +288,14 @@ public class FileUploadService {
         try {
             if(id == null) {
                 CommonResult failResult = responseService.getFailResult(-1, "deletePicToById Error Occurred");
-                loggingService.commonResultLogging(ClassName, "deletePicToById", failResult);
+                loggingService.commonResultLogging(this.getClass(), "deletePicToById", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 Integer result = imageRepo.deleteByFileName(id);
                 log.info("File SVC deletePicToById result : ", result);
 
                 SingleResult<Integer> singleResult = responseService.getSingleResult(result);
-                loggingService.singleResultLogging(ClassName, "deletePicToById", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "deletePicToById", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {

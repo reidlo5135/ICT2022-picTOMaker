@@ -10,39 +10,39 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResponseLoggingService {
 
-    public void singleResultLogging(String className, String methodName, SingleResult result) {
-       try {
-           log.info("Response Logging SVC singleResult logging ClassName : " + className);
-           log.info("Response Logging SVC singleResult logging MethodName : " + methodName);
-           log.info(className + " " + methodName + " result getCode : " + result.getCode());
-           log.info(className + " " + methodName + " result getData : " + result.getData());
-           log.info(className + " " + methodName + " result getMSg : " + result.getMsg());
-       } catch (Exception e) {
-           e.printStackTrace();
-           log.error("Response Logging SVC singleResult logging error occurred : " + e.getMessage());
-       }
+    public void singleResultLogging(Class paramClass, String methodName, SingleResult result) {
+        try {
+            log.info("Response Logging SVC singleResult logging ClassName : " + paramClass.getName());
+            log.info("Response Logging SVC singleResult logging MethodName : " + methodName);
+            log.info(paramClass.getName() + " " + methodName + " result getCode : " + result.getCode());
+            log.info(paramClass.getName() + " " + methodName + " result getData : " + result.getData());
+            log.info(paramClass.getName() + " " + methodName + " result getMSg : " + result.getMsg());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Response Logging SVC singleResult logging error occurred : " + e.getMessage());
+        }
     }
 
-    public void listResultLogging(String className, String methodName, ListResult result) {
+    public void listResultLogging(Class paramClass, String methodName, ListResult result) {
         try {
-            log.info("Response Logging SVC listResult logging ClassName : " + className);
+            log.info("Response Logging SVC listResult logging ClassName : " + paramClass.getName());
             log.info("Response Logging SVC listResult logging MethodName : " + methodName);
-            log.info(className + " " + methodName + " result getCode : " + result.getCode());
-            log.info(className + " " + methodName + " result getList : " + result.getList());
-            log.info(className + " " + methodName + " result getMSg : " + result.getMsg());
+            log.info(paramClass.getName() + " " + methodName + " result getCode : " + result.getCode());
+            log.info(paramClass.getName() + " " + methodName + " result getList : " + result.getList());
+            log.info(paramClass.getName() + " " + methodName + " result getMSg : " + result.getMsg());
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Response Logging SVC listResult logging error occurred : " + e.getMessage());
         }
     }
 
-    public void commonResultLogging(String className, String methodName, CommonResult result) {
+    public void commonResultLogging(Class paramClass, String methodName, CommonResult result) {
         try {
-            log.error("Response Logging SVC commonResult logging ClassName : " + className);
+            log.error("Response Logging SVC commonResult logging ClassName : " + paramClass.getName());
             log.error("Response Logging SVC commonResult logging MethodName : " + methodName);
-            log.error(className + " " + methodName + " result getCode : " + result.getCode());
-            log.error(className + " " + methodName + " result isSuccess : " + result.isSuccess());
-            log.error(className + " " + methodName + " result getMSg : " + result.getMsg());
+            log.error(paramClass.getName() + " " + methodName + " result getCode : " + result.getCode());
+            log.error(paramClass.getName() + " " + methodName + " result isSuccess : " + result.isSuccess());
+            log.error(paramClass.getName() + " " + methodName + " result getMSg : " + result.getMsg());
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Response Logging SVC commonResult logging error occurred : " + e.getMessage());

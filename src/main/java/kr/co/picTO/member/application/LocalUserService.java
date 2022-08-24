@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class LocalUserService {
-    private final String ClassName = this.getClass().getName();
     private final BaseLocalUserRepo userJpaRepo;
     private final BaseTokenRepo tokenRepo;
     private final PasswordEncoder passwordEncoder;
@@ -49,17 +48,17 @@ public class LocalUserService {
             if(user == null) {
                 CommonResult failResult = responseService.getFailResult(-1, "가입하지 않은 아이디입니다.");
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-                loggingService.commonResultLogging(ClassName, "login", failResult);
+                loggingService.commonResultLogging(this.getClass(), "login", failResult);
             } else if(!passwordEncoder.matches(localUserLoginRequestDto.getPassword(), user.getPassword())) {
                 CommonResult failResult = responseService.getFailResult(-1, "비밀번호가 일치하지 않습니다.");
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-                loggingService.commonResultLogging(ClassName, "login", failResult);
+                loggingService.commonResultLogging(this.getClass(), "login", failResult);
             } else {
                 BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
                 log.info("Local User SVC login bAToken : " + baseAccessToken);
 
                 SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(baseAccessToken);
-                loggingService.singleResultLogging(ClassName, "login", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "login", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -85,14 +84,14 @@ public class LocalUserService {
         try {
             if (user != null) {
                 CommonResult failResult = responseService.getFailResult(-1, "이미 존재하는 회원입니다.");
-                loggingService.commonResultLogging(ClassName, "SignUp", failResult);
+                loggingService.commonResultLogging(this.getClass(), "SignUp", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 Long resultId = userJpaRepo.save(localUserSignUpRequestDto.toEntity(passwordEncoder)).getId();
                 log.info("Local User SVC SignUp resultId : " + resultId);
 
                 SingleResult<Long> singleResult = responseService.getSingleResult(resultId);
-                loggingService.singleResultLogging(ClassName, "SignUp", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "SignUp", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -123,11 +122,11 @@ public class LocalUserService {
                 log.info("Local User SVC Profile pDTO isNull : " + (userProfileResponseDto == null));
 
                 SingleResult<UserProfileResponseDto> singleResult = responseService.getSingleResult(userProfileResponseDto);
-                loggingService.singleResultLogging(ClassName, "getProfileLocal", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "getProfileLocal", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             } else {
                 CommonResult failResult = responseService.getFailResult(-1, "Get Profile Local Error Occurred");
-                loggingService.commonResultLogging(ClassName, "getProfileLocal", failResult);
+                loggingService.commonResultLogging(this.getClass(), "getProfileLocal", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (Exception e) {
@@ -166,11 +165,11 @@ public class LocalUserService {
                     log.info("Local User SVC reissue newRefreshToken " + newRefreshToken);
 
                     SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(newRefreshToken);
-                    loggingService.singleResultLogging(ClassName, "reissue", singleResult);
+                    loggingService.singleResultLogging(this.getClass(), "reissue", singleResult);
                     ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
                 } else {
                     CommonResult failResult = responseService.getFailResult(-1, "Reissue Error Occurred");
-                    loggingService.commonResultLogging(ClassName, "reissue", failResult);
+                    loggingService.commonResultLogging(this.getClass(), "reissue", failResult);
                     ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
@@ -197,11 +196,11 @@ public class LocalUserService {
                 log.info("Local User SVC findNickNameByEmail nickName : ", nickName);
 
                 SingleResult<String> singleResult = responseService.getSingleResult(nickName);
-                loggingService.singleResultLogging(ClassName, "findByNickNameByEmail", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "findByNickNameByEmail", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             } else {
                 CommonResult failResult = responseService.getFailResult(-1, "FindNickNameByEmail Error Occurred");
-                loggingService.commonResultLogging(ClassName, "findByNickNameByEmail", failResult);
+                loggingService.commonResultLogging(this.getClass(), "findByNickNameByEmail", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (Exception e) {
@@ -223,14 +222,14 @@ public class LocalUserService {
         try {
             if(access_token == null || access_token.equals("")) {
                 CommonResult failResult = responseService.getFailResult(-1, "Local DeleteToken Error Occurred");
-                loggingService.commonResultLogging(ClassName, "deleteToken", failResult);
+                loggingService.commonResultLogging(this.getClass(), "deleteToken", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 Integer id = tokenRepo.deleteByAccessToken(access_token);
                 log.info("Local User SVC deleteToken bat id : " + id);
 
                 SingleResult<Integer> singleResult = responseService.getSingleResult(id);
-                loggingService.singleResultLogging(ClassName, "deleteToken", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "deleteToken", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {

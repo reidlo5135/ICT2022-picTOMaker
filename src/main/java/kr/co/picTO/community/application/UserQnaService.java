@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserQnaService {
-    private final String ClassName = this.getClass().getName();
     private final BaseUserQnaRepo baseUserQnaRepo;
     private final BaseLocalUserRepo userJpaRepo;
     private final BaseAuthUserRepo authUserRepo;
@@ -60,11 +59,11 @@ public class UserQnaService {
 
             if(result == null || result == 0) {
                 CommonResult failResult = responseService.getFailResult(-1, "registerQnA Error Occurred");
-                loggingService.commonResultLogging(ClassName, "registerQnA", failResult);
+                loggingService.commonResultLogging(this.getClass(), "registerQnA", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 SingleResult<Long> singleResult = responseService.getSingleResult(result);
-                loggingService.singleResultLogging(ClassName, "registerQnA", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "registerQnA", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {

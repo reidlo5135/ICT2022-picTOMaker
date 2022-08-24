@@ -28,9 +28,6 @@ import java.util.Locale;
 @Service
 @RequiredArgsConstructor
 public class OAuth2ProviderService {
-
-    private static final String className = OAuth2ProviderService.class.toString();
-
     private final OAuth2Factory oAuth2Factory;
     private final RestTemplate restTemplate;
     private final Gson gson;
@@ -60,11 +57,11 @@ public class OAuth2ProviderService {
                 saveAccessToken(baseAccessToken);
 
                 SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(baseAccessToken);
-                loggingService.singleResultLogging(className, "generateAccessToken", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "generateAccessToken", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             } else {
                 CommonResult failResult = responseService.getFailResult(-1, provider + " 로그인 중 에러가 발생하였습니다.");
-                loggingService.commonResultLogging(className, "generateAccessToken", failResult);
+                loggingService.commonResultLogging(this.getClass(), "generateAccessToken", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (Exception e) {
@@ -98,14 +95,14 @@ public class OAuth2ProviderService {
         try {
             if(access_token == null || access_token.equals("")) {
                 CommonResult failResult = responseService.getFailResult(-1, "OAuth2 DeleteToken Error Occurred");
-                loggingService.commonResultLogging(className, "deleteToken", failResult);
+                loggingService.commonResultLogging(this.getClass(), "deleteToken", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 Integer id = tokenRepo.deleteByAccessToken(access_token);
                 log.info("OAuth2ProvSVC deleteToken bat id : " + id);
 
                 SingleResult<Integer> singleResult = responseService.getSingleResult(id);
-                loggingService.singleResultLogging(className, "deleteToken", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "deleteToken", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -131,12 +128,12 @@ public class OAuth2ProviderService {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             if (response.getStatusCode() != HttpStatus.OK) {
                 CommonResult failResult = responseService.getFailResult(-1, "OAuth2 getProfile Error Occurred");
-                loggingService.commonResultLogging(className, "getProfile", failResult);
+                loggingService.commonResultLogging(this.getClass(), "getProfile", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 UserProfileResponseDto userProfileResponseDto = extractProfile(response, accessToken, provider);
                 SingleResult<UserProfileResponseDto> singleResult = responseService.getSingleResult(userProfileResponseDto);
-                loggingService.singleResultLogging(className, "getProfile", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "getProfile", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {

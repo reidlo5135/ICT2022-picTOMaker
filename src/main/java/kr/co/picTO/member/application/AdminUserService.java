@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AdminUserService {
-    private final String ClassName = this.getClass().getName();
     private final BaseLocalUserRepo userJpaRepo;
     private final ResponseService responseService;
     private final ResponseLoggingService loggingService;
@@ -41,11 +40,11 @@ public class AdminUserService {
         try {
             if(user == null) {
                 CommonResult failResult = responseService.getFailResult(-1, "findById result is Null");
-                loggingService.commonResultLogging(ClassName, "findById", failResult);
+                loggingService.commonResultLogging(this.getClass(), "findById", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 SingleResult<LocalUserResponseDto> singleResult = responseService.getSingleResult(new LocalUserResponseDto(user));
-                loggingService.singleResultLogging(ClassName, "findById", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "findById", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -69,11 +68,11 @@ public class AdminUserService {
         try {
             if(user == null) {
                 CommonResult failResult = responseService.getFailResult(-1, "findByEmail result is Null");
-                loggingService.commonResultLogging(ClassName, "findByEmail", failResult);
+                loggingService.commonResultLogging(this.getClass(), "findByEmail", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 SingleResult<LocalUserResponseDto> singleResult = responseService.getSingleResult(new LocalUserResponseDto(user));
-                loggingService.singleResultLogging(ClassName, "findByEmail", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "findByEmail", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -96,11 +95,11 @@ public class AdminUserService {
         try {
             if(list.isEmpty()) {
                 CommonResult failResult = responseService.getFailResult(-1, "findAllUser result is Null");
-                loggingService.commonResultLogging(ClassName, "findAllUser", failResult);
+                loggingService.commonResultLogging(this.getClass(), "findAllUser", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 ListResult listResult = responseService.getListResult(list);
-                loggingService.listResultLogging(ClassName, "findAllUser", listResult);
+                loggingService.listResultLogging(this.getClass(), "findAllUser", listResult);
                 ett = new ResponseEntity<>(listResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -125,14 +124,14 @@ public class AdminUserService {
         try {
             if(user == null) {
                 CommonResult failResult = responseService.getFailResult(-1, "delete findById is Null");
-                loggingService.commonResultLogging(ClassName, "delete", failResult);
+                loggingService.commonResultLogging(this.getClass(), "delete", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 userJpaRepo.deleteById(id);
                 result++;
                 log.info("AdminUserSVC delete result : " + result);
                 SingleResult<Integer> singleResult = responseService.getSingleResult(result);
-                loggingService.singleResultLogging(ClassName, "delete", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "delete", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
