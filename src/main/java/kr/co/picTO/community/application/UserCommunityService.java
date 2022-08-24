@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserCommunityService {
-    private static final String className = UserCommunityService.class.toString();
     private final BaseUserCommunityRepo communityRepo;
     private final BaseLocalUserRepo userJpaRepo;
     private final BaseAuthUserRepo authUserRepo;
@@ -46,12 +45,12 @@ public class UserCommunityService {
 
             if(communityList.isEmpty()) {
                 CommonResult failResult = responseService.getFailResult(-1, "등록된 게시물이 존재하지 않습니다.");
-                loggingService.commonResultLogging(className, "findBoardAll", failResult);
+                loggingService.commonResultLogging(this.getClass(), "findBoardAll", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 List<UserCommunityResponseDto> result = communityList.stream().map(UserCommunityResponseDto::new).collect(Collectors.toList());
                 ListResult<UserCommunityResponseDto> listResult = responseService.getListResult(result);
-                loggingService.listResultLogging(className, "findBoardAll", listResult);
+                loggingService.listResultLogging(this.getClass(), "findBoardAll", listResult);
                 ett = new ResponseEntity<>(listResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -74,12 +73,12 @@ public class UserCommunityService {
 
             if(baseUserCommunity == null) {
                 CommonResult failResult = responseService.getFailResult(-1, "등록된 게시물이 존재하지 않습니다.");
-                loggingService.commonResultLogging(className, "findBoardAll", failResult);
+                loggingService.commonResultLogging(this.getClass(), "findBoardAll", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 UserCommunityResponseDto userCommunityResponseDto = new UserCommunityResponseDto(baseUserCommunity);
                 SingleResult<UserCommunityResponseDto> singleResult = responseService.getSingleResult(userCommunityResponseDto);
-                loggingService.singleResultLogging(className, "findBoardById", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "findBoardById", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -124,11 +123,11 @@ public class UserCommunityService {
 
             if(result == null || result == 0) {
                 CommonResult failResult = responseService.getFailResult(-1, "registerBoard Error Occurred");
-                loggingService.commonResultLogging(className, "registerBoard", failResult);
+                loggingService.commonResultLogging(this.getClass(), "registerBoard", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 SingleResult<Long> singleResult = responseService.getSingleResult(result);
-                loggingService.singleResultLogging(className, "registerBoard", singleResult);
+                loggingService.singleResultLogging(this.getClass(), "registerBoard", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             }
         } catch (Exception e) {
