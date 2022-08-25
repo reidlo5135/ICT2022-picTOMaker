@@ -5,7 +5,7 @@ import kr.co.picTO.member.domain.local.BaseLocalUser;
 import kr.co.picTO.common.domain.CommonResult;
 import kr.co.picTO.common.domain.ListResult;
 import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.member.domain.BaseLocalUserRepo;
+import kr.co.picTO.member.domain.local.BaseLocalUserRepo;
 import kr.co.picTO.common.application.ResponseLoggingService;
 import kr.co.picTO.common.application.ResponseService;
 import lombok.RequiredArgsConstructor;
