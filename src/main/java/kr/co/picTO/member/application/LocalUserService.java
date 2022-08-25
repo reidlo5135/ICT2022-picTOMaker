@@ -8,7 +8,7 @@ import kr.co.picTO.member.domain.local.BaseLocalUser;
 import kr.co.picTO.member.domain.oauth2.BaseAccessToken;
 import kr.co.picTO.common.domain.CommonResult;
 import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.member.domain.BaseLocalUserRepo;
+import kr.co.picTO.member.domain.local.BaseLocalUserRepo;
 import kr.co.picTO.member.domain.BaseTokenRepo;
 import kr.co.picTO.common.application.ResponseLoggingService;
 import kr.co.picTO.common.application.ResponseService;
