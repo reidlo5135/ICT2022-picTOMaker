@@ -1,4 +1,4 @@
-package kr.co.picTO.member.domain;
+package kr.co.picTO.member.domain.oauth2;
 
 import kr.co.picTO.member.domain.oauth2.BaseAuthUser;
 import org.springframework.data.jpa.repository.JpaRepository;
