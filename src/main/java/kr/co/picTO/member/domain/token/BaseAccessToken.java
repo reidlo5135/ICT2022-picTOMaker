@@ -1,17 +1,14 @@
 package kr.co.picTO.member.domain.token;
 
 import kr.co.picTO.common.domain.BaseTimeEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "base_access_token")
 public class BaseAccessToken extends BaseTimeEntity {
