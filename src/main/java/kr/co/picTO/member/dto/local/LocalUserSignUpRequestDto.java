@@ -1,7 +1,7 @@
 package kr.co.picTO.member.dto.local;
 
 import kr.co.picTO.member.domain.local.BaseLocalUser;
-import kr.co.picTO.member.domain.oauth2.BaseAuthRole;
+import kr.co.picTO.member.domain.social.BaseAuthRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
