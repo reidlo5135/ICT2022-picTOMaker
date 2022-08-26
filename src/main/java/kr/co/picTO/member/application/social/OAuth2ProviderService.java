@@ -7,6 +7,7 @@ import kr.co.picTO.member.domain.token.BaseAccessToken;
 import kr.co.picTO.member.domain.social.BaseAuthRole;
 import kr.co.picTO.member.domain.social.BaseAuthUser;
 import kr.co.picTO.member.domain.social.BaseAuthUserRepo;
+import kr.co.picTO.member.dto.local.SocialTokenRequestDto;
 import kr.co.picTO.member.dto.social.*;
 import kr.co.picTO.common.domain.CommonResult;
 import kr.co.picTO.common.domain.SingleResult;
@@ -51,15 +52,15 @@ public class OAuth2ProviderService {
         try {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             if (response.getStatusCode() == HttpStatus.OK) {
-                BaseAccessToken baseAccessToken = gson.fromJson(response.getBody(), BaseAccessToken.class);
-                log.info("OAuth2ProvSVC gAT gson GetBody : " + baseAccessToken);
-                saveAccessToken(baseAccessToken);
+                SocialTokenRequestDto tokenRequestDto = gson.fromJson(response.getBody(), SocialTokenRequestDto.class);
+                log.info("OAuth2ProvSVC gAT gson GetBody : " + tokenRequestDto.getAccess_token());
+                saveAccessToken(tokenRequestDto.toEntity(provider));
 
-                SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(baseAccessToken);
+                SingleResult<SocialTokenRequestDto> singleResult = responseService.getSingleResult(tokenRequestDto);
                 loggingService.singleResultLogging(this.getClass(), "generateAccessToken", singleResult);
                 ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
             } else {
-                CommonResult failResult = responseService.getFailResult(-1, provider + " 로그인 중 에러가 발생하였습니다.");
+                CommonResult failResult = responseService.getFailResult(-1, provider + "소셜 로그인 중 에러가 발생하였습니다.");
                 loggingService.commonResultLogging(this.getClass(), "generateAccessToken", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -72,11 +73,12 @@ public class OAuth2ProviderService {
         }
     }
 
+    @Transactional
     public void saveAccessToken(BaseAccessToken baseAccessToken) {
         log.info("OAuth2ProvSVC sAT bat : " + baseAccessToken);
         try {
             if(!tokenRepo.findByAccessToken(baseAccessToken.getAccess_token()).isPresent()) {
-                tokenRepo.save(baseAccessToken);
+                tokenRepo.save(baseAccessToken).getId();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,6 +115,7 @@ public class OAuth2ProviderService {
         }
     }
 
+    @Transactional
     public ResponseEntity<?> getProfile(String accessToken, String provider) {
         ResponseEntity<?> ett = null;
         HttpHeaders httpHeaders = new HttpHeaders();
