@@ -1,14 +1,14 @@
-package kr.co.picTO.member.domain.oauth2;
+package kr.co.picTO.member.domain.token;
 
 import kr.co.picTO.common.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
+@Getter
 @Entity
 @Builder
 @NoArgsConstructor
