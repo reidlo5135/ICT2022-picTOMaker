@@ -14,17 +14,17 @@ const CDetail = ({ history, diaryList, match}) => {
         await axios.get(`/v1/api/community/find/${match.params.id}`)
             .then((response) => {
                 console.log('response : ', response.data);
-                console.log('response : ', response.data.data);
+                console.log('response : ', response.data.body.data);
 
-                if(response.data.code === 0) {
-                    const res = response.data.data;
+                if(response.data.body.code === 0) {
+                    const res = response.data.body.data;
                     console.log('community detail res : ' + res);
                     setData(res);
                 }
             })
             .catch((err) => {
                 console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.msg);
+                alert(err.response.data.body.msg);
             });
     }
 
