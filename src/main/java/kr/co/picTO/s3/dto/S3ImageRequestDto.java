@@ -1,7 +1,7 @@
 package kr.co.picTO.s3.dto;
 
 import kr.co.picTO.member.domain.local.BaseLocalUser;
-import kr.co.picTO.member.domain.oauth2.BaseAuthUser;
+import kr.co.picTO.member.domain.social.BaseAuthUser;
 import kr.co.picTO.s3.domain.BaseS3Image;
 import lombok.*;
 
