@@ -3,13 +3,12 @@ package kr.co.picTO.community.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import kr.co.picTO.common.domain.BaseTimeEntity;
 import kr.co.picTO.member.domain.local.BaseLocalUser;
-import kr.co.picTO.member.domain.oauth2.BaseAuthUser;
+import kr.co.picTO.member.domain.social.BaseAuthUser;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
-@Setter
 @Entity
 @Builder
 @NoArgsConstructor
