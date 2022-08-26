@@ -1,4 +1,4 @@
-package kr.co.picTO.member.application;
+package kr.co.picTO.member.application.local;
 
 import kr.co.picTO.common.exception.CustomUserNotFoundException;
 import kr.co.picTO.member.domain.local.BaseLocalUserRepo;
