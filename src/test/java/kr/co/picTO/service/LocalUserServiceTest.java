@@ -1,9 +1,9 @@
 package kr.co.picTO.service;
 
-import kr.co.picTO.member.application.LocalUserJwtProvider;
+import kr.co.picTO.member.application.token.LocalUserJwtProvider;
 import kr.co.picTO.member.dto.local.LocalUserSignUpRequestDto;
 import kr.co.picTO.member.domain.local.BaseLocalUserRepo;
-import kr.co.picTO.member.application.LocalUserService;
+import kr.co.picTO.member.application.local.LocalUserService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
