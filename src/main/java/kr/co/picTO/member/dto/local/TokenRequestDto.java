@@ -12,11 +12,14 @@ import lombok.extern.log4j.Log4j2;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocalTokenDto {
+public class TokenRequestDto {
 
     private String accessToken;
     private String refreshToken;
 
+//    public BaseAccessToken toEntity(BaseAccessToken baseAccessToken) {
+//        return BaseAccessToken.builder()
+//    }
     public BaseAccessToken toEntity(String accessToken, String refreshToken) {
         return BaseAccessToken.builder()
                 .access_token(accessToken)
