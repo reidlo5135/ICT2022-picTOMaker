@@ -1,16 +1,16 @@
-package kr.co.picTO.member.application;
+package kr.co.picTO.member.application.social;
 
 import com.google.gson.Gson;
 import kr.co.picTO.common.exception.CustomCommunicationException;
 import kr.co.picTO.common.exception.CustomUserNotFoundException;
-import kr.co.picTO.member.domain.oauth2.BaseAccessToken;
-import kr.co.picTO.member.domain.oauth2.BaseAuthRole;
-import kr.co.picTO.member.domain.oauth2.BaseAuthUser;
-import kr.co.picTO.member.domain.oauth2.BaseAuthUserRepo;
+import kr.co.picTO.member.domain.token.BaseAccessToken;
+import kr.co.picTO.member.domain.social.BaseAuthRole;
+import kr.co.picTO.member.domain.social.BaseAuthUser;
+import kr.co.picTO.member.domain.social.BaseAuthUserRepo;
 import kr.co.picTO.member.dto.social.*;
 import kr.co.picTO.common.domain.CommonResult;
 import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.member.domain.BaseTokenRepo;
+import kr.co.picTO.member.domain.token.BaseTokenRepo;
 import kr.co.picTO.common.application.ResponseLoggingService;
 import kr.co.picTO.common.application.ResponseService;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +52,6 @@ public class OAuth2ProviderService {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             if (response.getStatusCode() == HttpStatus.OK) {
                 BaseAccessToken baseAccessToken = gson.fromJson(response.getBody(), BaseAccessToken.class);
-                baseAccessToken.setProvider(provider.toUpperCase(Locale.ROOT));
                 log.info("OAuth2ProvSVC gAT gson GetBody : " + baseAccessToken);
                 saveAccessToken(baseAccessToken);
 

@@ -4,7 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import kr.co.picTO.common.application.ResponseLoggingService;
-import kr.co.picTO.member.application.LocalUserService;
+import kr.co.picTO.member.application.local.LocalUserService;
 import kr.co.picTO.member.dto.local.LocalTokenDto;
 import kr.co.picTO.member.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.member.dto.local.LocalUserSignUpRequestDto;

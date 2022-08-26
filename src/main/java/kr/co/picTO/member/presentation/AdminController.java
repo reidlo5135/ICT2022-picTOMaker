@@ -1,7 +1,7 @@
 package kr.co.picTO.member.presentation;
 
 import io.swagger.annotations.*;
-import kr.co.picTO.member.application.AdminUserService;
+import kr.co.picTO.member.application.local.AdminUserService;
 import kr.co.picTO.common.application.ResponseLoggingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

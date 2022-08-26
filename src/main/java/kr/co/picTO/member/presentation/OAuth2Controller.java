@@ -2,7 +2,7 @@ package kr.co.picTO.member.presentation;
 
 import io.swagger.annotations.Api;
 import kr.co.picTO.common.application.ResponseLoggingService;
-import kr.co.picTO.member.application.OAuth2ProviderService;
+import kr.co.picTO.member.application.social.OAuth2ProviderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
