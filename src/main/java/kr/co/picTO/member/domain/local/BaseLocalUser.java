@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Getter
 @Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "base_local_user")
 public class BaseLocalUser extends BaseTimeEntity implements UserDetails {
 

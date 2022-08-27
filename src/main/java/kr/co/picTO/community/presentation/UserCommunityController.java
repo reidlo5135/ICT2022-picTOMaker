@@ -22,20 +22,20 @@ public class UserCommunityController {
     private final ResponseLoggingService loggingService;
 
     @ApiOperation(value = "전체 게시물 조회", notes = "Select Board All")
-    @GetMapping(value = "/find/all")
+    @GetMapping(value = "/find")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok().body(userCommunityService.findBoardAll());
     }
 
     @ApiOperation(value = "특정 게시물 조회", notes = "Select Board By Id")
-    @GetMapping(value = "/find/{id}")
+    @GetMapping(value = "/find/id/{id}")
     public ResponseEntity<?> findById(@ApiParam(value = "board_id", required = true) @PathVariable long id) {
         loggingService.httpPathStrLogging(ClassName, "selectById", String.valueOf(id), "", "");
         return ResponseEntity.ok().body(userCommunityService.findBoardById(id));
     }
 
     @ApiOperation(value = "게시물 등록", notes = "Register Board")
-    @PostMapping(value = "/register/{provider}")
+    @PostMapping(value = "/register/provider/{provider}")
     public ResponseEntity<?> save(@ApiParam(value = "CommunityReqDto", required = true) @RequestBody UserCommunityRequestDto userCommunityRequestDto, @PathVariable String provider) {
         loggingService.httpPathStrLogging(ClassName, "saveBoard", userCommunityRequestDto.getEmail(), provider, "");
         return ResponseEntity.ok().body(userCommunityService.registerBoard(userCommunityRequestDto, provider));

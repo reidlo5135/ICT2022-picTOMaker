@@ -3,18 +3,15 @@ package kr.co.picTO.community.domain;
 import kr.co.picTO.common.domain.BaseTimeEntity;
 import kr.co.picTO.member.domain.local.BaseLocalUser;
 import kr.co.picTO.member.domain.social.BaseAuthUser;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "base_user_qna")
 public class BaseUserQna extends BaseTimeEntity {
 

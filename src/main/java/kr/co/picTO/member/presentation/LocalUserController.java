@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import kr.co.picTO.common.application.ResponseLoggingService;
 import kr.co.picTO.member.application.local.LocalUserService;
-import kr.co.picTO.member.dto.local.LocalTokenDto;
+import kr.co.picTO.member.dto.local.TokenRequestDto;
 import kr.co.picTO.member.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.member.dto.local.LocalUserSignUpRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -45,8 +45,8 @@ public class LocalUserController {
 
     @ApiOperation(value = "Access, Refresh Token Reissue", notes = "Token Reissue")
     @PostMapping(value = "/reissue")
-    public ResponseEntity<?> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody LocalTokenDto tokenDto) {
-        return ResponseEntity.ok().body(userService.reissue(tokenDto.toEntity(tokenDto.getAccessToken(), tokenDto.getRefreshToken())));
+    public ResponseEntity<?> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody TokenRequestDto tokenRequestDto) {
+        return ResponseEntity.ok().body(userService.reissue(tokenRequestDto.toEntity(tokenRequestDto.getAccessToken(), tokenRequestDto.getRefreshToken())));
     }
 
     @PostMapping(value = "/nickname")
@@ -54,7 +54,7 @@ public class LocalUserController {
         return ResponseEntity.ok().body(userService.findNickNameByEmail(reqBody.get("email")));
     }
 
-    @DeleteMapping(value = "/token/invalid/{access_token}")
+    @DeleteMapping(value = "/token/{access_token}")
     public ResponseEntity<?> inValidToken(@PathVariable String access_token) {
         loggingService.httpPathStrLogging(ClassName, "inValidToken", access_token, "", "");
         return ResponseEntity.ok().body(userService.deleteToken(access_token));

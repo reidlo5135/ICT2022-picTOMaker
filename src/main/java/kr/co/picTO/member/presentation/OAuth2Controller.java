@@ -20,19 +20,19 @@ public class OAuth2Controller {
     private final OAuth2ProviderService oAuth2ProviderService;
     private final ResponseLoggingService loggingService;
 
-    @PostMapping(value = "/token/{provider}")
+    @PostMapping(value = "/register/provider/{provider}")
     public ResponseEntity<?> generateToken(@RequestBody Map<String, String> code, @PathVariable String provider) {
         loggingService.httpPathStrLoggingWithRequest(ClassName, "generateToken", code.get("code"), provider, "");
         return ResponseEntity.ok().body(oAuth2ProviderService.generateAccessToken(code.get("code"), provider));
     }
 
-    @PostMapping(value = "/profile/{provider}")
+    @PostMapping(value = "/profile/provider/{provider}")
     public ResponseEntity<?> getProfile(@RequestBody Map<String, String> access_token, @PathVariable String provider) {
         loggingService.httpPathStrLoggingWithRequest(ClassName, "getProfile", access_token.get("access_token"), provider, "");
         return ResponseEntity.ok().body(oAuth2ProviderService.getProfile(access_token.get("access_token"), provider));
     }
 
-    @DeleteMapping(value = "/token/invalid/{access_token}")
+    @DeleteMapping(value = "/token/{access_token}")
     public ResponseEntity<?> inValidToken(@PathVariable String access_token) {
         loggingService.httpPathStrLogging(ClassName, "inValidToken", access_token, "", "");
         return ResponseEntity.ok().body(oAuth2ProviderService.deleteToken(access_token));

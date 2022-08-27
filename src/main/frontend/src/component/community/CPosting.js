@@ -130,7 +130,7 @@ const CPosting = () => {
 
       const registerBoard = () => {
           try {
-              axios.post(`/v1/api/community/register/${provider}`, {
+              axios.post(`/v1/api/community/register/provider/${provider}`, {
                   email,
                   title,
                   content
