@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "base_access_token")
 public class BaseAccessToken extends BaseTimeEntity {
 

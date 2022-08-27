@@ -7,18 +7,14 @@ import javax.persistence.*;
 
 @Getter
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "base_auth_user")
 public class BaseAuthUser extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-//    @ManyToOne
-//    @JoinColumn(name = "bat_id", referencedColumnName = "id")
-//    private BaseAccessToken bat;
 
     @Column(nullable = false)
     private String name;
