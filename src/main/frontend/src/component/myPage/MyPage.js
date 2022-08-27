@@ -37,7 +37,7 @@ export default function MyPageContent(){
     function Logout() {
         try {
             if(provider === 'LOCAL') {
-                axios.delete(`/v1/api/user/token/invalid/${access_token}`)
+                axios.delete(`/v1/api/user/token/${access_token}`)
                     .then((response) => {
                         console.log('LOCAL LOGOUT res data : ', response.data);
                         console.log('LOCAL LOGOUT res data.data : ', response.data.body.data);
@@ -53,7 +53,7 @@ export default function MyPageContent(){
                         alert(err.response.data.body.msg);
                     });
             } else {
-                axios.delete(`/v1/api/oauth2/token/invalid/${access_token}`)
+                axios.delete(`/v1/api/oauth2/token/${access_token}`)
                     .then((response) => {
                         console.log('SOCIAL LOGOUT res data : ', response.data);
                         console.log('SOCIAL LOGOUT res data.data : ', response.data.body.data);

@@ -54,7 +54,7 @@ public class LocalUserController {
         return ResponseEntity.ok().body(userService.findNickNameByEmail(reqBody.get("email")));
     }
 
-    @DeleteMapping(value = "/token/invalid/{access_token}")
+    @DeleteMapping(value = "/token/{access_token}")
     public ResponseEntity<?> inValidToken(@PathVariable String access_token) {
         loggingService.httpPathStrLogging(ClassName, "inValidToken", access_token, "", "");
         return ResponseEntity.ok().body(userService.deleteToken(access_token));
