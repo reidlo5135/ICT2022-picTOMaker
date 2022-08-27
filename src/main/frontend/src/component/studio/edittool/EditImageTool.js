@@ -53,7 +53,7 @@ export default function EditImageTool() {
         const jsonProf = JSON.parse(profile);
         const email = jsonProf.email;
         try {
-            axios.put(`/v1/api/picTO/update/${email}/${post.id}`, {
+            axios.put(`/v1/api/picto/email/${email}/id/${post.id}`, {
                 octet: changedUrl
             }).then((response) => {
                 console.log('EditImageTool update response data : ', response.data);
