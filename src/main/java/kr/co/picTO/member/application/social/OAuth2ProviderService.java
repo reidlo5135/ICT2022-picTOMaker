@@ -77,8 +77,8 @@ public class OAuth2ProviderService {
     public void saveAccessToken(BaseAccessToken baseAccessToken) {
         log.info("OAuth2ProvSVC sAT bat : " + baseAccessToken);
         try {
-            if(!tokenRepo.findByAccessToken(baseAccessToken.getAccess_token()).isPresent()) {
-                tokenRepo.save(baseAccessToken).getId();
+            if(tokenRepo.findByAccessToken(baseAccessToken.getAccess_token()).isEmpty()) {
+                tokenRepo.save(baseAccessToken);
             }
         } catch (Exception e) {
             e.printStackTrace();
