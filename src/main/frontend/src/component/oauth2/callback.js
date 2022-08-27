@@ -28,7 +28,7 @@ export default function Callback(){
     console.log('provider : ', provider);
 
     try {
-        axios.post(`/v1/api/oauth2/token/${provider}`, {
+        axios.post(`/v1/api/oauth2/register/provider/${provider}`, {
             code
         }).then((response) => {
             console.log('res data : ', response.data);
