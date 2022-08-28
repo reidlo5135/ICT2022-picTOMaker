@@ -25,9 +25,6 @@ public class LocalUserJwtAuthenticationFilter extends GenericFilterBean {
         String token = localUserJwtProvider.resolveToken((HttpServletRequest) request);
         boolean isValid = localUserJwtProvider.validationToken(token);
 
-        log.info("Local Jwt Filter token : " + token);
-        log.info("Local Jwt Filter isValid : " + isValid);
-
         if(token != null && isValid) {
             log.info("Local Jwt Filter token : " + token);
             Authentication authentication = localUserJwtProvider.getAuthentication(token);

@@ -114,7 +114,6 @@ public class LocalUserJwtProvider {
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return !claimsJws.getBody().getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
-            log.error("Local Jwt Prov validToken err : " + e.toString());
             return false;
         }
     }
