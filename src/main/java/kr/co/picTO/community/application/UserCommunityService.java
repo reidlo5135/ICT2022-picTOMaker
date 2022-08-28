@@ -32,12 +32,9 @@ public class UserCommunityService {
     private final ResponseLoggingService loggingService;
 
     public ListResult<UserCommunityResponseDto> findBoardAll() {
-        List<BaseUserCommunity> communityList = communityRepo.findAll();
-        if(communityList.isEmpty()) {
-            throw new CustomCommunityNotExistException();
-        }
+        List<UserCommunityResponseDto> result = communityRepo.findAll().stream().map(UserCommunityResponseDto::new).collect(Collectors.toList());
+        if(result.isEmpty()) throw new CustomCommunityNotExistException();
 
-        List<UserCommunityResponseDto> result = communityList.stream().map(UserCommunityResponseDto::new).collect(Collectors.toList());
         ListResult<UserCommunityResponseDto> listResult = responseService.getListResult(result);
         loggingService.listResultLogging(this.getClass(), "findBoardAll", listResult);
 
