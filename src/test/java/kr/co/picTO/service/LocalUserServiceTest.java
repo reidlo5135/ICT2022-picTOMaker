@@ -1,6 +1,6 @@
 package kr.co.picTO.service;
 
-import kr.co.picTO.member.application.token.LocalUserJwtProvider;
+import kr.co.picTO.token.application.LocalUserJwtProvider;
 import kr.co.picTO.member.dto.local.LocalUserSignUpRequestDto;
 import kr.co.picTO.member.domain.local.BaseLocalUserRepo;
 import kr.co.picTO.member.application.local.LocalUserService;
