@@ -3,8 +3,9 @@ package kr.co.picTO.member.application.token;
 import io.jsonwebtoken.*;
 import kr.co.picTO.common.exception.CustomAuthenticationEntryPointException;
 import kr.co.picTO.member.application.local.CustomUserDetailsService;
-import kr.co.picTO.member.domain.token.BaseTokenRepo;
+import kr.co.picTO.member.domain.local.BaseLocalUser;
 import kr.co.picTO.member.domain.token.BaseAccessToken;
+import kr.co.picTO.member.domain.token.BaseTokenRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +39,7 @@ public class LocalUserJwtProvider {
         log.info("Local Jwt Prov : " + secretKey);
     }
 
-    public BaseAccessToken createToken(String userPk, Long userId, List<String> roles) {
+    public BaseAccessToken createToken(String userPk, BaseLocalUser blu, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(String.valueOf(userPk));
         claims.put(ROLES, roles);
 
@@ -65,7 +66,7 @@ public class LocalUserJwtProvider {
         log.info("Local Jwt Prov accessToken : " + accessToken);
 
         BaseAccessToken baseAccessToken = BaseAccessToken.builder()
-                .local_user_id(userId)
+                .blu(blu)
                 .access_token(accessToken)
                 .expires_in(expire_access.getTime())
                 .token_type("bearer")
