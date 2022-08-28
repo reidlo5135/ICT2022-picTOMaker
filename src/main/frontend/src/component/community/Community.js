@@ -19,10 +19,10 @@ function Community() {
       await axios.get('/v1/api/community/find')
           .then((response) => {
             console.log('response : ', response.data);
-            console.log('response : ', response.data.body.list);
+            console.log('response : ', response.data.list);
 
-            if(response.data.body.code === 0) {
-                const res = response.data.body.list;
+            if(response.data.code === 0) {
+                const res = response.data.list;
                 console.log('community res : ' + res);
                 const initData = res.slice(0, 20).map((it) => {
                     return {
@@ -41,7 +41,7 @@ function Community() {
           })
           .catch((err) => {
             console.error('err : ', JSON.stringify(err));
-            alert(err.response.body.data.msg);
+            alert(err.response.data.msg);
           });
     } catch (err) {
       console.error(err);
