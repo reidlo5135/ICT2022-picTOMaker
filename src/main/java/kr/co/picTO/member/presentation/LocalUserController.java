@@ -49,11 +49,6 @@ public class LocalUserController {
         return ResponseEntity.ok().body(userService.reissue(tokenRequestDto.toEntity(tokenRequestDto.getAccessToken(), tokenRequestDto.getRefreshToken())));
     }
 
-    @PostMapping(value = "/nickname")
-    public ResponseEntity<?> getNickNameByEmail(@RequestBody Map<String, String> reqBody) {
-        return ResponseEntity.ok().body(userService.findNickNameByEmail(reqBody.get("email")));
-    }
-
     @DeleteMapping(value = "/token/{access_token}")
     public ResponseEntity<?> inValidToken(@PathVariable String access_token) {
         loggingService.httpPathStrLogging(ClassName, "inValidToken", access_token, "", "");
