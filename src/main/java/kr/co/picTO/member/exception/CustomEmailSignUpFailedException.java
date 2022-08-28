@@ -1,4 +1,4 @@
-package kr.co.picTO.common.exception;
+package kr.co.picTO.member.exception;
 
 public class CustomEmailSignUpFailedException extends RuntimeException{
 
