@@ -1,4 +1,4 @@
-package kr.co.picTO.member.application.token;
+package kr.co.picTO.token.application;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

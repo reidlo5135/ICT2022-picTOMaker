@@ -1,4 +1,4 @@
-package kr.co.picTO.member.domain.token;
+package kr.co.picTO.token.domain;
 
 import kr.co.picTO.common.domain.BaseTimeEntity;
 import kr.co.picTO.member.domain.local.BaseLocalUser;
