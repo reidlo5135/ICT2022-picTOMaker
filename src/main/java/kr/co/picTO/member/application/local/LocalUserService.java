@@ -1,20 +1,23 @@
 package kr.co.picTO.member.application.local;
 
+import kr.co.picTO.common.application.ResponseLoggingService;
+import kr.co.picTO.common.application.ResponseService;
+import kr.co.picTO.common.domain.CommonResult;
+import kr.co.picTO.common.domain.SingleResult;
+import kr.co.picTO.common.exception.CustomEmailLoginFailedException;
 import kr.co.picTO.common.exception.CustomRefreshTokenException;
+import kr.co.picTO.common.exception.CustomUserNotFoundException;
 import kr.co.picTO.member.application.token.LocalUserJwtProvider;
+import kr.co.picTO.member.domain.local.BaseLocalUser;
+import kr.co.picTO.member.domain.local.BaseLocalUserRepo;
+import kr.co.picTO.member.domain.token.BaseAccessToken;
+import kr.co.picTO.member.domain.token.BaseTokenRepo;
 import kr.co.picTO.member.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.member.dto.local.LocalUserSignUpRequestDto;
 import kr.co.picTO.member.dto.social.UserProfileResponseDto;
-import kr.co.picTO.member.domain.local.BaseLocalUser;
-import kr.co.picTO.member.domain.token.BaseAccessToken;
-import kr.co.picTO.common.domain.CommonResult;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.member.domain.local.BaseLocalUserRepo;
-import kr.co.picTO.member.domain.token.BaseTokenRepo;
-import kr.co.picTO.common.application.ResponseLoggingService;
-import kr.co.picTO.common.application.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class LocalUserService {
-    private final BaseLocalUserRepo userJpaRepo;
+    private final BaseLocalUserRepo userRepository;
     private final BaseTokenRepo tokenRepo;
     private final PasswordEncoder passwordEncoder;
     private final LocalUserJwtProvider localUserJwtProvider;
@@ -36,40 +39,20 @@ public class LocalUserService {
     private final ResponseLoggingService loggingService;
 
     @Transactional
-    public ResponseEntity<?> login(LocalUserLoginRequestDto localUserLoginRequestDto) {
-        ResponseEntity<?> ett = null;
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
+    public SingleResult<BaseAccessToken> login(@NotNull LocalUserLoginRequestDto localUserLoginRequestDto) {
         log.info("Local User SVC Login localReqDto : " + localUserLoginRequestDto.getEmail() + ", " + localUserLoginRequestDto.getPassword());
 
-        try {
-            BaseLocalUser user = userJpaRepo.findByEmail(localUserLoginRequestDto.getEmail()).orElse(null);
-
-            if(user == null) {
-                CommonResult failResult = responseService.getFailResult(-1, "가입하지 않은 아이디입니다.");
-                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-                loggingService.commonResultLogging(this.getClass(), "login", failResult);
-            } else if(!passwordEncoder.matches(localUserLoginRequestDto.getPassword(), user.getPassword())) {
-                CommonResult failResult = responseService.getFailResult(-1, "비밀번호가 일치하지 않습니다.");
-                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-                loggingService.commonResultLogging(this.getClass(), "login", failResult);
-            } else {
-                BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
-                log.info("Local User SVC login bAToken : " + baseAccessToken);
-
-                SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(baseAccessToken);
-                loggingService.singleResultLogging(this.getClass(), "login", singleResult);
-                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("Local User SVC login Error Occurred : " + e.getMessage());
-        } finally {
-            log.info("Local User SVC login ett : " + ett);
-            return ett;
+        BaseLocalUser user = userRepository.findByEmail(localUserLoginRequestDto.toEntity().getEmail()).orElseThrow(CustomUserNotFoundException::new);
+        if(!passwordEncoder.matches(localUserLoginRequestDto.toEntity().getPassword(), user.getPassword())) {
+            throw new CustomEmailLoginFailedException();
         }
 
+        BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user.getId(), user.getRoles());
+
+        SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(baseAccessToken);
+        loggingService.singleResultLogging(this.getClass(), "login", singleResult);
+
+        return singleResult;
     }
 
     @Transactional
@@ -80,7 +63,7 @@ public class LocalUserService {
 
         log.info("Local User SVC Sign localReqDto : " + localUserSignUpRequestDto.getEmail() + ", " + localUserSignUpRequestDto.getPassword());
 
-        BaseLocalUser user = userJpaRepo.findByEmail(localUserSignUpRequestDto.getEmail()).orElse(null);
+        BaseLocalUser user = userRepository.findByEmail(localUserSignUpRequestDto.getEmail()).orElse(null);
         log.info("Local User SVC SignUp user : " + user);
         try {
             if (user != null) {
@@ -88,7 +71,7 @@ public class LocalUserService {
                 loggingService.commonResultLogging(this.getClass(), "SignUp", failResult);
                 ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
-                Long resultId = userJpaRepo.save(localUserSignUpRequestDto.toEntity(passwordEncoder)).getId();
+                Long resultId = userRepository.save(localUserSignUpRequestDto.toEntity(passwordEncoder)).getId();
                 log.info("Local User SVC SignUp resultId : " + resultId);
 
                 SingleResult<Long> singleResult = responseService.getSingleResult(resultId);
@@ -113,7 +96,7 @@ public class LocalUserService {
 
         try {
             BaseAccessToken bat = tokenRepo.findByAccessToken(access_token).orElse(null);
-            BaseLocalUser user = userJpaRepo.findById(bat.getLocal_user_id()).orElse(null);
+            BaseLocalUser user = userRepository.findById(bat.getLocal_user_id()).orElse(null);
 
             log.info("Local User SVC Profile bat isNull : " + (bat == null));
             log.info("Local User SVC Profile user isNull : " + (user == null));
@@ -155,7 +138,7 @@ public class LocalUserService {
 
                 log.info("Local User SVC reissue accToken, authen : " + accessToken + ", " + authentication);
 
-                BaseLocalUser user = userJpaRepo.findByEmail(authentication.getName()).orElse(null);
+                BaseLocalUser user = userRepository.findByEmail(authentication.getName()).orElse(null);
                 BaseAccessToken originToken = tokenRepo.findById(user.getId()).orElse(null);
 
                 if(user != null && originToken != null) {
@@ -190,7 +173,7 @@ public class LocalUserService {
         log.info("Local User SVC findNickNameByEmail email : " + email);
 
         try {
-            BaseLocalUser user = userJpaRepo.findByEmail(email).orElse(null);
+            BaseLocalUser user = userRepository.findByEmail(email).orElse(null);
 
             if(user != null) {
                 String nickName = user.getNickName();
