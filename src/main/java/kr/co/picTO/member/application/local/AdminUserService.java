@@ -1,19 +1,15 @@
 package kr.co.picTO.member.application.local;
 
-import kr.co.picTO.member.dto.local.LocalUserResponseDto;
-import kr.co.picTO.member.domain.local.BaseLocalUser;
-import kr.co.picTO.common.domain.CommonResult;
-import kr.co.picTO.common.domain.ListResult;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.member.domain.local.BaseLocalUserRepo;
 import kr.co.picTO.common.application.ResponseLoggingService;
 import kr.co.picTO.common.application.ResponseService;
+import kr.co.picTO.common.domain.ListResult;
+import kr.co.picTO.common.domain.SingleResult;
+import kr.co.picTO.member.domain.local.BaseLocalUser;
+import kr.co.picTO.member.domain.local.BaseLocalUserRepo;
+import kr.co.picTO.member.dto.local.LocalUserResponseDto;
+import kr.co.picTO.member.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,122 +20,49 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AdminUserService {
-    private final BaseLocalUserRepo userJpaRepo;
+    private final BaseLocalUserRepo userRepository;
     private final ResponseService responseService;
     private final ResponseLoggingService loggingService;
 
     @Transactional(readOnly = true)
-    public ResponseEntity<?> findById(Long id) {
-        ResponseEntity<?> ett = null;
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        log.info("AdminUserSVC findById id : " + id);
-
-        BaseLocalUser user = userJpaRepo.findById(id).orElse(null);
+    public SingleResult<LocalUserResponseDto> findById(Long id) {
+        BaseLocalUser user = userRepository.findById(id).orElseThrow(CustomUserNotFoundException::new);
         log.info("AdminUserSVC findById user : " + user);
-        try {
-            if(user == null) {
-                CommonResult failResult = responseService.getFailResult(-1, "findById result is Null");
-                loggingService.commonResultLogging(this.getClass(), "findById", failResult);
-                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                SingleResult<LocalUserResponseDto> singleResult = responseService.getSingleResult(new LocalUserResponseDto(user));
-                loggingService.singleResultLogging(this.getClass(), "findById", singleResult);
-                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("AdminUserSVC findById Error Occurred : " + e.getMessage());
-        } finally {
-            log.info("AdminUserSVC findById ett : " + ett);
-            return ett;
-        }
+        SingleResult<LocalUserResponseDto> singleResult = responseService.getSingleResult(new LocalUserResponseDto(user));
+        loggingService.singleResultLogging(this.getClass(), "findById", singleResult);
+
+        return singleResult;
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<?> findByEmail(String email) {
-        ResponseEntity<?> ett = null;
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        log.info("AdminUserSVC findByEmail email : " + email);
+    public SingleResult<LocalUserResponseDto> findByEmail(String email) {
+        BaseLocalUser user = userRepository.findByEmail(email).orElseThrow(CustomUserNotFoundException::new);
 
-        BaseLocalUser user = userJpaRepo.findByEmail(email).orElse(null);
-        log.info("AdminUserSVC findByEmail user : " + user);
-        try {
-            if(user == null) {
-                CommonResult failResult = responseService.getFailResult(-1, "findByEmail result is Null");
-                loggingService.commonResultLogging(this.getClass(), "findByEmail", failResult);
-                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                SingleResult<LocalUserResponseDto> singleResult = responseService.getSingleResult(new LocalUserResponseDto(user));
-                loggingService.singleResultLogging(this.getClass(), "findByEmail", singleResult);
-                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("AdminUserSVC findByEmail Error Occurred : " + e.getMessage());
-        } finally {
-            log.info("AdminUserSVC findByEmail ett : " + ett);
-            return ett;
-        }
+        SingleResult<LocalUserResponseDto> singleResult = responseService.getSingleResult(new LocalUserResponseDto(user));
+        loggingService.singleResultLogging(this.getClass(), "findByEmail", singleResult);
+
+        return singleResult;
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<?> findAllUser() {
-        ResponseEntity<?> ett = null;
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    public ListResult<LocalUserResponseDto> findAllUser() {
+        List<LocalUserResponseDto> list = userRepository.findAll().stream().map(LocalUserResponseDto::new).collect(Collectors.toList());
+        if(list.isEmpty()) throw new NullPointerException();
 
-        List<LocalUserResponseDto> list = userJpaRepo.findAll().stream().map(LocalUserResponseDto::new).collect(Collectors.toList());
-        log.info("AdminUserSVC findAllUser list : " + list);
-        try {
-            if(list.isEmpty()) {
-                CommonResult failResult = responseService.getFailResult(-1, "findAllUser result is Null");
-                loggingService.commonResultLogging(this.getClass(), "findAllUser", failResult);
-                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                ListResult listResult = responseService.getListResult(list);
-                loggingService.listResultLogging(this.getClass(), "findAllUser", listResult);
-                ett = new ResponseEntity<>(listResult, httpHeaders, HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("AdminUserSVC findAllUser Error Occurred : " + e.getMessage());
-        } finally {
-            log.info("AdminUserSVC findAllUser ett : " + ett);
-            return ett;
-        }
+        ListResult<LocalUserResponseDto> listResult = responseService.getListResult(list);
+        loggingService.listResultLogging(this.getClass(), "findAllUser", listResult);
+
+        return listResult;
     }
 
     @Transactional
-    public ResponseEntity<?> delete(Long id) {
-        ResponseEntity<?> ett = null;
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        log.info("AdminUserSVC delete id : " + id);
+    public SingleResult<Long> delete(Long id) {
+        userRepository.deleteById(id);
+        Long result = userRepository.findById(id).stream().count();
+        log.info("AdminUserSVC delete result : " + result);
+        SingleResult<Long> singleResult = responseService.getSingleResult(result);
+        loggingService.singleResultLogging(this.getClass(), "delete", singleResult);
 
-        Integer result = 0;
-        BaseLocalUser user = userJpaRepo.findById(id).orElse(null);
-        log.info("AdminUserSVC delete user : " + user);
-        try {
-            if(user == null) {
-                CommonResult failResult = responseService.getFailResult(-1, "delete findById is Null");
-                loggingService.commonResultLogging(this.getClass(), "delete", failResult);
-                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                userJpaRepo.deleteById(id);
-                result++;
-                log.info("AdminUserSVC delete result : " + result);
-                SingleResult<Integer> singleResult = responseService.getSingleResult(result);
-                loggingService.singleResultLogging(this.getClass(), "delete", singleResult);
-                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("AdminUserSVC delete Error Occurred : " + e.getMessage());
-        } finally {
-            log.info("AdminUserSVC delete ett : " + ett);
-            return ett;
-        }
+        return singleResult;
     }
 }
