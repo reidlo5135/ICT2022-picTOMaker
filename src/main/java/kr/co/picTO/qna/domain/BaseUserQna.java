@@ -1,4 +1,4 @@
-package kr.co.picTO.community.domain;
+package kr.co.picTO.qna.domain;
 
 import kr.co.picTO.common.domain.BaseTimeEntity;
 import kr.co.picTO.member.domain.local.BaseLocalUser;
