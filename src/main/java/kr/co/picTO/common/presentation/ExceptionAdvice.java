@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Log4j2
-@RequiredArgsConstructor
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class ExceptionAdvice {
 
     private final ResponseService responseService;
@@ -32,7 +32,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult defaultException(HttpServletRequest request, Exception e) {
-        log.info(String.valueOf(e));
+        e.printStackTrace();
         return responseService.getFailResult
                 (Integer.parseInt(getMessage("unKnown.code")), getMessage("unKnown.msg"));
     }
@@ -44,6 +44,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(CustomUserNotFoundException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult userNotFoundException(HttpServletRequest request, CustomUserNotFoundException e) {
+        e.printStackTrace();
         return responseService.getFailResult(Integer.parseInt(getMessage("userNotFound.code")), getMessage("userNotFound.msg"));
     }
 
@@ -54,6 +55,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(CustomEmailLoginFailedException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult emailLoginFailedException(HttpServletRequest request, CustomEmailLoginFailedException e) {
+        e.printStackTrace();
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("emailLoginFailed.code")), getMessage("emailLoginFailed.msg"));
     }
@@ -65,6 +67,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(CustomEmailSignUpFailedException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult emailSignUpFailedCException(HttpServletRequest request, CustomEmailSignUpFailedException e) {
+        e.printStackTrace();
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("emailSignUpFailed.code")), getMessage("emailSignUpFailed.msg"));
     }
@@ -76,6 +79,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(CustomAuthenticationEntryPointException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult authenticationEntrypointException(HttpServletRequest request, CustomAuthenticationEntryPointException e) {
+        e.printStackTrace();
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("authenticationEntrypoint.code")), getMessage("authenticationEntrypoint.msg"));
     }
@@ -87,6 +91,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult accessDeniedException(HttpServletRequest request, AccessDeniedException e) {
+        e.printStackTrace();
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("accessDenied.code")), getMessage("accessDenied.msg"));
     }
@@ -98,6 +103,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(CustomCommunicationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected CommonResult communicationException(HttpServletRequest request, CustomCommunicationException e) {
+        e.printStackTrace();
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("communicationException.code")), getMessage("communicationException.msg")
         );
@@ -110,6 +116,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(CustomUserExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     protected CommonResult existUserException(HttpServletRequest request, CustomUserExistException e) {
+        e.printStackTrace();
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("userExistException.code")), getMessage("userExistException.msg")
         );
@@ -122,6 +129,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(CustomSocialAgreementException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected CommonResult socialAgreementException(HttpServletRequest request, CustomSocialAgreementException e) {
+        e.printStackTrace();
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("agreementException.code")), getMessage("agreementException.msg")
         );
