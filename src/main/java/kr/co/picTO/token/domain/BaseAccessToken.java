@@ -1,6 +1,8 @@
-package kr.co.picTO.member.domain.token;
+package kr.co.picTO.token.domain;
 
 import kr.co.picTO.common.domain.BaseTimeEntity;
+import kr.co.picTO.member.domain.local.BaseLocalUser;
+import kr.co.picTO.member.domain.social.BaseAuthUser;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,8 +19,13 @@ public class BaseAccessToken extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Long local_user_id;
+    @ManyToOne(targetEntity = BaseLocalUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "blu_id")
+    private BaseLocalUser blu;
+
+    @ManyToOne(targetEntity = BaseAuthUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "bau_id")
+    private BaseAuthUser bau;
 
     @Column(nullable = false)
     private String access_token;

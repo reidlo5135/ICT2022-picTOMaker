@@ -41,3 +41,7 @@ userExistException:
 agreementException:
   code: "-1009"
   msg: "필수동의 항목에 대해 동의가 필요합니다."
+
+communityNotExistException:
+  code: "-1010"
+  msg: "등록된 게시물이 존재하지 않습니다."

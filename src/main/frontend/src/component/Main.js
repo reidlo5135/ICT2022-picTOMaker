@@ -72,18 +72,8 @@ export default function Main(){
                         localStorage.setItem("access_token", access_token);
                         localStorage.setItem("refresh_token", refresh_token);
                         localStorage.setItem("provider", "LOCAL");
-
-                        axios.post('/v1/api/user/nickname', {
-                            email
-                        }).then((response) => {
-                            console.log('NICKNAME res data : ', response.data);
-                            console.log('NICKNAME res data.data : ', response.data.body.data);
-                            if(response.data.body.code === 0) {
-                                const nickName = response.data.body.data;
-                                closeModal();
-                                history.push("/");
-                            }
-                        });
+                        closeModal();
+                        history.push('/');
                     }
                 }).catch((err) => {
                     console.error('err : ', JSON.stringify(err));

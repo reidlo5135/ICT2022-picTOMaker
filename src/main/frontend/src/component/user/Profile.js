@@ -49,13 +49,9 @@ const Profile = () => {
             await axios.post('/v1/api/user/profile', {
                 access_token
             }).then((response) => {
-                console.log('Local profile res data.data : ', response.data.body.data);
-                console.log('Local get profile email : ', response.data.body.data.email);
-                console.log('Local get profile name : ', response.data.body.data.name);
-                console.log('Local get profile nickname : ', response.data.body.data.nickname);
-                console.log('Local get profile profile_image_url : ', response.data.body.data.profile_image_url);
+                console.log('Local profile res data.data : ', response.data.data);
 
-                profile = JSON.parse(JSON.stringify(response.data.body.data));
+                profile = JSON.parse(JSON.stringify(response.data.data));
                 setEmail(profile.email);
                 setNickName(profile.nickname);
 
@@ -67,10 +63,10 @@ const Profile = () => {
                     setProfileImage(profile.profile_image_url);
                 }
 
-                localStorage.setItem("profile", JSON.stringify(response.data.body.data));
+                localStorage.setItem("profile", JSON.stringify(response.data.data));
             }).catch((err) => {
                 console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.body.msg);
+                alert(err.response.data.msg);
             });
         } catch (err) {
             console.error(err);

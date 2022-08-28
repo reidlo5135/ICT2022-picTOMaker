@@ -1,4 +1,4 @@
-package kr.co.picTO.member.application.token;
+package kr.co.picTO.token.application;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,9 +24,6 @@ public class LocalUserJwtAuthenticationFilter extends GenericFilterBean {
 
         String token = localUserJwtProvider.resolveToken((HttpServletRequest) request);
         boolean isValid = localUserJwtProvider.validationToken(token);
-
-        log.info("Local Jwt Filter token : " + token);
-        log.info("Local Jwt Filter isValid : " + isValid);
 
         if(token != null && isValid) {
             log.info("Local Jwt Filter token : " + token);

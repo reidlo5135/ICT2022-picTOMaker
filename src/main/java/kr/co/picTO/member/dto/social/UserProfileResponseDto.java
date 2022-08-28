@@ -1,9 +1,11 @@
 package kr.co.picTO.member.dto.social;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
+@Builder
 @NoArgsConstructor
 public class UserProfileResponseDto {
     private String email;

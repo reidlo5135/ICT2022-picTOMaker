@@ -1,4 +1,4 @@
-package kr.co.picTO.community.domain;
+package kr.co.picTO.qna.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

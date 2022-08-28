@@ -6,7 +6,7 @@ import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.common.domain.CommonResult;
 import kr.co.picTO.common.domain.ListResult;
 import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.common.exception.CustomUserNotFoundException;
+import kr.co.picTO.member.exception.CustomUserNotFoundException;
 import kr.co.picTO.member.domain.social.BaseAuthUserRepo;
 import kr.co.picTO.member.domain.local.BaseLocalUserRepo;
 import kr.co.picTO.member.domain.local.BaseLocalUser;

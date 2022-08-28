@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import kr.co.picTO.common.application.ResponseLoggingService;
 import kr.co.picTO.member.application.local.LocalUserService;
-import kr.co.picTO.member.dto.local.TokenRequestDto;
+import kr.co.picTO.token.dto.TokenRequestDto;
 import kr.co.picTO.member.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.member.dto.local.LocalUserSignUpRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -47,11 +47,6 @@ public class LocalUserController {
     @PostMapping(value = "/reissue")
     public ResponseEntity<?> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody TokenRequestDto tokenRequestDto) {
         return ResponseEntity.ok().body(userService.reissue(tokenRequestDto.toEntity(tokenRequestDto.getAccessToken(), tokenRequestDto.getRefreshToken())));
-    }
-
-    @PostMapping(value = "/nickname")
-    public ResponseEntity<?> getNickNameByEmail(@RequestBody Map<String, String> reqBody) {
-        return ResponseEntity.ok().body(userService.findNickNameByEmail(reqBody.get("email")));
     }
 
     @DeleteMapping(value = "/token/{access_token}")

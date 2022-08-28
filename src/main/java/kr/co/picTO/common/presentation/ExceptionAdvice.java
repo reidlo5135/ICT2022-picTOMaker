@@ -3,6 +3,11 @@ package kr.co.picTO.common.presentation;
 import kr.co.picTO.common.exception.*;
 import kr.co.picTO.common.domain.CommonResult;
 import kr.co.picTO.common.application.ResponseService;
+import kr.co.picTO.community.exception.CustomCommunityNotExistException;
+import kr.co.picTO.member.exception.CustomEmailLoginFailedException;
+import kr.co.picTO.member.exception.CustomEmailSignUpFailedException;
+import kr.co.picTO.member.exception.CustomUserExistException;
+import kr.co.picTO.member.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -133,6 +138,18 @@ public class ExceptionAdvice {
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("agreementException.code")), getMessage("agreementException.msg")
         );
+    }
+
+    /***
+     *
+     * -1010
+     * 커뮤티니 등록된 게시물이 존재하지 않을 시 에러
+     */
+    @ExceptionHandler(CustomCommunityNotExistException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult communityNotExsitException(HttpServletRequest request, CustomCommunityNotExistException e) {
+        e.printStackTrace();
+        return responseService.getFailResult(Integer.parseInt("communityNotExistException.code"), getMessage("communityNotExistException.msg"));
     }
 
     private String getMessage(String code) {
