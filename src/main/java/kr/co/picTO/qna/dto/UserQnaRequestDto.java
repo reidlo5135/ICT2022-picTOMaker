@@ -1,7 +1,7 @@
 package kr.co.picTO.qna.dto;
 
-import kr.co.picTO.member.domain.local.BaseLocalUser;
-import kr.co.picTO.member.domain.social.BaseAuthUser;
+import kr.co.picTO.user.domain.local.BaseLocalUser;
+import kr.co.picTO.user.domain.social.BaseAuthUser;
 import kr.co.picTO.qna.domain.BaseUserQna;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

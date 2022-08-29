@@ -2,8 +2,8 @@ package kr.co.picTO.token.application;
 
 import io.jsonwebtoken.*;
 import kr.co.picTO.common.exception.CustomAuthenticationEntryPointException;
-import kr.co.picTO.member.application.local.CustomUserDetailsService;
-import kr.co.picTO.member.domain.local.BaseLocalUser;
+import kr.co.picTO.user.application.local.CustomUserDetailsService;
+import kr.co.picTO.user.domain.local.BaseLocalUser;
 import kr.co.picTO.token.domain.BaseAccessToken;
 import kr.co.picTO.token.domain.BaseTokenRepo;
 import lombok.RequiredArgsConstructor;

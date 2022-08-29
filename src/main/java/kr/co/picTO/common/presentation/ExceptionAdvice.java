@@ -4,10 +4,10 @@ import kr.co.picTO.common.exception.*;
 import kr.co.picTO.common.domain.CommonResult;
 import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.community.exception.CustomCommunityNotExistException;
-import kr.co.picTO.member.exception.CustomEmailLoginFailedException;
-import kr.co.picTO.member.exception.CustomEmailSignUpFailedException;
-import kr.co.picTO.member.exception.CustomUserExistException;
-import kr.co.picTO.member.exception.CustomUserNotFoundException;
+import kr.co.picTO.user.exception.CustomEmailLoginFailedException;
+import kr.co.picTO.user.exception.CustomEmailSignUpFailedException;
+import kr.co.picTO.user.exception.CustomUserExistException;
+import kr.co.picTO.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 

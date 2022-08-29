@@ -1,8 +1,8 @@
 package kr.co.picTO.repo;
 
-import kr.co.picTO.member.domain.social.BaseAuthRole;
-import kr.co.picTO.member.domain.social.BaseAuthUser;
-import kr.co.picTO.member.domain.social.BaseAuthUserRepo;
+import kr.co.picTO.user.domain.social.BaseAuthRole;
+import kr.co.picTO.user.domain.social.BaseAuthUser;
+import kr.co.picTO.user.domain.social.BaseAuthUserRepo;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
