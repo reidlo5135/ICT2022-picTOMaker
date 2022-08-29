@@ -27,21 +27,21 @@ public class LocalUserJwtProvider {
 
     @Value("${spring.jwt.secret}")
     private String secretKey;
-    private String ROLES = "roles";
-    private Long accessTokenValidMillisecond = 60 * 60 * 1000L;
-    private Long refreshTokenValidMillisecond = 14 * 24 * 60 * 60 * 1000L;
+    private final String ROLES = "roles";
     private final BaseTokenRepo tokenRepo;
     private final CustomUserDetailsService userDetailsService;
 
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-        log.info("Local Jwt Prov : " + secretKey);
     }
 
     public BaseAccessToken createToken(String userPk, BaseLocalUser blu, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(String.valueOf(userPk));
         claims.put(ROLES, roles);
+
+        long accessTokenValidMillisecond = 60 * 60 * 1000L;
+        long refreshTokenValidMillisecond = 14 * 24 * 60 * 60 * 1000L;
 
         Date now = new Date();
         Date expire_access = new Date(now.getTime() + accessTokenValidMillisecond);
@@ -88,7 +88,6 @@ public class LocalUserJwtProvider {
             throw new CustomAuthenticationEntryPointException();
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
-        log.info("Local Jwt Prov userDetails : " + userDetails);
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
