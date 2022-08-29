@@ -4,10 +4,8 @@ import kr.co.picTO.common.exception.*;
 import kr.co.picTO.common.domain.CommonResult;
 import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.community.exception.CustomCommunityNotExistException;
-import kr.co.picTO.member.exception.CustomEmailLoginFailedException;
-import kr.co.picTO.member.exception.CustomEmailSignUpFailedException;
-import kr.co.picTO.member.exception.CustomUserExistException;
-import kr.co.picTO.member.exception.CustomUserNotFoundException;
+import kr.co.picTO.file.exception.CustomFileNotFoundException;
+import kr.co.picTO.user.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -150,6 +148,30 @@ public class ExceptionAdvice {
     protected CommonResult communityNotExsitException(HttpServletRequest request, CustomCommunityNotExistException e) {
         e.printStackTrace();
         return responseService.getFailResult(Integer.parseInt("communityNotExistException.code"), getMessage("communityNotExistException.msg"));
+    }
+
+    /***
+     *
+     * -1011
+     * 동일 액세스 토큰이 이미 존재할 시 에러
+     */
+    @ExceptionHandler(CustomAccessTokenExistException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult existAccessTokenException(HttpServletRequest request, CustomAccessTokenExistException e) {
+        e.printStackTrace();
+        return responseService.getFailResult(Integer.parseInt("existAccessToken.code"), getMessage("existAcessToken.msg"));
+    }
+
+    /***
+     *
+     * -1012
+     * 파일이 존재하지 않을 시 에러
+     */
+    @ExceptionHandler(CustomFileNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult fileNotFoundException(HttpServletRequest request, CustomFileNotFoundException e) {
+        e.printStackTrace();
+        return responseService.getFailResult(Integer.parseInt("fileNotFoundException.code"), getMessage("fileNotFoundException.msg"));
     }
 
     private String getMessage(String code) {

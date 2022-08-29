@@ -32,11 +32,11 @@ export default function Callback(){
             code
         }).then((response) => {
             console.log('res data : ', response.data);
-            console.log('res data.data : ', response.data.body.data);
+            console.log('res data.data : ', response.data.data);
 
-            if(response.data.body.code === 0) {
-                const access_token = response.data.body.data.access_token;
-                const refresh_token = response.data.body.data.refresh_token;
+            if(response.data.code === 0) {
+                const access_token = response.data.data.access_token;
+                const refresh_token = response.data.data.refresh_token;
 
                 setIsLogged(true);
                 localStorage.setItem("access_token", access_token);
@@ -47,7 +47,7 @@ export default function Callback(){
             }
         }).catch((err) => {
             console.error('err : ', JSON.stringify(err));
-            alert(err.response.data.body.msg);
+            alert(err.response.data.msg);
         });
     } catch (err) {
         alert(err);

@@ -57,9 +57,9 @@ export default function EditImageTool() {
                 octet: changedUrl
             }).then((response) => {
                 console.log('EditImageTool update response data : ', response.data);
-                console.log('EditImageTool update response data.data : ', response.data.body.data);
+                console.log('EditImageTool update response data.data : ', response.data.data);
 
-                if(response.data.body.code === 0) {
+                if(response.data.code === 0) {
                     alert('성공적으로 저장되었습니다!');
                     history.push("/");
                 }

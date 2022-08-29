@@ -45,3 +45,11 @@ agreementException:
 communityNotExistException:
   code: "-1010"
   msg: "등록된 게시물이 존재하지 않습니다."
+
+existedAccessToken:
+  code: "-1011"
+  msg: "액세스 토큰이 이미 존재합니다."
+
+fileNotFoundException:
+  code: "-1012"
+  msg: "파일이 존재하지 않습니다."

@@ -23,13 +23,14 @@ export default function MyPageProfile(){
             axios.get(`/v1/api/picto/count/email/${email}/provider/${provider}`)
                 .then((response) => {
                     console.log('MyPage-profile getPicToCount : ', response.data);
-                    if(response.data.body.code === 0) {
-                        console.log('MyPage-profile getPicToCount count : ', response.data.body.data);
-                        setCount(response.data.body.data);
+
+                    if(response.data.code === 0) {
+                        console.log('MyPage-profile getPicToCount count : ', response.data.data);
+                        setCount(response.data.data);
                     }
                 }).catch((err) => {
                     console.error('err : ', JSON.stringify(err));
-                    alert(err.response.data.body.msg);
+                    alert(err.response.data.msg);
                 });
 
             setName(jsonProf.name);
@@ -60,7 +61,7 @@ export default function MyPageProfile(){
                 </div>
                 <div className='MenuBox'>
                     <div className='Name'>
-                        닉네임
+                        {nickName === null ? '' : '닉네임'}
                     </div>
                     <div className='MenuBox-props'>
                         <b>{nickName}</b>

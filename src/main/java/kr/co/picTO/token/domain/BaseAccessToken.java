@@ -1,8 +1,8 @@
 package kr.co.picTO.token.domain;
 
 import kr.co.picTO.common.domain.BaseTimeEntity;
-import kr.co.picTO.member.domain.local.BaseLocalUser;
-import kr.co.picTO.member.domain.social.BaseAuthUser;
+import kr.co.picTO.user.domain.local.BaseLocalUser;
+import kr.co.picTO.user.domain.social.BaseAuthUser;
 import lombok.*;
 
 import javax.persistence.*;

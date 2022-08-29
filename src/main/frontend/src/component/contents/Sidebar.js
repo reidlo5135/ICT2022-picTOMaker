@@ -15,17 +15,16 @@ export default function Sidebar(){
             axios.delete(`/v1/api/oauth2/token/${access_token}`)
                 .then((response) => {
                     console.log('res data : ', response.data);
-                    console.log('res data.data : ', response.data.body.data);
+                    console.log('res data.data : ', response.data.data);
 
-                    if(response.data.body.code === 0) {
+                    if(response.data.code === 0) {
                         console.clear();
                         localStorage.clear();
-                        alert('성공적으로 로그아웃 되었습니다!!');
                         history.push("/");
                     }
             }).catch((err) => {
                 console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.body.msg);
+                alert(err.response.data.msg);
             });
         } catch (err) {
             console.error(err);

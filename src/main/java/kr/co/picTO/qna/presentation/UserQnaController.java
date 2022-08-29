@@ -3,7 +3,6 @@ package kr.co.picTO.qna.presentation;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import kr.co.picTO.common.application.ResponseLoggingService;
 import kr.co.picTO.qna.application.UserQnaService;
 import kr.co.picTO.qna.dto.UserQnaRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +16,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping(value = "/v1/api/qna")
 public class UserQnaController {
-    private final String ClassName = this.getClass().getName();
     private final UserQnaService userQnaService;
-    private final ResponseLoggingService loggingService;
 
     @ApiOperation(value = "문의 등록", notes = "Register QnA")
     @PostMapping(value = "/register/{provider}")
     public ResponseEntity<?> save(@ApiParam(value = "QnaReqDto", required = true) @RequestBody UserQnaRequestDto userQnaRequestDto, @PathVariable String provider) {
-        loggingService.httpPathStrLogging(ClassName, "saveQnA", userQnaRequestDto.getEmail(), provider, "");
         return ResponseEntity.ok().body(userQnaService.registerQnA(userQnaRequestDto, provider));
     }
 }
