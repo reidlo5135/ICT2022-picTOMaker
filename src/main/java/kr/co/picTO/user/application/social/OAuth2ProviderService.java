@@ -1,19 +1,18 @@
 package kr.co.picTO.user.application.social;
 
 import com.google.gson.Gson;
+import kr.co.picTO.common.application.ResponseService;
+import kr.co.picTO.common.domain.SingleResult;
 import kr.co.picTO.common.exception.CustomCommunicationException;
-import kr.co.picTO.user.exception.CustomUserNotFoundException;
 import kr.co.picTO.token.domain.BaseAccessToken;
+import kr.co.picTO.token.domain.BaseTokenRepo;
+import kr.co.picTO.token.dto.SocialTokenRequestDto;
 import kr.co.picTO.user.domain.social.BaseAuthRole;
 import kr.co.picTO.user.domain.social.BaseAuthUser;
 import kr.co.picTO.user.domain.social.BaseAuthUserRepo;
-import kr.co.picTO.token.dto.SocialTokenRequestDto;
 import kr.co.picTO.user.dto.social.*;
-import kr.co.picTO.common.domain.CommonResult;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.token.domain.BaseTokenRepo;
-import kr.co.picTO.common.application.ResponseLoggingService;
-import kr.co.picTO.common.application.ResponseService;
+import kr.co.picTO.user.exception.CustomAccessTokenExistException;
+import kr.co.picTO.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.*;
@@ -35,11 +34,9 @@ public class OAuth2ProviderService {
     private final BaseAuthUserRepo userRepo;
     private final BaseTokenRepo tokenRepo;
     private final ResponseService responseService;
-    private final ResponseLoggingService loggingService;
 
     @Transactional
-    public ResponseEntity<?> generateAccessToken(String code, String provider) {
-        ResponseEntity<?> ett = null;
+    public SingleResult<SocialTokenRequestDto> generateAccessToken(String code, String provider) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -47,77 +44,34 @@ public class OAuth2ProviderService {
         HttpEntity<LinkedMultiValueMap<String, String>> request = new HttpEntity<>(oAuth2RequestDto.getMap(), httpHeaders);
 
         ResponseEntity<String> response = restTemplate.postForEntity(oAuth2RequestDto.getUrl(), request, String.class);
-        log.warn("OAuth2ProvSVC gAT resEntity : " + response);
+        SocialTokenRequestDto tokenRequestDto = gson.fromJson(response.getBody(), SocialTokenRequestDto.class);
+        saveAccessToken(tokenRequestDto.toEntity(provider));
 
-        try {
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-            if (response.getStatusCode() == HttpStatus.OK) {
-                SocialTokenRequestDto tokenRequestDto = gson.fromJson(response.getBody(), SocialTokenRequestDto.class);
-                log.info("OAuth2ProvSVC gAT gson GetBody : " + tokenRequestDto.getAccess_token());
-                saveAccessToken(tokenRequestDto.toEntity(provider));
+        SingleResult<SocialTokenRequestDto> singleResult = responseService.getSingleResult(tokenRequestDto);
 
-                SingleResult<SocialTokenRequestDto> singleResult = responseService.getSingleResult(tokenRequestDto);
-                loggingService.singleResultLogging(this.getClass(), "generateAccessToken", singleResult);
-                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
-            } else {
-                CommonResult failResult = responseService.getFailResult(-1, provider + "소셜 로그인 중 에러가 발생하였습니다.");
-                loggingService.commonResultLogging(this.getClass(), "generateAccessToken", failResult);
-                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("OAuth2ProvSVC gAT Error Occurred" + e.getMessage());
-        } finally {
-            log.info("OAuth2ProvSVC gAT ett : " + ett);
-            return ett;
-        }
+        return singleResult;
     }
 
     @Transactional
     public void saveAccessToken(BaseAccessToken baseAccessToken) {
         log.info("OAuth2ProvSVC sAT bat : " + baseAccessToken);
-        try {
-            if(tokenRepo.findByAccessToken(baseAccessToken.getAccess_token()).isEmpty()) {
-                tokenRepo.save(baseAccessToken);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("OAuth2ProvSVC sAT Error Occurred : " + e.getMessage());
-        }
+        if(tokenRepo.findByAccessToken(baseAccessToken.getAccess_token()).isPresent()) throw new CustomAccessTokenExistException();
+        tokenRepo.save(baseAccessToken);
     }
 
     @Transactional
-    public ResponseEntity<?> deleteToken(String access_token) {
-        ResponseEntity<?> ett = null;
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
+    public SingleResult<Integer> deleteToken(String access_token) {
         log.info("OAuth2ProvSVC deleteToken at : " + access_token);
-        try {
-            if(access_token == null || access_token.equals("")) {
-                CommonResult failResult = responseService.getFailResult(-1, "OAuth2 DeleteToken Error Occurred");
-                loggingService.commonResultLogging(this.getClass(), "deleteToken", failResult);
-                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                Integer id = tokenRepo.deleteByAccessToken(access_token);
-                log.info("OAuth2ProvSVC deleteToken bat id : " + id);
+        Integer id = tokenRepo.deleteByAccessToken(access_token);
+        log.info("OAuth2ProvSVC deleteToken bat id : " + id);
 
-                SingleResult<Integer> singleResult = responseService.getSingleResult(id);
-                loggingService.singleResultLogging(this.getClass(), "deleteToken", singleResult);
-                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("OAuth2ProvSVC deleteToken Error Occurred : " + e.getMessage());
-        } finally {
-            log.info("OAuth2ProvSVC deleteToken ett : " + ett);
-            return ett;
-        }
+        SingleResult<Integer> singleResult = responseService.getSingleResult(id);
+
+        return singleResult;
     }
 
     @Transactional
-    public ResponseEntity<?> getProfile(String accessToken, String provider) {
-        ResponseEntity<?> ett = null;
+    public SingleResult<SocialUserProfileResponseDto> getProfile(String accessToken, String provider) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         httpHeaders.set("Authorization", "Bearer " + accessToken);
@@ -126,28 +80,13 @@ public class OAuth2ProviderService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(httpHeaders);
         ResponseEntity<String> response = restTemplate.postForEntity(profileUrl, request, String.class);
 
-        try {
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-            if (response.getStatusCode() != HttpStatus.OK) {
-                CommonResult failResult = responseService.getFailResult(-1, "OAuth2 getProfile Error Occurred");
-                loggingService.commonResultLogging(this.getClass(), "getProfile", failResult);
-                ett = new ResponseEntity<>(failResult, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                UserProfileResponseDto userProfileResponseDto = extractProfile(response, accessToken, provider);
-                SingleResult<UserProfileResponseDto> singleResult = responseService.getSingleResult(userProfileResponseDto);
-                loggingService.singleResultLogging(this.getClass(), "getProfile", singleResult);
-                ett = new ResponseEntity<>(singleResult, httpHeaders, HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("OAuth2ProvSVC getProfile Error Occurred : " + e.getMessage());
-        } finally {
-            log.info("OAuth2ProvSVC getProfile ett : " + ett);
-            return ett;
-        }
+        SocialUserProfileResponseDto socialUserProfileResponseDto = extractProfile(response, provider);
+        SingleResult<SocialUserProfileResponseDto> singleResult = responseService.getSingleResult(socialUserProfileResponseDto);
+
+        return singleResult;
     }
 
-    public UserProfileResponseDto getProfileForGoogle(String accessToken, String provider) {
+    public SocialUserProfileResponseDto getProfileForGoogle(String accessToken, String provider) {
         String profileUrl = oAuth2Factory.getProfileUrl(provider);
 
         ResponseEntity<String> response = null;
@@ -166,7 +105,7 @@ public class OAuth2ProviderService {
             log.info("OAuth2ProvSVC googlePF res getBody : " + response.getBody());
             log.info("OAuth2ProvSVC googlePF res getHeaders : " + response.getHeaders());
             if(response.getStatusCode() == HttpStatus.OK) {
-                return extractProfile(response, accessToken, provider);
+                return extractProfile(response, provider);
             }
         } catch (Exception e){
             log.error("OAuth2ProvSVC googlePF CCoummuicate exception : " + e.getMessage());
@@ -175,30 +114,47 @@ public class OAuth2ProviderService {
         throw new CustomCommunicationException();
     }
 
-    private UserProfileResponseDto extractProfile(ResponseEntity<String> response, String accessToken, String provider) {
-        if (provider.equals("kakao")) {
-            KakaoProfile kakaoProfile = gson.fromJson(response.getBody(), KakaoProfile.class);
-            log.info("OAuth2ProvSVC " + provider + " extractProfile : " + kakaoProfile);
+    @Transactional
+    protected SocialUserProfileResponseDto extractProfile(ResponseEntity<String> response, String provider) {
+        switch (provider) {
+            case "kakao":
+                KakaoProfile kakaoProfile = gson.fromJson(response.getBody(), KakaoProfile.class);
+                log.info("OAuth2ProvSVC " + provider + " extractProfile : " + kakaoProfile);
 
-            saveUser(accessToken, kakaoProfile.getProperties().getNickname(), kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getProfile_image(), provider);
-            return new UserProfileResponseDto(kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getNickname(), kakaoProfile.getProperties().getProfile_image());
-        } else if(provider.equals("google")) {
-            GoogleProfile googleProfile = gson.fromJson(response.getBody(), GoogleProfile.class);
-            log.info("OAuth2ProvSVC " + provider + " extractProfile : " + googleProfile);
+                saveUser(kakaoProfile.getProperties().getNickname(), kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getProfile_image(), provider);
+                return SocialUserProfileResponseDto.builder()
+                        .email(kakaoProfile.getKakao_account().getEmail())
+                        .name(kakaoProfile.getProperties().getNickname())
+                        .profile_image_url(kakaoProfile.getProperties().getProfile_image())
+                        .build();
+            case "google":
+                GoogleProfile googleProfile = gson.fromJson(response.getBody(), GoogleProfile.class);
+                log.info("OAuth2ProvSVC " + provider + " extractProfile : " + googleProfile);
 
-            saveUser(accessToken, googleProfile.getEmail(), googleProfile.getName(), googleProfile.getPicture(), provider);
-            return new UserProfileResponseDto(googleProfile.getEmail(), googleProfile.getName(), googleProfile.getPicture());
-        } else {
-            NaverProfile naverProfile = gson.fromJson(response.getBody(), NaverProfile.class);
-            log.info("OAuth2ProvSVC " + provider + " extractProfile : " + naverProfile);
+                saveUser(googleProfile.getEmail(), googleProfile.getName(), googleProfile.getPicture(), provider);
+                return SocialUserProfileResponseDto.builder()
+                        .email(googleProfile.getEmail())
+                        .name(googleProfile.getName())
+                        .profile_image_url(googleProfile.getPicture())
+                        .build();
+            case "naver":
+                NaverProfile naverProfile = gson.fromJson(response.getBody(), NaverProfile.class);
+                log.info("OAuth2ProvSVC " + provider + " extractProfile : " + naverProfile);
 
-            saveUser(accessToken, naverProfile.getResponse().getName(), naverProfile.getResponse().getEmail(), naverProfile.getResponse().getProfile_image(), provider);
-            return new UserProfileResponseDto(naverProfile.getResponse().getEmail(), naverProfile.getResponse().getName(), naverProfile.getResponse().getProfile_image());
+                saveUser(naverProfile.getResponse().getName(), naverProfile.getResponse().getEmail(), naverProfile.getResponse().getProfile_image(), provider);
+                return SocialUserProfileResponseDto.builder()
+                        .email(naverProfile.getResponse().getName())
+                        .name(naverProfile.getResponse().getName())
+                        .profile_image_url(naverProfile.getResponse().getProfile_image())
+                        .build();
+            default:
+                return null;
         }
     }
 
-    private BaseAuthUser saveUser(String accessToken, String name, String email, String picture, String provider){
-        if(!userRepo.findByEmail(email).isPresent()) {
+    @Transactional
+    protected BaseAuthUser saveUser(String name, String email, String picture, String provider){
+        if(userRepo.findByEmail(email).isEmpty()) {
             String role = provider.toUpperCase(Locale.ROOT);
             BaseAuthUser baseAuthUser = BaseAuthUser.builder()
                     .name(name)
@@ -207,7 +163,6 @@ public class OAuth2ProviderService {
                     .provider(provider)
                     .role(BaseAuthRole.valueOf(role))
                     .build();
-            log.info("OAuth2ProvSVC saveUser : " + baseAuthUser.toString());
             return userRepo.save(baseAuthUser);
         } else {
             return userRepo.findByEmail(email).orElseThrow(CustomUserNotFoundException::new);
