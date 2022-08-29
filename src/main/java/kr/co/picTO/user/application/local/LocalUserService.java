@@ -1,20 +1,19 @@
 package kr.co.picTO.user.application.local;
 
-import kr.co.picTO.common.application.ResponseLoggingService;
 import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.common.domain.SingleResult;
+import kr.co.picTO.token.application.LocalUserJwtProvider;
+import kr.co.picTO.token.domain.BaseAccessToken;
+import kr.co.picTO.token.domain.BaseTokenRepo;
+import kr.co.picTO.user.domain.local.BaseLocalUser;
+import kr.co.picTO.user.domain.local.BaseLocalUserRepo;
+import kr.co.picTO.user.dto.local.LocalUserLoginRequestDto;
+import kr.co.picTO.user.dto.local.LocalUserProfileResponseDto;
+import kr.co.picTO.user.dto.local.LocalUserSignUpRequestDto;
 import kr.co.picTO.user.exception.CustomEmailLoginFailedException;
 import kr.co.picTO.user.exception.CustomRefreshTokenException;
 import kr.co.picTO.user.exception.CustomUserExistException;
 import kr.co.picTO.user.exception.CustomUserNotFoundException;
-import kr.co.picTO.token.application.LocalUserJwtProvider;
-import kr.co.picTO.user.domain.local.BaseLocalUser;
-import kr.co.picTO.user.domain.local.BaseLocalUserRepo;
-import kr.co.picTO.token.domain.BaseAccessToken;
-import kr.co.picTO.token.domain.BaseTokenRepo;
-import kr.co.picTO.user.dto.local.LocalUserLoginRequestDto;
-import kr.co.picTO.user.dto.local.LocalUserSignUpRequestDto;
-import kr.co.picTO.user.dto.social.UserProfileResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +31,6 @@ public class LocalUserService {
     private final PasswordEncoder passwordEncoder;
     private final LocalUserJwtProvider localUserJwtProvider;
     private final ResponseService responseService;
-    private final ResponseLoggingService loggingService;
 
     @Transactional
     public SingleResult<BaseAccessToken> login(@NotNull LocalUserLoginRequestDto localUserLoginRequestDto) {
@@ -46,7 +44,6 @@ public class LocalUserService {
         BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user, user.getRoles());
 
         SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(baseAccessToken);
-        loggingService.singleResultLogging(this.getClass(), "login", singleResult);
 
         return singleResult;
     }
@@ -62,27 +59,25 @@ public class LocalUserService {
         log.info("Local User SVC SignUp resultId : " + resultId);
 
         SingleResult<Long> singleResult = responseService.getSingleResult(resultId);
-        loggingService.singleResultLogging(this.getClass(), "SignUp", singleResult);
 
         return singleResult;
     }
 
     @Transactional(readOnly = true)
-    public SingleResult<UserProfileResponseDto> getProfileLocal(String access_token) {
+    public SingleResult<LocalUserProfileResponseDto> getProfileLocal(String access_token) {
         log.info("Local User SVC Profile access_token : " + access_token);
 
         BaseAccessToken bat = tokenRepo.findByAccessToken(access_token).orElseThrow(CustomRefreshTokenException::new);
         BaseLocalUser user = userRepository.findById(bat.getBlu().getId()).orElseThrow(CustomUserNotFoundException::new);
 
-        UserProfileResponseDto userProfileResponseDto = UserProfileResponseDto.builder()
+        LocalUserProfileResponseDto localUserProfileResponseDto = LocalUserProfileResponseDto.builder()
                 .email(user.getEmail())
                 .name(user.getName())
-                .nickname(user.getNickName())
+                .nickName(user.getNickName())
                 .profile_image_url(user.getProfile_image_url())
                 .build();
 
-        SingleResult<UserProfileResponseDto> singleResult = responseService.getSingleResult(userProfileResponseDto);
-        loggingService.singleResultLogging(this.getClass(), "getProfileLocal", singleResult);
+        SingleResult<LocalUserProfileResponseDto> singleResult = responseService.getSingleResult(localUserProfileResponseDto);
 
         return singleResult;
     }
@@ -101,7 +96,6 @@ public class LocalUserService {
             log.info("Local User SVC reissue newRefreshToken " + newRefreshToken);
 
             SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(newRefreshToken);
-            loggingService.singleResultLogging(this.getClass(), "reissue", singleResult);
 
             return singleResult;
         }
@@ -113,7 +107,6 @@ public class LocalUserService {
         log.info("Local User SVC deleteToken bat id : " + id);
 
         SingleResult<Integer> singleResult = responseService.getSingleResult(id);
-        loggingService.singleResultLogging(this.getClass(), "deleteToken", singleResult);
 
         return singleResult;
     }

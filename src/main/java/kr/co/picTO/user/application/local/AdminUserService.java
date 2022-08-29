@@ -1,6 +1,5 @@
 package kr.co.picTO.user.application.local;
 
-import kr.co.picTO.common.application.ResponseLoggingService;
 import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.common.domain.ListResult;
 import kr.co.picTO.common.domain.SingleResult;
@@ -22,14 +21,12 @@ import java.util.stream.Collectors;
 public class AdminUserService {
     private final BaseLocalUserRepo userRepository;
     private final ResponseService responseService;
-    private final ResponseLoggingService loggingService;
 
     @Transactional(readOnly = true)
     public SingleResult<LocalUserResponseDto> findById(Long id) {
         BaseLocalUser user = userRepository.findById(id).orElseThrow(CustomUserNotFoundException::new);
         log.info("AdminUserSVC findById user : " + user);
         SingleResult<LocalUserResponseDto> singleResult = responseService.getSingleResult(new LocalUserResponseDto(user));
-        loggingService.singleResultLogging(this.getClass(), "findById", singleResult);
 
         return singleResult;
     }
@@ -39,7 +36,6 @@ public class AdminUserService {
         BaseLocalUser user = userRepository.findByEmail(email).orElseThrow(CustomUserNotFoundException::new);
 
         SingleResult<LocalUserResponseDto> singleResult = responseService.getSingleResult(new LocalUserResponseDto(user));
-        loggingService.singleResultLogging(this.getClass(), "findByEmail", singleResult);
 
         return singleResult;
     }
@@ -50,7 +46,6 @@ public class AdminUserService {
         if(list.isEmpty()) throw new NullPointerException();
 
         ListResult<LocalUserResponseDto> listResult = responseService.getListResult(list);
-        loggingService.listResultLogging(this.getClass(), "findAllUser", listResult);
 
         return listResult;
     }
@@ -61,7 +56,6 @@ public class AdminUserService {
         Long result = userRepository.findById(id).stream().count();
         log.info("AdminUserSVC delete result : " + result);
         SingleResult<Long> singleResult = responseService.getSingleResult(result);
-        loggingService.singleResultLogging(this.getClass(), "delete", singleResult);
 
         return singleResult;
     }

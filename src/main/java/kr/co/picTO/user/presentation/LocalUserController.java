@@ -3,9 +3,8 @@ package kr.co.picTO.user.presentation;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import kr.co.picTO.common.application.ResponseLoggingService;
-import kr.co.picTO.user.application.local.LocalUserService;
 import kr.co.picTO.token.dto.TokenRequestDto;
+import kr.co.picTO.user.application.local.LocalUserService;
 import kr.co.picTO.user.dto.local.LocalUserLoginRequestDto;
 import kr.co.picTO.user.dto.local.LocalUserSignUpRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +20,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping(value = "/v1/api/user")
 public class LocalUserController {
-    private final String ClassName = this.getClass().getName();
     private final LocalUserService userService;
-    private final ResponseLoggingService loggingService;
 
     @ApiOperation(value = "로그인", notes = "Login By Email")
     @PostMapping(value = "/login")
@@ -51,7 +48,6 @@ public class LocalUserController {
 
     @DeleteMapping(value = "/token/{access_token}")
     public ResponseEntity<?> inValidToken(@PathVariable String access_token) {
-        loggingService.httpPathStrLogging(ClassName, "inValidToken", access_token, "", "");
         return ResponseEntity.ok().body(userService.deleteToken(access_token));
     }
 }

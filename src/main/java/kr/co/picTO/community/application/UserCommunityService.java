@@ -1,6 +1,5 @@
 package kr.co.picTO.community.application;
 
-import kr.co.picTO.common.application.ResponseLoggingService;
 import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.common.domain.ListResult;
 import kr.co.picTO.common.domain.SingleResult;
@@ -29,14 +28,12 @@ public class UserCommunityService {
     private final BaseLocalUserRepo userJpaRepo;
     private final BaseAuthUserRepo authUserRepo;
     private final ResponseService responseService;
-    private final ResponseLoggingService loggingService;
 
     public ListResult<UserCommunityResponseDto> findBoardAll() {
         List<UserCommunityResponseDto> result = communityRepo.findAll().stream().map(UserCommunityResponseDto::new).collect(Collectors.toList());
         if(result.isEmpty()) throw new CustomCommunityNotExistException();
 
         ListResult<UserCommunityResponseDto> listResult = responseService.getListResult(result);
-        loggingService.listResultLogging(this.getClass(), "findBoardAll", listResult);
 
         return listResult;
     }
@@ -46,7 +43,6 @@ public class UserCommunityService {
 
         UserCommunityResponseDto userCommunityResponseDto = new UserCommunityResponseDto(baseUserCommunity);
         SingleResult<UserCommunityResponseDto> singleResult = responseService.getSingleResult(userCommunityResponseDto);
-        loggingService.singleResultLogging(this.getClass(), "findBoardById", singleResult);
 
         return singleResult;
     }
@@ -60,9 +56,7 @@ public class UserCommunityService {
             BaseAuthUser bau = authUserRepo.findByEmail(userCommunityRequestDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
             result = communityRepo.save(userCommunityRequestDto.toEntity(bau)).getId();
         }
-        log.info("User Community SVC registerBoard result : " + result);
         SingleResult<Long> singleResult = responseService.getSingleResult(result);
-        loggingService.singleResultLogging(this.getClass(), "registerBoard", singleResult);
 
         return singleResult;
     }
