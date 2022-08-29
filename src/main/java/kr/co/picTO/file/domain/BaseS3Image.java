@@ -1,4 +1,4 @@
-package kr.co.picTO.s3.domain;
+package kr.co.picTO.file.domain;
 
 import kr.co.picTO.common.domain.BaseTimeEntity;
 import kr.co.picTO.user.domain.local.BaseLocalUser;

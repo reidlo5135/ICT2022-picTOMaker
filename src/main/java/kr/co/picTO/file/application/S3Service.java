@@ -1,4 +1,4 @@
-package kr.co.picTO.s3.application;
+package kr.co.picTO.file.application;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
