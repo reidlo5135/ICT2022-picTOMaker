@@ -34,7 +34,7 @@ export default function MyPageProfile(){
                 });
 
             setName(jsonProf.name);
-            setNickName(jsonProf.nickname);
+            setNickName(jsonProf.nickName);
             setProfileImage(jsonProf.profile_image_url);
         } catch (err) {
             console.error(err);
@@ -60,9 +60,7 @@ export default function MyPageProfile(){
                     </div>
                 </div>
                 <div className='MenuBox'>
-                    <div className='Name'>
-                        {nickName === null ? '' : '닉네임'}
-                    </div>
+                    {nickName === null ? <div className='Name'></div> : <div className='Name'>닉네임</div>}
                     <div className='MenuBox-props'>
                         <b>{nickName}</b>
                     </div>
