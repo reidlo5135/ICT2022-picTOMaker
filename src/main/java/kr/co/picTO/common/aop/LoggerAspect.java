@@ -36,4 +36,20 @@ public class LoggerAspect {
         log.info(">> Repository Result : {}", result);
         return result;
     }
+
+    @Around(value = "execution(public * kr.co.picTO.admin.presentation.*.*Controller.*(..))")
+    public Object logAdminControllers(ProceedingJoinPoint pjp) throws Throwable {
+        log.info(">> Admin Controller Request : {}.{}({})", pjp.getTarget().getClass().getName(), pjp.getSignature().getName(), pjp.getArgs());
+        Object result = pjp.proceed();
+        log.info(">> Admin Controller Result : {}", result);
+        return result;
+    }
+
+    @Around(value = "execution(public * kr.co.picTO.admin.application.*.*Service.*(..))")
+    public Object logAdminServices(ProceedingJoinPoint pjp) throws Throwable {
+        log.info(">> Admin Service Request : {}.{}({})", pjp.getTarget().getClass().getName(), pjp.getSignature().getName(), pjp.getArgs());
+        Object result = pjp.proceed();
+        log.info(">> Admin Service Result : {}", result);
+        return result;
+    }
 }
