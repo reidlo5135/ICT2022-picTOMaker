@@ -25,9 +25,9 @@ public class SwaggerConfiguration {
 
     private ApiInfo swaggerInfo() {
         return new ApiInfoBuilder()
-                .title("ICT2022 API DOCUMENT!!")
-                .description("made by reidlo")
-                .version("1")
+                .title("PictoMaker REST API Document")
+                .description("written by reidlo")
+                .version("1.1.0")
                 .build();
     }
 }
