@@ -5,6 +5,7 @@ import kr.co.picTO.common.domain.CommonResult;
 import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.community.exception.CustomCommunityNotExistException;
 import kr.co.picTO.file.exception.CustomFileNotFoundException;
+import kr.co.picTO.qna.exception.CustomQnaNotExistException;
 import kr.co.picTO.user.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -172,6 +173,18 @@ public class ExceptionAdvice {
     protected CommonResult fileNotFoundException(HttpServletRequest request, CustomFileNotFoundException e) {
         e.printStackTrace();
         return responseService.getFailResult(Integer.parseInt("fileNotFoundException.code"), getMessage("fileNotFoundException.msg"));
+    }
+
+    /***
+     *
+     * -1013
+     * QnA가 존재하지 않을 시 에러
+     */
+    @ExceptionHandler(CustomQnaNotExistException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult qnaNotExistException(HttpServletRequest request, CustomQnaNotExistException e) {
+        e.printStackTrace();
+        return responseService.getFailResult(Integer.parseInt("qnaNotExistException.code"), getMessage("qnaNotExistException.msg"));
     }
 
     private String getMessage(String code) {

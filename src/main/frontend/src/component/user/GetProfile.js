@@ -6,6 +6,7 @@ import "../../css/font.css";
 
 const GetProfile = () => {
     const getProfile = localStorage.getItem('profile');
+    const provider = localStorage.getItem('provider');
 
     const [email, setEmail] = useState();
     const [nickName, setNickName] = useState();
@@ -17,7 +18,11 @@ const GetProfile = () => {
             console.log('jProf : ', jsonProf);
 
             setEmail(jsonProf.email);
-            setNickName(jsonProf.nickname);
+            if(provider === 'LOCAL') {
+                setNickName(jsonProf.nickName);
+            } else {
+                setNickName(jsonProf.name);
+            }
             if(jsonProf.profile_image_url === null) {
                 setProfileImage(null);
             } else {

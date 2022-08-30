@@ -47,9 +47,7 @@ public class OAuth2ProviderService {
         SocialTokenRequestDto tokenRequestDto = gson.fromJson(response.getBody(), SocialTokenRequestDto.class);
         saveAccessToken(tokenRequestDto.toEntity(provider));
 
-        SingleResult<SocialTokenRequestDto> singleResult = responseService.getSingleResult(tokenRequestDto);
-
-        return singleResult;
+        return responseService.getSingleResult(tokenRequestDto);
     }
 
     @Transactional
@@ -62,12 +60,8 @@ public class OAuth2ProviderService {
     @Transactional
     public SingleResult<Integer> deleteToken(String access_token) {
         log.info("OAuth2ProvSVC deleteToken at : " + access_token);
-        Integer id = tokenRepo.deleteByAccessToken(access_token);
-        log.info("OAuth2ProvSVC deleteToken bat id : " + id);
 
-        SingleResult<Integer> singleResult = responseService.getSingleResult(id);
-
-        return singleResult;
+        return responseService.getSingleResult(tokenRepo.deleteByAccessToken(access_token));
     }
 
     @Transactional
@@ -80,10 +74,7 @@ public class OAuth2ProviderService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(httpHeaders);
         ResponseEntity<String> response = restTemplate.postForEntity(profileUrl, request, String.class);
 
-        SocialUserProfileResponseDto socialUserProfileResponseDto = extractProfile(response, provider);
-        SingleResult<SocialUserProfileResponseDto> singleResult = responseService.getSingleResult(socialUserProfileResponseDto);
-
-        return singleResult;
+        return responseService.getSingleResult(extractProfile(response, provider));
     }
 
     public SocialUserProfileResponseDto getProfileForGoogle(String accessToken, String provider) {
@@ -92,26 +83,14 @@ public class OAuth2ProviderService {
         ResponseEntity<String> response = null;
 
         if(provider.equals("google")) {
-            String googleProfUrl = profileUrl + "?access_token=" + accessToken;
-            log.info("OAuth2ProvSVC googlePF profileURL : " + googleProfUrl);
-
-            response = restTemplate.getForEntity(googleProfUrl, String.class);
-
-            log.info("OAuth2ProvSVC googlePF res : " + response);
+            response = restTemplate.getForEntity(profileUrl + "?access_token=" + accessToken, String.class);
         }
 
-        try {
-            log.info("OAuth2ProvSVC googlePF res statusCode : "+ response.getStatusCode());
-            log.info("OAuth2ProvSVC googlePF res getBody : " + response.getBody());
-            log.info("OAuth2ProvSVC googlePF res getHeaders : " + response.getHeaders());
-            if(response.getStatusCode() == HttpStatus.OK) {
-                return extractProfile(response, provider);
-            }
-        } catch (Exception e){
-            log.error("OAuth2ProvSVC googlePF CCoummuicate exception : " + e.getMessage());
+        if(response.getStatusCode() == HttpStatus.OK) {
+            return extractProfile(response, provider);
+        } else {
             throw new CustomCommunicationException();
         }
-        throw new CustomCommunicationException();
     }
 
     @Transactional

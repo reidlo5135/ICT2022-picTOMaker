@@ -40,12 +40,7 @@ public class LocalUserService {
         if(!passwordEncoder.matches(localUserLoginRequestDto.toEntity().getPassword(), user.getPassword())) {
             throw new CustomEmailLoginFailedException();
         }
-
-        BaseAccessToken baseAccessToken = localUserJwtProvider.createToken(String.valueOf(user.getId()), user, user.getRoles());
-
-        SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(baseAccessToken);
-
-        return singleResult;
+        return responseService.getSingleResult(localUserJwtProvider.createToken(String.valueOf(user.getId()), user, user.getRoles()));
     }
 
     @Transactional
@@ -55,12 +50,8 @@ public class LocalUserService {
         if(userRepository.findByEmail(localUserSignUpRequestDto.getEmail()).isPresent()) {
             throw new CustomUserExistException();
         }
-        Long resultId = userRepository.save(localUserSignUpRequestDto.toEntity(passwordEncoder)).getId();
-        log.info("Local User SVC SignUp resultId : " + resultId);
 
-        SingleResult<Long> singleResult = responseService.getSingleResult(resultId);
-
-        return singleResult;
+        return responseService.getSingleResult(userRepository.save(localUserSignUpRequestDto.toEntity(passwordEncoder)).getId());
     }
 
     @Transactional(readOnly = true)
@@ -77,9 +68,7 @@ public class LocalUserService {
                 .profile_image_url(user.getProfile_image_url())
                 .build();
 
-        SingleResult<LocalUserProfileResponseDto> singleResult = responseService.getSingleResult(localUserProfileResponseDto);
-
-        return singleResult;
+        return responseService.getSingleResult(localUserProfileResponseDto);
     }
 
     @Transactional
@@ -95,19 +84,12 @@ public class LocalUserService {
             bat.refreshToken(newRefreshToken.toString());
             log.info("Local User SVC reissue newRefreshToken " + newRefreshToken);
 
-            SingleResult<BaseAccessToken> singleResult = responseService.getSingleResult(newRefreshToken);
-
-            return singleResult;
+            return responseService.getSingleResult(newRefreshToken);
         }
     }
 
     @Transactional
     public SingleResult<Integer> deleteToken(String access_token) {
-        Integer id = tokenRepo.deleteByAccessToken(access_token);
-        log.info("Local User SVC deleteToken bat id : " + id);
-
-        SingleResult<Integer> singleResult = responseService.getSingleResult(id);
-
-        return singleResult;
+        return responseService.getSingleResult(tokenRepo.deleteByAccessToken(access_token));
     }
 }

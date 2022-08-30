@@ -4,12 +4,10 @@ import kr.co.picTO.community.domain.BaseUserCommunity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Log4j2
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserCommunityResponseDto {
