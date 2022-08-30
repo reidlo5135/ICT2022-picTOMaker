@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @Log4j2
 @RequiredArgsConstructor
-public class LocalUserJwtAuthenticationFilter extends GenericFilterBean {
+public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final LocalUserJwtProvider localUserJwtProvider;
 
