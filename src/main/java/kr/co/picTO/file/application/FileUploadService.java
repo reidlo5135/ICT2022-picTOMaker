@@ -130,13 +130,8 @@ public class FileUploadService {
                 image = imageRequestDto.toBauEntity(bau);
                 log.info("File SVC uploadImage bau : " + bau);
             }
-            log.info("File SVC uploadImage imageRequestDto : " + imageRequestDto);
-            log.info("File SVC uploadImage s3 : " + image);
 
-            Long result = imageRepo.save(image).getId();
-            SingleResult<Long> singleResult = responseService.getSingleResult(result);
-
-            return singleResult;
+            return responseService.getSingleResult(imageRepo.save(image).getId());
         } catch (IOException e) {
             throw new IllegalArgumentException(String.format("File SVC uploadImage 파일 변환 중 에러가 발생했습니다 파일명 -> (%s) : ", file.getOriginalFilename()));
         }
@@ -151,26 +146,19 @@ public class FileUploadService {
         }
         List<BaseS3Image> imageList = imageRepo.findByEmailAndProvider(email, provider);
         if(imageList.isEmpty()) throw new CustomFileNotFoundException();
-        List<S3ImageResponseDto> result = imageList.stream().map(S3ImageResponseDto::new).collect(Collectors.toList());
-        ListResult<S3ImageResponseDto> listResult = responseService.getListResult(result);
 
-        return listResult;
+        return responseService.getListResult(imageList.stream().map(S3ImageResponseDto::new).collect(Collectors.toList()));
     }
 
     @Transactional(readOnly = true)
     public SingleResult<Long> getPicToCountByEmailAndProvider(String email, String provider) {
         if(imageRepo.findByEmailAndProvider(email, provider).isEmpty()) throw new CustomFileNotFoundException();
-        Long result = imageRepo.countByEmailAndProvider(email, provider);
-        log.info("File SVC getPicToCountByEmailAndProvider result : " + result);
 
-        SingleResult<Long> singleResult = responseService.getSingleResult(result);
-
-        return singleResult;
+        return responseService.getSingleResult(imageRepo.countByEmailAndProvider(email, provider));
     }
 
     @Transactional
     public SingleResult<Integer> updatePicToByEmailAndId(MultipartFile file, String email, Long id) {
-        Integer result = null;
         String fileName = createFileName(file.getOriginalFilename());
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
@@ -178,16 +166,11 @@ public class FileUploadService {
 
         log.info("File SVC updatePicToByEmailAndId objectMetaData contentType : " + objectMetadata.getContentType());
 
-        String fileUrl = null;
-
         try (InputStream inputStream = file.getInputStream()) {
             log.info("File SVC updatePicToByEmailAndId fileName : " + fileName);
             uploadService.uploadFile(inputStream, objectMetadata, fileName);
-            fileUrl = uploadService.getFileUrl(fileName);
-            result = imageRepo.updateByEmailAndId(fileUrl, email, id);
-            SingleResult<Integer> singleResult = responseService.getSingleResult(result);
 
-            return singleResult;
+            return responseService.getSingleResult(imageRepo.updateByEmailAndId(uploadService.getFileUrl(fileName), email, id));
         } catch (IOException e) {
             throw new IllegalArgumentException(String.format("File SVC updatePicToByEmailAndId 파일 변환 중 에러가 발생했습니다 파일명 -> (%s) : ", file.getOriginalFilename()));
         }
@@ -195,25 +178,16 @@ public class FileUploadService {
 
     @Transactional
     public SingleResult<Integer> deletePicToById(Long id) {
-        Integer result = imageRepo.deleteByFileId(id);
-        log.info("File SVC deletePicToById result : " + result);
-
-        SingleResult<Integer> singleResult = responseService.getSingleResult(result);
-
-        return singleResult;
+        return responseService.getSingleResult(imageRepo.deleteByFileId(id));
     }
 
     private String createFileName(String originalFileName) {
-        log.info("File SVC createFileName originalFileName : " + originalFileName);
         return UUID.randomUUID().toString().concat(getFileExtension(originalFileName));
     }
 
     private String getFileExtension(String fileName) {
         try {
-            String ext = fileName.substring(fileName.lastIndexOf("."));
-            log.info("File SVC getFileExtension fName : " + fileName);
-            log.info("File SVC getFileExtension Ext : " + ext);
-            return ext;
+            return fileName.substring(fileName.lastIndexOf("."));
         } catch (StringIndexOutOfBoundsException e) {
             throw new IllegalArgumentException(String.format("FILE SVC getFileExtension 잘못된 형식의 파일입니다 파일명 -> (%s)", fileName));
         }

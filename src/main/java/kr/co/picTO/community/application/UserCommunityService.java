@@ -31,18 +31,13 @@ public class UserCommunityService {
         List<UserCommunityResponseDto> result = communityRepo.findAll().stream().map(UserCommunityResponseDto::new).collect(Collectors.toList());
         if(result.isEmpty()) throw new CustomCommunityNotExistException();
 
-        ListResult<UserCommunityResponseDto> listResult = responseService.getListResult(result);
-
-        return listResult;
+        return responseService.getListResult(result);
     }
 
     public SingleResult<UserCommunityResponseDto> findBoardById(long id) {
         BaseUserCommunity baseUserCommunity = communityRepo.findById(id).orElseThrow(CustomCommunityNotExistException::new);
 
-        UserCommunityResponseDto userCommunityResponseDto = new UserCommunityResponseDto(baseUserCommunity);
-        SingleResult<UserCommunityResponseDto> singleResult = responseService.getSingleResult(userCommunityResponseDto);
-
-        return singleResult;
+        return responseService.getSingleResult(new UserCommunityResponseDto(baseUserCommunity));
     }
 
     public SingleResult<Long> registerBoard(UserCommunityRequestDto userCommunityRequestDto, String provider) {
@@ -54,8 +49,7 @@ public class UserCommunityService {
             BaseAuthUser bau = authUserRepo.findByEmail(userCommunityRequestDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
             result = communityRepo.save(userCommunityRequestDto.toEntity(bau)).getId();
         }
-        SingleResult<Long> singleResult = responseService.getSingleResult(result);
 
-        return singleResult;
+        return responseService.getSingleResult(result);
     }
 }

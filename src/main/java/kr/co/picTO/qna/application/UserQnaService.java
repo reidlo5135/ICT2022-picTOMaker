@@ -31,8 +31,6 @@ public class UserQnaService {
             BaseAuthUser bau = authUserRepo.findByEmail(userQnaRequestDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
             result = baseUserQnaRepo.save(userQnaRequestDto.toEntity(bau)).getId();
         }
-        SingleResult<Long> singleResult = responseService.getSingleResult(result);
-
-        return singleResult;
+        return responseService.getSingleResult(result);
     }
 }
