@@ -32,7 +32,7 @@ export default function QnA() {
             console.log('QNA jProf : ', jsonProf);
 
             setProfEmail(jsonProf.email);
-            setProfNickName(jsonProf.nickname);
+            setProfNickName(jsonProf.nickName);
         } catch (err) {
             console.error(err);
         }
