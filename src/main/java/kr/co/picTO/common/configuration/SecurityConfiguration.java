@@ -2,7 +2,7 @@ package kr.co.picTO.common.configuration;
 
 import kr.co.picTO.common.exception.CustomAccessDeniedHandler;
 import kr.co.picTO.common.exception.RestAuthenticationEntryPoint;
-import kr.co.picTO.token.application.LocalUserJwtAuthenticationFilter;
+import kr.co.picTO.token.application.JwtAuthenticationFilter;
 import kr.co.picTO.token.application.LocalUserJwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin().disable()
                     .httpBasic().disable()
-                    .addFilterBefore(new LocalUserJwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
+                    .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                     .exceptionHandling()
                         .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                         .accessDeniedHandler(new CustomAccessDeniedHandler())
