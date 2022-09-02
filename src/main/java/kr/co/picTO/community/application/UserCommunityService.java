@@ -41,7 +41,7 @@ public class UserCommunityService {
     }
 
     public SingleResult<Long> registerBoard(UserCommunityRequestDto userCommunityRequestDto, String provider) {
-        Long result = null;
+        long result;
         if(provider != null && provider.equals("LOCAL")) {
             BaseLocalUser blu = userJpaRepo.findByEmail(userCommunityRequestDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
             result = communityRepo.save(userCommunityRequestDto.toEntity(blu)).getId();
