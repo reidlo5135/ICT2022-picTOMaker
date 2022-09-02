@@ -31,7 +31,11 @@ const CPosting = () => {
         try {
             const jsonProf = JSON.parse(getProfile);
             console.log('QNA jProf : ', jsonProf);
-            setProfNickName(jsonProf.nickname);
+            if(provider === 'LOCAL') {
+                setProfNickName(jsonProf.nickName);
+            } else {
+                setProfNickName(jsonProf.name);
+            }
             setEmail(jsonProf.email);
         } catch (err) {
             console.error(err);
