@@ -32,6 +32,8 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    implementation 'com.auth0:java-jwt:3.10.3'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
     implementation 'junit:junit:4.13.1'
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'org.jetbrains:annotations:20.1.0'

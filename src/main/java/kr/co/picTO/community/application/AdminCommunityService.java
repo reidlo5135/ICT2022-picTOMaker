@@ -1,4 +1,4 @@
-package kr.co.picTO.admin.application.community;
+package kr.co.picTO.community.application;
 
 import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.common.domain.ListResult;

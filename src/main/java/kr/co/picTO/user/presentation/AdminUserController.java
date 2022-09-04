@@ -1,7 +1,7 @@
-package kr.co.picTO.admin.presentation.user;
+package kr.co.picTO.user.presentation;
 
 import io.swagger.annotations.*;
-import kr.co.picTO.admin.application.user.AdminUserService;
+import kr.co.picTO.user.application.AdminUserService;
 import kr.co.picTO.common.domain.ListResult;
 import kr.co.picTO.common.domain.SingleResult;
 import kr.co.picTO.user.dto.local.LocalUserResponseDto;

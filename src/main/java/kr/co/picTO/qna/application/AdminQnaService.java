@@ -1,4 +1,4 @@
-package kr.co.picTO.admin.application.qna;
+package kr.co.picTO.qna.application;
 
 import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.common.domain.ListResult;

@@ -1,4 +1,4 @@
-package kr.co.picTO.common.aop;
+package kr.co.picTO.aop;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
