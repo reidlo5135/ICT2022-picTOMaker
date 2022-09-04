@@ -33,7 +33,6 @@ export default function MyPageProfile(){
                     alert(err.response.data.msg);
                 });
 
-            setName(jsonProf.name);
             setNickName(jsonProf.nickName);
             setProfileImage(jsonProf.profile_image_url);
         } catch (err) {
@@ -50,14 +49,6 @@ export default function MyPageProfile(){
             <div className='Right-Contents'>
                 <div className='Menu-Name'>
                     내 프로필
-                </div>
-                <div className='MenuBox'>
-                    <div className='Name'>
-                        이름
-                    </div>
-                    <div className='MenuBox-props'>
-                        <b>{name}</b>
-                    </div>
                 </div>
                 <div className='MenuBox'>
                     {nickName === null ? <div className='Name'></div> : <div className='Name'>닉네임</div>}

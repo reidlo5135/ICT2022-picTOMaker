@@ -18,11 +18,7 @@ const GetProfile = () => {
             console.log('jProf : ', jsonProf);
 
             setEmail(jsonProf.email);
-            if(provider === 'LOCAL') {
-                setNickName(jsonProf.nickName);
-            } else {
-                setNickName(jsonProf.name);
-            }
+            setNickName(jsonProf.nickName);
             if(jsonProf.profile_image_url === null) {
                 setProfileImage(null);
             } else {

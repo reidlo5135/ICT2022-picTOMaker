@@ -14,53 +14,50 @@ const Profile = () => {
     const [profileImage, setProfileImage] = useState();
     let profile = null;
 
-    const getOAuthProf = async () => {
+    // const getOAuthProf = async () => {
+    //     try {
+    //         await axios.post(`/v1/api/oauth2/profile/provider/${provider}`, {
+    //             access_token
+    //         }).then((response) => {
+    //             console.log('OAuth profile res data.data : ', response.data.data);
+    //
+    //             profile = JSON.parse(JSON.stringify(response.data.data));
+    //             setEmail(profile.email);
+    //             setNickName(profile.name);
+    //
+    //             if(profile.profile_image_url === null){
+    //                 setProfileImage(null);
+    //             } else {
+    //                 setProfileImage(profile.profile_image_url);
+    //             }
+    //
+    //             localStorage.setItem("profile", JSON.stringify(response.data.data));
+    //         }).catch((err) => {
+    //             console.error('err : ', JSON.stringify(err));
+    //             alert(err.response.data.msg);
+    //         });
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // };
+
+    const getProf = async () => {
         try {
-            await axios.post(`/v1/api/oauth2/profile/provider/${provider}`, {
-                access_token
-            }).then((response) => {
-                console.log('OAuth profile res data.data : ', response.data.data);
+            await axios.get('/v1/api/users/myinfo')
+                .then((response) => {
+                    console.log('Local profile res data.data : ', response.data.data);
 
-                profile = JSON.parse(JSON.stringify(response.data.data));
-                setEmail(profile.email);
-                setNickName(profile.name);
+                    profile = JSON.parse(JSON.stringify(response.data.data));
+                    setEmail(profile.email);
+                    setNickName(profile.nickName);
 
-                if(profile.profile_image_url === null){
-                    setProfileImage(null);
-                } else {
-                    setProfileImage(profile.profile_image_url);
-                }
+                    if(profile.profile_image_url === null){
+                        setProfileImage(null);
+                    } else {
+                        setProfileImage(profile.profile_image_url);
+                    }
 
-                localStorage.setItem("profile", JSON.stringify(response.data.data));
-            }).catch((err) => {
-                console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.msg);
-            });
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    const getLocalProf = async () => {
-        try {
-            await axios.post('/v1/api/user/profile', {
-                access_token
-            }).then((response) => {
-                console.log('Local profile res data.data : ', response.data.data);
-
-                profile = JSON.parse(JSON.stringify(response.data.data));
-                setEmail(profile.email);
-                setNickName(profile.nickName);
-
-                console.log('Local get profile expires_in : ', profile.expires_in);
-
-                if(profile.profile_image_url === null){
-                    setProfileImage(null);
-                } else {
-                    setProfileImage(profile.profile_image_url);
-                }
-
-                localStorage.setItem("profile", JSON.stringify(response.data.data));
+                    localStorage.setItem("profile", JSON.stringify(response.data.data));
             }).catch((err) => {
                 console.error('err : ', JSON.stringify(err));
                 alert(err.response.data.msg);
@@ -71,13 +68,8 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        if(provider != 'LOCAL') {
-            getOAuthProf();
-        } else if(provider === 'LOCAL') {
-            getLocalProf();
-        } else if(provider == null) {
-            setIsLogged(false);
-        }
+        getProf();
+        setIsLogged(false);
         if(access_token != null) {
             setIsLogged(true);
             localStorage.setItem("isLogged", isLogged.toString());
