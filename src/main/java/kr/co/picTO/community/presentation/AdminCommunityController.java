@@ -1,7 +1,7 @@
-package kr.co.picTO.admin.presentation.community;
+package kr.co.picTO.community.presentation;
 
 import io.swagger.annotations.*;
-import kr.co.picTO.admin.application.community.AdminCommunityService;
+import kr.co.picTO.community.application.AdminCommunityService;
 import kr.co.picTO.common.domain.ListResult;
 import kr.co.picTO.common.domain.SingleResult;
 import kr.co.picTO.community.dto.UserCommunityResponseDto;

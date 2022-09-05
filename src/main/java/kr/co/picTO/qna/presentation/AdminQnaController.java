@@ -1,7 +1,7 @@
-package kr.co.picTO.admin.presentation.qna;
+package kr.co.picTO.qna.presentation;
 
 import io.swagger.annotations.*;
-import kr.co.picTO.admin.application.qna.AdminQnaService;
+import kr.co.picTO.qna.application.AdminQnaService;
 import kr.co.picTO.common.domain.ListResult;
 import kr.co.picTO.common.domain.SingleResult;
 import kr.co.picTO.qna.dto.UserQnaResponseDto;
