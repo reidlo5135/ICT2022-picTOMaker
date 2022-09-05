@@ -14,9 +14,20 @@ public class LoggedInConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggedInInterceptor)
                 .excludePathPatterns("/")
-                .excludePathPatterns("/oauth2/redirect/**/**")
                 .excludePathPatterns("/static/**/**/**")
-                .excludePathPatterns("/index.html", "/favicon.ico", "/manifest.json", "/logo192.png")
+                .excludePathPatterns("/index.html",
+                        "/favicon.ico",
+                        "/manifest.json",
+                        "/logo192.png",
+                        "/**/*.png",
+                        "/**/*.gif",
+                        "/**/*.svg",
+                        "/**/*.jpg",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js",
+                        "/**/*.json",
+                        "/**/*.otf")
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs")
                 .excludePathPatterns("/v1/api/users/signup")

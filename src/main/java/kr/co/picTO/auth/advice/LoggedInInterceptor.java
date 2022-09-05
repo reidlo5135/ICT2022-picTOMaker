@@ -27,6 +27,8 @@ public class LoggedInInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         try {
+            log.info("Request URI - {}", request.getRequestURI());
+            if(request.getRequestURI().contains("oauth2")) return true;
             return oauthService.oauth(getToken(request));
         } catch (JWTValidException | TokenNotFoundException e) {
             writeInResponse(response, e.getMessage());
