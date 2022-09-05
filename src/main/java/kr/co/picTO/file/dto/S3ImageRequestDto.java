@@ -1,8 +1,8 @@
 package kr.co.picTO.file.dto;
 
-import kr.co.picTO.user.domain.local.BaseLocalUser;
-import kr.co.picTO.user.domain.social.BaseAuthUser;
-import kr.co.picTO.file.domain.BaseS3Image;
+import kr.co.picTO.user.domain.local.User;
+import kr.co.picTO.user.domain.social.SocialUser;
+import kr.co.picTO.file.domain.S3Image;
 import lombok.*;
 
 @Getter
@@ -15,9 +15,9 @@ public class S3ImageRequestDto {
     private String extension;
     private String provider;
 
-    public BaseS3Image toBluEntity(BaseLocalUser blu) {
-        return BaseS3Image.builder()
-                .blu(blu)
+    public S3Image toBluEntity(User user) {
+        return S3Image.builder()
+                .user(user)
                 .email(email)
                 .fileName(fileName)
                 .fileUrl(fileUrl)
@@ -26,9 +26,9 @@ public class S3ImageRequestDto {
                 .build();
     }
 
-    public BaseS3Image toBauEntity(BaseAuthUser bau) {
-        return BaseS3Image.builder()
-                .bau(bau)
+    public S3Image toBauEntity(SocialUser socialUser) {
+        return S3Image.builder()
+                .socialUser(socialUser)
                 .email(email)
                 .fileName(fileName)
                 .fileUrl(fileUrl)

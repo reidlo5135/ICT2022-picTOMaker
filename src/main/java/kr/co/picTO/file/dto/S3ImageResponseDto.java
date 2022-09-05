@@ -1,6 +1,6 @@
 package kr.co.picTO.file.dto;
 
-import kr.co.picTO.file.domain.BaseS3Image;
+import kr.co.picTO.file.domain.S3Image;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,16 +20,16 @@ public class S3ImageResponseDto {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public S3ImageResponseDto(BaseS3Image baseS3Image) {
-        if(baseS3Image.getBlu() != null) {
-            email = baseS3Image.getBlu().getEmail();
-        } else if(baseS3Image.getBau() != null) {
-            email = baseS3Image.getBau().getEmail();
+    public S3ImageResponseDto(S3Image s3Image) {
+        if(s3Image.getUser() != null) {
+            email = s3Image.getUser().getEmail();
+        } else if(s3Image.getSocialUser() != null) {
+            email = s3Image.getSocialUser().getEmail();
         }
-        id = baseS3Image.getId();
-        fileName = baseS3Image.getFileName();
-        fileUrl = baseS3Image.getFileUrl();
-        createdDate = baseS3Image.getCreatedDate();
-        modifiedDate = baseS3Image.getModifiedDate();
+        id = s3Image.getId();
+        fileName = s3Image.getFileName();
+        fileUrl = s3Image.getFileUrl();
+        createdDate = s3Image.getCreatedDate();
+        modifiedDate = s3Image.getModifiedDate();
     }
 }
