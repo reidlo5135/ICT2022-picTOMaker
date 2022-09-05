@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface BaseUserQnaRepo extends JpaRepository<BaseUserQna, Long> {
+public interface UserQnaRepo extends JpaRepository<UserQna, Long> {
 
-    Optional<BaseUserQna> findByName(String name);
+    Optional<UserQna> findByName(String name);
 }

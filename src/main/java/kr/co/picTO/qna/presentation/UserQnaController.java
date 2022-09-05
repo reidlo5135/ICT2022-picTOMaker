@@ -18,8 +18,8 @@ public class UserQnaController {
     private final UserQnaService userQnaService;
 
     @ApiOperation(value = "문의 등록", notes = "Register QnA")
-    @PostMapping(value = "/register/{provider}")
-    public ResponseEntity<SingleResult<Long>> save(@ApiParam(value = "QnaReqDto", required = true) @RequestBody UserQnaRequestDto userQnaRequestDto, @PathVariable String provider) {
-        return ResponseEntity.ok().body(userQnaService.registerQnA(userQnaRequestDto, provider));
+    @PostMapping(value = "/register")
+    public ResponseEntity<SingleResult<Long>> save(@ApiParam(value = "QnaReqDto", required = true) @RequestBody UserQnaRequestDto userQnaRequestDto) {
+        return ResponseEntity.ok().body(userQnaService.registerQnA(userQnaRequestDto));
     }
 }

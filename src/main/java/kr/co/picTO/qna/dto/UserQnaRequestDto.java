@@ -1,8 +1,7 @@
 package kr.co.picTO.qna.dto;
 
-import kr.co.picTO.user.domain.local.BaseLocalUser;
-import kr.co.picTO.user.domain.social.BaseAuthUser;
-import kr.co.picTO.qna.domain.BaseUserQna;
+import kr.co.picTO.qna.domain.UserQna;
+import kr.co.picTO.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,17 +17,9 @@ public class UserQnaRequestDto {
     private String name;
     private String qna;
 
-    public BaseUserQna toEntity(BaseLocalUser blu) {
-        return BaseUserQna.builder()
-                .blu(blu)
-                .name(name)
-                .qna(qna)
-                .build();
-    }
-
-    public BaseUserQna toEntity(BaseAuthUser bau) {
-        return BaseUserQna.builder()
-                .bau(bau)
+    public UserQna toEntity(User user) {
+        return UserQna.builder()
+                .user(user)
                 .name(name)
                 .qna(qna)
                 .build();

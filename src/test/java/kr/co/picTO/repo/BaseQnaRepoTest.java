@@ -1,6 +1,6 @@
 package kr.co.picTO.repo;
 
-import kr.co.picTO.qna.domain.BaseUserQnaRepo;
+import kr.co.picTO.qna.domain.UserQnaRepo;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,5 +22,5 @@ public class BaseQnaRepoTest {
     TestEntityManager testEntityManager;
 
     @Autowired
-    BaseUserQnaRepo userQnaRepo;
+    UserQnaRepo userQnaRepo;
 }
