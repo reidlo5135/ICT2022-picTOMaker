@@ -7,9 +7,9 @@ import kr.co.picTO.common.exception.CustomCommunicationException;
 import kr.co.picTO.token.domain.BaseAccessToken;
 import kr.co.picTO.token.domain.BaseTokenRepo;
 import kr.co.picTO.token.dto.SocialTokenRequestDto;
-import kr.co.picTO.user.domain.social.BaseAuthRole;
-import kr.co.picTO.user.domain.social.BaseAuthUser;
-import kr.co.picTO.user.domain.social.BaseAuthUserRepo;
+import kr.co.picTO.user.domain.social.AccountRole;
+import kr.co.picTO.user.domain.social.SocialUser;
+import kr.co.picTO.user.domain.social.SocialUserRepository;
 import kr.co.picTO.user.dto.social.*;
 import kr.co.picTO.user.exception.CustomAccessTokenExistException;
 import kr.co.picTO.user.exception.CustomUserNotFoundException;
@@ -31,7 +31,7 @@ public class OAuth2ProviderService {
     private final OAuth2Factory oAuth2Factory;
     private final RestTemplate restTemplate;
     private final Gson gson;
-    private final BaseAuthUserRepo userRepo;
+    private final SocialUserRepository userRepo;
     private final BaseTokenRepo tokenRepo;
     private final ResponseService responseService;
 
@@ -132,17 +132,17 @@ public class OAuth2ProviderService {
     }
 
     @Transactional
-    protected BaseAuthUser saveUser(String name, String email, String picture, String provider){
+    protected SocialUser saveUser(String name, String email, String picture, String provider){
         if(userRepo.findByEmail(email).isEmpty()) {
             String role = provider.toUpperCase(Locale.ROOT);
-            BaseAuthUser baseAuthUser = BaseAuthUser.builder()
+            SocialUser socialUser = SocialUser.builder()
                     .name(name)
                     .email(email)
                     .picture(picture)
                     .provider(provider)
-                    .role(BaseAuthRole.valueOf(role))
+                    .role(AccountRole.valueOf(role))
                     .build();
-            return userRepo.save(baseAuthUser);
+            return userRepo.save(socialUser);
         } else {
             return userRepo.findByEmail(email).orElseThrow(CustomUserNotFoundException::new);
         }

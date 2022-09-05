@@ -26,6 +26,7 @@ public class UserCreateDto {
                 .email(email)
                 .password(password)
                 .nickName(nickName)
+                .provider("LOCAL")
                 .build();
     }
 }

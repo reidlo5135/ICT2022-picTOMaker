@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "base_auth_user")
-public class BaseAuthUser extends BaseTimeEntity {
+public class SocialUser extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +30,10 @@ public class BaseAuthUser extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BaseAuthRole role;
+    private AccountRole role;
 
     @Builder
-    public BaseAuthUser(String name, String email, String picture, String provider, BaseAuthRole role) {
+    public SocialUser(String name, String email, String picture, String provider, AccountRole role) {
         this.name = name;
         this.email = email;
         this.picture = picture;
@@ -41,7 +41,7 @@ public class BaseAuthUser extends BaseTimeEntity {
         this.role = role;
     }
 
-    public BaseAuthUser update(String name, String picture) {
+    public SocialUser update(String name, String picture) {
         this.name = name;
         this.picture = picture;
 

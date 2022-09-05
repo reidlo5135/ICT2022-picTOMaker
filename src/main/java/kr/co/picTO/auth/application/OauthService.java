@@ -11,6 +11,7 @@ import kr.co.picTO.user.dto.UserLoginDto;
 import kr.co.picTO.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class OauthService {
         return WebToken.from(token).validToken(LOGIN_VALID_SECOND);
     }
 
+    @Transactional
     public WebToken login(UserLoginDto userLoginDto) {
         try {
             User user = userService.authenticate(userLoginDto);

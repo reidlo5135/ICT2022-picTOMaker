@@ -69,6 +69,7 @@ export default function Main(){
 
                         setIsLogged(true);
                         localStorage.setItem("access_token", access_token);
+                        localStorage.setItem("provider", "LOCAL");
                         closeModal();
                         history.push('/');
                     }

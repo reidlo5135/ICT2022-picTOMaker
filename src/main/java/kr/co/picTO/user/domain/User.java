@@ -48,14 +48,18 @@ public class User extends BaseTimeEntity {
     @Column(name = "profile_image", length = 300)
     private String profile_image_url;
 
+    @Column(name = "provider", nullable = false, length = 30)
+    private String provider;
+
     @Builder
-    public User(Long id, String email, String password, String nickName, String introduction, String profile_image_url) {
+    public User(Long id, String email, String password, String nickName, String introduction, String profile_image_url, String provider) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.nickName = nickName;
         this.introduction = introduction;
         this.profile_image_url = profile_image_url;
+        this.provider = provider;
     }
 
     public void update(User updateUser) {

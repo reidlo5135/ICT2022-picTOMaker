@@ -1,7 +1,7 @@
 package kr.co.picTO.repo;
 
 import kr.co.picTO.user.domain.local.BaseLocalUser;
-import kr.co.picTO.user.domain.social.BaseAuthRole;
+import kr.co.picTO.user.domain.social.AccountRole;
 import kr.co.picTO.user.domain.local.BaseLocalUserRepo;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +45,7 @@ public class BaseLocalUserRepoTest {
                 .name(TEST_NAME)
                 .nickName(TEST_NICKNAME)
                 .profile_image_url(TEST_PIC)
-                .provider(BaseAuthRole.LOCAL.getKey())
+                .provider(AccountRole.LOCAL.getKey())
                 .build();
 
         testEntityManager.persist(blu);

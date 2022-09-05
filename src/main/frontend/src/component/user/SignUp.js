@@ -11,13 +11,12 @@ export default function SignUp(){
 
     const [inputValue, setInputValue] = useState({
         email: '',
-        name: '',
         nickName: '',
         password: '',
         confirmPassword: '',
     });
 
-    const {email, name, nickName, password, confirmPassword } = inputValue;
+    const {email, nickName, password, confirmPassword } = inputValue;
 
     const isValidEmail = email.includes('@') && email.includes('.');
     const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
@@ -32,7 +31,7 @@ export default function SignUp(){
         });
     };
 
-    const isValidInput = email.length >= 1 && name.length >= 1 && nickName.length >= 1;
+    const isValidInput = email.length >= 1 && nickName.length >= 1;
 
     const getIsActive = isValidEmail && isValidPassword && isValidInput && isEqualsPassword === true;
 
@@ -48,9 +47,8 @@ export default function SignUp(){
             alert('비밀번호가 일치하지 않습니다.');
         } else {
             try {
-                axios.post('/v1/api/user/signUp', {
+                axios.post('/v1/api/users/signup', {
                     email,
-                    name,
                     nickName,
                     password
                 }).then((response) => {
@@ -85,10 +83,6 @@ export default function SignUp(){
                         <div className='SU-Form'>
                             <div className='Label-txt'>이메일</div>
                             <input type={'email'} name={'email'} onChange={handleInput} placeholder="exmaple@picTOMaker.com"/>
-                        </div>
-                        <div className='SU-Form'>
-                            <div className='Label-txt'>이름</div>
-                            <input type={'text'} name={'name'} onChange={handleInput} placeholder="EX) 김픽토"/>
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>닉네임</div>

@@ -20,6 +20,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final ResponseService responseService;
 
+    @Transactional(readOnly = true)
+    public User authenticate(UserLoginDto userLoginDto) {
+        User loginUser = userLoginDto.toEntity();
+        return userRepository.findByEmailAndPassword(loginUser.getEmail(), loginUser.getPassword()).orElseThrow(CustomUserNotFoundException::new);
+    }
+
     public SingleResult<UserInfoDto> save(UserCreateDto userCreateDto) {
         try {
             return responseService.getSingleResult(UserInfoDto.from(userRepository.save(userCreateDto.toEntity())));
@@ -51,12 +57,6 @@ public class UserService {
         userRepository.findById(userId)
                 .orElseThrow(CustomUserNotFoundException::new)
                 .deactivate();
-    }
-
-    @Transactional(readOnly = true)
-    public User authenticate(UserLoginDto userLoginDto) {
-        User loginUser = userLoginDto.toEntity();
-        return userRepository.findByEmailAndPassword(loginUser.getEmail(), loginUser.getPassword()).orElseThrow(CustomUserNotFoundException::new);
     }
 
     public User findInfoDtoByEmail(String email) {
