@@ -1,11 +1,11 @@
-package kr.co.picTO.user.domain.social;
+package kr.co.picTO.user.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum BaseAuthRole {
+public enum AccountRole {
     GOOGLE("GOOGLE", "구글 사용자"),
     NAVER("NAVER", "네이버 사용자"),
     KAKAO("KAKAO", "카카오 사용자"),
