@@ -3,7 +3,7 @@ package kr.co.picTO.common.configuration;
 import kr.co.picTO.common.exception.CustomAccessDeniedHandler;
 import kr.co.picTO.common.exception.RestAuthenticationEntryPoint;
 import kr.co.picTO.token.application.JwtAuthenticationFilter;
-import kr.co.picTO.token.application.LocalUserJwtProvider;
+import kr.co.picTO.token.application.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final LocalUserJwtProvider jwtProvider;
+    private final JwtProvider jwtProvider;
 
     @Bean
     @Override
