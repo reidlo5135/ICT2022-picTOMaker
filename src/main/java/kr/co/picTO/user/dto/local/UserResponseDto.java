@@ -1,6 +1,6 @@
 package kr.co.picTO.user.dto.local;
 
-import kr.co.picTO.user.domain.local.BaseLocalUser;
+import kr.co.picTO.user.domain.local.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -9,17 +9,17 @@ import java.util.Collection;
 import java.util.List;
 
 @Getter
-public class LocalUserResponseDto {
+public class UserResponseDto {
 
     private final Long id;
     private final String email;
     private final String name;
     private final String nickName;
-    private List<String> roles;
-    private Collection<? extends GrantedAuthority> authorities;
+    private final List<String> roles;
+    private final Collection<? extends GrantedAuthority> authorities;
     private final LocalDateTime modifiedDate;
 
-    public LocalUserResponseDto(BaseLocalUser user) {
+    public UserResponseDto(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
         this.name = user.getName();

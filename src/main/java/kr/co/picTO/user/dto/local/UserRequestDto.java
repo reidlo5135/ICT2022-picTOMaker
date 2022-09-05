@@ -1,6 +1,6 @@
 package kr.co.picTO.user.dto.local;
 
-import kr.co.picTO.user.domain.local.BaseLocalUser;
+import kr.co.picTO.user.domain.local.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,14 +10,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocalUserLoginRequestDto {
-    private String email;
-    private String password;
+public class UserRequestDto {
 
-    public BaseLocalUser toEntity() {
-        return BaseLocalUser.builder()
+    private String email;
+    private String name;
+    private String nickName;
+
+    public User toEntity() {
+        return User.builder()
                 .email(email)
-                .password(password)
+                .name(name)
+                .nickName(nickName)
                 .build();
     }
 }

@@ -1,9 +1,9 @@
 package kr.co.picTO.service;
 
-import kr.co.picTO.token.application.LocalUserJwtProvider;
-import kr.co.picTO.user.dto.local.LocalUserSignUpRequestDto;
-import kr.co.picTO.user.domain.local.BaseLocalUserRepo;
-import kr.co.picTO.user.application.local.LocalUserService;
+import kr.co.picTO.token.application.JwtProvider;
+import kr.co.picTO.user.dto.local.UserCreateDto;
+import kr.co.picTO.user.domain.local.UserRepository;
+import kr.co.picTO.user.application.local.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +23,11 @@ public class LocalUserServiceTest {
     private static final String TEST_IMG = "asdfasf";
 
     @Autowired
-    private BaseLocalUserRepo userRepo;
+    private UserRepository userRepo;
     @Autowired
-    private LocalUserService userService;
+    private UserService userService;
     @Autowired
-    private LocalUserJwtProvider jwtProvider;
+    private JwtProvider jwtProvider;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -37,7 +37,7 @@ public class LocalUserServiceTest {
     }
 
     @Test
-    void singUp(LocalUserSignUpRequestDto localUserSignUpRequestDto) {
+    void singUp(UserCreateDto userCreateDto) {
 
     }
 }

@@ -1,6 +1,7 @@
 package kr.co.picTO.user.dto.local;
 
-import kr.co.picTO.user.domain.local.BaseLocalUser;
+import kr.co.picTO.user.domain.AccountStatus;
+import kr.co.picTO.user.domain.local.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,21 +16,22 @@ import java.util.Collections;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocalUserSignUpRequestDto {
+public class UserCreateDto {
 
     private String email;
     private String password;
     private String name;
     private String nickName;
 
-    public BaseLocalUser toEntity(PasswordEncoder passwordEncoder) {
+    public User toEntity(PasswordEncoder passwordEncoder) {
 
-        return BaseLocalUser.builder()
+        return User.builder()
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .name(name)
                 .nickName(nickName)
                 .provider("LOCAL")
+                .status(AccountStatus.ACTIVE)
                 .roles(Collections.singletonList("ROLE_LOCAL"))
                 .build();
     }
