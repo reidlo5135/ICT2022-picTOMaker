@@ -1,6 +1,6 @@
 package kr.co.picTO.community.dto;
 
-import kr.co.picTO.community.domain.BaseUserCommunity;
+import kr.co.picTO.community.domain.UserCommunity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,14 +20,9 @@ public class UserCommunityResponseDto {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public UserCommunityResponseDto(BaseUserCommunity baseUserCommunity) {
-        if(baseUserCommunity.getBlu() != null) {
-            email = baseUserCommunity.getBlu().getEmail();
-            nickname = baseUserCommunity.getBlu().getNickName();
-        } else if(baseUserCommunity.getBau() != null) {
-            email = baseUserCommunity.getBau().getEmail();
-            nickname = baseUserCommunity.getBau().getName();
-        }
+    public UserCommunityResponseDto(UserCommunity baseUserCommunity) {
+        email = baseUserCommunity.getUser().getEmail();
+        nickname = baseUserCommunity.getUser().getNickName();
         id = baseUserCommunity.getId();
         title = baseUserCommunity.getTitle();
         content = baseUserCommunity.getContent();

@@ -32,8 +32,8 @@ public class UserCommunityController {
     }
 
     @ApiOperation(value = "게시물 등록", notes = "Register Board")
-    @PostMapping(value = "/register/provider/{provider}")
-    public ResponseEntity<SingleResult<Long>> save(@ApiParam(value = "CommunityReqDto", required = true) @RequestBody UserCommunityRequestDto userCommunityRequestDto, @PathVariable String provider) {
-        return ResponseEntity.ok().body(userCommunityService.registerBoard(userCommunityRequestDto, provider));
+    @PostMapping(value = "/register")
+    public ResponseEntity<SingleResult<Long>> save(@ApiParam(value = "CommunityReqDto", required = true) @RequestBody UserCommunityRequestDto userCommunityRequestDto) {
+        return ResponseEntity.ok().body(userCommunityService.registerBoard(userCommunityRequestDto));
     }
 }

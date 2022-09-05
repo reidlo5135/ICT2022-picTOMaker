@@ -134,7 +134,7 @@ const CPosting = () => {
 
       const registerBoard = () => {
           try {
-              axios.post(`/v1/api/community/register/provider/${provider}`, {
+              axios.post('/v1/api/community/register', {
                   email,
                   title,
                   content

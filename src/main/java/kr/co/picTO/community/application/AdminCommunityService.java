@@ -3,12 +3,12 @@ package kr.co.picTO.community.application;
 import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.common.domain.ListResult;
 import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.community.domain.BaseUserCommunity;
-import kr.co.picTO.community.domain.BaseUserCommunityRepo;
+import kr.co.picTO.community.domain.UserCommunity;
+import kr.co.picTO.community.domain.UserCommunityRepo;
 import kr.co.picTO.community.dto.UserCommunityResponseDto;
 import kr.co.picTO.community.exception.CustomCommunityNotExistException;
 import kr.co.picTO.user.domain.local.BaseLocalUserRepo;
-import kr.co.picTO.user.domain.social.BaseAuthUserRepo;
+import kr.co.picTO.user.domain.social.SocialUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AdminCommunityService {
-    private final BaseUserCommunityRepo communityRepo;
+    private final UserCommunityRepo communityRepo;
     private final BaseLocalUserRepo localUserRepo;
-    private final BaseAuthUserRepo authUserRepo;
+    private final SocialUserRepository authUserRepo;
     private final ResponseService responseService;
 
 
@@ -35,7 +35,7 @@ public class AdminCommunityService {
 
     @Transactional(readOnly = true)
     public SingleResult<UserCommunityResponseDto> findBoardById(long id) {
-        BaseUserCommunity baseUserCommunity = communityRepo.findById(id).orElseThrow(CustomCommunityNotExistException::new);
+        UserCommunity baseUserCommunity = communityRepo.findById(id).orElseThrow(CustomCommunityNotExistException::new);
 
         return responseService.getSingleResult(new UserCommunityResponseDto(baseUserCommunity));
     }
