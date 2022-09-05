@@ -5,14 +5,14 @@ import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.common.domain.ListResult;
 import kr.co.picTO.common.domain.SingleResult;
 import kr.co.picTO.file.exception.CustomFileNotFoundException;
-import kr.co.picTO.file.domain.BaseS3Image;
-import kr.co.picTO.file.domain.BaseS3ImageRepo;
+import kr.co.picTO.file.domain.S3Image;
+import kr.co.picTO.file.domain.S3ImageRepository;
 import kr.co.picTO.file.dto.S3ImageRequestDto;
 import kr.co.picTO.file.dto.S3ImageResponseDto;
-import kr.co.picTO.user.domain.local.BaseLocalUser;
-import kr.co.picTO.user.domain.local.BaseLocalUserRepo;
-import kr.co.picTO.user.domain.social.BaseAuthUser;
-import kr.co.picTO.user.domain.social.BaseAuthUserRepo;
+import kr.co.picTO.user.domain.local.User;
+import kr.co.picTO.user.domain.local.UserRepository;
+import kr.co.picTO.user.domain.social.SocialUser;
+import kr.co.picTO.user.domain.social.SocialUserRepository;
 import kr.co.picTO.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -37,9 +37,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class FileUploadService {
-    private final BaseS3ImageRepo imageRepo;
-    private final BaseAuthUserRepo authUserRepo;
-    private final BaseLocalUserRepo localUserRepo;
+    private final S3ImageRepository imageRepo;
+    private final SocialUserRepository authUserRepo;
+    private final UserRepository localUserRepo;
     private final UploadService uploadService;
     private final ResponseService responseService;
 
@@ -117,15 +117,15 @@ public class FileUploadService {
             uploadService.uploadFile(inputStream, objectMetadata, fileName);
             fileUrl = uploadService.getFileUrl(fileName);
 
-            BaseS3Image image = null;
+            S3Image image = null;
             S3ImageRequestDto imageRequestDto = null;
             if(provider.equals("LOCAL")) {
-                BaseLocalUser blu = localUserRepo.findByEmail(email).orElseThrow();
+                User blu = localUserRepo.findByEmail(email).orElseThrow();
                 imageRequestDto = new S3ImageRequestDto(blu.getEmail(), fileName, fileUrl, getFileExtension(fileName), provider);
                 image = imageRequestDto.toBluEntity(blu);
                 log.info("File SVC uploadImage blu : " + blu);
             } else {
-                BaseAuthUser bau = authUserRepo.findByEmail(email).orElseThrow();
+                SocialUser bau = authUserRepo.findByEmail(email).orElseThrow();
                 imageRequestDto = new S3ImageRequestDto(bau.getEmail(), fileName, fileUrl, getFileExtension(fileName), provider);
                 image = imageRequestDto.toBauEntity(bau);
                 log.info("File SVC uploadImage bau : " + bau);
@@ -144,7 +144,7 @@ public class FileUploadService {
         } else {
             authUserRepo.findByEmailAndProvider(email, provider).orElseThrow(CustomUserNotFoundException::new);
         }
-        List<BaseS3Image> imageList = imageRepo.findByEmailAndProvider(email, provider);
+        List<S3Image> imageList = imageRepo.findByEmailAndProvider(email, provider);
         if(imageList.isEmpty()) throw new CustomFileNotFoundException();
 
         return responseService.getListResult(imageList.stream().map(S3ImageResponseDto::new).collect(Collectors.toList()));

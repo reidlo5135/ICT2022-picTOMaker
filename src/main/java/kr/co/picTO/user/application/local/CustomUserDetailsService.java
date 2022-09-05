@@ -1,7 +1,7 @@
 package kr.co.picTO.user.application.local;
 
 import kr.co.picTO.user.exception.CustomUserNotFoundException;
-import kr.co.picTO.user.domain.local.BaseLocalUserRepo;
+import kr.co.picTO.user.domain.local.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final BaseLocalUserRepo userRepo;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userPk) throws UsernameNotFoundException {
-        return userRepo.findById(Long.parseLong(userPk)).orElseThrow(CustomUserNotFoundException::new);
+        return userRepository.findById(Long.parseLong(userPk)).orElseThrow(CustomUserNotFoundException::new);
     }
 }

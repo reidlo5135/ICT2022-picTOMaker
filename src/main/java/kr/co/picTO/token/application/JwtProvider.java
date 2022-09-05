@@ -3,9 +3,9 @@ package kr.co.picTO.token.application;
 import io.jsonwebtoken.*;
 import kr.co.picTO.common.exception.CustomAuthenticationEntryPointException;
 import kr.co.picTO.user.application.local.CustomUserDetailsService;
-import kr.co.picTO.user.domain.local.BaseLocalUser;
-import kr.co.picTO.token.domain.BaseAccessToken;
-import kr.co.picTO.token.domain.BaseTokenRepo;
+import kr.co.picTO.user.domain.local.User;
+import kr.co.picTO.token.domain.AccessToken;
+import kr.co.picTO.token.domain.AccessTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,12 +23,12 @@ import java.util.List;
 @Log4j2
 @Component
 @RequiredArgsConstructor
-public class LocalUserJwtProvider {
+public class JwtProvider {
 
     @Value("${spring.jwt.secret}")
     private String secretKey;
     private final String ROLES = "roles";
-    private final BaseTokenRepo tokenRepo;
+    private final AccessTokenRepository tokenRepo;
     private final CustomUserDetailsService userDetailsService;
 
     @PostConstruct
@@ -36,7 +36,7 @@ public class LocalUserJwtProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public BaseAccessToken createToken(String userPk, BaseLocalUser blu, List<String> roles) {
+    public AccessToken createToken(String userPk, User user, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(String.valueOf(userPk));
         claims.put(ROLES, roles);
 
@@ -65,8 +65,8 @@ public class LocalUserJwtProvider {
         log.info("Local Jwt Prov prov : "  + provider);
         log.info("Local Jwt Prov accessToken : " + accessToken);
 
-        BaseAccessToken baseAccessToken = BaseAccessToken.builder()
-                .blu(blu)
+        AccessToken baseAccessToken = AccessToken.builder()
+                .user(user)
                 .access_token(accessToken)
                 .expires_in(expire_access.getTime())
                 .token_type("bearer")
