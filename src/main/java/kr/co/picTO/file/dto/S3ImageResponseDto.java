@@ -21,10 +21,10 @@ public class S3ImageResponseDto {
     private LocalDateTime modifiedDate;
 
     public S3ImageResponseDto(BaseS3Image baseS3Image) {
-        if(baseS3Image.getBlu() != null) {
-            email = baseS3Image.getBlu().getEmail();
-        } else if(baseS3Image.getBau() != null) {
-            email = baseS3Image.getBau().getEmail();
+        if(baseS3Image.getUser() != null) {
+            email = baseS3Image.getUser().getEmail();
+        } else if(baseS3Image.getSocialUser() != null) {
+            email = baseS3Image.getSocialUser().getEmail();
         }
         id = baseS3Image.getId();
         fileName = baseS3Image.getFileName();

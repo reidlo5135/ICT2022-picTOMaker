@@ -1,9 +1,12 @@
 package kr.co.picTO.file.dto;
 
-import kr.co.picTO.user.domain.local.BaseLocalUser;
-import kr.co.picTO.user.domain.social.BaseAuthUser;
 import kr.co.picTO.file.domain.BaseS3Image;
-import lombok.*;
+import kr.co.picTO.user.domain.User;
+import kr.co.picTO.user.domain.social.SocialUser;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
@@ -15,9 +18,9 @@ public class S3ImageRequestDto {
     private String extension;
     private String provider;
 
-    public BaseS3Image toBluEntity(BaseLocalUser blu) {
+    public BaseS3Image toUser(User user) {
         return BaseS3Image.builder()
-                .blu(blu)
+                .user(user)
                 .email(email)
                 .fileName(fileName)
                 .fileUrl(fileUrl)
@@ -26,9 +29,9 @@ public class S3ImageRequestDto {
                 .build();
     }
 
-    public BaseS3Image toBauEntity(BaseAuthUser bau) {
+    public BaseS3Image toSocialUser(SocialUser socialUser) {
         return BaseS3Image.builder()
-                .bau(bau)
+                .socialUser(socialUser)
                 .email(email)
                 .fileName(fileName)
                 .fileUrl(fileUrl)
@@ -36,4 +39,26 @@ public class S3ImageRequestDto {
                 .provider(provider)
                 .build();
     }
+
+//    public BaseS3Image toBluEntity(BaseLocalUser blu) {
+//        return BaseS3Image.builder()
+//                .blu(blu)
+//                .email(email)
+//                .fileName(fileName)
+//                .fileUrl(fileUrl)
+//                .extension(extension)
+//                .provider(provider)
+//                .build();
+//    }
+//
+//    public BaseS3Image toBauEntity(SocialUser bau) {
+//        return BaseS3Image.builder()
+//                .bau(bau)
+//                .email(email)
+//                .fileName(fileName)
+//                .fileUrl(fileUrl)
+//                .extension(extension)
+//                .provider(provider)
+//                .build();
+//    }
 }
