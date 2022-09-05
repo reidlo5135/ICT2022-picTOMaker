@@ -1,6 +1,6 @@
 package kr.co.picTO.community.dto;
 
-import kr.co.picTO.community.domain.BaseUserCommunity;
+import kr.co.picTO.community.domain.UserCommunity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,18 +20,18 @@ public class UserCommunityResponseDto {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public UserCommunityResponseDto(BaseUserCommunity baseUserCommunity) {
-        if(baseUserCommunity.getBlu() != null) {
-            email = baseUserCommunity.getBlu().getEmail();
-            nickname = baseUserCommunity.getBlu().getNickName();
-        } else if(baseUserCommunity.getBau() != null) {
-            email = baseUserCommunity.getBau().getEmail();
-            nickname = baseUserCommunity.getBau().getName();
+    public UserCommunityResponseDto(UserCommunity userCommunity) {
+        if(userCommunity.getUser() != null) {
+            email = userCommunity.getUser().getEmail();
+            nickname = userCommunity.getUser().getNickName();
+        } else if(userCommunity.getSocialUser() != null) {
+            email = userCommunity.getSocialUser().getEmail();
+            nickname = userCommunity.getSocialUser().getName();
         }
-        id = baseUserCommunity.getId();
-        title = baseUserCommunity.getTitle();
-        content = baseUserCommunity.getContent();
-        createdDate = baseUserCommunity.getCreatedDate();
-        modifiedDate = baseUserCommunity.getModifiedDate();
+        id = userCommunity.getId();
+        title = userCommunity.getTitle();
+        content = userCommunity.getContent();
+        createdDate = userCommunity.getCreatedDate();
+        modifiedDate = userCommunity.getModifiedDate();
     }
 }

@@ -1,8 +1,8 @@
 package kr.co.picTO.community.dto;
 
-import kr.co.picTO.community.domain.BaseUserCommunity;
-import kr.co.picTO.user.domain.local.BaseLocalUser;
-import kr.co.picTO.user.domain.social.BaseAuthUser;
+import kr.co.picTO.community.domain.UserCommunity;
+import kr.co.picTO.user.domain.local.User;
+import kr.co.picTO.user.domain.social.SocialUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,17 +18,17 @@ public class UserCommunityRequestDto {
     private String title;
     private String content;
 
-    public BaseUserCommunity toEntity(BaseLocalUser blu) {
-        return BaseUserCommunity.builder()
-                .blu(blu)
+    public UserCommunity toEntity(User user) {
+        return UserCommunity.builder()
+                .user(user)
                 .title(title)
                 .content(content)
                 .build();
     }
 
-    public BaseUserCommunity toEntity(BaseAuthUser bau) {
-        return BaseUserCommunity.builder()
-                .bau(bau)
+    public UserCommunity toEntity(SocialUser socialUser) {
+        return UserCommunity.builder()
+                .socialUser(socialUser)
                 .title(title)
                 .content(content)
                 .build();
