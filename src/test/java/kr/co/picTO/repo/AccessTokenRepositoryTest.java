@@ -1,7 +1,7 @@
 package kr.co.picTO.repo;
 
-import kr.co.picTO.token.domain.BaseAccessToken;
-import kr.co.picTO.token.domain.BaseTokenRepo;
+import kr.co.picTO.token.domain.AccessToken;
+import kr.co.picTO.token.domain.AccessTokenRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class BaseTokenRepoTest {
+public class AccessTokenRepositoryTest {
 
     private static final String TEST_BAT = "asdfasdfasdfasdf";
     private static final String TEST_RET = "qwerqwerqwerqwer";
@@ -29,17 +29,17 @@ public class BaseTokenRepoTest {
     private static final Date expire_access = new Date(now.getTime() + accessTokenValidMillisecond);
     private static final Date expire_refresh = new Date(now.getTime() + refreshTokenValidMillisecond);
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseTokenRepoTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccessTokenRepositoryTest.class);
 
     @Autowired
     TestEntityManager testEntityManager;
 
     @Autowired
-    BaseTokenRepo tokenRepo;
+    AccessTokenRepository tokenRepo;
 
     @Test
     void findByAccessToken() {
-        BaseAccessToken bat = BaseAccessToken.builder()
+        AccessToken bat = AccessToken.builder()
                 .token_type("bearer")
                 .access_token(TEST_BAT)
                 .expires_in(expire_access.getTime())
@@ -50,7 +50,7 @@ public class BaseTokenRepoTest {
 
         testEntityManager.persist(bat);
 
-        assertEquals(bat, testEntityManager.find(BaseAccessToken.class, bat.getId()));
+        assertEquals(bat, testEntityManager.find(AccessToken.class, bat.getId()));
         assertEquals("BAT equals", bat.getAccess_token(), TEST_BAT);
         assertEquals("BAT tokenRepo : ", bat, tokenRepo.findByAccessToken(TEST_BAT));
         LOGGER.info("BAT : " + bat);

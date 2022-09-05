@@ -1,6 +1,6 @@
 package kr.co.picTO.token.dto;
 
-import kr.co.picTO.token.domain.BaseAccessToken;
+import kr.co.picTO.token.domain.AccessToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,8 +17,8 @@ public class TokenRequestDto {
     private String accessToken;
     private String refreshToken;
 
-    public BaseAccessToken toEntity(String accessToken, String refreshToken) {
-        return BaseAccessToken.builder()
+    public AccessToken toEntity(String accessToken, String refreshToken) {
+        return AccessToken.builder()
                 .access_token(accessToken)
                 .refresh_token(refreshToken)
                 .build();

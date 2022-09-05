@@ -1,8 +1,8 @@
 package kr.co.picTO.token.domain;
 
 import kr.co.picTO.common.domain.BaseTimeEntity;
-import kr.co.picTO.user.domain.local.BaseLocalUser;
-import kr.co.picTO.user.domain.social.BaseAuthUser;
+import kr.co.picTO.user.domain.local.User;
+import kr.co.picTO.user.domain.social.SocialUser;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,20 +12,20 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "base_access_token")
-public class BaseAccessToken extends BaseTimeEntity {
+@Table(name = "access_token")
+public class AccessToken extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = BaseLocalUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "blu_id")
-    private BaseLocalUser blu;
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @ManyToOne(targetEntity = BaseAuthUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "bau_id")
-    private BaseAuthUser bau;
+    @ManyToOne(targetEntity = SocialUser.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "social_user_id")
+    private SocialUser socialUser;
 
     @Column(nullable = false)
     private String access_token;
