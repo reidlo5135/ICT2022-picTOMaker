@@ -11,7 +11,7 @@ import org.springframework.util.LinkedMultiValueMap;
 @Log4j2
 @Component
 @RequiredArgsConstructor
-public class OAuth2Factory {
+public class SocialUserFactory {
 
     private final KakaoInfo kakaoInfo;
     private final GoogleInfo googleInfo;

@@ -4,12 +4,12 @@ import com.google.gson.Gson;
 import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.common.domain.SingleResult;
 import kr.co.picTO.common.exception.CustomCommunicationException;
-import kr.co.picTO.token.domain.BaseAccessToken;
-import kr.co.picTO.token.domain.BaseTokenRepo;
+import kr.co.picTO.token.domain.AccessToken;
+import kr.co.picTO.token.domain.AccessTokenRepository;
 import kr.co.picTO.token.dto.SocialTokenRequestDto;
-import kr.co.picTO.user.domain.social.BaseAuthRole;
-import kr.co.picTO.user.domain.social.BaseAuthUser;
-import kr.co.picTO.user.domain.social.BaseAuthUserRepo;
+import kr.co.picTO.user.domain.AccountRole;
+import kr.co.picTO.user.domain.social.SocialUser;
+import kr.co.picTO.user.domain.social.SocialUserRepository;
 import kr.co.picTO.user.dto.social.*;
 import kr.co.picTO.user.exception.CustomAccessTokenExistException;
 import kr.co.picTO.user.exception.CustomUserNotFoundException;
@@ -27,12 +27,12 @@ import java.util.Locale;
 @Log4j2
 @Service
 @RequiredArgsConstructor
-public class OAuth2ProviderService {
-    private final OAuth2Factory oAuth2Factory;
+public class SocialUserService {
+    private final SocialUserFactory socialUserFactory;
     private final RestTemplate restTemplate;
     private final Gson gson;
-    private final BaseAuthUserRepo userRepo;
-    private final BaseTokenRepo tokenRepo;
+    private final SocialUserRepository socialUserRepository;
+    private final AccessTokenRepository tokenRepository;
     private final ResponseService responseService;
 
     @Transactional
@@ -40,7 +40,7 @@ public class OAuth2ProviderService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        OAuth2RequestDto oAuth2RequestDto = oAuth2Factory.getRequest(code, provider);
+        OAuth2RequestDto oAuth2RequestDto = socialUserFactory.getRequest(code, provider);
         HttpEntity<LinkedMultiValueMap<String, String>> request = new HttpEntity<>(oAuth2RequestDto.getMap(), httpHeaders);
 
         ResponseEntity<String> response = restTemplate.postForEntity(oAuth2RequestDto.getUrl(), request, String.class);
@@ -51,34 +51,34 @@ public class OAuth2ProviderService {
     }
 
     @Transactional
-    public void saveAccessToken(BaseAccessToken baseAccessToken) {
-        log.info("OAuth2ProvSVC sAT bat : " + baseAccessToken);
-        if(tokenRepo.findByAccessToken(baseAccessToken.getAccess_token()).isPresent()) throw new CustomAccessTokenExistException();
-        tokenRepo.save(baseAccessToken);
+    public void saveAccessToken(AccessToken accessToken) {
+        log.info("OAuth2ProvSVC sAT bat : " + accessToken);
+        if(tokenRepository.findByAccessToken(accessToken.getAccess_token()).isPresent()) throw new CustomAccessTokenExistException();
+        tokenRepository.save(accessToken);
     }
 
     @Transactional
     public SingleResult<Integer> deleteToken(String access_token) {
         log.info("OAuth2ProvSVC deleteToken at : " + access_token);
 
-        return responseService.getSingleResult(tokenRepo.deleteByAccessToken(access_token));
+        return responseService.getSingleResult(tokenRepository.deleteByAccessToken(access_token));
     }
 
     @Transactional
-    public SingleResult<SocialUserProfileResponseDto> getProfile(String accessToken, String provider) {
+    public SingleResult<SocialUserInfoDto> getProfile(String accessToken, String provider) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         httpHeaders.set("Authorization", "Bearer " + accessToken);
 
-        String profileUrl = oAuth2Factory.getProfileUrl(provider);
+        String profileUrl = socialUserFactory.getProfileUrl(provider);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(httpHeaders);
         ResponseEntity<String> response = restTemplate.postForEntity(profileUrl, request, String.class);
 
         return responseService.getSingleResult(extractProfile(response, provider));
     }
 
-    public SocialUserProfileResponseDto getProfileForGoogle(String accessToken, String provider) {
-        String profileUrl = oAuth2Factory.getProfileUrl(provider);
+    public SocialUserInfoDto getProfileForGoogle(String accessToken, String provider) {
+        String profileUrl = socialUserFactory.getProfileUrl(provider);
 
         ResponseEntity<String> response = null;
 
@@ -94,14 +94,14 @@ public class OAuth2ProviderService {
     }
 
     @Transactional
-    protected SocialUserProfileResponseDto extractProfile(ResponseEntity<String> response, String provider) {
+    protected SocialUserInfoDto extractProfile(ResponseEntity<String> response, String provider) {
         switch (provider) {
             case "kakao":
                 KakaoProfile kakaoProfile = gson.fromJson(response.getBody(), KakaoProfile.class);
                 log.info("OAuth2ProvSVC " + provider + " extractProfile : " + kakaoProfile);
 
                 saveUser(kakaoProfile.getProperties().getNickname(), kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getProfile_image(), provider);
-                return SocialUserProfileResponseDto.builder()
+                return SocialUserInfoDto.builder()
                         .email(kakaoProfile.getKakao_account().getEmail())
                         .name(kakaoProfile.getProperties().getNickname())
                         .profile_image_url(kakaoProfile.getProperties().getProfile_image())
@@ -111,7 +111,7 @@ public class OAuth2ProviderService {
                 log.info("OAuth2ProvSVC " + provider + " extractProfile : " + googleProfile);
 
                 saveUser(googleProfile.getEmail(), googleProfile.getName(), googleProfile.getPicture(), provider);
-                return SocialUserProfileResponseDto.builder()
+                return SocialUserInfoDto.builder()
                         .email(googleProfile.getEmail())
                         .name(googleProfile.getName())
                         .profile_image_url(googleProfile.getPicture())
@@ -121,7 +121,7 @@ public class OAuth2ProviderService {
                 log.info("OAuth2ProvSVC " + provider + " extractProfile : " + naverProfile);
 
                 saveUser(naverProfile.getResponse().getName(), naverProfile.getResponse().getEmail(), naverProfile.getResponse().getProfile_image(), provider);
-                return SocialUserProfileResponseDto.builder()
+                return SocialUserInfoDto.builder()
                         .email(naverProfile.getResponse().getName())
                         .name(naverProfile.getResponse().getName())
                         .profile_image_url(naverProfile.getResponse().getProfile_image())
@@ -132,19 +132,19 @@ public class OAuth2ProviderService {
     }
 
     @Transactional
-    protected BaseAuthUser saveUser(String name, String email, String picture, String provider){
-        if(userRepo.findByEmail(email).isEmpty()) {
+    protected void saveUser(String name, String email, String picture, String provider){
+        if(socialUserRepository.findByEmail(email).isEmpty()) {
             String role = provider.toUpperCase(Locale.ROOT);
-            BaseAuthUser baseAuthUser = BaseAuthUser.builder()
+            SocialUser socialUser = SocialUser.builder()
                     .name(name)
                     .email(email)
                     .picture(picture)
                     .provider(provider)
-                    .role(BaseAuthRole.valueOf(role))
+                    .role(AccountRole.valueOf(role))
                     .build();
-            return userRepo.save(baseAuthUser);
+            socialUserRepository.save(socialUser);
         } else {
-            return userRepo.findByEmail(email).orElseThrow(CustomUserNotFoundException::new);
+            socialUserRepository.findByEmail(email).orElseThrow(CustomUserNotFoundException::new);
         }
     }
 }

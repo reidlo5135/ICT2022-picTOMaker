@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SocialUserProfileResponseDto {
+public class SocialUserInfoDto {
     private String email;
     private String name;
     private String profile_image_url;

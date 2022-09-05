@@ -1,8 +1,8 @@
 package kr.co.picTO.repo;
 
-import kr.co.picTO.user.domain.social.BaseAuthRole;
-import kr.co.picTO.user.domain.social.BaseAuthUser;
-import kr.co.picTO.user.domain.social.BaseAuthUserRepo;
+import kr.co.picTO.user.domain.AccountRole;
+import kr.co.picTO.user.domain.social.SocialUser;
+import kr.co.picTO.user.domain.social.SocialUserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -17,28 +17,28 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class BaseAuthUserRepoTest {
+public class SocialUserRepoTest {
 
     private static final String TEST_EMAIL = "naru5135@naver.com";
     private static final String TEST_NAME = "강준모";
     private static final String TEST_PIC = "";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseAuthUserRepoTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SocialUserRepoTest.class);
 
     @Autowired
     TestEntityManager testEntityManager;
 
     @Autowired
-    BaseAuthUserRepo authUserRepo;
+    SocialUserRepository authUserRepo;
 
     @Test
     void findByEmail() {
-        BaseAuthUser bau = BaseAuthUser.builder()
+        SocialUser bau = SocialUser.builder()
                 .email(TEST_EMAIL)
                 .name(TEST_NAME)
                 .picture(TEST_PIC)
-                .role(BaseAuthRole.KAKAO)
-                .provider(BaseAuthRole.KAKAO.getKey())
+                .role(AccountRole.KAKAO)
+                .provider(AccountRole.KAKAO.getKey())
                 .build();
 
         testEntityManager.persist(bau);
