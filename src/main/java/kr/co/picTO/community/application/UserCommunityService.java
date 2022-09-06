@@ -22,20 +22,20 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserCommunityService {
-    private final UserCommunityRepository communityRepo;
-    private final UserRepository userJpaRepo;
-    private final SocialUserRepository authUserRepo;
+    private final UserCommunityRepository communityRepository;
+    private final UserRepository userRepository;
+    private final SocialUserRepository socialUserRepository;
     private final ResponseService responseService;
 
     public ListResult<UserCommunityResponseDto> findBoardAll() {
-        List<UserCommunityResponseDto> result = communityRepo.findAll().stream().map(UserCommunityResponseDto::new).collect(Collectors.toList());
+        List<UserCommunityResponseDto> result = communityRepository.findAll().stream().map(UserCommunityResponseDto::new).collect(Collectors.toList());
         if(result.isEmpty()) throw new CustomCommunityNotExistException();
 
         return responseService.getListResult(result);
     }
 
     public SingleResult<UserCommunityResponseDto> findBoardById(long id) {
-        UserCommunity userCommunity = communityRepo.findById(id).orElseThrow(CustomCommunityNotExistException::new);
+        UserCommunity userCommunity = communityRepository.findById(id).orElseThrow(CustomCommunityNotExistException::new);
 
         return responseService.getSingleResult(new UserCommunityResponseDto(userCommunity));
     }
@@ -43,11 +43,11 @@ public class UserCommunityService {
     public SingleResult<Long> registerBoard(UserCommunityRequestDto userCommunityRequestDto, String provider) {
         long result;
         if(provider != null && provider.equals("LOCAL")) {
-            User blu = userJpaRepo.findByEmail(userCommunityRequestDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
-            result = communityRepo.save(userCommunityRequestDto.toEntity(blu)).getId();
+            User blu = userRepository.findByEmail(userCommunityRequestDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
+            result = communityRepository.save(userCommunityRequestDto.toEntity(blu)).getId();
         } else {
-            SocialUser bau = authUserRepo.findByEmail(userCommunityRequestDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
-            result = communityRepo.save(userCommunityRequestDto.toEntity(bau)).getId();
+            SocialUser bau = socialUserRepository.findByEmail(userCommunityRequestDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
+            result = communityRepository.save(userCommunityRequestDto.toEntity(bau)).getId();
         }
 
         return responseService.getSingleResult(result);
