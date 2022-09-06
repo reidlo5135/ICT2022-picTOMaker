@@ -12,7 +12,7 @@ const Posts = ({ posts, loading }) => {
     const deletePicTo = (id) => {
         console.log('Posts deletePicTo id : ', id);
         try {
-            axios.delete(`/v1/api/picto/id/${id}`)
+            axios.delete(`/v1/api/picto/${id}`)
                 .then((response) => {
                     console.log('Posts deletePicTo response data : ' + response.data);
                     console.log('Posts deletePicTo response data.data : ' + response.data.data);
