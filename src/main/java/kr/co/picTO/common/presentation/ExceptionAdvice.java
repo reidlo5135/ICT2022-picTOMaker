@@ -148,7 +148,9 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult communityNotExsitException(HttpServletRequest request, CustomCommunityNotExistException e) {
         e.printStackTrace();
-        return responseService.getFailResult(Integer.parseInt("communityNotExistException.code"), getMessage("communityNotExistException.msg"));
+        return responseService.getFailResult(
+                Integer.parseInt(getMessage("communityNotExistException.code")), getMessage("communityNotExistException.msg")
+        );
     }
 
     /***
@@ -160,7 +162,9 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult existAccessTokenException(HttpServletRequest request, CustomAccessTokenExistException e) {
         e.printStackTrace();
-        return responseService.getFailResult(Integer.parseInt("existAccessToken.code"), getMessage("existAcessToken.msg"));
+        return responseService.getFailResult(
+                Integer.parseInt(getMessage("existAccessToken.code")), getMessage("existAcessToken.msg")
+        );
     }
 
     /***
@@ -172,7 +176,9 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult fileNotFoundException(HttpServletRequest request, CustomFileNotFoundException e) {
         e.printStackTrace();
-        return responseService.getFailResult(Integer.parseInt("fileNotFoundException.code"), getMessage("fileNotFoundException.msg"));
+        return responseService.getFailResult(
+                Integer.parseInt(getMessage("fileNotFoundException.code")), getMessage("fileNotFoundException.msg")
+        );
     }
 
     /***
@@ -184,7 +190,9 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult qnaNotExistException(HttpServletRequest request, CustomQnaNotExistException e) {
         e.printStackTrace();
-        return responseService.getFailResult(Integer.parseInt("qnaNotExistException.code"), getMessage("qnaNotExistException.msg"));
+        return responseService.getFailResult(
+                Integer.parseInt(getMessage("qnaNotExistException.code")), getMessage("qnaNotExistException.msg")
+        );
     }
 
     private String getMessage(String code) {

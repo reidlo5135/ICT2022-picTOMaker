@@ -7,35 +7,31 @@ import kr.co.picTO.token.domain.AccessToken;
 import kr.co.picTO.token.domain.AccessTokenRepository;
 import kr.co.picTO.user.domain.local.User;
 import kr.co.picTO.user.domain.local.UserRepository;
-import kr.co.picTO.user.dto.local.UserLoginDto;
-import kr.co.picTO.user.dto.local.UserInfoDto;
 import kr.co.picTO.user.dto.local.UserCreateDto;
+import kr.co.picTO.user.dto.local.UserInfoDto;
+import kr.co.picTO.user.dto.local.UserLoginDto;
 import kr.co.picTO.user.exception.CustomEmailLoginFailedException;
 import kr.co.picTO.user.exception.CustomRefreshTokenException;
 import kr.co.picTO.user.exception.CustomUserExistException;
 import kr.co.picTO.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Log4j2
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
-    private final AccessTokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+    private final UserRepository userRepository;
+    private final AccessTokenRepository tokenRepository;
     private final ResponseService responseService;
 
     @Transactional
     public SingleResult<AccessToken> login(@NotNull UserLoginDto userLoginDto) {
-        log.info("Local User SVC Login localReqDto : " + userLoginDto.getEmail() + ", " + userLoginDto.getPassword());
-
         User user = userRepository.findByEmail(userLoginDto.toEntity().getEmail()).orElseThrow(CustomUserNotFoundException::new);
         if(!passwordEncoder.matches(userLoginDto.toEntity().getPassword(), user.getPassword())) {
             throw new CustomEmailLoginFailedException();
@@ -45,8 +41,6 @@ public class UserService {
 
     @Transactional
     public SingleResult<Long> signUp(@NotNull UserCreateDto userCreateDto) {
-        log.info("Local User SVC Sign localReqDto : " + userCreateDto.getEmail() + ", " + userCreateDto.getPassword());
-
         if(userRepository.findByEmail(userCreateDto.getEmail()).isPresent()) {
             throw new CustomUserExistException();
         }
@@ -56,8 +50,6 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public SingleResult<UserInfoDto> getProfileLocal(String access_token) {
-        log.info("Local User SVC Profile access_token : " + access_token);
-
         AccessToken bat = tokenRepository.findByAccessToken(access_token).orElseThrow(CustomRefreshTokenException::new);
         User user = userRepository.findById(bat.getUser().getId()).orElseThrow(CustomUserNotFoundException::new);
 
@@ -82,7 +74,6 @@ public class UserService {
             User user = userRepository.findByEmail(authentication.getName()).orElseThrow(CustomUserNotFoundException::new);
             AccessToken newRefreshToken = jwtProvider.createToken(String.valueOf(user.getId()), user, user.getRoles());
             bat.refreshToken(newRefreshToken.toString());
-            log.info("Local User SVC reissue newRefreshToken " + newRefreshToken);
 
             return responseService.getSingleResult(newRefreshToken);
         }

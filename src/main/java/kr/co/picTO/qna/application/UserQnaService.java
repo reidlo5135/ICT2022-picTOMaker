@@ -18,17 +18,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserQnaService {
     private final UserQnaRepository userQnaRepository;
-    private final UserRepository userJpaRepo;
-    private final SocialUserRepository authUserRepo;
+    private final UserRepository userRepository;
+    private final SocialUserRepository socialUserRepository;
     private final ResponseService responseService;
 
     public SingleResult<Long> registerQnA(UserQnaRequestDto userQnaRequestDto, String provider) {
         Long result = null;
         if(provider != null && provider.equals("LOCAL")) {
-            User blu = userJpaRepo.findByEmail(userQnaRequestDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
+            User blu = userRepository.findByEmail(userQnaRequestDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
             result = userQnaRepository.save(userQnaRequestDto.toEntity(blu)).getId();
         } else {
-            SocialUser bau = authUserRepo.findByEmail(userQnaRequestDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
+            SocialUser bau = socialUserRepository.findByEmail(userQnaRequestDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
             result = userQnaRepository.save(userQnaRequestDto.toEntity(bau)).getId();
         }
         return responseService.getSingleResult(result);
