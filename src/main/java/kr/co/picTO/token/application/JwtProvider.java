@@ -28,7 +28,7 @@ public class JwtProvider {
     @Value("${spring.jwt.secret}")
     private String secretKey;
     private final String ROLES = "roles";
-    private final AccessTokenRepository tokenRepo;
+    private final AccessTokenRepository accessTokenRepository;
     private final CustomUserDetailsService userDetailsService;
 
     @PostConstruct
@@ -75,7 +75,7 @@ public class JwtProvider {
                 .provider(provider)
                 .build();
 
-        tokenRepo.save(baseAccessToken);
+        accessTokenRepository.save(baseAccessToken);
 
         return baseAccessToken;
     }
