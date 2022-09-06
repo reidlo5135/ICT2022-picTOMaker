@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author reidlo
+ * 2022-09-06
+ * ver 1.1.1
+ **/
 @Api(tags = {"8. Only Admin - QnA"})
 @ApiImplicitParams({
         @ApiImplicitParam(
@@ -25,14 +30,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminQnaController {
     private final AdminQnaService qnaService;
 
+    @GetMapping
     @ApiOperation(value = "전체 문의사항 조회", notes = "Select Qna All")
-    @GetMapping(value = "/find")
     public ResponseEntity<ListResult<UserQnaResponseDto>> findAll() {
         return ResponseEntity.ok().body(qnaService.findQnaAll());
     }
 
+    @GetMapping(value = "/{id}")
     @ApiOperation(value = "Id로 특정 문의사항 조회", notes = "Select Qna By Id")
-    @GetMapping(value = "/find/id/{id}")
     public ResponseEntity<SingleResult<UserQnaResponseDto>> findById(@ApiParam(value = "qna_id", required = true) @PathVariable long id) {
         return ResponseEntity.ok().body(qnaService.findQnaById(id));
     }
