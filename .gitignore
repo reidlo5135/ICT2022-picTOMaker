@@ -29,6 +29,7 @@ out/
 
 # frontend #
 src/main/frontend/src/component/oauth2/env.js
+src/main/frontend/package-lock.json
 src/main/resources/static/**
 src/main/resources/static/static/**
 src/main/resources/static/static/js/**
