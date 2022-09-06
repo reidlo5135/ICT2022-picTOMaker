@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 
+/**
+ * @author reidlo
+ * 2022-09-06
+ * ver 1.1.1
+ **/
 @Log4j2
 @Component
 @RequiredArgsConstructor

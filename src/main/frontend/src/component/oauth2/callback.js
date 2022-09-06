@@ -28,7 +28,7 @@ export default function Callback(){
     console.log('provider : ', provider);
 
     try {
-        axios.post(`/v1/api/oauth2/register/provider/${provider}`, {
+        axios.post(`/v1/api/oauth2/signup/${provider}`, {
             code
         }).then((response) => {
             console.log('res data : ', response.data);
@@ -36,11 +36,9 @@ export default function Callback(){
 
             if(response.data.code === 0) {
                 const access_token = response.data.data.access_token;
-                const refresh_token = response.data.data.refresh_token;
 
                 setIsLogged(true);
                 localStorage.setItem("access_token", access_token);
-                localStorage.setItem("refresh_token", refresh_token);
                 localStorage.setItem("provider", provider);
 
                 history.push("/");

@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+/**
+ * @author reidlo
+ * 2022-09-06
+ * ver 1.1.1
+ **/
 @Api(tags = {"2. OAuth2 User"})
 @RestController
 @RequiredArgsConstructor
@@ -18,17 +23,26 @@ import java.util.Map;
 public class SocialUserController {
     private final SocialUserService socialUserService;
 
-    @PostMapping(value = "/register/provider/{provider}")
+    /**
+     * frontend - callback.js
+     **/
+    @PostMapping(value = "/signup/{provider}")
     public ResponseEntity<SingleResult<SocialTokenRequestDto>> generateToken(@RequestBody Map<String, String> code, @PathVariable String provider) {
         return ResponseEntity.ok().body(socialUserService.generateAccessToken(code.get("code"), provider));
     }
 
-    @PostMapping(value = "/profile/provider/{provider}")
+    /**
+     * frontend - Profile.js
+     **/
+    @PostMapping(value = "/info/{provider}")
     public ResponseEntity<SingleResult<SocialUserInfoDto>> getProfile(@RequestBody Map<String, String> access_token, @PathVariable String provider) {
         return ResponseEntity.ok().body(socialUserService.getProfile(access_token.get("access_token"), provider));
     }
 
-    @DeleteMapping(value = "/token/{access_token}")
+    /**
+     * frontend - MyPage.js, Sidebar.js
+     **/
+    @DeleteMapping(value = "/{access_token}")
     public ResponseEntity<SingleResult<Integer>> inValidToken(@PathVariable String access_token) {
         return ResponseEntity.ok().body(socialUserService.deleteToken(access_token));
     }
