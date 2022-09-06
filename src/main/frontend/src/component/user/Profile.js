@@ -43,7 +43,7 @@ const Profile = () => {
 
     const getLocalProf = async () => {
         try {
-            await axios.post('/v1/api/user/profile', {
+            await axios.post('/v1/api/user/info', {
                 access_token
             }).then((response) => {
                 console.log('Local profile res data.data : ', response.data.data);

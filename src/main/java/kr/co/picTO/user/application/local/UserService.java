@@ -21,6 +21,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author reidlo
+ * 2022-09-06
+ * ver 1.1.1
+ **/
 @Service
 @RequiredArgsConstructor
 public class UserService {
