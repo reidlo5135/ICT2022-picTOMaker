@@ -25,14 +25,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminCommunityController {
     private final AdminCommunityService communityService;
 
+    @GetMapping
     @ApiOperation(value = "전체 게시물 조회", notes = "Select Board All")
-    @GetMapping(value = "/find")
     public ResponseEntity<ListResult<UserCommunityResponseDto>> findAll() {
         return ResponseEntity.ok().body(communityService.findBoardAll());
     }
 
+    @GetMapping(value = "/{id}")
     @ApiOperation(value = "특정 게시물 조회", notes = "Select Board By Id")
-    @GetMapping(value = "/find/id/{id}")
     public ResponseEntity<SingleResult<UserCommunityResponseDto>> findById(@ApiParam(value = "board_id", required = true) @PathVariable long id) {
         return ResponseEntity.ok().body(communityService.findBoardById(id));
     }
