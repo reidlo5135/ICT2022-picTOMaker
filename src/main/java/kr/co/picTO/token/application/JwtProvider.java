@@ -20,6 +20,11 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author reidlo
+ * 2022-09-06
+ * ver 1.1.1
+ **/
 @Log4j2
 @Component
 @RequiredArgsConstructor
