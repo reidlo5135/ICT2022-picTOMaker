@@ -12,6 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author reidlo
+ * 2022-09-06
+ * ver 1.1.1
+ **/
 @Api(tags = {"4. Community Controller"})
 @RestController
 @RequiredArgsConstructor
@@ -20,9 +25,6 @@ public class UserCommunityController {
     private final UserCommunityService userCommunityService;
 
     /**
-     * @author reidlo
-     * 2022-09-06
-     * ver 1.1.1
      * frontend - Community.js
     **/
     @GetMapping(value = "/")
@@ -32,9 +34,6 @@ public class UserCommunityController {
     }
 
     /**
-     * @author reidlo
-     * 2022-09-06
-     * ver 1.1.1
      * frontend - CDetail.js
      **/
     @GetMapping(value = "/{id}")
@@ -44,10 +43,7 @@ public class UserCommunityController {
     }
 
     /**
-     * @author reidlo
-     * 2022-09-06
-     * ver 1.1.1
-     * frotnend - CPosting.js
+     * frontend - CPosting.js
      **/
     @PostMapping(value = "/{provider}")
     @ApiOperation(value = "게시물 등록", notes = "Register Board")
