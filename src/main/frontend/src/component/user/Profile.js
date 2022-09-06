@@ -71,11 +71,11 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        if(provider != 'LOCAL') {
+        if(provider !== 'LOCAL') {
             getOAuthProf();
         } else if(provider === 'LOCAL') {
             getLocalProf();
-        } else if(provider == null) {
+        } else if(provider === null) {
             setIsLogged(false);
         }
         if(access_token != null) {
@@ -88,11 +88,11 @@ const Profile = () => {
         return (
             <Link to='/myPage' className="profile-link">
                 <div className="profile-content">
-                        {profileImage === null ?
-                            <img src={Human} className='img_profile' alt={'p-image'} /> :
-                            <img src={profileImage} className='img_profile' alt={'p-image'} />
-                        }
-                        {nickName}님 환영합니다!
+                    {profileImage === null ?
+                        <img src={Human} className='img_profile' alt={'p-image'} /> :
+                        <img src={profileImage} className='img_profile' alt={'p-image'} />
+                    }
+                    {nickName}님 환영합니다!
                 </div>
             </Link>
         );

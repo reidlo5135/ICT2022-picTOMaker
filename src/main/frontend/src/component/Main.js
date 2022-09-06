@@ -58,17 +58,18 @@ export default function Main(){
             alert('아이디와 비밀번호를 입력해주세요.');
         } else {
             try {
-                axios.post('/v1/api/oauth/login', {
+                axios.post('/v1/api/user/login', {
                     email,
                     password
                 }).then((response) => {
                     console.log('res data ', response.data);
 
                     if(response.data.code === 0){
-                        const access_token = response.data.data;
+                        const access_token = response.data.data.access_token;
 
                         setIsLogged(true);
                         localStorage.setItem("access_token", access_token);
+                        localStorage.setItem("provider", "LOCAL");
                         closeModal();
                         history.push('/');
                     }
