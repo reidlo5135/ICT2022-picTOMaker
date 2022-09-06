@@ -58,7 +58,7 @@ const CPosting = () => {
         try {
             axios.post(`/v1/api/qna/register/${provider}`, {
                 name: profNickName,
-                content: content
+                content
             }).then((response) => {
                 console.log('response : ', response.data);
                 console.log('response : ', response.data.data);
@@ -134,7 +134,7 @@ const CPosting = () => {
 
       const registerBoard = () => {
           try {
-              axios.post(`/v1/api/community/register/provider/${provider}`, {
+              axios.post(`/v1/api/community/${provider}`, {
                   email,
                   title,
                   content

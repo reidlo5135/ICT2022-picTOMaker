@@ -48,7 +48,7 @@ export default function SignUp(){
             alert('비밀번호가 일치하지 않습니다.');
         } else {
             try {
-                axios.post('/v1/api/user/signUp', {
+                axios.post('/v1/api/user/signup', {
                     email,
                     name,
                     nickName,

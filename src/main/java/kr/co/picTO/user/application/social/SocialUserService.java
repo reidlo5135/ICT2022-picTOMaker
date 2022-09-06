@@ -24,6 +24,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Locale;
 
+/**
+ * @author reidlo
+ * 2022-09-06
+ * ver 1.1.1
+ **/
 @Log4j2
 @Service
 @RequiredArgsConstructor

@@ -9,6 +9,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author reidlo
+ * 2022-09-06
+ * ver 1.1.1
+ **/
 @Api(tags = {"6. Only Admin - User"})
 @ApiImplicitParams({
         @ApiImplicitParam(
@@ -29,19 +34,19 @@ public class AdminUserController {
     }
 
     @ApiOperation(value = "회원 단일 조회", notes = "id로 회원 조회")
-    @GetMapping("/user/id/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<SingleResult<UserResponseDto>> findUserById(@ApiParam(value = "회원 ID", required = true) @PathVariable Long userId, @ApiParam(value = "언어", defaultValue = "ko") @RequestParam String lang) {
         return ResponseEntity.ok().body(adminUserService.findById(userId));
     }
 
     @ApiOperation(value = "회원 단일 조회", notes = "email로 회원 조회")
-    @GetMapping("/user/email/{email}")
+    @GetMapping("/user/{email}")
     public ResponseEntity<SingleResult<UserResponseDto>> findUserByEmail (@ApiParam(value = "회원 이메일", required = true) @PathVariable String email, @ApiParam(value = "언어", defaultValue = "ko") @RequestParam String lang) {
         return ResponseEntity.ok().body(adminUserService.findByEmail(email));
     }
 
     @ApiOperation(value = "회원 삭제", notes = "id로 회원 삭제")
-    @DeleteMapping("/user/{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<SingleResult<Long>> delete(@ApiParam(value = "회원 아이디", required = true) @PathVariable Long userId) {
         return ResponseEntity.ok().body(adminUserService.delete(userId));
     }

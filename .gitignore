@@ -37,3 +37,5 @@ src/main/resources/static/static/js/**
 # server #
 src/main/resources/application-private.yml
 src/main/resources/application-credentials.yml
+package.json
+package-lock.json

@@ -1,14 +1,12 @@
 import React, {useState,useEffect} from 'react';
 import axios from "axios";
-import {useHistory} from "react-router";
+import Posts from "./Posts";
+import Pagination from "./Pagination";
 import "../../css/MyPage.css";
 import "../../css/font.css";
 import 'react-fancybox/lib/fancybox.css';
-import Posts from "./Posts";
-import Pagination from "./Pagination";
 
 export default function MyPageMyPic(){
-    const history = useHistory();
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
@@ -22,7 +20,7 @@ export default function MyPageMyPic(){
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await axios.get(`/v1/api/picto/find/email/${email}/provider/${provider}`)
+            await axios.get(`/v1/api/picto/${email}/${provider}`)
                 .then((response) => {
                     console.log('response data : ' + response.data);
                     console.log('response data.list : ' + response.data.list);
@@ -36,7 +34,7 @@ export default function MyPageMyPic(){
                     console.error('err : ', JSON.stringify(err));
                     setPosts(null);
                     alert(err.response.data.msg);
-                    history.replace('/myPage');
+                    window.location.replace('/myPage');
                 });
         };
         fetchData();

@@ -36,7 +36,7 @@ export default function MyPageContent(){
 
     function Logout() {
         try {
-            axios.delete(`/v1/api/oauth2/token/${access_token}`)
+            axios.delete(`/v1/api/oauth2/${access_token}`)
                 .then((response) => {
                     console.log('res data : ', response.data);
                     console.log('res data.data : ', response.data.data);
@@ -47,9 +47,29 @@ export default function MyPageContent(){
                         history.push("/");
                     }
                 }).catch((err) => {
-                console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.msg);
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
             });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    function deActive() {
+        try {
+            axios.delete(`/v1/api/user/${access_token}`)
+                .then((response) => {
+                    console.log('res data : ', response.data);
+                    console.log('res data.data : ', response.data.data);
+
+                    if(response.data.code === 0) {
+                        alert('회원 탈퇴가 정상적으로 이루어졌습니다.');
+                        history.push("/");
+                    }
+                }).catch((err) => {
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
+                });
         } catch (err) {
             console.error(err);
         }
@@ -85,7 +105,9 @@ export default function MyPageContent(){
                         <Link to="/qna" className='qna-link'>
                             <p>문의하기</p>
                         </Link>
-                        <p>회원탈퇴</p>
+                        <p onClick={() => {
+                            deActive();
+                        }}>회원탈퇴</p>
                     </div>
 
                     <div className='MyPage-footer'>

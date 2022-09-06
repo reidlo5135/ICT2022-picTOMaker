@@ -16,7 +16,7 @@ function Community() {
 
   const getData = async () => {
     try {
-      await axios.get('/v1/api/community/find')
+      await axios.get('/v1/api/community/')
           .then((response) => {
             console.log('response : ', response.data);
             console.log('response : ', response.data.list);
