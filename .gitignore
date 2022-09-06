@@ -29,7 +29,8 @@ out/
 
 # frontend #
 src/main/frontend/src/component/oauth2/env.js
-
+src/main/resources/static/
+src/main/resources/static/static/
 # server #
 src/main/resources/application-private.yml
 src/main/resources/application-credentials.yml
