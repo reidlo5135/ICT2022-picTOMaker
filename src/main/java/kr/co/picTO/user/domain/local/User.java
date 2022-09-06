@@ -64,6 +64,19 @@ public class User extends BaseTimeEntity implements UserDetails {
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
+    public void update(User updateUser) {
+        this.nickName = updateUser.nickName;
+        this.profile_image_url = updateUser.profile_image_url;
+    }
+
+    public void activate() {
+        this.status = AccountStatus.ACTIVE;
+    }
+
+    public void deactivate() {
+        this.status = AccountStatus.INACTIVE;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles

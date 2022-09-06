@@ -10,6 +10,7 @@ import kr.co.picTO.user.domain.local.UserRepository;
 import kr.co.picTO.user.dto.local.UserCreateDto;
 import kr.co.picTO.user.dto.local.UserInfoDto;
 import kr.co.picTO.user.dto.local.UserLoginDto;
+import kr.co.picTO.user.dto.local.UserUpdateDto;
 import kr.co.picTO.user.exception.CustomEmailLoginFailedException;
 import kr.co.picTO.user.exception.CustomRefreshTokenException;
 import kr.co.picTO.user.exception.CustomUserExistException;
@@ -59,6 +60,7 @@ public class UserService {
         User user = userRepository.findById(bat.getUser().getId()).orElseThrow(CustomUserNotFoundException::new);
 
         UserInfoDto userInfoDto = UserInfoDto.builder()
+                .id(user.getId())
                 .email(user.getEmail())
                 .name(user.getName())
                 .nickName(user.getNickName())
@@ -66,6 +68,16 @@ public class UserService {
                 .build();
 
         return responseService.getSingleResult(userInfoDto);
+    }
+
+    @Transactional
+    public SingleResult<UserInfoDto> update(UserUpdateDto userUpdateDto, String access_token) {
+        AccessToken bat = tokenRepository.findByAccessToken(access_token).orElseThrow(CustomRefreshTokenException::new);
+        User findUser = userRepository.findById(bat.getUser().getId()).orElseThrow(CustomUserNotFoundException::new);
+        findUser.update(userUpdateDto.toEntity());
+        findUser.activate();
+
+        return responseService.getSingleResult(UserInfoDto.from(findUser));
     }
 
     @Transactional
@@ -87,5 +99,13 @@ public class UserService {
     @Transactional
     public SingleResult<Integer> deleteToken(String access_token) {
         return responseService.getSingleResult(tokenRepository.deleteByAccessToken(access_token));
+    }
+
+    @Transactional
+    public SingleResult<User> delete(String access_token) {
+        AccessToken bat = tokenRepository.findByAccessToken(access_token).orElseThrow(CustomRefreshTokenException::new);
+        User user = userRepository.findById(bat.getUser().getId()).orElseThrow(CustomUserNotFoundException::new);
+        user.deactivate();
+        return responseService.getSingleResult(user);
     }
 }
