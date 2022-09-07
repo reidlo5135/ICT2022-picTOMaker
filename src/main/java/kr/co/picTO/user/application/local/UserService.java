@@ -5,6 +5,7 @@ import kr.co.picTO.common.domain.SingleResult;
 import kr.co.picTO.token.application.JwtProvider;
 import kr.co.picTO.token.domain.AccessToken;
 import kr.co.picTO.token.domain.AccessTokenRepository;
+import kr.co.picTO.user.domain.AccountStatus;
 import kr.co.picTO.user.domain.local.User;
 import kr.co.picTO.user.domain.local.UserRepository;
 import kr.co.picTO.user.dto.local.UserCreateDto;
@@ -38,8 +39,9 @@ public class UserService {
 
     @Transactional
     public SingleResult<AccessToken> login(@NotNull UserLoginDto userLoginDto) {
-        User user = userRepository.findByEmail(userLoginDto.toEntity().getEmail()).orElseThrow(CustomUserNotFoundException::new);
-        if(!passwordEncoder.matches(userLoginDto.toEntity().getPassword(), user.getPassword())) {
+        User user = userRepository.findByEmail(userLoginDto.getEmail()).orElseThrow(CustomUserNotFoundException::new);
+        checkStatus(user);
+        if(!passwordEncoder.matches(userLoginDto.getPassword(), user.getPassword())) {
             throw new CustomEmailLoginFailedException();
         }
         return responseService.getSingleResult(jwtProvider.createToken(String.valueOf(user.getId()), user, user.getRoles()));
@@ -102,10 +104,15 @@ public class UserService {
     }
 
     @Transactional
-    public SingleResult<User> delete(String access_token) {
+    public SingleResult<Integer> delete(String access_token) {
         AccessToken bat = tokenRepository.findByAccessToken(access_token).orElseThrow(CustomRefreshTokenException::new);
         User user = userRepository.findById(bat.getUser().getId()).orElseThrow(CustomUserNotFoundException::new);
         user.deactivate();
-        return responseService.getSingleResult(user);
+
+        return deleteToken(access_token);
+    }
+
+    private void checkStatus(User user) {
+        if(user.getStatus() == AccountStatus.INACTIVE) throw new CustomUserNotFoundException();
     }
 }
