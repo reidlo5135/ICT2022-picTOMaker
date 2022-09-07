@@ -64,6 +64,8 @@ export default function MyPageContent(){
 
                     if(response.data.code === 0) {
                         alert('회원 탈퇴가 정상적으로 이루어졌습니다.');
+                        localStorage.clear();
+                        console.clear();
                         history.push("/");
                     }
                 }).catch((err) => {

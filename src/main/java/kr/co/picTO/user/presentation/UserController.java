@@ -7,7 +7,6 @@ import kr.co.picTO.common.domain.SingleResult;
 import kr.co.picTO.token.domain.AccessToken;
 import kr.co.picTO.token.dto.TokenRequestDto;
 import kr.co.picTO.user.application.local.UserService;
-import kr.co.picTO.user.domain.local.User;
 import kr.co.picTO.user.dto.local.UserCreateDto;
 import kr.co.picTO.user.dto.local.UserInfoDto;
 import kr.co.picTO.user.dto.local.UserLoginDto;
@@ -82,7 +81,7 @@ public class UserController {
      **/
     @DeleteMapping("/{access_token}")
     @ApiOperation(value = "Make User InActive", notes = "User DeActivate")
-    public ResponseEntity<SingleResult<User>> deActivate(@ApiParam(value = "Access Token", required = true) @PathVariable String access_token) {
+    public ResponseEntity<SingleResult<Integer>> deActivate(@ApiParam(value = "Access Token", required = true) @PathVariable String access_token) {
         return ResponseEntity.ok().body(userService.delete(access_token));
     }
 }
