@@ -61,6 +61,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # frontend #
+src/main/frontend/node_modules
 src/main/frontend/src/component/oauth2/env.js
 src/main/frontend/package-lock.json
 src/main/resources/static/**
