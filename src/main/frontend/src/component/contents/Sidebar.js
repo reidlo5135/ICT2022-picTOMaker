@@ -12,7 +12,7 @@ export default function Sidebar(){
 
     function Logout() {
         try {
-            axios.delete(`/v1/api/oauth2/token/${access_token}`)
+            axios.delete(`/v1/api/oauth2/${access_token}`)
                 .then((response) => {
                     console.log('res data : ', response.data);
                     console.log('res data.data : ', response.data.data);
@@ -22,7 +22,7 @@ export default function Sidebar(){
                         localStorage.clear();
                         history.push("/");
                     }
-            }).catch((err) => {
+                }).catch((err) => {
                 console.error('err : ', JSON.stringify(err));
                 alert(err.response.data.msg);
             });
@@ -34,9 +34,9 @@ export default function Sidebar(){
     return (
         <div class="hamburger-menu">
             <input id="menu__toggle" type="checkbox" />
-                <label class="menu__btn" for="menu__toggle">
+            <label class="menu__btn" for="menu__toggle">
                 <span></span>
-                </label>
+            </label>
 
             <ul class="menu__box">
                 <li><Link to='/mypage' className='menu__item'>마이페이지</Link></li>

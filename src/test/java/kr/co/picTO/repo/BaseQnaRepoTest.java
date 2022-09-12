@@ -1,6 +1,6 @@
 package kr.co.picTO.repo;
 
-import kr.co.picTO.qna.domain.BaseUserQnaRepo;
+import kr.co.picTO.qna.domain.UserQnaRepository;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
-import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -22,5 +21,5 @@ public class BaseQnaRepoTest {
     TestEntityManager testEntityManager;
 
     @Autowired
-    BaseUserQnaRepo userQnaRepo;
+    UserQnaRepository userQnaRepository;
 }

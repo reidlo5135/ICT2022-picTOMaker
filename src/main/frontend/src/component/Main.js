@@ -66,11 +66,9 @@ export default function Main(){
 
                     if(response.data.code === 0){
                         const access_token = response.data.data.access_token;
-                        const refresh_token = response.data.data.refresh_token;
 
                         setIsLogged(true);
                         localStorage.setItem("access_token", access_token);
-                        localStorage.setItem("refresh_token", refresh_token);
                         localStorage.setItem("provider", "LOCAL");
                         closeModal();
                         history.push('/');

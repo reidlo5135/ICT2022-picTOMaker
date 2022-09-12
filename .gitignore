@@ -5,7 +5,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-build
+build/
 
 ### STS ###
 .apt_generated
@@ -38,12 +38,6 @@ out/
 ### VS Code ###
 .vscode/
 
-src/main/resources/application-private.yml
-src/main/resources/application-credentials.yml
-application-private.yml
-application-credentials.yml
-env.js
-
 # dependencies
 /node_modules
 /.pnp
@@ -65,3 +59,17 @@ env.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# frontend #
+src/main/frontend/node_modules
+src/main/frontend/src/component/oauth2/env.js
+src/main/frontend/package-lock.json
+src/main/resources/static/**
+src/main/resources/static/static/**
+src/main/resources/static/static/js/**
+
+# server #
+src/main/resources/application-private.yml
+src/main/resources/application-credentials.yml
+package.json
+package-lock.json

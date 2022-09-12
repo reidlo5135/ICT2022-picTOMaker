@@ -36,37 +36,42 @@ export default function MyPageContent(){
 
     function Logout() {
         try {
-            if(provider === 'LOCAL') {
-                axios.delete(`/v1/api/user/token/${access_token}`)
-                    .then((response) => {
-                        console.log('LOCAL LOGOUT res data : ', response.data);
-                        console.log('LOCAL LOGOUT res data.data : ', response.data.data);
+            axios.delete(`/v1/api/oauth2/${access_token}`)
+                .then((response) => {
+                    console.log('res data : ', response.data);
+                    console.log('res data.data : ', response.data.data);
 
-                        if(response.data.code === 0) {
-                            console.clear();
-                            localStorage.clear();
-                            history.push("/");
-                        }
-                    }).catch((err) => {
-                        console.error('err : ', JSON.stringify(err));
-                        alert(err.response.data.msg);
-                    });
-            } else {
-                axios.delete(`/v1/api/oauth2/token/${access_token}`)
-                    .then((response) => {
-                        console.log('SOCIAL LOGOUT res data : ', response.data);
-                        console.log('SOCIAL LOGOUT res data.data : ', response.data.data);
+                    if(response.data.code === 0) {
+                        console.clear();
+                        localStorage.clear();
+                        history.push("/");
+                    }
+                }).catch((err) => {
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
-                        if(response.data.code === 0) {
-                            console.clear();
-                            localStorage.clear();
-                            history.push("/");
-                        }
-                    }).catch((err) => {
-                        console.error('err : ', JSON.stringify(err));
-                        alert(err.response.data.msg);
-                    });
-            }
+    function deActive() {
+        try {
+            axios.delete(`/v1/api/user/${access_token}`)
+                .then((response) => {
+                    console.log('res data : ', response.data);
+                    console.log('res data.data : ', response.data.data);
+
+                    if(response.data.code === 0) {
+                        alert('회원 탈퇴가 정상적으로 이루어졌습니다.');
+                        localStorage.clear();
+                        console.clear();
+                        history.push("/");
+                    }
+                }).catch((err) => {
+                    console.error('err : ', JSON.stringify(err));
+                    alert(err.response.data.msg);
+                });
         } catch (err) {
             console.error(err);
         }
@@ -102,7 +107,9 @@ export default function MyPageContent(){
                         <Link to="/qna" className='qna-link'>
                             <p>문의하기</p>
                         </Link>
-                        <p>회원탈퇴</p>
+                        <p onClick={() => {
+                            deActive();
+                        }}>회원탈퇴</p>
                     </div>
 
                     <div className='MyPage-footer'>

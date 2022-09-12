@@ -16,7 +16,7 @@ const Profile = () => {
 
     const getOAuthProf = async () => {
         try {
-            await axios.post(`/v1/api/oauth2/profile/provider/${provider}`, {
+            await axios.post(`/v1/api/oauth2/info/${provider}`, {
                 access_token
             }).then((response) => {
                 console.log('OAuth profile res data.data : ', response.data.data);
@@ -43,7 +43,7 @@ const Profile = () => {
 
     const getLocalProf = async () => {
         try {
-            await axios.post('/v1/api/user/profile', {
+            await axios.post('/v1/api/user/info', {
                 access_token
             }).then((response) => {
                 console.log('Local profile res data.data : ', response.data.data);
@@ -71,11 +71,11 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        if(provider != 'LOCAL') {
+        if(provider !== 'LOCAL') {
             getOAuthProf();
         } else if(provider === 'LOCAL') {
             getLocalProf();
-        } else if(provider == null) {
+        } else if(provider === null) {
             setIsLogged(false);
         }
         if(access_token != null) {
@@ -88,11 +88,11 @@ const Profile = () => {
         return (
             <Link to='/myPage' className="profile-link">
                 <div className="profile-content">
-                        {profileImage === null ?
-                            <img src={Human} className='img_profile' alt={'p-image'} /> :
-                            <img src={profileImage} className='img_profile' alt={'p-image'} />
-                        }
-                        {nickName}님 환영합니다!
+                    {profileImage === null ?
+                        <img src={Human} className='img_profile' alt={'p-image'} /> :
+                        <img src={profileImage} className='img_profile' alt={'p-image'} />
+                    }
+                    {nickName}님 환영합니다!
                 </div>
             </Link>
         );

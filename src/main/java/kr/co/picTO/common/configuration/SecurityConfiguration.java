@@ -3,7 +3,7 @@ package kr.co.picTO.common.configuration;
 import kr.co.picTO.common.exception.CustomAccessDeniedHandler;
 import kr.co.picTO.common.exception.RestAuthenticationEntryPoint;
 import kr.co.picTO.token.application.JwtAuthenticationFilter;
-import kr.co.picTO.token.application.LocalUserJwtProvider;
+import kr.co.picTO.token.application.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final LocalUserJwtProvider jwtProvider;
+    private final JwtProvider jwtProvider;
 
     @Bean
     @Override
@@ -63,8 +63,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                             "/**/*.otf").permitAll()
                 .antMatchers(HttpMethod.GET,"/exception/**", "/v1/api/picto/**/**/**", "/v1/api/community/**/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/api/oauth2/**/**/**", "/v1/api/user/**", "/v1/api/picto/**/**/**", "/v1/api/qna/**/**", "/v1/api/community/**/**").permitAll()
-                .antMatchers(HttpMethod.PUT, "/v1/api/picto/**/**/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/v1/api/oauth2/token/**", "/v1/api/user/token/**", "/v1/api/picto/delete").permitAll()
+                .antMatchers(HttpMethod.PUT, "/v1/api/picto/**/**/**", "/v1/api/user/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/v1/api/oauth2/**", "/v1/api/user/**", "/v1/api/picto/delete").permitAll()
+                .antMatchers("/v1/api/users/**", "/v1/api/oauth/**").permitAll()
                 .antMatchers("/v1/api/oauth2/redirect/**", "/").permitAll()
                 .antMatchers("/index").permitAll()
                 .mvcMatchers("/v3/api-docs/**",

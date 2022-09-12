@@ -10,6 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author reidlo
+ * 2022-09-06
+ * ver 1.1.1
+ **/
 @Api(tags = {"3. QnA Controller"})
 @RestController
 @RequiredArgsConstructor
@@ -17,8 +22,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserQnaController {
     private final UserQnaService userQnaService;
 
+    /**
+     * frontend - QnA.js
+     **/
+    @PostMapping(value = "/{provider}")
     @ApiOperation(value = "문의 등록", notes = "Register QnA")
-    @PostMapping(value = "/register/{provider}")
     public ResponseEntity<SingleResult<Long>> save(@ApiParam(value = "QnaReqDto", required = true) @RequestBody UserQnaRequestDto userQnaRequestDto, @PathVariable String provider) {
         return ResponseEntity.ok().body(userQnaService.registerQnA(userQnaRequestDto, provider));
     }

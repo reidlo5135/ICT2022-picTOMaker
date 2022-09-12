@@ -1,6 +1,6 @@
 package kr.co.picTO.token.dto;
 
-import kr.co.picTO.token.domain.BaseAccessToken;
+import kr.co.picTO.token.domain.AccessToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,8 +23,8 @@ public class SocialTokenRequestDto {
     private long expires_in;
     private long refresh_token_expires_in;
 
-    public BaseAccessToken toEntity(String provider) {
-        return BaseAccessToken.builder()
+    public AccessToken toEntity(String provider) {
+        return AccessToken.builder()
                 .id(id)
                 .access_token(access_token)
                 .token_type(token_type)

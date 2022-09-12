@@ -5,14 +5,14 @@ import kr.co.picTO.common.application.ResponseService;
 import kr.co.picTO.common.domain.ListResult;
 import kr.co.picTO.common.domain.SingleResult;
 import kr.co.picTO.file.exception.CustomFileNotFoundException;
-import kr.co.picTO.file.domain.BaseS3Image;
-import kr.co.picTO.file.domain.BaseS3ImageRepo;
+import kr.co.picTO.file.domain.S3Image;
+import kr.co.picTO.file.domain.S3ImageRepository;
 import kr.co.picTO.file.dto.S3ImageRequestDto;
 import kr.co.picTO.file.dto.S3ImageResponseDto;
-import kr.co.picTO.user.domain.local.BaseLocalUser;
-import kr.co.picTO.user.domain.local.BaseLocalUserRepo;
-import kr.co.picTO.user.domain.social.BaseAuthUser;
-import kr.co.picTO.user.domain.social.BaseAuthUserRepo;
+import kr.co.picTO.user.domain.local.User;
+import kr.co.picTO.user.domain.local.UserRepository;
+import kr.co.picTO.user.domain.social.SocialUser;
+import kr.co.picTO.user.domain.social.SocialUserRepository;
 import kr.co.picTO.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -33,13 +33,18 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * @author reidlo
+ * 2022-09-06
+ * ver 1.1.1
+ **/
 @Log4j2
 @Service
 @RequiredArgsConstructor
 public class FileUploadService {
-    private final BaseS3ImageRepo imageRepo;
-    private final BaseAuthUserRepo authUserRepo;
-    private final BaseLocalUserRepo localUserRepo;
+    private final S3ImageRepository s3ImageRepository;
+    private final SocialUserRepository socialUserRepository;
+    private final UserRepository userRepository;
     private final UploadService uploadService;
     private final ResponseService responseService;
 
@@ -117,21 +122,21 @@ public class FileUploadService {
             uploadService.uploadFile(inputStream, objectMetadata, fileName);
             fileUrl = uploadService.getFileUrl(fileName);
 
-            BaseS3Image image = null;
+            S3Image image = null;
             S3ImageRequestDto imageRequestDto = null;
             if(provider.equals("LOCAL")) {
-                BaseLocalUser blu = localUserRepo.findByEmail(email).orElseThrow();
+                User blu = userRepository.findByEmail(email).orElseThrow();
                 imageRequestDto = new S3ImageRequestDto(blu.getEmail(), fileName, fileUrl, getFileExtension(fileName), provider);
                 image = imageRequestDto.toBluEntity(blu);
                 log.info("File SVC uploadImage blu : " + blu);
             } else {
-                BaseAuthUser bau = authUserRepo.findByEmail(email).orElseThrow();
+                SocialUser bau = socialUserRepository.findByEmail(email).orElseThrow();
                 imageRequestDto = new S3ImageRequestDto(bau.getEmail(), fileName, fileUrl, getFileExtension(fileName), provider);
                 image = imageRequestDto.toBauEntity(bau);
                 log.info("File SVC uploadImage bau : " + bau);
             }
 
-            return responseService.getSingleResult(imageRepo.save(image).getId());
+            return responseService.getSingleResult(s3ImageRepository.save(image).getId());
         } catch (IOException e) {
             throw new IllegalArgumentException(String.format("File SVC uploadImage 파일 변환 중 에러가 발생했습니다 파일명 -> (%s) : ", file.getOriginalFilename()));
         }
@@ -140,11 +145,11 @@ public class FileUploadService {
     @Transactional(readOnly = true)
     public ListResult<S3ImageResponseDto> getPicToByEmail(String email, String provider) {
         if(provider.equals("LOCAL")) {
-            localUserRepo.findByEmailAndProvider(email, provider).orElseThrow(CustomUserNotFoundException::new);
+            userRepository.findByEmailAndProvider(email, provider).orElseThrow(CustomUserNotFoundException::new);
         } else {
-            authUserRepo.findByEmailAndProvider(email, provider).orElseThrow(CustomUserNotFoundException::new);
+            socialUserRepository.findByEmailAndProvider(email, provider).orElseThrow(CustomUserNotFoundException::new);
         }
-        List<BaseS3Image> imageList = imageRepo.findByEmailAndProvider(email, provider);
+        List<S3Image> imageList = s3ImageRepository.findByEmailAndProvider(email, provider);
         if(imageList.isEmpty()) throw new CustomFileNotFoundException();
 
         return responseService.getListResult(imageList.stream().map(S3ImageResponseDto::new).collect(Collectors.toList()));
@@ -152,9 +157,9 @@ public class FileUploadService {
 
     @Transactional(readOnly = true)
     public SingleResult<Long> getPicToCountByEmailAndProvider(String email, String provider) {
-        if(imageRepo.findByEmailAndProvider(email, provider).isEmpty()) throw new CustomFileNotFoundException();
+        if(s3ImageRepository.findByEmailAndProvider(email, provider).isEmpty()) throw new CustomFileNotFoundException();
 
-        return responseService.getSingleResult(imageRepo.countByEmailAndProvider(email, provider));
+        return responseService.getSingleResult(s3ImageRepository.countByEmailAndProvider(email, provider));
     }
 
     @Transactional
@@ -170,7 +175,7 @@ public class FileUploadService {
             log.info("File SVC updatePicToByEmailAndId fileName : " + fileName);
             uploadService.uploadFile(inputStream, objectMetadata, fileName);
 
-            return responseService.getSingleResult(imageRepo.updateByEmailAndId(uploadService.getFileUrl(fileName), email, id));
+            return responseService.getSingleResult(s3ImageRepository.updateByEmailAndId(uploadService.getFileUrl(fileName), email, id));
         } catch (IOException e) {
             throw new IllegalArgumentException(String.format("File SVC updatePicToByEmailAndId 파일 변환 중 에러가 발생했습니다 파일명 -> (%s) : ", file.getOriginalFilename()));
         }
@@ -178,7 +183,7 @@ public class FileUploadService {
 
     @Transactional
     public SingleResult<Integer> deletePicToById(Long id) {
-        return responseService.getSingleResult(imageRepo.deleteByFileId(id));
+        return responseService.getSingleResult(s3ImageRepository.deleteByFileId(id));
     }
 
     private String createFileName(String originalFileName) {

@@ -1,12 +1,10 @@
-import React,{useState,useEffect} from 'react';
-import "../../css/MyPage.css";
-import "../../css/font.css";
-import 'react-fancybox/lib/fancybox.css';
-import Pic from "../../image/Human.png"
-import Mockup from "../../image/mockup.png"
+import React, {useState,useEffect} from 'react';
 import axios from "axios";
 import Posts from "./Posts";
 import Pagination from "./Pagination";
+import "../../css/MyPage.css";
+import "../../css/font.css";
+import 'react-fancybox/lib/fancybox.css';
 
 export default function MyPageMyPic(){
     const [posts, setPosts] = useState([]);
@@ -22,7 +20,7 @@ export default function MyPageMyPic(){
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await axios.get(`/v1/api/picto/find/email/${email}/provider/${provider}`)
+            await axios.get(`/v1/api/picto/${email}/${provider}`)
                 .then((response) => {
                     console.log('response data : ' + response.data);
                     console.log('response data.list : ' + response.data.list);
@@ -34,7 +32,9 @@ export default function MyPageMyPic(){
                     }
                 }).catch((err) => {
                     console.error('err : ', JSON.stringify(err));
+                    setPosts(null);
                     alert(err.response.data.msg);
+                    window.location.replace('/myPage');
                 });
         };
         fetchData();

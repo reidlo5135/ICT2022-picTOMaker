@@ -13,21 +13,26 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * @author reidlo
+ * 2022-09-06
+ * ver 1.1.1
+ **/
 @Log4j2
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
-    private final LocalUserJwtProvider localUserJwtProvider;
+    private final JwtProvider jwtProvider;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        String token = localUserJwtProvider.resolveToken((HttpServletRequest) request);
-        boolean isValid = localUserJwtProvider.validationToken(token);
+        String token = jwtProvider.resolveToken((HttpServletRequest) request);
+        boolean isValid = jwtProvider.validationToken(token);
 
         if(token != null && isValid) {
             log.info("Local Jwt Filter token : " + token);
-            Authentication authentication = localUserJwtProvider.getAuthentication(token);
+            Authentication authentication = jwtProvider.getAuthentication(token);
 
             log.info("Local Jwt Filter authentication : " + authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);

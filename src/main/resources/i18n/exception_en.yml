@@ -41,3 +41,19 @@ userExistException:
 agreementException:
   code: "-1009"
   msg: "A consent is required for the required consent item."
+
+communityNotExistException:
+  code: "-1010"
+  msg: "Boards are not exist."
+
+existedAccessToken:
+  code: "-1011"
+  msg: "This Access Token is already exist."
+
+fileNotFoundException:
+  code: "-1012"
+  msg: "Files are not exist."
+
+qnaNotExistException:
+  code: "-1013"
+  msg: "Qna is not exist."

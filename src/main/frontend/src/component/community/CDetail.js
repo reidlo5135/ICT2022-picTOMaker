@@ -11,7 +11,7 @@ const CDetail = ({ history, diaryList, match}) => {
     console.log('CDetail matchParams : ' + match.params.id);
 
     const getData = async () => {
-        await axios.get(`/v1/api/community/find/id/${match.params.id}`)
+        await axios.get(`/v1/api/community/${match.params.id}`)
             .then((response) => {
                 console.log('response : ', response.data);
                 console.log('response : ', response.data.data);
