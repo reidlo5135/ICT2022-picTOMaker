@@ -15,8 +15,19 @@ const CPosting = () => {
     const getProfile = localStorage.getItem('profile');
     const provider = localStorage.getItem('provider');
     
-    const [ img, setImg ] = useState([])
-    const [ previewImg, setPreviewImg ] = useState([])
+    const [imageSrc, setImageSrc] = useState('');
+          
+    const encodeFileToBase64 = (fileBlob) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(fileBlob);
+        return new Promise((resolve) => {
+            reader.onload = () => {
+                  setImageSrc(reader.result);
+                  resolve();
+                };
+              });
+            };
+
 
 
     const [inputValue, setInputValue] = useState({
@@ -54,36 +65,7 @@ const CPosting = () => {
         });
     };
 
-    function onChangeIsOpen() {
-        try {
-            axios.post(`/v1/api/qna/register/${provider}`, {
-                name: profNickName,
-                content
-            }).then((response) => {
-                console.log('response : ', response.data);
-                console.log('response : ', response.data.data);
-
-                if(response.data.code === 0) {
-                    alert('문의사항이 접수되었습니다.');
-                    setIsOpen(!isOpen);
-                    history.push("/");
-                } else {
-                    alert('An Error Occurred code : ' + response.data.code);
-                }
-            }).catch((err) => {
-                console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.msg);
-            });
-        } catch (err) {
-            console.error(err);
-        }
-        
-         setTimeout(() => {
-            window.location.reload();
-        }, 2500); 
-    } 
-
-    const insertImg = (e) => {
+   /*  const insertImg = (e) => {
         let reader = new FileReader()
 
         if(e.target.files[0]) {
@@ -130,14 +112,15 @@ const CPosting = () => {
             )
           })
         }
-      }
+      } */
 
       const registerBoard = () => {
           try {
               axios.post(`/v1/api/community/${provider}`, {
                   email,
                   title,
-                  content
+                  content,
+                  image
               }).then((response) => {
                   console.log('response : ', response.data);
                   console.log('response : ', response.data.data);
@@ -177,10 +160,12 @@ const CPosting = () => {
                   />
                   <form encType='multipart/form-data'>
                     <label htmlFor='file'><img className="uploadimg" src={upload} alt="사진 업로드 버튼"/></label>
-                    <input className="upload" type="file" id='file' accept='image/jpg, image/jpeg, image/png' onChange={(e) => insertImg(e)}/>
+                    <input type="file" name="image" onChange={(e) => {
+                        encodeFileToBase64(e.target.files[0]);
+                      }}/>
                   </form>
                   <div>
-                      {getPreviewImg()}
+                      {/* {getPreviewImg()} */}
                       <input
                           className="postingarea"
                           contentEditable='true'
@@ -189,6 +174,10 @@ const CPosting = () => {
                           placeholder="내용을 입력하세요"
                           onChange={handleInput}
                       />
+                      
+                      <div className="preview">
+                        {imageSrc && <img src={imageSrc} alt="preview=img"/>}
+                      </div>
                   </div>
               </div>
               <div>
