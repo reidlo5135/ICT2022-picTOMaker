@@ -1,0 +1,55 @@
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+build/
+
+### IntelliJ IDEA ###
+.idea
+server/.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### VS Code ###
+.vscode/
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# frontend #
+client/node_modules
+client/src/component/oauth2/env.js
+client/package-lock.json
+client/static/**
+client/static/static/**
+client/static/static/js/**
+
+# server #
+server/src/main/resources/application-private.yml
+server/src/main/resources/application-credentials.yml
