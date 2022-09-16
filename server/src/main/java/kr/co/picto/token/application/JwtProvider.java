@@ -3,6 +3,7 @@ package kr.co.picto.token.application;
 import io.jsonwebtoken.*;
 import kr.co.picto.common.exception.CustomAuthenticationEntryPointException;
 import kr.co.picto.token.dto.TokenResponseDto;
+import kr.co.picto.token.exception.CustomExpireJwtException;
 import kr.co.picto.user.application.local.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -94,6 +95,7 @@ public class JwtProvider {
     }
 
     public String getUserPk(String token) {
+        if(!validationToken(token)) throw new CustomExpireJwtException("토큰이 만료되었습니다.");
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
@@ -104,6 +106,7 @@ public class JwtProvider {
     public boolean validationToken(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            log.info("claimsJws : " + claimsJws);
             return !claimsJws.getBody().getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
             return false;
