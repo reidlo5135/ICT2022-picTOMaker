@@ -1,12 +1,12 @@
 package kr.co.picto.qna.application;
 
-import kr.co.picTO.common.application.ResponseService;
-import kr.co.picTO.common.domain.ListResult;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.qna.domain.UserQna;
-import kr.co.picTO.qna.domain.UserQnaRepository;
-import kr.co.picTO.qna.dto.UserQnaResponseDto;
-import kr.co.picTO.qna.exception.CustomQnaNotExistException;
+import kr.co.picto.common.application.ResponseService;
+import kr.co.picto.common.domain.ListResult;
+import kr.co.picto.common.domain.SingleResult;
+import kr.co.picto.qna.domain.UserQna;
+import kr.co.picto.qna.domain.UserQnaRepository;
+import kr.co.picto.qna.dto.UserQnaResponseDto;
+import kr.co.picto.qna.exception.CustomQnaNotExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

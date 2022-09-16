@@ -1,7 +1,7 @@
 package kr.co.picto.user.domain.social;
 
-import kr.co.picTO.common.domain.BaseTimeEntity;
-import kr.co.picTO.user.domain.AccountRole;
+import kr.co.picto.common.domain.BaseTimeEntity;
+import kr.co.picto.user.domain.AccountRole;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,6 +1,6 @@
 package kr.co.picto.qna.dto;
 
-import kr.co.picTO.qna.domain.UserQna;
+import kr.co.picto.qna.domain.UserQna;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

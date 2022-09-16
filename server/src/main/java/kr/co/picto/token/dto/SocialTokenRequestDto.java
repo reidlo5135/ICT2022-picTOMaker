@@ -1,6 +1,6 @@
 package kr.co.picto.token.dto;
 
-import kr.co.picTO.token.domain.AccessToken;
+import kr.co.picto.token.domain.AccessToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

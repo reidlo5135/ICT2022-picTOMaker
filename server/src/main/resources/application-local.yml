@@ -1,7 +1,7 @@
 logging:
   level:
     root: warn
-    kr.co.picTO: debug #debug info warn error fatal off
+    kr.co.picto: debug #debug info warn error fatal off
 
 server:
   port: 8080

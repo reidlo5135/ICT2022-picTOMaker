@@ -1,12 +1,12 @@
 package kr.co.picto.user.application.admin;
 
-import kr.co.picTO.common.application.ResponseService;
-import kr.co.picTO.common.domain.ListResult;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.user.domain.local.User;
-import kr.co.picTO.user.domain.local.UserRepository;
-import kr.co.picTO.user.dto.local.UserResponseDto;
-import kr.co.picTO.user.exception.CustomUserNotFoundException;
+import kr.co.picto.common.application.ResponseService;
+import kr.co.picto.common.domain.ListResult;
+import kr.co.picto.common.domain.SingleResult;
+import kr.co.picto.user.domain.local.User;
+import kr.co.picto.user.domain.local.UserRepository;
+import kr.co.picto.user.dto.local.UserResponseDto;
+import kr.co.picto.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

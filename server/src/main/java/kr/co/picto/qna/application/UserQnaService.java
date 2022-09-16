@@ -1,14 +1,14 @@
 package kr.co.picto.qna.application;
 
-import kr.co.picTO.common.application.ResponseService;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.qna.domain.UserQnaRepository;
-import kr.co.picTO.qna.dto.UserQnaRequestDto;
-import kr.co.picTO.user.domain.local.User;
-import kr.co.picTO.user.domain.local.UserRepository;
-import kr.co.picTO.user.domain.social.SocialUser;
-import kr.co.picTO.user.domain.social.SocialUserRepository;
-import kr.co.picTO.user.exception.CustomUserNotFoundException;
+import kr.co.picto.common.application.ResponseService;
+import kr.co.picto.common.domain.SingleResult;
+import kr.co.picto.qna.domain.UserQnaRepository;
+import kr.co.picto.qna.dto.UserQnaRequestDto;
+import kr.co.picto.user.domain.local.User;
+import kr.co.picto.user.domain.local.UserRepository;
+import kr.co.picto.user.domain.social.SocialUser;
+import kr.co.picto.user.domain.social.SocialUserRepository;
+import kr.co.picto.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

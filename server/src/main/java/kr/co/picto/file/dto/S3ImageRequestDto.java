@@ -1,9 +1,12 @@
 package kr.co.picto.file.dto;
 
-import kr.co.picTO.user.domain.local.User;
-import kr.co.picTO.user.domain.social.SocialUser;
-import kr.co.picTO.file.domain.S3Image;
-import lombok.*;
+import kr.co.picto.file.domain.S3Image;
+import kr.co.picto.user.domain.local.User;
+import kr.co.picto.user.domain.social.SocialUser;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor

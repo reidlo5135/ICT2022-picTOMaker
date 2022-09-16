@@ -1,7 +1,7 @@
 package kr.co.picto.user.application.local;
 
-import kr.co.picTO.user.exception.CustomUserNotFoundException;
-import kr.co.picTO.user.domain.local.UserRepository;
+import kr.co.picto.user.domain.local.UserRepository;
+import kr.co.picto.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetails;

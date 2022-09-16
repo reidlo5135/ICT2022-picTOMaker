@@ -1,10 +1,10 @@
 package kr.co.picto.user.presentation;
 
 import io.swagger.annotations.*;
-import kr.co.picTO.user.application.admin.AdminUserService;
-import kr.co.picTO.common.domain.ListResult;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.user.dto.local.UserResponseDto;
+import kr.co.picto.common.domain.ListResult;
+import kr.co.picto.common.domain.SingleResult;
+import kr.co.picto.user.application.admin.AdminUserService;
+import kr.co.picto.user.dto.local.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,10 +1,10 @@
 package kr.co.picto.user.presentation;
 
 import io.swagger.annotations.Api;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.token.dto.SocialTokenRequestDto;
-import kr.co.picTO.user.application.social.SocialUserService;
-import kr.co.picTO.user.dto.social.SocialUserInfoDto;
+import kr.co.picto.common.domain.SingleResult;
+import kr.co.picto.token.dto.SocialTokenRequestDto;
+import kr.co.picto.user.application.social.SocialUserService;
+import kr.co.picto.user.dto.social.SocialUserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

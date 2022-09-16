@@ -1,18 +1,18 @@
 package kr.co.picto.community.application;
 
-import kr.co.picTO.common.application.ResponseService;
-import kr.co.picTO.common.domain.ListResult;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.community.domain.UserCommunity;
-import kr.co.picTO.community.domain.UserCommunityRepository;
-import kr.co.picTO.community.dto.UserCommunityRequestDto;
-import kr.co.picTO.community.dto.UserCommunityResponseDto;
-import kr.co.picTO.community.exception.CustomCommunityNotExistException;
-import kr.co.picTO.user.domain.local.User;
-import kr.co.picTO.user.domain.local.UserRepository;
-import kr.co.picTO.user.domain.social.SocialUser;
-import kr.co.picTO.user.domain.social.SocialUserRepository;
-import kr.co.picTO.user.exception.CustomUserNotFoundException;
+import kr.co.picto.common.application.ResponseService;
+import kr.co.picto.common.domain.ListResult;
+import kr.co.picto.common.domain.SingleResult;
+import kr.co.picto.community.domain.UserCommunity;
+import kr.co.picto.community.domain.UserCommunityRepository;
+import kr.co.picto.community.dto.UserCommunityRequestDto;
+import kr.co.picto.community.dto.UserCommunityResponseDto;
+import kr.co.picto.community.exception.CustomCommunityNotExistException;
+import kr.co.picto.user.domain.local.User;
+import kr.co.picto.user.domain.local.UserRepository;
+import kr.co.picto.user.domain.social.SocialUser;
+import kr.co.picto.user.domain.social.SocialUserRepository;
+import kr.co.picto.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

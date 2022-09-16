@@ -1,10 +1,10 @@
 package kr.co.picto.file.presentation;
 
 import io.swagger.annotations.Api;
-import kr.co.picTO.common.domain.ListResult;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.file.application.FileUploadService;
-import kr.co.picTO.file.dto.S3ImageResponseDto;
+import kr.co.picto.common.domain.ListResult;
+import kr.co.picto.common.domain.SingleResult;
+import kr.co.picto.file.application.FileUploadService;
+import kr.co.picto.file.dto.S3ImageResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

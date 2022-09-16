@@ -1,9 +1,9 @@
 package kr.co.picto.common.configuration;
 
-import kr.co.picTO.common.exception.CustomAccessDeniedHandler;
-import kr.co.picTO.common.exception.RestAuthenticationEntryPoint;
-import kr.co.picTO.token.application.JwtAuthenticationFilter;
-import kr.co.picTO.token.application.JwtProvider;
+import kr.co.picto.common.exception.CustomAccessDeniedHandler;
+import kr.co.picto.common.exception.RestAuthenticationEntryPoint;
+import kr.co.picto.token.application.JwtAuthenticationFilter;
+import kr.co.picto.token.application.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

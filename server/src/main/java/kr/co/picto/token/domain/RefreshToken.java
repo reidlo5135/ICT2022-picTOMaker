@@ -1,6 +1,6 @@
 package kr.co.picto.token.domain;
 
-import kr.co.picTO.common.domain.BaseTimeEntity;
+import kr.co.picto.common.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

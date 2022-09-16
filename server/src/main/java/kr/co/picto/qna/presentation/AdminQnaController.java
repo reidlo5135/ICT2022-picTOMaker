@@ -1,10 +1,10 @@
 package kr.co.picto.qna.presentation;
 
 import io.swagger.annotations.*;
-import kr.co.picTO.qna.application.AdminQnaService;
-import kr.co.picTO.common.domain.ListResult;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.qna.dto.UserQnaResponseDto;
+import kr.co.picto.common.domain.ListResult;
+import kr.co.picto.common.domain.SingleResult;
+import kr.co.picto.qna.application.AdminQnaService;
+import kr.co.picto.qna.dto.UserQnaResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

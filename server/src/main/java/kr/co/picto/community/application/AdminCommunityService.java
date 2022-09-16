@@ -1,12 +1,12 @@
 package kr.co.picto.community.application;
 
-import kr.co.picTO.common.application.ResponseService;
-import kr.co.picTO.common.domain.ListResult;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.community.domain.UserCommunity;
-import kr.co.picTO.community.domain.UserCommunityRepository;
-import kr.co.picTO.community.dto.UserCommunityResponseDto;
-import kr.co.picTO.community.exception.CustomCommunityNotExistException;
+import kr.co.picto.common.application.ResponseService;
+import kr.co.picto.common.domain.ListResult;
+import kr.co.picto.common.domain.SingleResult;
+import kr.co.picto.community.domain.UserCommunity;
+import kr.co.picto.community.domain.UserCommunityRepository;
+import kr.co.picto.community.dto.UserCommunityResponseDto;
+import kr.co.picto.community.exception.CustomCommunityNotExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

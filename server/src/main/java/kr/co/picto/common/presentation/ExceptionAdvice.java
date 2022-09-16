@@ -1,15 +1,16 @@
 package kr.co.picto.common.presentation;
 
-import kr.co.picTO.common.exception.*;
-import kr.co.picTO.common.domain.CommonResult;
-import kr.co.picTO.common.application.ResponseService;
-import kr.co.picTO.community.exception.CustomCommunityNotExistException;
-import kr.co.picTO.file.exception.CustomFileNotFoundException;
-import kr.co.picTO.qna.exception.CustomQnaNotExistException;
-import kr.co.picTO.user.exception.*;
+import kr.co.picto.common.application.ResponseService;
+import kr.co.picto.common.domain.CommonResult;
+import kr.co.picto.common.exception.CustomAuthenticationEntryPointException;
+import kr.co.picto.common.exception.CustomCommunicationException;
+import kr.co.picto.common.exception.CustomSocialAgreementException;
+import kr.co.picto.community.exception.CustomCommunityNotExistException;
+import kr.co.picto.file.exception.CustomFileNotFoundException;
+import kr.co.picto.qna.exception.CustomQnaNotExistException;
+import kr.co.picto.user.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;

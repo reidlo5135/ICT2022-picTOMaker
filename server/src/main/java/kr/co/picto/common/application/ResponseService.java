@@ -1,9 +1,9 @@
 package kr.co.picto.common.application;
 
-import kr.co.picTO.common.domain.CommonResult;
-import kr.co.picTO.common.domain.ListResult;
-import kr.co.picTO.common.domain.SingleResult;
-import kr.co.picTO.common.domain.CommonResponse;
+import kr.co.picto.common.domain.CommonResponse;
+import kr.co.picto.common.domain.CommonResult;
+import kr.co.picto.common.domain.ListResult;
+import kr.co.picto.common.domain.SingleResult;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

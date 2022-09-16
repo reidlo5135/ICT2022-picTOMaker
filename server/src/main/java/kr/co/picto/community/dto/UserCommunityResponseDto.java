@@ -1,6 +1,6 @@
 package kr.co.picto.community.dto;
 
-import kr.co.picTO.community.domain.UserCommunity;
+import kr.co.picto.community.domain.UserCommunity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

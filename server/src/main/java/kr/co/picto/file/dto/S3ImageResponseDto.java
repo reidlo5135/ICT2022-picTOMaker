@@ -1,6 +1,6 @@
 package kr.co.picto.file.dto;
 
-import kr.co.picTO.file.domain.S3Image;
+import kr.co.picto.file.domain.S3Image;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package kr.co.picto.user.application.social;
 
-import kr.co.picTO.user.dto.social.OAuth2RequestDto;
+import kr.co.picto.user.dto.social.OAuth2RequestDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

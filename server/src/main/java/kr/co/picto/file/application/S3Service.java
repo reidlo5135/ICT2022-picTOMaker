@@ -3,7 +3,7 @@ package kr.co.picto.file.application;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import kr.co.picTO.common.configuration.S3Component;
+import kr.co.picto.common.configuration.S3Component;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;

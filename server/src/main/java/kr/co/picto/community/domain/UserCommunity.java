@@ -1,9 +1,9 @@
 package kr.co.picto.community.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import kr.co.picTO.common.domain.BaseTimeEntity;
-import kr.co.picTO.user.domain.local.User;
-import kr.co.picTO.user.domain.social.SocialUser;
+import kr.co.picto.common.domain.BaseTimeEntity;
+import kr.co.picto.user.domain.local.User;
+import kr.co.picto.user.domain.social.SocialUser;
 import lombok.*;
 
 import javax.persistence.*;

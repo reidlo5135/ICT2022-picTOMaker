@@ -1,9 +1,9 @@
 package kr.co.picto.token.application;
 
 import io.jsonwebtoken.*;
-import kr.co.picTO.common.exception.CustomAuthenticationEntryPointException;
-import kr.co.picTO.token.dto.TokenResponseDto;
-import kr.co.picTO.user.application.local.CustomUserDetailsService;
+import kr.co.picto.common.exception.CustomAuthenticationEntryPointException;
+import kr.co.picto.token.dto.TokenResponseDto;
+import kr.co.picto.user.application.local.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;

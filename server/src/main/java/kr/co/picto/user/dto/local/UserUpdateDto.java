@@ -1,6 +1,6 @@
 package kr.co.picto.user.dto.local;
 
-import kr.co.picTO.user.domain.local.User;
+import kr.co.picto.user.domain.local.User;
 import lombok.*;
 
 @Getter
