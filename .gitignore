@@ -9,7 +9,8 @@ build/
 
 ### IntelliJ IDEA ###
 .idea
-server/.idea
+server/.idea/
+server/.idea/vcs.xml
 *.iws
 *.iml
 *.ipr
@@ -53,3 +54,6 @@ client/static/static/js/**
 # server #
 server/src/main/resources/application-private.yml
 server/src/main/resources/application-credentials.yml
+server/settings.gradle
+server/gradlew
+server/gradlew.bat

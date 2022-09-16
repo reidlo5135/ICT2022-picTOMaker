@@ -1,0 +1,36 @@
+logging:
+  level:
+    root: warn
+    kr.co.picTO: debug #debug info warn error fatal off
+
+server:
+  port: 8080
+
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  url:
+    base: http://localhost:8080
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  messages:
+    basename: i18n/exception
+    encoding: UTF-8

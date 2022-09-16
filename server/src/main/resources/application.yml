@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    include: private, local, s3, credentials
+
+  messages:
+    basename: i18n/exception
+    encoding: UTF-8
+
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
