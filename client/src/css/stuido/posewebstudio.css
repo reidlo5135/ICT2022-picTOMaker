@@ -1,0 +1,87 @@
+/*Studio */
+
+.studio_container {
+    width : 1280px;
+  margin : 0 auto;
+}
+
+/* CamPose.js */
+
+.cam-pose {
+  width : 640px;
+  height : 480px;
+  margin : 0;
+  padding : 0;
+  display: flex;
+  
+
+}
+
+.test-pose {
+  width : 640px;
+  height : 500px;
+  margin : 0;
+  padding : 0;
+  display: flex;
+}
+
+.left-content{
+  float: left;
+  height: 100%
+}
+
+.right-content{
+  float: right;
+  height: 100%;
+}
+
+.camera-btn{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height : 235px;
+  margin-top: 70px;
+
+}
+.camera-btn > Button{
+  width: 80px;
+  height: 80px;
+  margin-left: 40px;
+}
+
+.camera-btn > .camera-img{
+  width: 80px;
+  height: 80px;
+}
+
+/*설정*/
+.setting{
+  margin-top: 15px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  
+}
+
+.menu{
+  display: block;
+  position: absolute;
+  bottom: 500px;
+  transition: 1s;
+}
+  
+.nmenu{
+  display: none;
+  bottom: 0;
+  position: absolute;
+  transition: 1s;
+}
+
+.button-group {
+  width : 1280px;
+  height : 235px;
+  border: 1px solid #aeaeae;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+
+}

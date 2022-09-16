@@ -1,0 +1,76 @@
+.explanation{
+    background-image: url("../image/explanation.png");
+    background-size: cover;
+    width: 1320px;
+    margin: 0 auto;
+    height: 500px;
+    margin-bottom: 100px;
+    border-bottom: solid 1px #F2F2F2;
+}
+
+.Title{
+    padding-top: 13%;
+    padding-left: 20%;
+}
+
+.Image{
+
+    text-align: center;
+    margin-right: 50px;
+}
+
+.MainTitle{
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.SubTitle{
+    margin-top: 20px;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.MainButton {
+    margin-top: 20px;
+    position: relative;
+    padding: 15px 30px;
+    border-radius: 35px;
+    background: linear-gradient(to left, #EB5D38, #E72D71);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.25s;
+    border-style: none;
+
+}
+.MainButton:hover {
+    letter-spacing: 2px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.Best{
+    margin: 0 auto;
+    text-align: center;
+    color: #E72D71;
+    font-size: 24px;
+    font-weight: bold;
+    height: 800px;
+}
+
+.slick-slider{
+    margin: 0 auto;
+    width: 1280px;
+}
+
+.Best-title {
+    margin-bottom: 100px;
+}
+
+.Best-list{
+    background-color: #F2F2F2;
+    width: 250px !important;
+    height: 300px;
+    border-radius: 15px;
+}
