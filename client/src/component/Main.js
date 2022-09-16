@@ -69,7 +69,6 @@ export default function Main(){
                         localStorage.setItem("refresh_token", response.data.data.refreshToken);
                         localStorage.setItem("provider", "LOCAL");
                         closeModal();
-                        axios.defaults.headers.common["X-AUTH-TOKEN"] = `${response.data.data.accessToken}`;
                         history.push('/');
                     }
                 })

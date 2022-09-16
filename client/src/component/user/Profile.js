@@ -48,7 +48,11 @@ const Profile = () => {
 
     const getLocalProf = () => {
         try {
-            axios.post('/v1/api/user/info').then((response) => {
+            axios.post('/v1/api/user/info', {}, {
+                headers: {
+                    "X-AUTH-TOKEN": cookies.accessToken
+                }
+            }).then((response) => {
                 console.log('Local profile res data.data : ', response.data.data);
 
                 profile = JSON.parse(JSON.stringify(response.data.data));
