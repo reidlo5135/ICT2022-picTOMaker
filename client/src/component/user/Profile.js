@@ -48,11 +48,7 @@ const Profile = () => {
 
     const getLocalProf = () => {
         try {
-            axios.post('/v1/api/user/info', {}, {
-                headers: {
-                    "X-AUTH-TOKEN": cookies.accessToken
-                }
-            }).then((response) => {
+            axios.post('/v1/api/user/info').then((response) => {
                 console.log('Local profile res data.data : ', response.data.data);
 
                 profile = JSON.parse(JSON.stringify(response.data.data));
@@ -70,11 +66,17 @@ const Profile = () => {
                 console.error('err : ', JSON.stringify(err));
                 console.error('code : ', err.response.data.code);
                 if(err.response.data.code === -1014) {
-                    profile = null;
-                    console.clear();
-                    history.push("/");
+                    axios.post('/v1/api/user/reissue', {
+                        accessToken: cookies.accessToken,
+                        refreshToken: localStorage.getItem("refresh_token")
+                    }).then((response) => {
+                        profile = null;
+                        console.clear();
+                        setCookie("accessToken", response.data.accessToken);
+                        localStorage.setItem("refresh_token", response.data.refreshToken);
+                        history.push("/");
+                    });
                 }
-                alert(err.response.data.msg);
             });
         } catch (err) {
             console.error(err);
