@@ -1,5 +1,6 @@
 package kr.co.picto.token.application;
 
+import kr.co.picto.token.exception.CustomExpireJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
@@ -28,13 +29,15 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         String token = jwtProvider.resolveToken((HttpServletRequest) request);
+        log.info("Jwt filer token : " + token);
         boolean isValid = jwtProvider.validationToken(token);
+        log.info("Jwt filter isValid : " + isValid);
+        if(token != null && !isValid) throw new CustomExpireJwtException("토큰이 만료되었습니다.");
 
         if(token != null && isValid) {
-            log.info("Local Jwt Filter token : " + token);
             Authentication authentication = jwtProvider.getAuthentication(token);
 
-            log.info("Local Jwt Filter authentication : " + authentication);
+            log.info("Jwt Filter authentication : " + authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         chain.doFilter(request, response);
