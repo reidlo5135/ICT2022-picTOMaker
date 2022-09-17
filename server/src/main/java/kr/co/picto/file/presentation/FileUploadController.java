@@ -26,7 +26,7 @@ public class FileUploadController {
     private final FileUploadService fileUploadService;
 
     /**
-     * frontend - MyPage-Mypic.js
+     * frontend - MyPagePicToDetails.js
      **/
     @GetMapping(value = "/{provider}")
     @ApiImplicitParams({
@@ -40,7 +40,7 @@ public class FileUploadController {
     }
 
     /**
-     * frontend - MyPage-profile.js
+     * frontend - MyPageProfileDetails.js
      **/
     @GetMapping(value = "/count/{provider}")
     @ApiImplicitParams({
@@ -68,7 +68,7 @@ public class FileUploadController {
     }
 
     /**
-     * frontend - Posts.js
+     * frontend - MyPagePicToPosting.js
      **/
     @PutMapping(value = "/{id}")
     @ApiImplicitParams({
@@ -82,7 +82,7 @@ public class FileUploadController {
     }
 
     /**
-     * frontend - Posts.js
+     * frontend - MyPagePicToPosting.js
      **/
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<SingleResult<Integer>> deletePicTo(@PathVariable Long id) {
