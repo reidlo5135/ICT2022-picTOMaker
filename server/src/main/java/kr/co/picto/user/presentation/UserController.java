@@ -111,8 +111,24 @@ public class UserController {
                     required = true, dataTypeClass = String.class, paramType = "header")
     })
     @ApiOperation(value = "Make User InActive", notes = "User DeActivate")
-    public ResponseEntity<SingleResult<Integer>> deActivate(@ApiParam(value = "Access Token", required = true) @RequestHeader(value = "X-AUTH-TOKEN") String access_token) {
+    public ResponseEntity deActivate(@RequestHeader(value = "X-AUTH-TOKEN") String access_token) {
         userService.delete(access_token);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * frontend - MyPage.js, Sidebar.js
+     */
+    @DeleteMapping(value = "/logout")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "X-AUTH-TOKEN",
+                    value = "AccessToken",
+                    required = true, dataTypeClass = String.class, paramType = "header")
+    })
+    @ApiOperation(value = "User Logout", notes = "User Logout & Delete Token")
+    public ResponseEntity logout(@RequestHeader(value = "X-AUTH-TOKEN") String access_token) {
+        userService.logoutAndDeleteToken(access_token);
         return ResponseEntity.ok().build();
     }
 }

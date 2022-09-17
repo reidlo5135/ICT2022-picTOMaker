@@ -117,6 +117,12 @@ public class UserService {
         user.deactivate();
     }
 
+    @Transactional
+    public void logoutAndDeleteToken(String access_token) {
+        User user = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new);
+        refreshTokenRepository.deleteByTokenId(user.getId());
+    }
+
     private void checkStatus(User user) {
         if(user.getStatus() == AccountStatus.INACTIVE) throw new CustomUserNotFoundException();
     }
