@@ -69,7 +69,16 @@ const TopProfile = () => {
             }).catch((err) => {
                 console.error('err : ', JSON.stringify(err));
                 console.error('code : ', err.response.data.code);
-                history.push("/");
+                axios.post('/v1/api/user/reissue', {
+                    accessToken: cookies.accessToken,
+                    refreshToken: localStorage.getItem("refresh_token")
+                }).then((response) => {
+                    setCookie("accessToken", response.data.data.accessToken);
+                    localStorage.setItem("refresh_token", response.data.data.refreshToken);
+                    window.location.reload();
+                }).catch((err) => {
+                    alert(err.response.data.msg);
+                });
             });
         } catch (err) {
             console.error(err);
