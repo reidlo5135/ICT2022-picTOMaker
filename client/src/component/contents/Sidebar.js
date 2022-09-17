@@ -35,13 +35,13 @@ export default function Sidebar(){
     return (
         <div className={"hamburger-menu"}>
             <input id="menu__toggle" type="checkbox" />
-            <label class="menu__btn" for="menu__toggle">
+            <label className="menu__btn" htmlFor="menu__toggle">
                 <span></span>
             </label>
 
-            <ul class="menu__box">
+            <ul className="menu__box">
                 <li><Link to='/mypage' className='menu__item'>마이페이지</Link></li>
-                <li><a class="menu__item" href="#" onClick={Logout}>로그아웃</a></li>
+                <li><a className="menu__item" href="#" onClick={Logout}>로그아웃</a></li>
                 <li><Link to='/qna' className='menu__item'>문의하기</Link></li>
                 <li><Link to='/community' className='menu__item'>커뮤니티</Link></li>
             </ul>

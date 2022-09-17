@@ -26,7 +26,7 @@ export default function Introduce(){
             transition={{ ease: "easeOut", duration: 1 }}
         >
             <div className='Introduce' >
-                <div class="col-md-7 intro-content intro-content1" data-aos="fade-up" data-aos-duration="1000">
+                <div className="col-md-7 intro-content intro-content1" data-aos="fade-up" data-aos-duration="1000">
                     <div className='intro-title' data-aos="fade-up" data-aos-duration="2000" data-aos-delay="500">
                         <div>카메라 촬영만으로</div>
                         <div className='br-title'>저작권 없는 픽토그램을 제공합니다.</div>
@@ -44,10 +44,10 @@ export default function Introduce(){
                     </div>
                 </div>
 
-                <div class="col-md-7 intro-content intro-content2">
+                <div className="col-md-7 intro-content intro-content2">
                 <div className='intro-title' data-aos="fade-up" data-aos-duration="1000">
                     <div >사용법이 아주 간단해요</div>
-                    <div  className='br-title'>3가지 단계만 따라해 보세요!</div>
+                    <div className='br-title'>3가지 단계만 따라해 보세요!</div>
                 </div>
                 <div className='intro-manual'>
                     <div className='intro-imgmanual'>
@@ -87,7 +87,7 @@ export default function Introduce(){
 
                 </div>
 
-                <div class="col-md-7 intro-content intro-content3">
+                <div className="col-md-7 intro-content intro-content3">
                     <div className='col-md-7 intro-title3'>
                         <div className='intro-titlediv'>
                             <div className='intro-title-content'>
