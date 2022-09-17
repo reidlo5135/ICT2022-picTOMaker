@@ -4,9 +4,9 @@ import * as cam from '@mediapipe/camera_utils';
 import CamHand from './module/CamHand'
 import TestHand from './module/TestHand'
 import Button from '@mui/material/Button';
-import Top from "../../contents/Top";
-import "../../../css/stuido/topbar.css";
-import "../../../css/stuido/posewebstudio.css";
+import Top from "../../Top";
+import "../../../styles/stuido/topbar.css";
+import "../../../styles/stuido/posewebstudio.css";
 import Gear from "../../../assets/image/studio_image/gear-solid.svg";
 import Time from "./resource/time.svg";
 import Camera from "../../../assets/image/studio_image/camera.png";
