@@ -67,18 +67,10 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public SingleResult<UserInfoDto> getProfileLocal(String access_token) {
+    public SingleResult<UserInfoDto> info(String access_token) {
         User user = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new);
 
-        UserInfoDto userInfoDto = UserInfoDto.builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .name(user.getName())
-                .nickName(user.getNickName())
-                .profile_image_url(user.getProfile_image_url())
-                .build();
-
-        return responseService.getSingleResult(userInfoDto);
+        return responseService.getSingleResult(UserInfoDto.from(user));
     }
 
     @Transactional
@@ -109,6 +101,11 @@ public class UserService {
         refreshTokenRepository.save(updateRefreshToken);
 
         return responseService.getSingleResult(refreshedToken);
+    }
+
+    @Transactional
+    public SingleResult<Boolean> isValid(String access_token) {
+        return responseService.getSingleResult(jwtProvider.validationToken(access_token));
     }
 
     @Transactional
