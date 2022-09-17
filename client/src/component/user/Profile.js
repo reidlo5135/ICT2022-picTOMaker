@@ -70,17 +70,9 @@ const Profile = () => {
                 console.error('err : ', JSON.stringify(err));
                 console.error('code : ', err.response.data.code);
                 if(err.response.data.code === -1014) {
-                    axios.post('/v1/api/user/reissue', {
-                        accessToken: cookies.accessToken,
-                        refreshToken: localStorage.getItem("refresh_token")
-                    }).then((response) => {
-                        profile = null;
-                        console.clear();
-                        setCookie("accessToken", response.data.accessToken);
-                        localStorage.setItem("refresh_token", response.data.refreshToken);
-                        history.push("/");
-                    });
+                    history.push("/");
                 }
+                alert(err.response.data.msg);
             });
         } catch (err) {
             console.error(err);
