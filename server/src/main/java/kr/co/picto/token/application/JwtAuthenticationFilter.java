@@ -28,13 +28,14 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         String token = jwtProvider.resolveToken((HttpServletRequest) request);
+        log.info("Jwt filer token : " + token);
         boolean isValid = jwtProvider.validationToken(token);
+        log.info("Jwt filter isValid : " + isValid);
 
         if(token != null && isValid) {
-            log.info("Local Jwt Filter token : " + token);
             Authentication authentication = jwtProvider.getAuthentication(token);
 
-            log.info("Local Jwt Filter authentication : " + authentication);
+            log.info("Jwt Filter authentication : " + authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         chain.doFilter(request, response);
