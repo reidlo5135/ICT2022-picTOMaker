@@ -3,8 +3,8 @@ import "../../css/Terms.css";
 import "../../css/font.css"
 import Top from "../contents/Top";
 import Footer from "../contents/Footer";
-import Arrow from "../../image/terms-arrow.png";
-import Important from "../../image/important.png";
+import Arrow from "../../assets/image/terms-arrow.png";
+import Important from "../../assets/image/important.png";
 
 export default function Terms(){
 

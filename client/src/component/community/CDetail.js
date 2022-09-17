@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState,useRef } from 'react';
 import Top from "../contents/Top";
-import img from "../../image/naver.png";
+import img from "../../assets/image/naver.png";
 import Ccomment from "./Ccomment";
 import Ccmt from "./Ccmt";
 

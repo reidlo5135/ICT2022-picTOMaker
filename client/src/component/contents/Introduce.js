@@ -3,10 +3,10 @@ import "aos/dist/aos.css";
 import AOS from "aos";
 import "../../css/Introduce.css"
 import "../../App.css"
-import Logo from "../../image/Logo.png"
-import Step1 from "../../image/step1.svg"
-import Step2 from "../../image/step2.svg"
-import Step3 from "../../image/step3.svg"
+import Logo from "../../assets/image/Logo.png"
+import Step1 from "../../assets/image/step1.svg"
+import Step2 from "../../assets/image/step2.svg"
+import Step3 from "../../assets/image/step3.svg"
 import { motion } from "framer-motion";
 import { Link } from 'react-scroll';
 

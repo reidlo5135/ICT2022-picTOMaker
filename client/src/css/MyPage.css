@@ -203,7 +203,7 @@
     width: 35px;
     height: 35px;
     border: none;
-    background: url("../image/studio_image/download_btn.png") no-repeat;
+    background: url("../../src/assets/image/studio_image/download_btn.png") no-repeat;
     background-size: cover;
 }
 
@@ -211,7 +211,7 @@
     width: 35px;
     height: 35px;
     border: none;
-    background: url("../image/studio_image/pencil_btn.png") no-repeat;
+    background: url("../../src/assets/image/studio_image/pencil_btn.png") no-repeat;
     background-size: cover;
 }
 
@@ -219,7 +219,7 @@
     width: 35px;
     height: 35px;
     border: none;
-    background: url("../image/studio_image/trash-can-solid.svg") no-repeat;
+    background: url("../../src/assets/image/studio_image/trash-can-solid.svg") no-repeat;
     background-size: cover;
 }
 
@@ -234,7 +234,7 @@ button > p{
 
 .pic-backimg{
     height: 230px;
- background-image: url(../image/mockup.png);
+ background-image: url(../../src/assets/image/mockup.png);
  background-size: cover;
 }
 

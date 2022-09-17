@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/Select-Content.css";
 import Select from "../component/contents/Select-Content"
-import Logo from "../image/Logo.png";
+import Logo from "../assets/image/Logo.png";
 import { Link } from "react-router-dom";
 
 function SelectPage() {

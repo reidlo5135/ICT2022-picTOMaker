@@ -1,7 +1,7 @@
 import React from 'react';
-import Human from "../../image/Human.png"
-import Things from "../../image/Things.png"
-import Edit from "../../image/Edit.png"
+import Human from "../../assets/image/Human.png"
+import Things from "../../assets/image/Things.png"
+import Edit from "../../assets/image/Edit.png"
 import { Link } from "react-router-dom";
 import "../../css/Select-Content.css";
 import "../../css/font.css";

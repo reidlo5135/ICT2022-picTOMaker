@@ -2,7 +2,7 @@ import React,{useState,useEffect,useRef} from "react";
 import {Link} from "react-router-dom";
 import axios from 'axios';
 import '../../css/Callback.css';
-import img from "../../image/naver.png";
+import img from "../../assets/image/naver.png";
 
 const CList = ({diaryList}) => {
     const access_token = localStorage.getItem('access_token');

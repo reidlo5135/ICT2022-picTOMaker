@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import SetSocialImg from "../oauth2/SetSocialImg";
-import Human from '../../image/Human.png';
+import Human from '../../assets/image/Human.png';
 import "../../css/MyPage.css";
 import "../../css/font.css";
 

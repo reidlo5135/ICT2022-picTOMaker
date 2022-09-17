@@ -4,7 +4,7 @@ import axios from 'axios';
 import '../../css/Callback.css';
 import Top from "../contents/Top";
 import {useHistory} from "react-router-dom";
-import upload from "../../image/studio_image/image_btn.png"
+import upload from "../../assets/image/studio_image/image_btn.png"
 import "../../css/community.css";
 
 const CPosting = () => {

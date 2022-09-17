@@ -4,7 +4,7 @@ import {useCookies} from "react-cookie";
 import axios from "axios";
 import '../../css/Top.css'
 import {Link} from "react-router-dom";
-import Human from '../../image/Human.png';
+import Human from '../../assets/image/Human.png';
 
 const Profile = () => {
     const history = useHistory();

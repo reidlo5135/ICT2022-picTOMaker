@@ -3,7 +3,7 @@ import {useHistory} from "react-router";
 import {useCookies} from "react-cookie";
 import { Link } from "react-router-dom";
 import Profile from "../user/Profile";
-import Logo from "../../image/Logo.png";
+import Logo from "../../assets/image/Logo.png";
 import Sidebar from "../../component/contents/Sidebar";
 import "../../css/Top.css";
 import "../../css/font.css";

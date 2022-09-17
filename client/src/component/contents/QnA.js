@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import {useHistory} from "react-router";
 import axios from "axios";
 import { motion } from "framer-motion";
-import Postani1 from "../../image/postcar.png";
-import Postani2 from "../../image/email.png";
-import Logo from "../../image/Logo.png";
+import Postani1 from "../../assets/image/postcar.png";
+import Postani2 from "../../assets/image/email.png";
+import Logo from "../../assets/image/Logo.png";
 import "../../App.css";
 import "../../css/QnA.css";
 
