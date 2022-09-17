@@ -9,6 +9,7 @@ import kr.co.picto.file.domain.S3ImageRepository;
 import kr.co.picto.file.dto.S3ImageRequestDto;
 import kr.co.picto.file.dto.S3ImageResponseDto;
 import kr.co.picto.file.exception.CustomFileNotFoundException;
+import kr.co.picto.token.application.JwtProvider;
 import kr.co.picto.user.domain.local.User;
 import kr.co.picto.user.domain.local.UserRepository;
 import kr.co.picto.user.domain.social.SocialUser;
@@ -42,6 +43,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class FileUploadService {
+    private final JwtProvider jwtProvider;
     private final S3ImageRepository s3ImageRepository;
     private final SocialUserRepository socialUserRepository;
     private final UserRepository userRepository;
@@ -107,7 +109,7 @@ public class FileUploadService {
     }
 
     @Transactional
-    public SingleResult<Long> uploadImage(MultipartFile file, String email, String provider) {
+    public SingleResult<Long> uploadImage(MultipartFile file, String access_token, String provider) {
         String fileName = createFileName(file.getOriginalFilename());
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
@@ -125,12 +127,12 @@ public class FileUploadService {
             S3Image image = null;
             S3ImageRequestDto imageRequestDto = null;
             if(provider.equals("LOCAL")) {
-                User blu = userRepository.findByEmail(email).orElseThrow();
+                User blu = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new);
                 imageRequestDto = new S3ImageRequestDto(blu.getEmail(), fileName, fileUrl, getFileExtension(fileName), provider);
                 image = imageRequestDto.toBluEntity(blu);
                 log.info("File SVC uploadImage blu : " + blu);
             } else {
-                SocialUser bau = socialUserRepository.findByEmail(email).orElseThrow();
+                SocialUser bau = socialUserRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new);
                 imageRequestDto = new S3ImageRequestDto(bau.getEmail(), fileName, fileUrl, getFileExtension(fileName), provider);
                 image = imageRequestDto.toBauEntity(bau);
                 log.info("File SVC uploadImage bau : " + bau);
@@ -143,11 +145,14 @@ public class FileUploadService {
     }
 
     @Transactional(readOnly = true)
-    public ListResult<S3ImageResponseDto> getPicToByEmail(String email, String provider) {
+    public ListResult<S3ImageResponseDto> getPicToByEmail(String access_token, String provider) {
+        long userPk = Long.parseLong(jwtProvider.getUserPk(access_token));
+        log.info("userPK : " + userPk);
+        String email = null;
         if(provider.equals("LOCAL")) {
-            userRepository.findByEmailAndProvider(email, provider).orElseThrow(CustomUserNotFoundException::new);
+            email = userRepository.findById(userPk).orElseThrow(CustomUserNotFoundException::new).getEmail();
         } else {
-            socialUserRepository.findByEmailAndProvider(email, provider).orElseThrow(CustomUserNotFoundException::new);
+            email = socialUserRepository.findById(userPk).orElseThrow(CustomUserNotFoundException::new).getEmail();
         }
         List<S3Image> imageList = s3ImageRepository.findByEmailAndProvider(email, provider);
         if(imageList.isEmpty()) throw new CustomFileNotFoundException();
@@ -156,14 +161,15 @@ public class FileUploadService {
     }
 
     @Transactional(readOnly = true)
-    public SingleResult<Long> getPicToCountByEmailAndProvider(String email, String provider) {
+    public SingleResult<Long> getPicToCountByEmailAndProvider(String access_token, String provider) {
+        String email = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new).getEmail();
         if(s3ImageRepository.findByEmailAndProvider(email, provider).isEmpty()) throw new CustomFileNotFoundException();
 
         return responseService.getSingleResult(s3ImageRepository.countByEmailAndProvider(email, provider));
     }
 
     @Transactional
-    public SingleResult<Integer> updatePicToByEmailAndId(MultipartFile file, String email, Long id) {
+    public SingleResult<Integer> updatePicToByEmailAndId(MultipartFile file, String access_token, Long id) {
         String fileName = createFileName(file.getOriginalFilename());
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
@@ -175,6 +181,7 @@ public class FileUploadService {
             log.info("File SVC updatePicToByEmailAndId fileName : " + fileName);
             uploadService.uploadFile(inputStream, objectMetadata, fileName);
 
+            String email = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new).getEmail();
             return responseService.getSingleResult(s3ImageRepository.updateByEmailAndId(uploadService.getFileUrl(fileName), email, id));
         } catch (IOException e) {
             throw new IllegalArgumentException(String.format("File SVC updatePicToByEmailAndId 파일 변환 중 에러가 발생했습니다 파일명 -> (%s) : ", file.getOriginalFilename()));

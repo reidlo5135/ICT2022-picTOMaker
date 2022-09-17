@@ -1,6 +1,8 @@
 package kr.co.picto.file.presentation;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import kr.co.picto.common.domain.ListResult;
 import kr.co.picto.common.domain.SingleResult;
 import kr.co.picto.file.application.FileUploadService;
@@ -26,33 +28,57 @@ public class FileUploadController {
     /**
      * frontend - MyPage-Mypic.js
      **/
-    @GetMapping(value = "/{email}/{provider}")
-    public ResponseEntity<ListResult<S3ImageResponseDto>> getPicTo(@PathVariable String email, @PathVariable String provider) {
-        return ResponseEntity.ok().body(fileUploadService.getPicToByEmail(email, provider));
+    @GetMapping(value = "/{provider}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "X-AUTH-TOKEN",
+                    value = "AccessToken",
+                    required = true, dataTypeClass = String.class, paramType = "header")
+    })
+    public ResponseEntity<ListResult<S3ImageResponseDto>> getPicTo(@RequestHeader(value = "X-AUTH-TOKEN") String access_token, @PathVariable String provider) {
+        return ResponseEntity.ok().body(fileUploadService.getPicToByEmail(access_token, provider));
     }
 
     /**
      * frontend - MyPage-profile.js
      **/
-    @GetMapping(value = "/count/{email}/{provider}")
-    public ResponseEntity<SingleResult<Long>> getPicToCount(@PathVariable String email, @PathVariable String provider) {
-        return ResponseEntity.ok().body(fileUploadService.getPicToCountByEmailAndProvider(email, provider));
+    @GetMapping(value = "/count/{provider}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "X-AUTH-TOKEN",
+                    value = "AccessToken",
+                    required = true, dataTypeClass = String.class, paramType = "header")
+    })
+    public ResponseEntity<SingleResult<Long>> getPicToCount(@RequestHeader(value = "X-AUTH-TOKEN") String access_token, @PathVariable String provider) {
+        return ResponseEntity.ok().body(fileUploadService.getPicToCountByEmailAndProvider(access_token, provider));
     }
 
     /**
      * frontend - EditTool.js
      **/
-    @PostMapping(value = "/{email}/{provider}")
-    public ResponseEntity<SingleResult<Long>> uploadPicTo(@RequestBody Map<String, String> octet, @PathVariable String email, @PathVariable String provider) {
-        return ResponseEntity.ok().body(fileUploadService.uploadImage(fileUploadService.decodeAndConvertFile(octet.get("image")), email, provider));
+    @PostMapping(value = "/{provider}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "X-AUTH-TOKEN",
+                    value = "AccessToken",
+                    required = true, dataTypeClass = String.class, paramType = "header")
+    })
+    public ResponseEntity<SingleResult<Long>> uploadPicTo(@RequestBody Map<String, String> octet, @RequestHeader(value = "X-AUTH-TOKEN") String access_token, @PathVariable String provider) {
+        return ResponseEntity.ok().body(fileUploadService.uploadImage(fileUploadService.decodeAndConvertFile(octet.get("image")), access_token, provider));
     }
 
     /**
      * frontend - Posts.js
      **/
-    @PutMapping(value = "/{email}/{id}")
-    public ResponseEntity<SingleResult<Integer>> updatePicTo(@RequestBody Map<String, String> octet, @PathVariable String email, @PathVariable Long id) {
-        return ResponseEntity.ok().body(fileUploadService.updatePicToByEmailAndId(fileUploadService.decodeAndConvertFile(octet.get("octet")), email, id));
+    @PutMapping(value = "/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "X-AUTH-TOKEN",
+                    value = "AccessToken",
+                    required = true, dataTypeClass = String.class, paramType = "header")
+    })
+    public ResponseEntity<SingleResult<Integer>> updatePicTo(@RequestBody Map<String, String> octet, @RequestHeader(value = "X-AUTH-TOKEN") String access_token, @PathVariable Long id) {
+        return ResponseEntity.ok().body(fileUploadService.updatePicToByEmailAndId(fileUploadService.decodeAndConvertFile(octet.get("octet")), access_token, id));
     }
 
     /**

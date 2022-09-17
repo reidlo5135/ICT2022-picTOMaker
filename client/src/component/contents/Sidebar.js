@@ -13,17 +13,27 @@ export default function Sidebar(){
 
     function Logout() {
         try {
-            console.clear();
-            localStorage.clear();
-            removeCookie("accessToken", {path: "/"});
-            history.push("/");
+            axios.delete('/v1/api/user/logout', {
+                headers: {
+                    "X-AUTH-TOKEN": cookies.accessToken
+                }
+            }).then((response) => {
+                if(response.status === 200) {
+                    console.clear();
+                    localStorage.clear();
+                    removeCookie("accessToken", {path: "/"});
+                    history.push("/");
+                }
+            }).catch((err) => {
+                alert(err.response.data.msg);
+            });
         } catch (err) {
             console.error(err);
         }
     }
 
     return (
-        <div class="hamburger-menu">
+        <div className={"hamburger-menu"}>
             <input id="menu__toggle" type="checkbox" />
             <label class="menu__btn" for="menu__toggle">
                 <span></span>

@@ -1,9 +1,9 @@
 package kr.co.picto.service;
 
-import kr.co.picTO.token.application.JwtProvider;
-import kr.co.picTO.user.dto.local.UserCreateDto;
-import kr.co.picTO.user.domain.local.UserRepository;
-import kr.co.picTO.user.application.local.UserService;
+import kr.co.picto.token.application.JwtProvider;
+import kr.co.picto.user.application.local.UserService;
+import kr.co.picto.user.domain.local.UserRepository;
+import kr.co.picto.user.dto.local.UserCreateDto;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

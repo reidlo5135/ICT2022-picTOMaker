@@ -38,10 +38,20 @@ export default function MyPageContent(){
 
     function Logout() {
         try {
-            console.clear();
-            localStorage.clear();
-            removeCookie("accessToken", {path: "/"});
-            history.push("/");
+            axios.delete('/v1/api/user/logout', {
+                headers: {
+                    "X-AUTH-TOKEN": cookies.accessToken
+                }
+            }).then((response) => {
+                if(response.status === 200) {
+                    console.clear();
+                    localStorage.clear();
+                    removeCookie("accessToken", {path: "/"});
+                    history.push("/");
+                }
+            }).catch((err) => {
+                alert(err.response.data.msg);
+            });
         } catch (err) {
             console.error(err);
         }

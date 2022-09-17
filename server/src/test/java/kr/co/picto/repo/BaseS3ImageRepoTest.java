@@ -1,6 +1,6 @@
 package kr.co.picto.repo;
 
-import kr.co.picTO.file.domain.S3ImageRepository;
+import kr.co.picto.file.domain.S3ImageRepository;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

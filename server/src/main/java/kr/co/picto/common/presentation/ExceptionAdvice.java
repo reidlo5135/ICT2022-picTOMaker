@@ -8,6 +8,7 @@ import kr.co.picto.common.exception.CustomSocialAgreementException;
 import kr.co.picto.community.exception.CustomCommunityNotExistException;
 import kr.co.picto.file.exception.CustomFileNotFoundException;
 import kr.co.picto.qna.exception.CustomQnaNotExistException;
+import kr.co.picto.token.exception.CustomExpireJwtException;
 import kr.co.picto.user.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -193,6 +194,20 @@ public class ExceptionAdvice {
         e.printStackTrace();
         return responseService.getFailResult(
                 Integer.parseInt(getMessage("qnaNotExistException.code")), getMessage("qnaNotExistException.msg")
+        );
+    }
+
+    /***
+     *
+     * -1014
+     * AccessToken 만료 시 에러
+     */
+    @ExceptionHandler({CustomExpireJwtException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult accessTokenExpiredException(HttpServletRequest request, CustomExpireJwtException e) {
+        e.printStackTrace();
+        return responseService.getFailResult(
+                Integer.parseInt(getMessage("accessTokenExpiredException.code")), getMessage(e.getMessage())
         );
     }
 

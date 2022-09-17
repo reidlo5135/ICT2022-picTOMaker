@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useCookies} from "react-cookie";
+import {useHistory} from "react-router";
+import axios from "axios";
 import '../App.css';
 import {Route, Switch} from 'react-router-dom';
 import Main from "./Main";
@@ -19,6 +22,34 @@ import CDetail from './community/CDetail';
 import CPosting from './community/CPosting';
 
 export default function App(){
+    const [cookies, setCookie] = useCookies(["accessToken"]);
+    const history = useHistory();
+
+    useEffect(() => {
+        console.log("app.js token : ", cookies.accessToken);
+        axios.post('/v1/api/user/valid', {}, {
+            headers: {
+                "X-AUTH-TOKEN": cookies.accessToken
+            }
+        }).then((response) => {
+            console.log("App.js response : ", response.data);
+            if(response.data.data === false) {
+                axios.post('/v1/api/user/reissue', {
+                    accessToken: cookies.accessToken,
+                    refreshToken: localStorage.getItem("refresh_token")
+                }).then((response) => {
+                    setCookie("accessToken", response.data.data.accessToken);
+                    localStorage.setItem("refresh_token", response.data.data.refreshToken);
+                    history.push("/");
+                }).catch((err) => {
+                    alert(err.response.data.msg);
+                });
+            }
+        }).catch((err) => {
+            console.log("err : ", err.response.data);
+        })
+    }, []);
+
     return (
         <div className='App'>
             <AnimatePresence>

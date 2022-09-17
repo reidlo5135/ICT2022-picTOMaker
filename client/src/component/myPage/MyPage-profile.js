@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
+import {useCookies} from "react-cookie";
 import axios from "axios";
 import "../../css/MyPage.css";
 import "../../css/font.css";
 
 export default function MyPageProfile(){
+    const [cookies, setCookie] = useCookies(["accessToken"]);
     const getProfile = localStorage.getItem('profile');
     const provider = localStorage.getItem('provider');
 
@@ -20,8 +22,11 @@ export default function MyPageProfile(){
 
             const email = jsonProf.email;
             setEmail(email);
-            axios.get(`/v1/api/picto/count/${email}/${provider}`)
-                .then((response) => {
+            axios.get(`/v1/api/picto/count/${provider}`, {
+                headers: {
+                    "X-AUTH-TOKEN": cookies.accessToken
+                }
+            }).then((response) => {
                     console.log('MyPage-profile getPicToCount : ', response.data);
 
                     if(response.data.code === 0) {

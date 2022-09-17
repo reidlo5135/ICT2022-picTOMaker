@@ -19,6 +19,7 @@ import kr.co.picto.user.exception.CustomRefreshTokenException;
 import kr.co.picto.user.exception.CustomUserExistException;
 import kr.co.picto.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ import javax.validation.Valid;
  * 2022-09-16
  * ver 1.1.1
  **/
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -67,18 +69,10 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public SingleResult<UserInfoDto> getProfileLocal(String access_token) {
+    public SingleResult<UserInfoDto> info(String access_token) {
         User user = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new);
 
-        UserInfoDto userInfoDto = UserInfoDto.builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .name(user.getName())
-                .nickName(user.getNickName())
-                .profile_image_url(user.getProfile_image_url())
-                .build();
-
-        return responseService.getSingleResult(userInfoDto);
+        return responseService.getSingleResult(UserInfoDto.from(user));
     }
 
     @Transactional
@@ -92,13 +86,14 @@ public class UserService {
 
     @Transactional
     public SingleResult<TokenResponseDto> reissue(TokenRequestDto tokenRequestDto) {
+        log.info("Reissue at : " + tokenRequestDto.getAccessToken());
+        log.info("Reissue rt : " + tokenRequestDto.getRefreshToken());
         if (!jwtProvider.validationToken(tokenRequestDto.getRefreshToken())) {
             throw new CustomRefreshTokenException();
         }
 
         String accessToken = tokenRequestDto.getAccessToken();
         Authentication authentication = jwtProvider.getAuthentication(accessToken);
-
         User user = userRepository.findById(Long.parseLong(authentication.getName())).orElseThrow(CustomUserNotFoundException::new);
         RefreshToken refreshToken = refreshTokenRepository.findByTokenId(user.getId()).orElseThrow(CustomRefreshTokenException::new);
 
@@ -112,9 +107,20 @@ public class UserService {
     }
 
     @Transactional
+    public SingleResult<Boolean> isValid(String access_token) {
+        return responseService.getSingleResult(jwtProvider.validationToken(access_token));
+    }
+
+    @Transactional
     public void delete(String access_token) {
         User user = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new);
         user.deactivate();
+    }
+
+    @Transactional
+    public void logoutAndDeleteToken(String access_token) {
+        User user = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new);
+        refreshTokenRepository.deleteByTokenId(user.getId());
     }
 
     private void checkStatus(User user) {

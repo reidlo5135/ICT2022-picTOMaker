@@ -24,18 +24,32 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final JwtProvider jwtProvider;
 
+    private boolean isExcludeURI(String uri) {
+        log.info("Jwt filter excludeFilter uri : " + uri);
+        String[] patterns = {"/v1/api/user/reissue", "/v1/api/user/signup"};
+        for(String str : patterns) {
+            log.info("Jwt filter excludeFilter str : " + str);
+            if(uri.equals(str)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        log.info("Jwt filter request URI : " + ((HttpServletRequest) request).getRequestURI());
+        if(!isExcludeURI(((HttpServletRequest) request).getRequestURI())) {
+            String token = jwtProvider.resolveToken((HttpServletRequest) request);
+            boolean isValid = jwtProvider.validationToken(token);
+            log.info("Jwt filter token : " + token);
+            log.info("Jwt filter isValid : " + isValid);
+            if(token != null && isValid) {
+                Authentication authentication = jwtProvider.getAuthentication(token);
 
-        String token = jwtProvider.resolveToken((HttpServletRequest) request);
-        boolean isValid = jwtProvider.validationToken(token);
-
-        if(token != null && isValid) {
-            log.info("Local Jwt Filter token : " + token);
-            Authentication authentication = jwtProvider.getAuthentication(token);
-
-            log.info("Local Jwt Filter authentication : " + authentication);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                log.info("Jwt Filter authentication : " + authentication);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
         chain.doFilter(request, response);
     }

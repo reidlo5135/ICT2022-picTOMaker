@@ -1,4 +1,5 @@
 import React, {useState,useEffect} from 'react';
+import {useCookies} from "react-cookie";
 import axios from "axios";
 import Posts from "./Posts";
 import Pagination from "./Pagination";
@@ -7,6 +8,7 @@ import "../../css/font.css";
 import 'react-fancybox/lib/fancybox.css';
 
 export default function MyPageMyPic(){
+    const [cookies, setCookie] = useCookies(["accessToken"]);
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
@@ -20,8 +22,11 @@ export default function MyPageMyPic(){
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await axios.get(`/v1/api/picto/${email}/${provider}`)
-                .then((response) => {
+            await axios.get(`/v1/api/picto/${provider}`, {
+                headers: {
+                    "X-AUTH-TOKEN": cookies.accessToken
+                }
+            }).then((response) => {
                     console.log('response data : ' + response.data);
                     console.log('response data.list : ' + response.data.list);
                     console.log('response data.list JSON : ', JSON.stringify(response.data.list));

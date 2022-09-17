@@ -1,7 +1,7 @@
 package kr.co.picto.repo;
 
-import kr.co.picTO.token.domain.AccessToken;
-import kr.co.picTO.token.domain.AccessTokenRepository;
+import kr.co.picto.token.domain.AccessToken;
+import kr.co.picto.token.domain.AccessTokenRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
