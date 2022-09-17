@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {useHistory} from "react-router";
 import {useCookies} from "react-cookie";
 import axios from "axios";
 import '../../css/Top.css'
@@ -6,7 +7,8 @@ import {Link} from "react-router-dom";
 import Human from '../../image/Human.png';
 
 const Profile = () => {
-    const [cookies] = useCookies(["accessToken"]);
+    const history = useHistory();
+    const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
     const provider = localStorage.getItem('provider');
     const [isLogged, setIsLogged] = useState(false);
 
@@ -63,10 +65,13 @@ const Profile = () => {
                     setProfileImage(profile.profile_image_url);
                 }
 
-                localStorage.setItem("profile", JSON.stringify(response.data.data));
+                localStorage.setItem("profile", JSON.stringify(profile));
             }).catch((err) => {
                 console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.msg);
+                console.error('code : ', err.response.data.code);
+                if(err.response.data.code === -1014) {
+                    history.push("/");
+                }
             });
         } catch (err) {
             console.error(err);
@@ -91,13 +96,17 @@ const Profile = () => {
     if(isLogged) {
         return (
             <Link to='/myPage' className="profile-link">
-                <div className="profile-content">
-                    {profileImage === null ?
-                        <img src={Human} className='img_profile' alt={'p-image'} /> :
-                        <img src={profileImage} className='img_profile' alt={'p-image'} />
-                    }
-                    {nickName}님 환영합니다!
-                </div>
+                {
+                    localStorage.getItem("profile") === null ?
+                        <div></div> :
+                        <div className="profile-content">
+                            {profileImage === null ?
+                                <img src={Human} className='img_profile' alt={'p-image'} /> :
+                                <img src={profileImage} className='img_profile' alt={'p-image'} />
+                            }
+                            {nickName}님 환영합니다!
+                        </div>
+                }
             </Link>
         );
     } else {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {useCookies} from "react-cookie";
 import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {fabric} from 'fabric';
@@ -11,6 +12,7 @@ import '../../../css/stuido/edittool.css';
 let canvas = null;
 
 export default function EditTool(props) {
+    const [cookies, setCookie] = useCookies(["accessToken"]);
     const history = useHistory();
 
     const [selectMode, setSelectMode] = useState("none");
@@ -137,8 +139,12 @@ export default function EditTool(props) {
         const jsonProf = JSON.parse(profile);
         const email = jsonProf.email;
         try {
-            axios.post(`/v1/api/picto/${email}/${provider}`, {
+            axios.post(`/v1/api/picto/${provider}`, {
                 image
+            }, {
+                headers: {
+                    "X-AUTH-TOKEN": cookies.accessToken
+                }
             }).then((response) => {
                 console.log('response data : ', response.data);
                 console.log('response data.data : ', response.data.data);

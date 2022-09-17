@@ -1,8 +1,8 @@
 package kr.co.picto.repo;
 
-import kr.co.picTO.user.domain.AccountRole;
-import kr.co.picTO.user.domain.social.SocialUser;
-import kr.co.picTO.user.domain.social.SocialUserRepository;
+import kr.co.picto.user.domain.AccountRole;
+import kr.co.picto.user.domain.social.SocialUser;
+import kr.co.picto.user.domain.social.SocialUserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

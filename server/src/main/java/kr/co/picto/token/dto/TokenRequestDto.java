@@ -16,11 +16,4 @@ public class TokenRequestDto {
 
     private String accessToken;
     private String refreshToken;
-
-    public AccessToken toEntity(String accessToken, String refreshToken) {
-        return AccessToken.builder()
-                .access_token(accessToken)
-                .refresh_token(refreshToken)
-                .build();
-    }
 }

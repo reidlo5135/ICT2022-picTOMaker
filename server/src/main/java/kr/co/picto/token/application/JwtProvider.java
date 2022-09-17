@@ -3,6 +3,7 @@ package kr.co.picto.token.application;
 import io.jsonwebtoken.*;
 import kr.co.picto.common.exception.CustomAuthenticationEntryPointException;
 import kr.co.picto.token.dto.TokenResponseDto;
+import kr.co.picto.token.exception.CustomExpireJwtException;
 import kr.co.picto.user.application.local.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -33,6 +34,11 @@ public class JwtProvider {
     private final String ROLES = "roles";
     private final CustomUserDetailsService userDetailsService;
 
+    // 1 hour
+    private final long accessTokenValidMillisecond = 60 * 60 * 1000L;
+    // 14 day
+    private final long refreshTokenValidMillisecond = 14 * 24 * 60 * 60 * 1000L;
+
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
@@ -42,25 +48,20 @@ public class JwtProvider {
         Claims claims = Jwts.claims().setSubject(String.valueOf(userPk));
         claims.put(ROLES, roles);
 
-        long accessTokenValidMillisecond = 60 * 60 * 1000L;
-        long refreshTokenValidMillisecond = 14 * 24 * 60 * 60 * 1000L;
-
         Date now = new Date();
-        Date expire_access = new Date(now.getTime() + accessTokenValidMillisecond);
-        Date expire_refresh = new Date(now.getTime() + refreshTokenValidMillisecond);
 
         String accessToken = Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(expire_access)
+                .setExpiration(new Date(now.getTime() + accessTokenValidMillisecond))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
 
         String refreshToken = Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setIssuedAt(now)
-                .setExpiration(expire_refresh)
+                .setExpiration(new Date(now.getTime() + refreshTokenValidMillisecond))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
 
@@ -94,6 +95,7 @@ public class JwtProvider {
     }
 
     public String getUserPk(String token) {
+        if(!validationToken(token)) throw new CustomExpireJwtException("토큰이 만료되었습니다.");
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
@@ -103,10 +105,18 @@ public class JwtProvider {
 
     public boolean validationToken(String token) {
         try {
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return !claimsJws.getBody().getExpiration().before(new Date());
-        } catch (JwtException | IllegalArgumentException e) {
-            return false;
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            return true;
+        } catch (SecurityException | MalformedJwtException e) {
+            log.error("잘못된 Jwt 서명입니다.");
+        } catch (ExpiredJwtException e) {
+            log.error("토큰이 만료되었습니다.");
+            throw new CustomExpireJwtException(e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            log.error("지원하지 않는 토큰입니다.");
+        } catch (IllegalArgumentException e) {
+            log.error("잘못된 토큰입니다.");
         }
+        return false;
     }
 }

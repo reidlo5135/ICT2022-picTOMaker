@@ -1,9 +1,11 @@
 import React from "react";
+import {useCookies} from "react-cookie";
 import {Link} from "react-router-dom";
 import axios from 'axios';
 import '../../css/Callback.css';
 
 const Posts = ({ posts, loading }) => {
+    const [cookies, setCookie] = useCookies(["accessToken"]);
     console.log('POST posts : ', posts);
     posts.map((post) => {
         console.log('post : ', post);

@@ -57,3 +57,7 @@ fileNotFoundException:
 qnaNotExistException:
   code: "-1013"
   msg: "문의사항이 존재하지 않습니다."
+
+accessTokenExpiredException:
+  code: "-1014"
+  msg: "토큰이 만료되었습니다."

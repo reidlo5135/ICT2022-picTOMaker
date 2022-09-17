@@ -55,7 +55,7 @@ public class UserController {
     })
     @ApiOperation(value = "회원 프로필 조회", notes = "프로필 조회")
     public ResponseEntity<SingleResult<UserInfoDto>> getProfile(@RequestHeader(value = "X-AUTH-TOKEN") String access_token) {
-        return ResponseEntity.ok().body(userService.getProfileLocal(access_token));
+        return ResponseEntity.ok().body(userService.info(access_token));
     }
 
     /**
@@ -66,6 +66,22 @@ public class UserController {
     public ResponseEntity<SingleResult<TokenResponseDto>> reissue(@ApiParam(value = "Token reissue DTO", required = true) @RequestBody TokenRequestDto tokenRequestDto) {
         return ResponseEntity.ok().body(userService.reissue(tokenRequestDto));
     }
+
+    /**
+     * frontend - App.js
+     */
+    @PostMapping(value = "/valid")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "X-AUTH-TOKEN",
+                    value = "AccessToken",
+                    required = true, dataTypeClass = String.class, paramType = "header")
+    })
+    @ApiOperation(value = "Check token's validation", notes = "Token isValid")
+    public ResponseEntity<SingleResult<Boolean>> isValid(@RequestHeader(value = "X-AUTH-TOKEN") String access_token) {
+        return ResponseEntity.ok().body(userService.isValid(access_token));
+    }
+
 
     /**
      *
@@ -95,8 +111,24 @@ public class UserController {
                     required = true, dataTypeClass = String.class, paramType = "header")
     })
     @ApiOperation(value = "Make User InActive", notes = "User DeActivate")
-    public ResponseEntity<SingleResult<Integer>> deActivate(@ApiParam(value = "Access Token", required = true) @RequestHeader(value = "X-AUTH-TOKEN") String access_token) {
+    public ResponseEntity deActivate(@RequestHeader(value = "X-AUTH-TOKEN") String access_token) {
         userService.delete(access_token);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * frontend - MyPage.js, Sidebar.js
+     */
+    @DeleteMapping(value = "/logout")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "X-AUTH-TOKEN",
+                    value = "AccessToken",
+                    required = true, dataTypeClass = String.class, paramType = "header")
+    })
+    @ApiOperation(value = "User Logout", notes = "User Logout & Delete Token")
+    public ResponseEntity logout(@RequestHeader(value = "X-AUTH-TOKEN") String access_token) {
+        userService.logoutAndDeleteToken(access_token);
         return ResponseEntity.ok().build();
     }
 }
