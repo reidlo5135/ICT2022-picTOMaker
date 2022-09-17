@@ -26,17 +26,18 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String token = jwtProvider.resolveToken((HttpServletRequest) request);
-        log.info("Jwt filter token : " + token);
         log.info("Jwt filter request URI : " + ((HttpServletRequest) request).getRequestURI());
-        boolean isValid = jwtProvider.validationToken(token);
-        log.info("Jwt filter isValid : " + isValid);
+        if(!((HttpServletRequest) request).getRequestURI().contains("/v1/api/user/reissue")) {
+            String token = jwtProvider.resolveToken((HttpServletRequest) request);
+            boolean isValid = jwtProvider.validationToken(token);
+            log.info("Jwt filter token : " + token);
+            log.info("Jwt filter isValid : " + isValid);
+            if(token != null && isValid) {
+                Authentication authentication = jwtProvider.getAuthentication(token);
 
-        if(token != null && isValid) {
-            Authentication authentication = jwtProvider.getAuthentication(token);
-
-            log.info("Jwt Filter authentication : " + authentication);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                log.info("Jwt Filter authentication : " + authentication);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
         chain.doFilter(request, response);
     }

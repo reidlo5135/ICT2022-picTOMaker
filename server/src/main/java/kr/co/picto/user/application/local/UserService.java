@@ -19,6 +19,7 @@ import kr.co.picto.user.exception.CustomRefreshTokenException;
 import kr.co.picto.user.exception.CustomUserExistException;
 import kr.co.picto.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ import javax.validation.Valid;
  * 2022-09-16
  * ver 1.1.1
  **/
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -84,13 +86,14 @@ public class UserService {
 
     @Transactional
     public SingleResult<TokenResponseDto> reissue(TokenRequestDto tokenRequestDto) {
+        log.info("Reissue at : " + tokenRequestDto.getAccessToken());
+        log.info("Reissue rt : " + tokenRequestDto.getRefreshToken());
         if (!jwtProvider.validationToken(tokenRequestDto.getRefreshToken())) {
             throw new CustomRefreshTokenException();
         }
 
         String accessToken = tokenRequestDto.getAccessToken();
         Authentication authentication = jwtProvider.getAuthentication(accessToken);
-
         User user = userRepository.findById(Long.parseLong(authentication.getName())).orElseThrow(CustomUserNotFoundException::new);
         RefreshToken refreshToken = refreshTokenRepository.findByTokenId(user.getId()).orElseThrow(CustomRefreshTokenException::new);
 
