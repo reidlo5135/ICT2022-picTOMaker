@@ -24,10 +24,22 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final JwtProvider jwtProvider;
 
+    private boolean isExcludeURI(String uri) {
+        log.info("Jwt filter excludeFilter uri : " + uri);
+        String[] patterns = {"/v1/api/user/reissue", "/v1/api/user/signup"};
+        for(String str : patterns) {
+            log.info("Jwt filter excludeFilter str : " + str);
+            if(uri.equals(str)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         log.info("Jwt filter request URI : " + ((HttpServletRequest) request).getRequestURI());
-        if(!((HttpServletRequest) request).getRequestURI().contains("/v1/api/user/reissue")) {
+        if(!isExcludeURI(((HttpServletRequest) request).getRequestURI())) {
             String token = jwtProvider.resolveToken((HttpServletRequest) request);
             boolean isValid = jwtProvider.validationToken(token);
             log.info("Jwt filter token : " + token);
