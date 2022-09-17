@@ -24,7 +24,6 @@ import CPosting from './community/CPosting';
 export default function App(){
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const history = useHistory();
-    const JWT_EXPIRE_TIME = 60 * 60 * 1000;
 
     useEffect(() => {
         console.log("app.js token : ", cookies.accessToken);
@@ -33,20 +32,21 @@ export default function App(){
                 "X-AUTH-TOKEN": cookies.accessToken
             }
         }).then((response) => {
+            console.log("App.js response : ", response.data);
             if(response.data.data === false) {
                 axios.post('/v1/api/user/reissue', {
                     accessToken: cookies.accessToken,
                     refreshToken: localStorage.getItem("refresh_token")
                 }).then((response) => {
-                    setCookie("accessToken", response.data.accessToken);
-                    localStorage.setItem("refresh_token", response.data.refreshToken);
+                    setCookie("accessToken", response.data.data.accessToken);
+                    localStorage.setItem("refresh_token", response.data.data.refreshToken);
                     history.push("/");
                 }).catch((err) => {
                     alert(err.response.data.msg);
                 });
             }
         }).catch((err) => {
-            alert(err.response.data.msg);
+            console.log("err : ", err.response.data);
         })
     }, []);
 

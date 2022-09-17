@@ -72,7 +72,6 @@ const Profile = () => {
                 if(err.response.data.code === -1014) {
                     history.push("/");
                 }
-                alert(err.response.data.msg);
             });
         } catch (err) {
             console.error(err);
