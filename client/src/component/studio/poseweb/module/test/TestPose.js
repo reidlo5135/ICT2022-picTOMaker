@@ -1,7 +1,7 @@
 import testImage from '../..//resource/human_pose.png'
 import {Pose} from '@mediapipe/pose'
 import {drawLine, drawHead} from '../../util/DrawingUtils'
-import "../../../../../css/stuido/posewebstudio.css"
+import "../../../../../styles/stuido/posewebstudio.css"
 import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState} from 'react';
 
 // Static Image를 통해 인체 모델을 테스트합니다.

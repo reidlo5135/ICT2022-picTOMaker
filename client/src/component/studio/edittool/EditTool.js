@@ -5,9 +5,9 @@ import axios from "axios";
 import {fabric} from 'fabric';
 import DetailComponent from './detail/DetailComponent';
 import { color } from '@mui/system';
-import Top from "../../contents/Top";
-import '../../../css/stuido/topbar.css';
-import '../../../css/stuido/edittool.css';
+import Top from "../../Top";
+import '../../../styles/stuido/topbar.css';
+import '../../../styles/stuido/edittool.css';
 
 let canvas = null;
 

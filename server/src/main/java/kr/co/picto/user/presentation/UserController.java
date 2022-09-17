@@ -35,7 +35,7 @@ public class UserController {
     }
 
     /**
-     * frontend - SignUp.js
+     * frontend - LocalUserSignUp.js
      **/
     @PostMapping(value = "/signup")
     @ApiOperation(value = "회원 등록", notes = "회원 가입")
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     /**
-     * frontend - Profile.js
+     * frontend - TopProfile.js
      **/
     @PostMapping(value = "/info")
     @ApiImplicitParams({
@@ -59,7 +59,7 @@ public class UserController {
     }
 
     /**
-     * frontend - callback.js
+     * frontend - SocialUserCallback.js
      **/
     @PostMapping(value = "/reissue")
     @ApiOperation(value = "Access, Refresh Token Reissue", notes = "Token Reissue")

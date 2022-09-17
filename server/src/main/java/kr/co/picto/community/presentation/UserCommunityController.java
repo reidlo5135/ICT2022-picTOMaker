@@ -34,7 +34,7 @@ public class UserCommunityController {
     }
 
     /**
-     * frontend - CDetail.js
+     * frontend - CommunitytDetails.js
      **/
     @GetMapping(value = "/{id}")
     @ApiOperation(value = "특정 게시물 조회", notes = "Select Board By Id")
@@ -43,7 +43,7 @@ public class UserCommunityController {
     }
 
     /**
-     * frontend - CPosting.js
+     * frontend - CommunityPosting.js
      **/
     @PostMapping(value = "/{provider}")
     @ApiOperation(value = "게시물 등록", notes = "Register Board")

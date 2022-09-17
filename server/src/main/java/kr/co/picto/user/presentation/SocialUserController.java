@@ -24,7 +24,7 @@ public class SocialUserController {
     private final SocialUserService socialUserService;
 
     /**
-     * frontend - callback.js
+     * frontend - SocialUserCallback.js
      **/
     @PostMapping(value = "/signup/{provider}")
     public ResponseEntity<SingleResult<SocialTokenRequestDto>> generateToken(@RequestBody Map<String, String> code, @PathVariable String provider) {
@@ -32,7 +32,7 @@ public class SocialUserController {
     }
 
     /**
-     * frontend - Profile.js
+     * frontend - TopProfile.js
      **/
     @PostMapping(value = "/info/{provider}")
     public ResponseEntity<SingleResult<SocialUserInfoDto>> getProfile(@RequestBody Map<String, String> access_token, @PathVariable String provider) {
