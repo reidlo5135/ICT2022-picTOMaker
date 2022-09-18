@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class LoggerAspect {
 
-    @Around(value = "execution(public * kr.co.picto.*.controller.*.*(..))")
+    @Around(value = "execution(public * kr.co.picto.*.presentation.*Controller.*.*(..))")
     public Object logControllers(ProceedingJoinPoint pjp) throws Throwable {
         log.info(">> Controller Request : {}.{}({})", pjp.getTarget().getClass().getName(), pjp.getSignature().getName(), pjp.getArgs());
         Object result = pjp.proceed();
@@ -29,7 +29,7 @@ public class LoggerAspect {
         return result;
     }
 
-    @Around(value = "execution(public * kr.co.picto.*.domain.*Repo.*(..))")
+    @Around(value = "execution(public * kr.co.picto.*.domain.*Repository.*(..))")
     public Object logRepositories(ProceedingJoinPoint pjp) throws Throwable {
         log.info(">> Repository Request : {}.{}({})", pjp.getTarget().getClass().getInterfaces()[0].getName(), pjp.getSignature().getName(), pjp.getArgs());
         Object result = pjp.proceed();
