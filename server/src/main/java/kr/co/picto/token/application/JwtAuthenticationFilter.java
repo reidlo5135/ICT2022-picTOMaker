@@ -26,9 +26,15 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private boolean isExcludeURI(String uri) {
         log.info("Jwt filter excludeFilter uri : " + uri);
-        String[] patterns = {"/v1/api/user/reissue", "/v1/api/user/signup"};
+        String[] patterns = {
+                "/v1/api/user/reissue",
+                "/v1/api/user/signup",
+                "/swagger-ui",
+                "/swagger-resources",
+                "/v3/api-docs"
+        };
         for(String str : patterns) {
-            if(uri.equals(str)) {
+            if(uri.equals(str) || uri.contains(str)) {
                 return true;
             }
         }
