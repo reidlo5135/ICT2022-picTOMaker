@@ -36,7 +36,8 @@ export default function MyPageContent(){
         }
     }
 
-    function Logout() {
+    function Logout(e) {
+        e.preventDefault();
         try {
             axios.delete('/v1/api/user/logout', {
                 headers: {
