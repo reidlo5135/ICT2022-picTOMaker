@@ -51,12 +51,22 @@ public class UserService {
         }
         TokenResponseDto tokenResponseDto = jwtProvider.createToken(user.getId(), user.getRoles());
 
-        RefreshToken refreshToken = RefreshToken.builder()
-                .tokenId(user.getId())
-                .token(tokenResponseDto.getRefreshToken())
-                .build();
-        refreshTokenRepository.save(refreshToken);
+        if(refreshTokenRepository.findByTokenId(user.getId()).isPresent()) {
+            renewLogin(user.getId(), tokenResponseDto);
+        } else {
+            RefreshToken refreshToken = RefreshToken.builder()
+                    .tokenId(user.getId())
+                    .token(tokenResponseDto.getRefreshToken())
+                    .build();
+            refreshTokenRepository.save(refreshToken);
+        }
         return responseService.getSingleResult(tokenResponseDto);
+    }
+
+    @Transactional
+    public void renewLogin(Long userId, TokenResponseDto tokenResponseDto) {
+        Integer result = refreshTokenRepository.updateById(tokenResponseDto.getRefreshToken(), userId);
+        log.info("Update Token result : " + result);
     }
 
     @Transactional
