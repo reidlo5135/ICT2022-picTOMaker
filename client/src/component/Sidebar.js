@@ -7,23 +7,21 @@ import {useHistory} from "react-router";
 import {useCookies} from "react-cookie";
 
 export default function Sidebar(){
-
     const history = useHistory();
     const [cookies, setCookie, removeCookie] = useCookies(["accessToken"])
 
-    function Logout() {
+    function Logout(e) {
+        e.preventDefault();
         try {
             axios.delete('/v1/api/user/logout', {
                 headers: {
                     "X-AUTH-TOKEN": cookies.accessToken
                 }
-            }).then((response) => {
-                if(response.status === 200) {
-                    console.clear();
-                    localStorage.clear();
-                    removeCookie("accessToken", {path: "/"});
-                    history.push("/");
-                }
+            }).then(() => {
+                console.clear();
+                localStorage.clear();
+                removeCookie("accessToken", {path: "/"});
+                history.push("/");
             }).catch((err) => {
                 alert(err.response.data.msg);
             });

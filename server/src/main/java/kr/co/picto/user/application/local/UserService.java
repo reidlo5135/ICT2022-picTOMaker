@@ -65,8 +65,7 @@ public class UserService {
 
     @Transactional
     public void renewLogin(Long userId, TokenResponseDto tokenResponseDto) {
-        Integer result = refreshTokenRepository.updateById(tokenResponseDto.getRefreshToken(), userId);
-        log.info("Update Token result : " + result);
+        refreshTokenRepository.updateById(tokenResponseDto.getRefreshToken(), userId);
     }
 
     @Transactional
