@@ -5,11 +5,8 @@ import kr.co.picto.common.application.ResponseService;
 import kr.co.picto.common.domain.SingleResult;
 import kr.co.picto.common.exception.CustomCommunicationException;
 import kr.co.picto.token.dto.SocialTokenResponseDto;
-import kr.co.picto.user.domain.AccountRole;
-import kr.co.picto.user.domain.social.SocialUser;
 import kr.co.picto.user.domain.social.SocialUserRepository;
 import kr.co.picto.user.dto.social.*;
-import kr.co.picto.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.*;
@@ -18,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Locale;
 
 /**
  * @author reidlo
@@ -81,56 +76,38 @@ public class SocialUserService {
 
     @Transactional
     protected SocialUserInfoDto extractProfile(ResponseEntity<String> response, String provider) {
+        SocialUserInfoDto socialUserInfoDto = null;
         switch (provider) {
             case "kakao":
                 KakaoProfile kakaoProfile = gson.fromJson(response.getBody(), KakaoProfile.class);
                 log.info("OAuth2ProvSVC " + provider + " extractProfile : " + kakaoProfile);
 
-                saveUser(kakaoProfile.getProperties().getNickname(), kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getProfile_image(), provider);
-                return SocialUserInfoDto.builder()
-                        .email(kakaoProfile.getKakao_account().getEmail())
-                        .name(kakaoProfile.getProperties().getNickname())
-                        .profile_image_url(kakaoProfile.getProperties().getProfile_image())
-                        .build();
+                socialUserInfoDto = new SocialUserInfoDto(kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getNickname(), kakaoProfile.getProperties().getProfile_image(), provider);
+                saveUser(socialUserInfoDto);
+                return socialUserInfoDto;
             case "google":
                 GoogleProfile googleProfile = gson.fromJson(response.getBody(), GoogleProfile.class);
                 log.info("OAuth2ProvSVC " + provider + " extractProfile : " + googleProfile);
 
-                saveUser(googleProfile.getEmail(), googleProfile.getName(), googleProfile.getPicture(), provider);
-                return SocialUserInfoDto.builder()
-                        .email(googleProfile.getEmail())
-                        .name(googleProfile.getName())
-                        .profile_image_url(googleProfile.getPicture())
-                        .build();
+                socialUserInfoDto = new SocialUserInfoDto(googleProfile.getEmail(), googleProfile.getName(), googleProfile.getPicture(), provider);
+                saveUser(socialUserInfoDto);
+                return socialUserInfoDto;
             case "naver":
                 NaverProfile naverProfile = gson.fromJson(response.getBody(), NaverProfile.class);
                 log.info("OAuth2ProvSVC " + provider + " extractProfile : " + naverProfile);
 
-                saveUser(naverProfile.getResponse().getName(), naverProfile.getResponse().getEmail(), naverProfile.getResponse().getProfile_image(), provider);
-                return SocialUserInfoDto.builder()
-                        .email(naverProfile.getResponse().getName())
-                        .name(naverProfile.getResponse().getName())
-                        .profile_image_url(naverProfile.getResponse().getProfile_image())
-                        .build();
+                socialUserInfoDto = new SocialUserInfoDto(naverProfile.getResponse().getEmail(), naverProfile.getResponse().getName(), naverProfile.getResponse().getProfile_image(), provider);
+                saveUser(socialUserInfoDto);
+                return socialUserInfoDto;
             default:
-                return null;
+                return socialUserInfoDto;
         }
     }
 
     @Transactional
-    protected void saveUser(String name, String email, String picture, String provider){
-        if(socialUserRepository.findByEmail(email).isEmpty()) {
-            String role = provider.toUpperCase(Locale.ROOT);
-            SocialUser socialUser = SocialUser.builder()
-                    .name(name)
-                    .email(email)
-                    .picture(picture)
-                    .provider(provider)
-                    .role(AccountRole.valueOf(role))
-                    .build();
-            socialUserRepository.save(socialUser);
-        } else {
-            socialUserRepository.findByEmail(email).orElseThrow(CustomUserNotFoundException::new);
+    protected void saveUser(SocialUserInfoDto socialUserInfoDto){
+        if(socialUserRepository.findByEmail(socialUserInfoDto.getEmail()).isEmpty()) {
+            socialUserRepository.save(socialUserInfoDto.from());
         }
     }
 }

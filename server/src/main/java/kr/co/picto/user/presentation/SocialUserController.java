@@ -8,6 +8,7 @@ import kr.co.picto.token.dto.SocialTokenResponseDto;
 import kr.co.picto.user.application.social.SocialUserService;
 import kr.co.picto.user.dto.social.SocialUserInfoDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
