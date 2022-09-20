@@ -4,14 +4,11 @@ import com.google.gson.Gson;
 import kr.co.picto.common.application.ResponseService;
 import kr.co.picto.common.domain.SingleResult;
 import kr.co.picto.common.exception.CustomCommunicationException;
-import kr.co.picto.token.domain.AccessToken;
-import kr.co.picto.token.domain.AccessTokenRepository;
-import kr.co.picto.token.dto.SocialTokenRequestDto;
+import kr.co.picto.token.dto.SocialTokenResponseDto;
 import kr.co.picto.user.domain.AccountRole;
 import kr.co.picto.user.domain.social.SocialUser;
 import kr.co.picto.user.domain.social.SocialUserRepository;
 import kr.co.picto.user.dto.social.*;
-import kr.co.picto.user.exception.CustomAccessTokenExistException;
 import kr.co.picto.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -37,11 +34,10 @@ public class SocialUserService {
     private final RestTemplate restTemplate;
     private final Gson gson;
     private final SocialUserRepository socialUserRepository;
-    private final AccessTokenRepository tokenRepository;
     private final ResponseService responseService;
 
     @Transactional
-    public SingleResult<SocialTokenRequestDto> generateAccessToken(String code, String provider) {
+    public SingleResult<SocialTokenResponseDto> generateAccessToken(String code, String provider) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -49,24 +45,9 @@ public class SocialUserService {
         HttpEntity<LinkedMultiValueMap<String, String>> request = new HttpEntity<>(oAuth2RequestDto.getMap(), httpHeaders);
 
         ResponseEntity<String> response = restTemplate.postForEntity(oAuth2RequestDto.getUrl(), request, String.class);
-        SocialTokenRequestDto tokenRequestDto = gson.fromJson(response.getBody(), SocialTokenRequestDto.class);
-        saveAccessToken(tokenRequestDto.toEntity(provider));
+        SocialTokenResponseDto socialTokenResponseDto = gson.fromJson(response.getBody(), SocialTokenResponseDto.class);
 
-        return responseService.getSingleResult(tokenRequestDto);
-    }
-
-    @Transactional
-    public void saveAccessToken(AccessToken accessToken) {
-        log.info("OAuth2ProvSVC sAT bat : " + accessToken);
-        if(tokenRepository.findByAccessToken(accessToken.getAccess_token()).isPresent()) throw new CustomAccessTokenExistException();
-        tokenRepository.save(accessToken);
-    }
-
-    @Transactional
-    public SingleResult<Integer> deleteToken(String access_token) {
-        log.info("OAuth2ProvSVC deleteToken at : " + access_token);
-
-        return responseService.getSingleResult(tokenRepository.deleteByAccessToken(access_token));
+        return responseService.getSingleResult(socialTokenResponseDto);
     }
 
     @Transactional

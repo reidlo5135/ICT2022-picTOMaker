@@ -29,6 +29,12 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         String[] patterns = {
                 "/v1/api/user/reissue",
                 "/v1/api/user/signup",
+                "/v1/api/oauth2/",
+                "/oauth2/redirect/",
+                "/kakao",
+                "/naver",
+                "/error",
+                "/index.html",
                 "/swagger-ui",
                 "/swagger-resources",
                 "/v3/api-docs"

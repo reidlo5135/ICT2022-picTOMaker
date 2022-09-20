@@ -46,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/v1/api/picto/**/**/**", "/v1/api/user/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/v1/api/oauth2/**", "/v1/api/user/**", "/v1/api/picto/delete").permitAll()
                 .antMatchers("/v1/api/users/**", "/v1/api/oauth/**").permitAll()
-                .antMatchers("/v1/api/oauth2/redirect/**", "/").permitAll()
+                .antMatchers("/oauth2/redirect/**", "/").permitAll()
                 .antMatchers("/index").permitAll()
                 .mvcMatchers("/v3/api-docs/**",
                         "/configuration/**",
