@@ -17,11 +17,11 @@ const TopProfile = () => {
     const [profileImage, setProfileImage] = useState();
     let profile = null;
 
-    const getOAuthProf = async () => {
+    const getOAuthProf = () => {
         try {
-            await axios.post(`/v1/api/oauth2/info/${provider}`, {}, {
+            axios.post(`/v1/api/oauth2/info/${provider}`, {}, {
                 headers: {
-                    "X-AUTH-TOKEN": cookies.accessToken
+                    "Authorization": cookies.accessToken
                 }
             }).then((response) => {
                 console.log('OAuth profile res data.data : ', response.data.data);

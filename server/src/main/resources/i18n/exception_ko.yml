@@ -1,6 +1,6 @@
 unKnown:
   code: "-9999"
-  msg: "알수 없는 오류가 발생하였습니다."
+  msg: "알 수 없는 오류가 발생하였습니다."
 
 userNotFound:
   code: "-1000"

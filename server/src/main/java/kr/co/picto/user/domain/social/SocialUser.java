@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Getter
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "social_user")
@@ -32,15 +33,6 @@ public class SocialUser extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AccountRole role;
-
-    @Builder
-    public SocialUser(String name, String email, String picture, String provider, AccountRole role) {
-        this.name = name;
-        this.email = email;
-        this.picture = picture;
-        this.provider = provider;
-        this.role = role;
-    }
 
     public SocialUser update(String name, String picture) {
         this.name = name;

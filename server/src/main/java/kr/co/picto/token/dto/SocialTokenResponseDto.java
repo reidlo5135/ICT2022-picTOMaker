@@ -11,8 +11,7 @@ import lombok.extern.log4j.Log4j2;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TokenRequestDto {
-
-    private String accessToken;
-    private String refreshToken;
+public class SocialTokenResponseDto {
+    private String access_token;
+    private String refresh_token;
 }
