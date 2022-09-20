@@ -7,13 +7,13 @@ import { Link } from "react-router-dom";
 function MenuSelect() {
   return (
     <div className="selectpage">
-      <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
+      <div className="star"></div>
+        <div className="star"></div>
+        <div className="star"></div>
+        <div className="star"></div>
+        <div className="star"></div>
+        <div className="star"></div>
+        <div className="star"></div>
       <Link to='/'>
         <div className='qna-logo'>
           <img src={Logo} alt="PictoMaker-Logo" style={{width:"150px",height:"70px"}}/>
