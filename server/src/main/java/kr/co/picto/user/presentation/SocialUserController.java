@@ -48,7 +48,7 @@ public class SocialUserController {
                     value = "AccessToken",
                     required = true, dataTypeClass = String.class, paramType = "header")
     })
-    public ResponseEntity<SingleResult<SocialUserInfoDto>> getProfile(@RequestHeader(value = "Authorization") String access_token, @PathVariable String provider) {
-        return ResponseEntity.ok().body(socialUserService.getProfile(access_token, provider));
+    public ResponseEntity<SingleResult<SocialUserInfoDto>> getProfile(@RequestHeader(value = "Authorization") String token, @PathVariable String provider) {
+        return ResponseEntity.ok().body(socialUserService.getProfile(token, provider));
     }
 }
