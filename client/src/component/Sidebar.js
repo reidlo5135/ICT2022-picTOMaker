@@ -9,25 +9,34 @@ import {useCookies} from "react-cookie";
 export default function Sidebar(){
     const history = useHistory();
     const [cookies, setCookie, removeCookie] = useCookies(["accessToken"])
+    const provider = localStorage.getItem("provider");
 
     function Logout(e) {
         e.preventDefault();
-        try {
-            axios.delete('/v1/api/user/logout', {
-                headers: {
-                    "X-AUTH-TOKEN": cookies.accessToken
-                }
-            }).then(() => {
-                console.clear();
-                localStorage.clear();
-                removeCookie("accessToken", {path: "/"});
-                history.push("/");
-            }).catch((err) => {
-                alert(err.response.data.msg);
-            });
-        } catch (err) {
-            console.error(err);
+        if(provider !== "LOCAL") {
+            console.clear();
+            localStorage.clear();
+            removeCookie("accessToken");
+            history.push("/");
+        } else {
+            try {
+                axios.delete('/v1/api/user/logout', {
+                    headers: {
+                        "X-AUTH-TOKEN": cookies.accessToken
+                    }
+                }).then(() => {
+                    console.clear();
+                    localStorage.clear();
+                    removeCookie("accessToken", {path: "/"});
+                    history.push("/");
+                }).catch((err) => {
+                    alert(err.response.data.msg);
+                });
+            } catch (err) {
+                console.error(err);
+            }
         }
+
     }
 
     return (

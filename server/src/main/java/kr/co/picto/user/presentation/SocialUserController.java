@@ -1,15 +1,16 @@
 package kr.co.picto.user.presentation;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import kr.co.picto.common.domain.SingleResult;
-import kr.co.picto.token.dto.SocialTokenRequestDto;
+import kr.co.picto.token.dto.SocialTokenResponseDto;
 import kr.co.picto.user.application.social.SocialUserService;
 import kr.co.picto.user.dto.social.SocialUserInfoDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 /**
  * @author reidlo
@@ -26,24 +27,28 @@ public class SocialUserController {
     /**
      * frontend - SocialUserCallback.js
      **/
-    @PostMapping(value = "/signup/{provider}")
-    public ResponseEntity<SingleResult<SocialTokenRequestDto>> generateToken(@RequestBody Map<String, String> code, @PathVariable String provider) {
-        return ResponseEntity.ok().body(socialUserService.generateAccessToken(code.get("code"), provider));
+    @PostMapping(value = "/login/{provider}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "Authorization",
+                    value = "AccessToken",
+                    required = true, dataTypeClass = String.class, paramType = "header")
+    })
+    public ResponseEntity<SingleResult<SocialTokenResponseDto>> generateToken(@RequestHeader(value = "Authorization") String token, @PathVariable String provider) {
+        return ResponseEntity.ok().body(socialUserService.generateAccessToken(token, provider));
     }
 
     /**
      * frontend - TopProfile.js
      **/
     @PostMapping(value = "/info/{provider}")
-    public ResponseEntity<SingleResult<SocialUserInfoDto>> getProfile(@RequestBody Map<String, String> access_token, @PathVariable String provider) {
-        return ResponseEntity.ok().body(socialUserService.getProfile(access_token.get("access_token"), provider));
-    }
-
-    /**
-     * frontend - MyPage.js, Sidebar.js
-     **/
-    @DeleteMapping(value = "/{access_token}")
-    public ResponseEntity<SingleResult<Integer>> inValidToken(@PathVariable String access_token) {
-        return ResponseEntity.ok().body(socialUserService.deleteToken(access_token));
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "Authorization",
+                    value = "AccessToken",
+                    required = true, dataTypeClass = String.class, paramType = "header")
+    })
+    public ResponseEntity<SingleResult<SocialUserInfoDto>> getProfile(@RequestHeader(value = "Authorization") String token, @PathVariable String provider) {
+        return ResponseEntity.ok().body(socialUserService.getProfile(token, provider));
     }
 }

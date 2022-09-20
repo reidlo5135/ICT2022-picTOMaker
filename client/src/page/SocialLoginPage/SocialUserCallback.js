@@ -1,17 +1,19 @@
 import React, {useState} from 'react';
+import {useCookies} from "react-cookie";
 import {useHistory} from "react-router";
 import axios from "axios";
 import './socialUserCallback.css';
 
 export default function SocialUserCallback(){
+    const [cookies, setCookie] = useCookies(["accessToken"]);
     const history = useHistory();
     const [isLogged, setIsLogged] = useState(true);
     const url = new URL(window.location.href);
     let provider;
-    const code = new URL(window.location.href).searchParams.get("code");
-    console.log('code : ', code);
+    const token = new URL(window.location.href).searchParams.get("code");
+    console.log('code : ', token);
 
-    if(code.toString() == null) {
+    if(token.toString() == null) {
         alert('Token is Null');
     }
 
@@ -28,19 +30,19 @@ export default function SocialUserCallback(){
     console.log('provider : ', provider);
 
     try {
-        axios.post(`/v1/api/oauth2/signup/${provider}`, {
-            code
+        axios.post(`/v1/api/oauth2/login/${provider}`, {}, {
+            headers: {
+                "Authorization": token
+            }
         }).then((response) => {
             console.log('res data : ', response.data);
             console.log('res data.data : ', response.data.data);
 
             if(response.data.code === 0) {
-                const access_token = response.data.data.access_token;
-
                 setIsLogged(true);
-                localStorage.setItem("access_token", access_token);
+                setCookie("accessToken", response.data.data.access_token);
+                localStorage.setItem("refresh_token", response.data.data.refresh_token);
                 localStorage.setItem("provider", provider);
-
                 history.push("/");
             }
         }).catch((err) => {
