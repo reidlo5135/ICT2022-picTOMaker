@@ -21,7 +21,7 @@ const TopProfile = () => {
         try {
             await axios.post(`/v1/api/oauth2/info/${provider}`, {}, {
                 headers: {
-                    "X-AUTH-TOKEN": cookies.accessToken
+                    "Authorization": cookies.accessToken
                 }
             }).then((response) => {
                 console.log('OAuth profile res data.data : ', response.data.data);
