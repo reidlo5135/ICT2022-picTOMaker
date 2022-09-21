@@ -50,24 +50,26 @@ const MyPagePicToPosting = ({ posts, loading }) => {
                         <img src={post.fileUrl} alt={"픽토이미지"} />
                     </div>
                     <p className='pic-name'>{post.fileName}</p>
-                    <div className='pic-btns'>
-                        <button className='pic-download pic-btn' />
-                        <Link to={{
-                            pathname: '/tool/image',
-                            state: {
-                                post: post
-                            }
-                        }}>
-                            <button className='pic-edit pic-btn' />
-                        </Link>
-                        <button className='pic-delete pic-btn' onClick={() => {
-                            deletePicTo(post.id);
-                        }} />
-                    </div>
-                    <div className='pic-txt'>
-                        <span className='pic-dtxt'>다운로드</span>
-                        <span className='pic-etxt'>편집하기</span>
-                        <span className='pic-etxt'>삭제하기</span>
+                    <div className="pic-utils">
+                        <div className='pic-btns'>
+                            <button className='pic-download pic-btn' />
+                            <Link to={{
+                                pathname: '/tool/image',
+                                state: {
+                                    post: post
+                                }
+                            }}>
+                                <button className='pic-edit pic-btn' />
+                            </Link>
+                            <button className='pic-delete pic-btn' onClick={() => {
+                                deletePicTo(post.id);
+                            }} />
+                        </div>
+                        <div className='pic-txt'>
+                            <span className='pic-dtxt'>다운로드</span>
+                            <span className='pic-etxt'>편집하기</span>
+                            <span className='pic-etxt'>삭제하기</span>
+                        </div>
                     </div>
                 </div>
             </div>
