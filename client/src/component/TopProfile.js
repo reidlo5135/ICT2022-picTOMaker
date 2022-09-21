@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {post} from "../services/AxiosService";
 import {useHistory} from "react-router";
 import {useCookies} from "react-cookie";
 import axios from "axios";
@@ -18,32 +19,28 @@ const TopProfile = () => {
     let profile = null;
 
     const getOAuthProf = () => {
-        try {
-            axios.post(`/v1/api/oauth2/info/${provider}`, {}, {
-                headers: {
-                    "Authorization": cookies.accessToken
-                }
-            }).then((response) => {
-                console.log('OAuth profile res data.data : ', response.data.data);
+        post(`/v1/api/oauth2/info/${provider}`, {}, {
+            headers: {
+                "Authorization": cookies.accessToken
+            }
+        }).then((response) => {
+            console.log('OAuth profile res data.data : ', response.data.data);
 
-                profile = JSON.parse(JSON.stringify(response.data.data));
-                setEmail(profile.email);
-                setNickName(profile.name);
+            profile = JSON.parse(JSON.stringify(response.data.data));
+            setEmail(profile.email);
+            setNickName(profile.name);
 
-                if(profile.profile_image_url === null){
-                    setProfileImage(null);
-                } else {
-                    setProfileImage(profile.profile_image_url);
-                }
+            if(profile.profile_image_url === null){
+                setProfileImage(null);
+            } else {
+                setProfileImage(profile.profile_image_url);
+            }
 
-                localStorage.setItem("profile", JSON.stringify(response.data.data));
-            }).catch((err) => {
-                console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.msg);
-            });
-        } catch (err) {
-            console.error(err);
-        }
+            localStorage.setItem("profile", JSON.stringify(response.data.data));
+        }).catch((err) => {
+            console.error('err : ', JSON.stringify(err));
+            alert(err.response.data.msg);
+        });
     };
 
     const getLocalProf = () => {
