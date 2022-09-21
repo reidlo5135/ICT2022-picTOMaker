@@ -12,7 +12,11 @@ const MyPagePicToPosting = ({ posts, loading }) => {
     });
 
     const deletePicTo = (id) => {
-        del(`/v1/api/picto/${id}`)
+        del(`/v1/api/picto/${id}`, {
+            headers: {
+                "X-AUTH-TOKEN": cookies.accessToken
+            }
+        })
             .then((response) => {
                 console.log('MyPagePicToPosting deletePicTo response data : ' + response.data);
                 console.log('MyPagePicToPosting deletePicTo response data.data : ' + response.data.data);

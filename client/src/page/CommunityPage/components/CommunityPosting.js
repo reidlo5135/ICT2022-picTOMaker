@@ -1,5 +1,4 @@
 import {useState,useEffect} from "react";
-import {Link} from "react-router-dom";
 import axios from 'axios';
 import '../../SocialLoginPage/socialUserCallback.css';
 import Top from "../../../component/Top";

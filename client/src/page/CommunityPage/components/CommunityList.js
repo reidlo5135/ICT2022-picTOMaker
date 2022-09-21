@@ -2,7 +2,6 @@ import React,{useState,useEffect,useRef} from "react";
 import {Link} from "react-router-dom";
 import axios from 'axios';
 import '../../SocialLoginPage/socialUserCallback.css';
-import img from "../../../assets/image/naver.png";
 
 const CommunityList = ({diaryList}) => {
     const access_token = localStorage.getItem('access_token');

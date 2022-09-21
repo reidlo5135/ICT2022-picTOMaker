@@ -2,7 +2,6 @@ import React from "react";
 import kakaotalk from '../assets/image/kakaotalk.png';
 import naver from '../assets/image/naver.png';
 import google from '../assets/image/google.png';
-import Logo from '../assets/image/Logo.png';
 
 export default function SetUpUserImage () {
 
