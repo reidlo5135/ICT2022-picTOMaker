@@ -1,11 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import emailjs from 'emailjs-com';
+import {post} from "../../services/AxiosService";
 import { Link } from "react-router-dom";
 import {useHistory} from "react-router";
-import axios from "axios";
 import { motion } from "framer-motion";
-import Postani1 from "../../assets/image/postcar.png";
-import Postani2 from "../../assets/image/email.png";
 import Logo from "../../assets/image/Logo.png";
 import "../../App.css";
 import "./qna.css";
@@ -55,27 +52,23 @@ export default function QnA() {
     const getIsOpen = isOpen === true;
 
     function onChangeIsOpen() {
-        try {
-            axios.post(`/v1/api/qna/${provider}`, {
-                email: profEmail,
-                name: profNickName,
-                qna
-            }).then((response) => {
-                console.log('response : ', response.data);
-                console.log('response : ', response.data.data);
+        post(`/v1/api/qna/${provider}`, {
+            email: profEmail,
+            name: profNickName,
+            qna
+        }).then((response) => {
+            console.log('response : ', response.data);
+            console.log('response : ', response.data.data);
 
-                if(response.data.code === 0) {
-                    alert('문의사항이 접수되었습니다.');
-                    setIsOpen(!isOpen);
-                    history.push("/");
-                }
-            }).catch((err) => {
-                console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.msg);
-            });
-        } catch (err) {
-            console.error(err);
-        }
+            if(response.data.code === 0) {
+                alert('문의사항이 접수되었습니다.');
+                setIsOpen(!isOpen);
+                history.push("/");
+            }
+        }).catch((err) => {
+            console.error('err : ', JSON.stringify(err));
+            alert(err.response.data.msg);
+        });
         
         /* setTimeout(() => {
             window.location.reload();
