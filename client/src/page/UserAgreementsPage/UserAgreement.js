@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from "react";
 import "./userAgreements.css";
 import "../../styles/font.css"
 import Top from "../../component/Top";

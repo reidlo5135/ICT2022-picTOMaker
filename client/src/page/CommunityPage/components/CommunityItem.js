@@ -1,4 +1,4 @@
-import { useReducer, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 const CommunityItem = ({onEdit,onRemove,author, content, created_date, id}) => {
 
