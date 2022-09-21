@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react';
+import {del} from "../../services/AxiosService";
 import Logo from "../../assets/image/Logo.png";
 import "./myPage.css";
 import "../../styles/font.css";
@@ -44,22 +45,18 @@ export default function MyPageContent(){
             removeCookie("accessToken");
             history.push("/");
         } else {
-            try {
-                axios.delete('/v1/api/user/logout', {
-                    headers: {
-                        "X-AUTH-TOKEN": cookies.accessToken
-                    }
-                }).then(() => {
-                    console.clear();
-                    localStorage.clear();
-                    removeCookie("accessToken", {path: "/"});
-                    history.push("/");
-                }).catch((err) => {
-                    alert(err.response.data.msg);
-                });
-            } catch (err) {
-                console.error(err);
-            }
+            del('/v1/api/user/logout', {
+                headers: {
+                    "X-AUTH-TOKEN": cookies.accessToken
+                }
+            }).then(() => {
+                console.clear();
+                localStorage.clear();
+                removeCookie("accessToken", {path: "/"});
+                history.push("/");
+            }).catch((err) => {
+                alert(err.response.data.msg);
+            });
         }
 
     }

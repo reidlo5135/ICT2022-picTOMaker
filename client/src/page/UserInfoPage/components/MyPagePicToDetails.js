@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react';
+import {get} from "../../../services/AxiosService";
 import {useCookies} from "react-cookie";
-import axios from "axios";
 import MyPagePicToPosting from "./MyPagePicToPosting";
 import MyPagePicToPagination from "./MyPagePicToPagination";
 import "../myPage.css";
@@ -22,25 +22,25 @@ export default function MyPagePicToDetails(){
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await axios.get(`/v1/api/picto/${provider}`, {
+            get(`/v1/api/picto/${provider}`, {
                 headers: {
                     "X-AUTH-TOKEN": cookies.accessToken
                 }
             }).then((response) => {
-                    console.log('response data : ' + response.data);
-                    console.log('response data.list : ' + response.data.list);
-                    console.log('response data.list JSON : ', JSON.stringify(response.data.list));
+                console.log('response data : ' + response.data);
+                console.log('response data.list : ' + response.data.list);
+                console.log('response data.list JSON : ', JSON.stringify(response.data.list));
 
-                    if(response.data.code === 0) {
-                        setPosts(response.data.list);
-                        setLoading(false);
-                    }
-                }).catch((err) => {
-                    console.error('err : ', JSON.stringify(err));
-                    setPosts(null);
-                    alert(err.response.data.msg);
-                    window.location.replace('/myPage');
-                });
+                if(response.data.code === 0) {
+                    setPosts(response.data.list);
+                    setLoading(false);
+                }
+            }).catch((err) => {
+                console.error('err : ', JSON.stringify(err));
+                setPosts(null);
+                alert(err.response.data.msg);
+                window.location.replace('/myPage');
+            });
         };
         fetchData();
     }, []);
