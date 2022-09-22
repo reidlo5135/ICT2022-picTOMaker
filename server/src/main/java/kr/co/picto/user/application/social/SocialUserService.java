@@ -122,7 +122,7 @@ public class SocialUserService {
 
     @Transactional
     protected void saveUser(SocialUserInfoDto socialUserInfoDto, String accessToken){
-        if(socialUserRepository.findByEmail(socialUserInfoDto.getEmail()).isEmpty()) {
+        if(socialUserRepository.findByEmailAndProvider(socialUserInfoDto.getEmail(), socialUserInfoDto.getProvider()).isEmpty()) {
             socialUserRepository.save(socialUserInfoDto.from());
         }
         SocialUser socialUser = socialUserRepository.findByEmailAndProvider(socialUserInfoDto.getEmail(), socialUserInfoDto.getProvider()).orElseThrow(CustomUserNotFoundException::new);

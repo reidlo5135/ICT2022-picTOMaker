@@ -10,7 +10,7 @@ public interface SocialRefreshTokenRepository extends JpaRepository<SocialRefres
 
     Optional<SocialRefreshToken> findByTokenId(Long tokenId);
 
-    @Query(value = "SELECT srt.id from SocialRefreshToken srt WHERE srt.token = :token")
+    @Query(value = "SELECT srt.tokenId from SocialRefreshToken srt WHERE srt.token = :token")
     Long findIdByToken(String token);
 
     @Modifying
