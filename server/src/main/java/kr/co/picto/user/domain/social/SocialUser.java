@@ -33,15 +33,4 @@ public class SocialUser extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AccountRole role;
-
-    public SocialUser update(String name, String picture) {
-        this.name = name;
-        this.picture = picture;
-
-        return this;
-    }
-
-    public String getRoleKey() {
-        return this.role.getKey();
-    }
 }
