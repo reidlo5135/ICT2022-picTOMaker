@@ -139,6 +139,9 @@ public class SocialUserService {
 
     @Transactional
     public Long findIdByToken(String accessToken) {
-        return socialRefreshTokenRepository.findIdByToken(accessToken);
+        log.info("findIdByToken : " + accessToken);
+        Long userId = socialRefreshTokenRepository.findIdByToken(accessToken);
+        log.info("findIdByToken userId : " + userId);
+        return userId;
     }
 }

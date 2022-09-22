@@ -64,7 +64,7 @@ public class SocialUserController {
                     required = true, dataTypeClass = String.class, paramType = "header")
     })
     @ApiOperation(value = "User Logout", notes = "User Logout & Delete Token")
-    public ResponseEntity logout(@RequestHeader(value = "X-AUTH-TOKEN") String access_token) {
+    public ResponseEntity logout(@RequestHeader(value = "Authorization") String access_token) {
         socialUserService.logoutAndDeleteToken(access_token);
         return ResponseEntity.ok().build();
     }
