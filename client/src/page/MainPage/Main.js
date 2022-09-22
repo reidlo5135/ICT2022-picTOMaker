@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {post} from "../../services/AxiosService";
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router";
 import Modal from "../../component/Modal";
@@ -6,7 +7,6 @@ import "./main.css";
 import "../../styles/font.css";
 import "../../styles/modal.css";
 import "../../styles/login.css";
-import axios from "axios";
 import Logo from "../../assets/image/Logo.png";
 import {GOOGLE_AUTH_URL, KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../../component/SocialUserConfig";
 import kakaotalk from "../../assets/image/kakaotalk.png";
@@ -57,28 +57,23 @@ export default function Main(){
         }else if(email === "" && password === "") {
             alert('아이디와 비밀번호를 입력해주세요.');
         } else {
-            try {
-                axios.post('/v1/api/user/login', {
-                    email,
-                    password
-                }).then((response) => {
-                    console.log('res data ', response.data);
-                    if(response.data.code === 0){
-                        setIsLogged(true);
-                        setCookie("accessToken", response.data.data.accessToken, {path: "/"});
-                        localStorage.setItem("refresh_token", response.data.data.refreshToken);
-                        localStorage.setItem("provider", "LOCAL");
-                        closeModal();
-                        history.push('/');
-                    }
-                })
-                .catch((err) => {
-                    console.error('err : ', JSON.stringify(err));
-                    alert(err.response.data.msg);
-                });
-            } catch (err) {
-                console.error(err);
-            }
+            post('/v1/api/user/login', {
+                email,
+                password
+            }).then((response) => {
+                console.log('res data ', response.data);
+                if(response.data.code === 0){
+                    setIsLogged(true);
+                    setCookie("accessToken", response.data.data.accessToken, {path: "/"});
+                    localStorage.setItem("refresh_token", response.data.data.refreshToken);
+                    localStorage.setItem("provider", "LOCAL");
+                    closeModal();
+                    history.push('/');
+                }
+            }).catch((err) => {
+                console.error('err : ', JSON.stringify(err));
+                alert(err.response.data.msg);
+            });
         }
     }
 

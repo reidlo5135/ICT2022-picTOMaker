@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useHistory} from "react-router";
+import {post} from "../services/AxiosService";
 import {useCookies} from "react-cookie";
 import axios from "axios";
 import '../styles/top.css'
@@ -7,7 +7,6 @@ import {Link} from "react-router-dom";
 import Human from '../assets/image/Human.png';
 
 const TopProfile = () => {
-    const history = useHistory();
     const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
     const provider = localStorage.getItem('provider');
     const [isLogged, setIsLogged] = useState(false);
@@ -18,71 +17,63 @@ const TopProfile = () => {
     let profile = null;
 
     const getOAuthProf = () => {
-        try {
-            axios.post(`/v1/api/oauth2/info/${provider}`, {}, {
-                headers: {
-                    "Authorization": cookies.accessToken
-                }
-            }).then((response) => {
-                console.log('OAuth profile res data.data : ', response.data.data);
+        post(`/v1/api/oauth2/info/${provider}`, {}, {
+            headers: {
+                "Authorization": cookies.accessToken
+            }
+        }).then((response) => {
+            console.log('OAuth profile res data.data : ', response.data.data);
 
-                profile = JSON.parse(JSON.stringify(response.data.data));
-                setEmail(profile.email);
-                setNickName(profile.name);
+            profile = JSON.parse(JSON.stringify(response.data.data));
+            setEmail(profile.email);
+            setNickName(profile.name);
 
-                if(profile.profile_image_url === null){
-                    setProfileImage(null);
-                } else {
-                    setProfileImage(profile.profile_image_url);
-                }
+            if(profile.profile_image_url === null){
+                setProfileImage(null);
+            } else {
+                setProfileImage(profile.profile_image_url);
+            }
 
-                localStorage.setItem("profile", JSON.stringify(response.data.data));
-            }).catch((err) => {
-                console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.msg);
-            });
-        } catch (err) {
-            console.error(err);
-        }
+            localStorage.setItem("profile", JSON.stringify(response.data.data));
+        }).catch((err) => {
+            console.error('err : ', JSON.stringify(err));
+            alert(err.response.data.msg);
+        });
     };
 
     const getLocalProf = () => {
-        try {
-            axios.post('/v1/api/user/info', {}, {
-                headers: {
-                    "X-AUTH-TOKEN": cookies.accessToken
-                }
+        post('/v1/api/user/info', {}, {
+            headers: {
+                "X-AUTH-TOKEN": cookies.accessToken
+            }
+        }).then((response) => {
+            console.log('Local profile res data.data : ', response.data.data);
+
+            profile = JSON.parse(JSON.stringify(response.data.data));
+            setEmail(profile.email);
+            setNickName(profile.nickName);
+
+            if(profile.profile_image_url === null){
+                setProfileImage(null);
+            } else {
+                setProfileImage(profile.profile_image_url);
+            }
+
+            localStorage.setItem("profile", JSON.stringify(profile));
+        }).catch((err) => {
+            console.error('err : ', JSON.stringify(err));
+            console.error('code : ', err.response.data.code);
+            axios.post('/v1/api/user/reissue', {
+                accessToken: cookies.accessToken,
+                refreshToken: localStorage.getItem("refresh_token")
             }).then((response) => {
-                console.log('Local profile res data.data : ', response.data.data);
-
-                profile = JSON.parse(JSON.stringify(response.data.data));
-                setEmail(profile.email);
-                setNickName(profile.nickName);
-
-                if(profile.profile_image_url === null){
-                    setProfileImage(null);
-                } else {
-                    setProfileImage(profile.profile_image_url);
-                }
-
-                localStorage.setItem("profile", JSON.stringify(profile));
+                setCookie("accessToken", response.data.data.accessToken);
+                localStorage.setItem("refresh_token", response.data.data.refreshToken);
+                window.location.reload();
             }).catch((err) => {
-                console.error('err : ', JSON.stringify(err));
-                console.error('code : ', err.response.data.code);
-                axios.post('/v1/api/user/reissue', {
-                    accessToken: cookies.accessToken,
-                    refreshToken: localStorage.getItem("refresh_token")
-                }).then((response) => {
-                    setCookie("accessToken", response.data.data.accessToken);
-                    localStorage.setItem("refresh_token", response.data.data.refreshToken);
-                    window.location.reload();
-                }).catch((err) => {
-                    alert(err.response.data.msg);
-                });
+                alert(err.response.data.msg);
             });
-        } catch (err) {
-            console.error(err);
-        }
+        });
     };
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
+import {post} from "../../services/AxiosService";
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router";
-import axios from "axios";
 import './socialUserCallback.css';
 
 export default function SocialUserCallback(){
@@ -29,30 +29,25 @@ export default function SocialUserCallback(){
 
     console.log('provider : ', provider);
 
-    try {
-        axios.post(`/v1/api/oauth2/login/${provider}`, {}, {
-            headers: {
-                "Authorization": token
-            }
-        }).then((response) => {
-            console.log('res data : ', response.data);
-            console.log('res data.data : ', response.data.data);
+    post(`/v1/api/oauth2/login/${provider}`, {}, {
+        headers: {
+            "Authorization": token
+        }
+    }).then((response) => {
+        console.log('res data : ', response.data);
+        console.log('res data.data : ', response.data.data);
 
-            if(response.data.code === 0) {
-                setIsLogged(true);
-                setCookie("accessToken", response.data.data.access_token);
-                localStorage.setItem("refresh_token", response.data.data.refresh_token);
-                localStorage.setItem("provider", provider);
-                history.push("/");
-            }
-        }).catch((err) => {
-            console.error('err : ', JSON.stringify(err));
-            alert(err.response.data.msg);
-        });
-    } catch (err) {
-        alert(err);
-        console.error(err);
-    }
+        if(response.data.code === 0) {
+            setIsLogged(true);
+            setCookie("accessToken", response.data.data.access_token, {path: "/"});
+            localStorage.setItem("refresh_token", response.data.data.refresh_token);
+            localStorage.setItem("provider", provider);
+            history.push("/");
+        }
+    }).catch((err) => {
+        console.error('err : ', JSON.stringify(err));
+        alert(err.response.data.msg);
+    });
 
     return (
         <center>
