@@ -39,7 +39,7 @@ export default function SocialUserCallback(){
 
         if(response.data.code === 0) {
             setIsLogged(true);
-            setCookie("accessToken", response.data.data.access_token);
+            setCookie("accessToken", response.data.data.access_token, {path: "/"});
             localStorage.setItem("refresh_token", response.data.data.refresh_token);
             localStorage.setItem("provider", provider);
             history.push("/");
