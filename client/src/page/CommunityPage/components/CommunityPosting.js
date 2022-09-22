@@ -1,6 +1,5 @@
 import {useState,useEffect} from "react";
-import {Link} from "react-router-dom";
-import axios,{instance, fileInstance} from 'axios';
+import axios from 'axios';
 import '../../SocialLoginPage/socialUserCallback.css';
 import Top from "../../../component/Top";
 import {useHistory} from "react-router-dom";
@@ -14,13 +13,10 @@ const CommunityPosting = () => {
     const [email, setEmail] = useState(null);
     const getProfile = localStorage.getItem('profile');
     const provider = localStorage.getItem('provider');
-    const [contents, setContents] = useState("");
-
+    
     const [ img, setImg ] = useState([])
     const [ previewImg, setPreviewImg ] = useState([])
 
-    const [imgBase64, setImgBase64] = useState([]);
-    const [imgFile, setImgFile] = useState(null);
 
     const [inputValue, setInputValue] = useState({
         name: '',
@@ -29,8 +25,6 @@ const CommunityPosting = () => {
     });
 
     const { name, title ,content} = inputValue;
-
-    const [imageSrc, setImageSrc] = useState('');
 
     const getProf = () => {
         try {
@@ -49,7 +43,6 @@ const CommunityPosting = () => {
 
     useEffect(() => {
         getProf();
-        console.log(`img: ${imageSrc}`)
     }, []);
 
     const handleInput = e => {
@@ -140,13 +133,10 @@ const CommunityPosting = () => {
 
       const registerBoard = () => {
           try {
-            const image = imageSrc.toDataURL("image/png").replace("image/png", "image/octet-stream");
-            console.log('image : ', image);
               axios.post(`/v1/api/community/${provider}`, {
                   email,
                   title,
-                  content,
-                  image
+                  content
               }).then((response) => {
                   console.log('response : ', response.data);
                   console.log('response : ', response.data.data);
@@ -164,63 +154,6 @@ const CommunityPosting = () => {
               console.error(err);
           }
       }
-
-      const handleChangeFile = (e) => {
-        console.log(e.target.files);
-        setImgFile(e.target.files);
-        setImgBase64([]);
-        for(let i=0 ; i<e.target.files.length ; i++) {
-            if(e.target.files[i]) {
-                let reader = new FileReader();
-                reader.readAsDataURL(e.target.files[i]);
-                reader.onloadend = () => {
-                    const base64 = reader.result; // 비트맵 데이터 리턴, 이 데이터를 통해 파일 미리보기가 가능함
-                    console.log(base64)
-                    if(base64) {
-                        let base64Sub = base64.toString()
-                        setImgBase64(imgBase64 => [...imgBase64, base64Sub]);
-                    }
-                }
-            }
-        }
-    }
-
-    /* const WriteBoard = async () => {
-        const fd = new FormData();
-        for(let i=0 ; i<imgFile.length ; i++) {
-            fd.append("file", imgFile[i]);
-        }
-        await fileInstance({
-            method: 'post',
-            url: `/v1/api/community/${provider}`,
-            data: fd
-        })
-        .then((response) => {
-            if(response.data) {
-                console.log(response.data)
-                readImages();
-                setImgFile(null);
-                setImgBase64([]);
-                alert("업로드 완료!");
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-            alert("실패!");
-        })
-    }
- */
-    const encodeFileToBase64 = (fileBlob) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(fileBlob);
-        return new Promise((resolve) => {
-        reader.onload = () => {
-            setImageSrc(reader.result);
-             resolve();
-        };       
-        });
-    };
-
 
   return (
     <>
@@ -241,21 +174,9 @@ const CommunityPosting = () => {
                       placeholder="제목을 입력하세요"
                       onChange={handleInput}
                   />
-                  <form>
+                  <form encType='multipart/form-data'>
                     <label htmlFor='file'><img className="uploadimg" src={upload} alt="사진 업로드 버튼"/></label>
-                    {/* <input className="upload" type="file" id='file' accept='image/jpg, image/jpeg, image/png' onChange={(e) => insertImg(e)}/> */}
-                    {/* <input name="img"
-                            type="file"
-                            id="customFile"
-                            /> */}
-                            <input type="file" onChange={(e) => {
-                                encodeFileToBase64(e.target.files[0]);
-                            }} />
-                            <div className="preview">
-                                {imageSrc && <img src={imageSrc} alt="preview-img" />}
-                            </div>
-
-
+                    <input className="upload" type="file" id='file' accept='image/jpg, image/jpeg, image/png' onChange={(e) => insertImg(e)}/>
                   </form>
                   <div>
                       {getPreviewImg()}
@@ -270,7 +191,7 @@ const CommunityPosting = () => {
                   </div>
               </div>
               <div>
-                  <button onClick={() => {registerBoard();}} /* onClick={WriteBoard} */ >저장하기</button>
+                  <button onClick={() => {registerBoard();}}>저장하기</button>
               </div>
           </div>
     </>
