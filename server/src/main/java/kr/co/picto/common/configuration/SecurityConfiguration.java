@@ -7,6 +7,7 @@ import kr.co.picto.token.application.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -43,6 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v1/api/user/login", "/v1/api/user/signup", "/v1/api/user/reissue", "/v1/api/oauth2/**").permitAll()
                 .antMatchers("/v1/api/picto/**", "/v1/api/community/**", "/v1/api/qna/**").permitAll()
                 .antMatchers("/exception").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/v1/api/oauth2/**").permitAll()
                 .mvcMatchers("/v3/api-docs/**",
                         "/configuration/**",
                         "/swagger*/**",

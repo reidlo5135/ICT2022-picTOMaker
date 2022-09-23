@@ -7,6 +7,7 @@ import kr.co.picto.common.exception.CustomCommunicationException;
 import kr.co.picto.token.domain.social.SocialRefreshToken;
 import kr.co.picto.token.domain.social.SocialRefreshTokenRepository;
 import kr.co.picto.token.dto.SocialTokenResponseDto;
+import kr.co.picto.user.domain.AccountStatus;
 import kr.co.picto.user.domain.social.SocialUser;
 import kr.co.picto.user.domain.social.SocialUserRepository;
 import kr.co.picto.user.dto.social.*;
@@ -127,6 +128,7 @@ public class SocialUserService {
         }
         SocialUser socialUser = socialUserRepository.findByEmailAndProvider(socialUserInfoDto.getEmail(), socialUserInfoDto.getProvider()).orElseThrow(CustomUserNotFoundException::new);
         if(socialRefreshTokenRepository.findByTokenId(socialUser.getId()).isPresent()) {
+            if(isInActiveUser(socialUser)) socialUser.activate();
             renewLogin(socialUser.getId(), accessToken);
         } else {
             SocialRefreshToken socialRefreshToken = SocialRefreshToken.builder()
@@ -143,5 +145,24 @@ public class SocialUserService {
         Long userId = socialRefreshTokenRepository.findIdByToken(accessToken);
         log.info("findIdByToken userId : " + userId);
         return userId;
+    }
+
+    @Transactional
+    public void delete(String accessToken, String provider) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        httpHeaders.set("Authorization", "Bearer " + accessToken);
+
+        String unlinkUrl = socialUserFactory.getUnlinkUrl(provider);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(httpHeaders);
+        ResponseEntity<String> response = restTemplate.postForEntity(unlinkUrl, request, String.class);
+        log.info("SocialUser SVC delete response : " + response);
+
+        SocialUser socialUser = socialUserRepository.findById(findIdByToken(accessToken)).orElseThrow(CustomUserNotFoundException::new);
+        socialUser.deactivate();
+    }
+
+    public boolean isInActiveUser(SocialUser socialUser) {
+        return socialUser.getStatus() == AccountStatus.INACTIVE;
     }
 }
