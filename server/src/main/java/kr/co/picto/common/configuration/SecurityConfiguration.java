@@ -41,13 +41,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(new CustomAccessDeniedHandler())
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/exception/**", "/v1/api/picto/**/**/**", "/v1/api/community/**/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/v1/api/oauth2/**/**/**", "/v1/api/user/**", "/v1/api/picto/**/**/**", "/v1/api/qna/**/**", "/v1/api/community/**/**").permitAll()
-                .antMatchers(HttpMethod.PUT, "/v1/api/picto/**/**/**", "/v1/api/user/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/v1/api/oauth2/**", "/v1/api/user/**", "/v1/api/picto/delete").permitAll()
-                .antMatchers("/v1/api/users/**", "/v1/api/oauth/**").permitAll()
-                .antMatchers("/oauth2/redirect/**", "/").permitAll()
-                .antMatchers("/index").permitAll()
+                .antMatchers("/v1/api/user/login", "/v1/api/user/signup", "/v1/api/user/reissue", "/v1/api/oauth2/**").permitAll()
+                .antMatchers("/v1/api/picto/**", "/v1/api/community/**", "/v1/api/qna/**").permitAll()
+                .antMatchers("/exception").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/v1/api/oauth2/**").permitAll()
                 .mvcMatchers("/v3/api-docs/**",
                         "/configuration/**",
                         "/swagger*/**",

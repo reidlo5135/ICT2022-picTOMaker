@@ -73,6 +73,14 @@ public class SocialUserFactory {
         }
     }
 
+    public String getUnlinkUrl(String provider) {
+        if(provider.equals("kakao")) {
+            return kakaoInfo.getKakaoUnlinkUrl();
+        } else {
+            return null;
+        }
+    }
+
     @Getter
     @Component
     static class KakaoInfo {
@@ -84,6 +92,8 @@ public class SocialUserFactory {
         private String kakaoTokenUrl;
         @Value("${spring.security.oauth2.client.provider.kakao.user-info-uri}")
         private String kakaoProfileUrl;
+        @Value("${spring.security.oauth2.client.provider.kakao.user-unlink-uri}")
+        private String kakaoUnlinkUrl;
     }
 
     @Getter

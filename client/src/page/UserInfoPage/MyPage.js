@@ -65,26 +65,32 @@ export default function MyPageContent(){
     }
 
     function deActive() {
-        try {
-            axios.delete('/v1/api/user/', {
-                headers: {
-                    "X-AUTH-TOKEN": access_token
-                }
-            })
-                .then((response) => {
-                    if(response.status === 200) {
-                        alert('회원 탈퇴가 정상적으로 이루어졌습니다.');
-                        localStorage.clear();
-                        console.clear();
-                        history.push("/");
-                    }
-                }).catch((err) => {
-                    console.error('err : ', JSON.stringify(err));
-                    alert(err.response.data.msg);
-                });
-        } catch (err) {
-            console.error(err);
+        let url = null;
+        let header = {};
+        if(provider === "LOCAL") {
+            url = "/v1/api/user/";
+            header = {
+                "X-AUTH-TOKEN": cookies.accessToken
+            }
+        } else {
+            url = `/v1/api/oauth2/${provider}`;
+            header = {
+                "Authorization": cookies.accessToken
+            }
         }
+        del(url, {
+            headers: header
+        }).then((response) => {
+            console.log("MyPage.js deActive user response : ", response);
+            alert('회원 탈퇴가 정상적으로 이루어졌습니다.');
+            localStorage.clear();
+            console.clear();
+            removeCookie("accessToken", {path: "/"});
+            history.push("/");
+        }).catch((err) => {
+            console.error('err : ', JSON.stringify(err));
+            alert(err.response.data.msg);
+        });
     }
 
     return (
