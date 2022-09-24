@@ -18,6 +18,7 @@ import {AnimatePresence} from "framer-motion";
 import HandWebStudio from './component/studio/handweb/HandWebStudio';
 import CommunitytDetails from './page/CommunityPage/components/CommunitytDetails';
 import CommunityPosting from './page/CommunityPage/components/CommunityPosting';
+import M_main from "./page/MainPage/Mobile_main";
 
 export default function App(){
 
@@ -26,7 +27,7 @@ export default function App(){
             <MobileView>
                 <AnimatePresence>
                     <Switch>
-                        <Route exact path = '/' component={Main}/>
+                        <Route exact path = '/' component={M_main}/>
                         <Route path = '/select' component={MenuSelect}/>
                         <Route path = '/signUp' component={LocalUserSignUp}/>
                         <Route path = '/myPage' component={MyPageContent}/>

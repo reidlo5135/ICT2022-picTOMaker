@@ -5,3 +5,10 @@
 body{
   margin: 0 auto;
 }
+
+@media (max-width:768px) {
+  .App{
+    height: 100%;
+    
+  }
+}
