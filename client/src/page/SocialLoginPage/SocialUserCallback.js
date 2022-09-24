@@ -31,7 +31,7 @@ export default function SocialUserCallback(){
 
     post(`/v1/api/oauth2/login/${provider}`, {}, {
         headers: {
-            "Authorization": token
+            "X-AUTH-TOKEN": token
         }
     }).then((response) => {
         console.log('res data : ', response.data);
