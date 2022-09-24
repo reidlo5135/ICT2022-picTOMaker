@@ -137,3 +137,12 @@
 .menu__item:hover {
 	background-color: #CFD8DC;
 }
+
+@media (max-width:768px) {
+	.topMenu{
+		justify-content: center;
+		width:100%;
+		display: flex;
+		border-bottom: solid 1px #F2F2F2;
+	}
+}
