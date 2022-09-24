@@ -1,7 +1,5 @@
-import React, {useEffect} from 'react';
-import {useCookies} from "react-cookie";
-import {useHistory} from "react-router";
-import axios from "axios";
+import React from 'react';
+import {BrowserView, MobileView} from "react-device-detect";
 import './App.css';
 import {Route, Switch} from 'react-router-dom';
 import Main from "./page/MainPage/Main";
@@ -25,27 +23,52 @@ export default function App(){
 
     return (
         <div className='App'>
-            <AnimatePresence>
-                <Switch>
-                    <Route exact path = '/' component={Main}/>
-                    <Route path = '/select' component={MenuSelect}/>
-                    <Route path = '/signUp' component={LocalUserSignUp}/>
-                    <Route path = '/myPage' component={MyPageContent}/>
-                    <Route path = '/introduce' component={Introduce}/>
-                    <Route path = '/qna' component={QnA}/>
-                    <Route path = '/community' component={Community}/>
-                    <Route path = '/cdetail/:id' component={CommunitytDetails}/>
-                    <Route path = '/cposting' component={CommunityPosting}/>
-                    <Route path = '/terms' component={UserAgreement}/>
-                    <Route path = '/oauth2/redirect/kakao' component={SocialUserCallback} />
-                    <Route path='/oauth2/redirect/naver' component={SocialUserCallback} />
-                    <Route path='/oauth2/redirect/google' component={SocialUserCallback} />
-                    <Route path='/studio/pose/web' component={PoseWebStudio}/>
-                    <Route path='/studio/hand/web' component={HandWebStudio}/>
-                    <Route path='/edit' component={EditTool} />
-                    <Route path='/tool/image' component={EditImageTool} />
-                </Switch>
-            </AnimatePresence>
+            <MobileView>
+                <AnimatePresence>
+                    <Switch>
+                        <Route exact path = '/' component={Main}/>
+                        <Route path = '/select' component={MenuSelect}/>
+                        <Route path = '/signUp' component={LocalUserSignUp}/>
+                        <Route path = '/myPage' component={MyPageContent}/>
+                        <Route path = '/introduce' component={Introduce}/>
+                        <Route path = '/qna' component={QnA}/>
+                        <Route path = '/community' component={Community}/>
+                        <Route path = '/cdetail/:id' component={CommunitytDetails}/>
+                        <Route path = '/cposting' component={CommunityPosting}/>
+                        <Route path = '/terms' component={UserAgreement}/>
+                        <Route path = '/oauth2/redirect/kakao' component={SocialUserCallback} />
+                        <Route path='/oauth2/redirect/naver' component={SocialUserCallback} />
+                        <Route path='/oauth2/redirect/google' component={SocialUserCallback} />
+                        <Route path='/studio/pose/web' component={PoseWebStudio}/>
+                        <Route path='/studio/hand/web' component={HandWebStudio}/>
+                        <Route path='/edit' component={EditTool} />
+                        <Route path='/tool/image' component={EditImageTool} />
+                    </Switch>
+                </AnimatePresence>
+            </MobileView>
+            <BrowserView>
+                <AnimatePresence>
+                    <Switch>
+                        <Route exact path = '/' component={Main}/>
+                        <Route path = '/select' component={MenuSelect}/>
+                        <Route path = '/signUp' component={LocalUserSignUp}/>
+                        <Route path = '/myPage' component={MyPageContent}/>
+                        <Route path = '/introduce' component={Introduce}/>
+                        <Route path = '/qna' component={QnA}/>
+                        <Route path = '/community' component={Community}/>
+                        <Route path = '/cdetail/:id' component={CommunitytDetails}/>
+                        <Route path = '/cposting' component={CommunityPosting}/>
+                        <Route path = '/terms' component={UserAgreement}/>
+                        <Route path = '/oauth2/redirect/kakao' component={SocialUserCallback} />
+                        <Route path='/oauth2/redirect/naver' component={SocialUserCallback} />
+                        <Route path='/oauth2/redirect/google' component={SocialUserCallback} />
+                        <Route path='/studio/pose/web' component={PoseWebStudio}/>
+                        <Route path='/studio/hand/web' component={HandWebStudio}/>
+                        <Route path='/edit' component={EditTool} />
+                        <Route path='/tool/image' component={EditImageTool} />
+                    </Switch>
+                </AnimatePresence>
+            </BrowserView>
        </div>
     );
 }
