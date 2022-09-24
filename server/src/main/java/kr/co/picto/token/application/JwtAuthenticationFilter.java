@@ -37,7 +37,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                 "/index.html",
                 "/swagger-ui",
                 "/swagger-resources",
-                "/v3/api-docs"
+                "/v3/api-docs",
+                ".png"
         };
         for(String str : patterns) {
             if(uri.equals(str) || uri.contains(str)) {

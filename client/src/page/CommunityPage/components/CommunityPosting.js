@@ -1,6 +1,7 @@
 import {useState,useEffect} from "react";
 import {Link} from "react-router-dom";
-import axios,{instance, fileInstance} from 'axios';
+import {post} from "../../../services/AxiosService";
+import axios from 'axios';
 import '../../SocialLoginPage/socialUserCallback.css';
 import Top from "../../../component/Top";
 import {useHistory} from "react-router-dom";
@@ -139,30 +140,26 @@ const CommunityPosting = () => {
       }
 
       const registerBoard = () => {
-          try {
-            const image = imageSrc.toDataURL("image/png").replace("image/png", "image/octet-stream");
-            console.log('image : ', image);
-              axios.post(`/v1/api/community/${provider}`, {
-                  email,
-                  title,
-                  content,
-                  image
-              }).then((response) => {
-                  console.log('response : ', response.data);
-                  console.log('response : ', response.data.data);
+          const image = imageSrc.toDataURL("image/png").replace("image/png", "image/octet-stream");
+          console.log('image : ', image);
+          post(`/v1/api/community/${provider}`, {
+              email,
+              title,
+              content,
+              image
+          }).then((response) => {
+              console.log('response : ', response.data);
+              console.log('response : ', response.data.data);
 
-                  if(response.data.code === 0) {
-                      alert('게시물이 등록되었습니다.');
-                      setIsOpen(!isOpen);
-                      history.push("/");
-                  }
-              }).catch((err) => {
-                  console.error('err : ', JSON.stringify(err));
-                  alert(err.response.data.msg);
-              });
-          } catch (err) {
-              console.error(err);
-          }
+              if(response.data.code === 0) {
+                  alert('게시물이 등록되었습니다.');
+                  setIsOpen(!isOpen);
+                  history.push("/");
+              }
+          }).catch((err) => {
+              console.error('err : ', JSON.stringify(err));
+              alert(err.response.data.msg);
+          });
       }
 
       const handleChangeFile = (e) => {

@@ -2,6 +2,7 @@ package kr.co.picto.user.domain.social;
 
 import kr.co.picto.common.domain.BaseTimeEntity;
 import kr.co.picto.user.domain.AccountRole;
+import kr.co.picto.user.domain.AccountStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,14 +35,15 @@ public class SocialUser extends BaseTimeEntity {
     @Column(nullable = false)
     private AccountRole role;
 
-    public SocialUser update(String name, String picture) {
-        this.name = name;
-        this.picture = picture;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private AccountStatus status = AccountStatus.ACTIVE;
 
-        return this;
+    public void activate() {
+        this.status = AccountStatus.ACTIVE;
     }
 
-    public String getRoleKey() {
-        return this.role.getKey();
+    public void deactivate() {
+        this.status = AccountStatus.INACTIVE;
     }
 }

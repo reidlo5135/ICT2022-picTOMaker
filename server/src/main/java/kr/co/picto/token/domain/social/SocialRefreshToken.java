@@ -1,4 +1,4 @@
-package kr.co.picto.token.domain;
+package kr.co.picto.token.domain.social;
 
 import kr.co.picto.common.domain.BaseTimeEntity;
 import lombok.Builder;
@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "refresh_token")
-public class RefreshToken extends BaseTimeEntity {
+@Table(name = "social_refresh_token")
+public class SocialRefreshToken extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +23,13 @@ public class RefreshToken extends BaseTimeEntity {
     @Column(nullable = false)
     private String token;
 
-    public RefreshToken updateToken(String token) {
+    public SocialRefreshToken updateToken(String token) {
         this.token = token;
         return this;
     }
 
     @Builder
-    public RefreshToken(Long tokenId, String token) {
+    public SocialRefreshToken(Long tokenId, String token) {
         this.tokenId = tokenId;
         this.token = token;
     }
