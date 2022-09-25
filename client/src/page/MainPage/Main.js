@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import SockJS from "sockjs-client";
-import Stomp from 'stompjs';
 import {post} from "../../services/AxiosService";
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router";
@@ -59,52 +57,23 @@ export default function Main(){
         }else if(email === "" && password === "") {
             alert('아이디와 비밀번호를 입력해주세요.');
         } else {
-            const sock = new SockJS("http://localhost:8080/ws/");
-            const ws = Stomp.over(sock);
-            let UserLoginDto = {
+            post('/v1/api/user/login', {
                 email,
                 password
-            }
-            try {
-                ws.connect({}, () => {
-                    ws.send('/pub/login', {}, JSON.stringify(UserLoginDto));
-                    ws.subscribe(
-                        '/sub/login',
-                        (data) => {
-                            const response = JSON.parse(data.body);
-                            console.log("Stomp ws msg : ", response);
-                            console.log("")
-                            if(response.body.code === 0) {
-                                setIsLogged(true);
-                                setCookie("accessToken", response.body.data.accessToken, {path: "/"});
-                                localStorage.setItem("refresh_token", response.body.data.refreshToken);
-                                localStorage.setItem("provider", "LOCAL");
-                                closeModal();
-                                history.push("/");
-                            }
-                        }
-                    )
-                });
-            } catch (e) {
-                console.error(e);
-            }
-            // post('/v1/api/user/login', {
-            //     email,
-            //     password
-            // }).then((response) => {
-            //     console.log('res data ', response.data);
-            //     if(response.data.code === 0){
-            //         setIsLogged(true);
-            //         setCookie("accessToken", response.data.data.accessToken, {path: "/"});
-            //         localStorage.setItem("refresh_token", response.data.data.refreshToken);
-            //         localStorage.setItem("provider", "LOCAL");
-            //         closeModal();
-            //         history.push('/');
-            //     }
-            // }).catch((err) => {
-            //     console.error('err : ', JSON.stringify(err));
-            //     alert(err.response.data.msg);
-            // });
+            }).then((response) => {
+                console.log('res data ', response.data);
+                if(response.data.code === 0){
+                    setIsLogged(true);
+                    setCookie("accessToken", response.data.data.accessToken, {path: "/"});
+                    localStorage.setItem("refresh_token", response.data.data.refreshToken);
+                    localStorage.setItem("provider", "LOCAL");
+                    closeModal();
+                    history.push('/');
+                }
+            }).catch((err) => {
+                console.error('err : ', JSON.stringify(err));
+                alert(err.response.data.msg);
+            });
         }
     }
 
