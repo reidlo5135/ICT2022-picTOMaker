@@ -132,7 +132,7 @@ public class UserService {
         refreshTokenRepository.deleteByTokenId(user.getId());
     }
 
-    private void checkStatus(User user) {
+    private static void checkStatus(User user) {
         if(user.getStatus() == AccountStatus.INACTIVE) throw new CustomUserNotFoundException();
     }
 }
