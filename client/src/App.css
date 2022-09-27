@@ -9,6 +9,6 @@ body{
 @media (max-width:768px) {
   .App{
     height: 100%;
-    
+    width: 100vw;
   }
 }

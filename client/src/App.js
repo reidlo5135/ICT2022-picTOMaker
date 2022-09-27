@@ -19,6 +19,7 @@ import HandWebStudio from './component/studio/handweb/HandWebStudio';
 import CommunitytDetails from './page/CommunityPage/components/CommunitytDetails';
 import CommunityPosting from './page/CommunityPage/components/CommunityPosting';
 import M_main from "./page/MainPage/Mobile_main";
+import M_intro from "./page/IntroducePage/components/Mobile-intro";
 
 export default function App(){
 
@@ -31,7 +32,7 @@ export default function App(){
                         <Route path = '/select' component={MenuSelect}/>
                         <Route path = '/signUp' component={LocalUserSignUp}/>
                         <Route path = '/myPage' component={MyPageContent}/>
-                        <Route path = '/introduce' component={Introduce}/>
+                        <Route path = '/introduce' component={M_intro}/>
                         <Route path = '/qna' component={QnA}/>
                         <Route path = '/community' component={Community}/>
                         <Route path = '/cdetail/:id' component={CommunitytDetails}/>
