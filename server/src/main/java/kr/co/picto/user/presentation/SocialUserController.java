@@ -30,11 +30,11 @@ public class SocialUserController {
     @PostMapping(value = "/login/{provider}")
     @ApiImplicitParams({
             @ApiImplicitParam(
-                    name = "Authorization",
+                    name = "X-AUTH-TOKEN",
                     value = "AccessToken",
                     required = true, dataTypeClass = String.class, paramType = "header")
     })
-    public ResponseEntity<SingleResult<SocialTokenResponseDto>> generateToken(@RequestHeader(value = "Authorization") String token, @PathVariable String provider) {
+    public ResponseEntity<SingleResult<SocialTokenResponseDto>> generateToken(@RequestHeader(value = "X-AUTH-TOKEN") String token, @PathVariable String provider) {
         return ResponseEntity.ok().body(socialUserService.generateAccessToken(token, provider));
     }
 
@@ -44,11 +44,11 @@ public class SocialUserController {
     @PostMapping(value = "/info/{provider}")
     @ApiImplicitParams({
             @ApiImplicitParam(
-                    name = "Authorization",
+                    name = "X-AUTH-TOKEN",
                     value = "AccessToken",
                     required = true, dataTypeClass = String.class, paramType = "header")
     })
-    public ResponseEntity<SingleResult<SocialUserInfoDto>> getProfile(@RequestHeader(value = "Authorization") String token, @PathVariable String provider) {
+    public ResponseEntity<SingleResult<SocialUserInfoDto>> getProfile(@RequestHeader(value = "X-AUTH-TOKEN") String token, @PathVariable String provider) {
         return ResponseEntity.ok().body(socialUserService.getProfile(token, provider));
     }
 
@@ -63,8 +63,8 @@ public class SocialUserController {
                     required = true, dataTypeClass = String.class, paramType = "header")
     })
     @ApiOperation(value = "User Logout", notes = "User Logout & Delete Token")
-    public ResponseEntity logout(@RequestHeader(value = "Authorization") String access_token) {
-        socialUserService.logoutAndDeleteToken(access_token);
+    public ResponseEntity logout(@RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        socialUserService.logoutAndDeleteToken(token);
         return ResponseEntity.ok().build();
     }
 
@@ -74,13 +74,13 @@ public class SocialUserController {
     @DeleteMapping("/{provider}")
     @ApiImplicitParams({
             @ApiImplicitParam(
-                    name = "Authorization",
+                    name = "X-AUTH-TOKEN",
                     value = "AccessToken",
                     required = true, dataTypeClass = String.class, paramType = "header")
     })
     @ApiOperation(value = "Make Social User InActive", notes = "Social User DeActivate")
-    public ResponseEntity deActivate(@RequestHeader(value = "Authorization") String access_token, @PathVariable String provider) {
-        socialUserService.delete(access_token, provider);
+    public ResponseEntity deActivate(@RequestHeader(value = "X-AUTH-TOKEN") String token, @PathVariable String provider) {
+        socialUserService.delete(token, provider);
         return ResponseEntity.ok().build();
     }
 }
