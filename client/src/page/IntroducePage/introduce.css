@@ -321,7 +321,7 @@
     }
 
     .intro-content2{
-        padding-bottom: 80%;
+        padding-bottom: 10%;
     }
 
 
@@ -404,7 +404,10 @@
         height: inherit;
         display: block;
         width: 100%;
-        height: 12%
+        height: 20%;
+    }
+    .tit-wrap{
+        padding: 7%;
     }
   } 
 
