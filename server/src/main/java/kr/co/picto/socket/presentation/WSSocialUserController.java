@@ -1,4 +1,4 @@
-package kr.co.picto.user.presentation;
+package kr.co.picto.socket.presentation;
 
 import kr.co.picto.common.domain.SingleResult;
 import kr.co.picto.token.dto.SocialTokenResponseDto;
