@@ -20,7 +20,7 @@ import CommunitytDetails from './page/CommunityPage/components/CommunitytDetails
 import CommunityPosting from './page/CommunityPage/components/CommunityPosting';
 import M_main from "./page/MainPage/Mobile_main";
 import M_intro from "./page/IntroducePage/components/Mobile-intro";
-import M_mypage from "./page/UserInfoPage/Mobile-mypage";
+import M_mypage from "./page/UserInfoPage/Mobile-myPage";
 import M_community from "./page/CommunityPage/Mobile-Community";
 
 export default function App(){

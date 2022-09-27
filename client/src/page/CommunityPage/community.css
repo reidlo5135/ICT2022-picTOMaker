@@ -292,3 +292,38 @@ label > img{
     position: absolute;
     top: 150px;
 }
+
+@media (min-width:768px) and (max-width:1023px) {
+    .notice {
+        width: 100vw;
+        margin: 0 auto;
+    }
+    .notice .noticeList {
+        width: 100%;
+    }
+    .noticeList tr {
+        display: block;
+        height: 50px;
+        margin-bottom: 5px;
+        color: white;
+    }
+    .ctitle {
+        width: 30%;
+        background: linear-gradient(to left,#EB5D38, #E72D71);
+        border-radius: 5px;
+    }
+    .cdate {
+        width: 10%;
+        float: none;
+        background: linear-gradient(to left,#EB5D38, #E72D71);
+        border-radius: 5px;
+    }
+}
+
+@media all and (min-width:480px) and (max-width:767px) {
+
+} 
+
+@media all and (max-width:479px) {
+
+}
