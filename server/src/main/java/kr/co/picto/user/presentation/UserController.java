@@ -59,7 +59,7 @@ public class UserController {
     }
 
     /**
-     * frontend - SocialUserCallback.js
+     * frontend - TopProfile.js
      **/
     @PostMapping(value = "/reissue")
     @ApiOperation(value = "Access, Refresh Token Reissue", notes = "Token Reissue")
