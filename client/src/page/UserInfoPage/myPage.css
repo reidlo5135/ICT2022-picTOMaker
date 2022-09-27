@@ -260,3 +260,99 @@ button > p{
 .page-item:hover{
     cursor: pointer;
 }
+
+@media (min-width:768px) and (max-width:1023px){
+    .MyPage-Menu{
+        line-height: 150%;
+        font-weight: bold;
+        display: flex;
+        margin: 0 auto;
+        justify-content: space-around;
+        height: 100%;
+        align-items: center;
+    }
+    .MyPage-Content{
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        display: block;
+    }
+    .MyPage-Left{
+        display: block;
+        width: 100%;
+        height: 10vw;
+    }
+    .MyPage-Right {
+        width: 100%;
+        height: 70vw;
+    }
+    .Right-Contents {
+        margin: 0;
+        padding: 10%;
+    }
+    .MyPage-footer {
+        font-size: 12px;
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        height: 20vw;
+        position : absolute;
+        bottom : 0;
+    }
+    .Copyright {
+        margin-left: -5%;
+        text-align: center;
+        color: #d6d6d6;
+        margin: 0 auto;
+    }
+}
+
+@media all and (min-width:480px) and (max-width:767px) {
+    .MyPage-Menu{
+        line-height: 150%;
+        font-weight: bold;
+        display: flex;
+        margin: 0 auto;
+        justify-content: space-around;
+        height: 100%;
+        align-items: center;
+    }
+    .MyPage-Content{
+        width: 100%; 
+        height: 100%;
+        margin: 0 auto;
+        display: block;
+    }
+    .MyPage-Left{
+        display: block;
+        width: 100%;
+        height: 10vw;
+    }
+    .MyPage-Right {
+        width: 100%;
+        height: 70vw;
+    }
+    .Right-Contents {
+        margin: 0;
+        padding: 10%;
+    }
+    .MyPage-footer {
+        font-size: 12px;
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+        height: 20vw;
+        position : absolute;
+        bottom : 0;
+    }
+    .Copyright {
+        margin-left: -5%;
+        text-align: center;
+        color: #d6d6d6;
+        margin: 0 auto;
+    }
+} 
+
+@media all and (max-width:479px) {
+
+}
