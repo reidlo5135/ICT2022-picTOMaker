@@ -35,8 +35,8 @@ public class FileUploadController {
                     value = "AccessToken",
                     required = true, dataTypeClass = String.class, paramType = "header")
     })
-    public ResponseEntity<ListResult<S3ImageResponseDto>> getPicTo(@RequestHeader(value = "X-AUTH-TOKEN") String access_token, @PathVariable String provider) {
-        return ResponseEntity.ok().body(fileUploadService.getPicToByEmail(access_token, provider));
+    public ResponseEntity<ListResult<S3ImageResponseDto>> getPicTo(@RequestHeader(value = "X-AUTH-TOKEN") String token, @PathVariable String provider) {
+        return ResponseEntity.ok().body(fileUploadService.getPicToByEmail(token, provider));
     }
 
     /**
@@ -49,8 +49,8 @@ public class FileUploadController {
                     value = "AccessToken",
                     required = true, dataTypeClass = String.class, paramType = "header")
     })
-    public ResponseEntity<SingleResult<Long>> getPicToCount(@RequestHeader(value = "X-AUTH-TOKEN") String access_token, @PathVariable String provider) {
-        return ResponseEntity.ok().body(fileUploadService.getPicToCountByEmailAndProvider(access_token, provider));
+    public ResponseEntity<SingleResult<Long>> getPicToCount(@RequestHeader(value = "X-AUTH-TOKEN") String token, @PathVariable String provider) {
+        return ResponseEntity.ok().body(fileUploadService.getPicToCountByEmailAndProvider(token, provider));
     }
 
     /**
@@ -63,8 +63,11 @@ public class FileUploadController {
                     value = "AccessToken",
                     required = true, dataTypeClass = String.class, paramType = "header")
     })
-    public ResponseEntity<SingleResult<Long>> uploadPicTo(@RequestBody Map<String, String> octet, @RequestHeader(value = "X-AUTH-TOKEN") String access_token, @PathVariable String provider) {
-        return ResponseEntity.ok().body(fileUploadService.uploadImage(fileUploadService.decodeAndConvertFile(octet.get("image")), access_token, provider));
+    public ResponseEntity<SingleResult<Long>> uploadPicTo(
+            @RequestBody Map<String, String> octet,
+            @RequestHeader(value = "X-AUTH-TOKEN") String token,
+            @PathVariable String provider) {
+        return ResponseEntity.ok().body(fileUploadService.uploadImage(fileUploadService.decodeAndConvertFile(octet.get("image")), token, provider));
     }
 
     /**
@@ -77,8 +80,11 @@ public class FileUploadController {
                     value = "AccessToken",
                     required = true, dataTypeClass = String.class, paramType = "header")
     })
-    public ResponseEntity<SingleResult<Integer>> updatePicTo(@RequestBody Map<String, String> octet, @RequestHeader(value = "X-AUTH-TOKEN") String access_token, @PathVariable Long id) {
-        return ResponseEntity.ok().body(fileUploadService.updatePicToByEmailAndId(fileUploadService.decodeAndConvertFile(octet.get("octet")), access_token, id));
+    public ResponseEntity<SingleResult<Integer>> updatePicTo(
+            @RequestBody Map<String, String> octet,
+            @RequestHeader(value = "X-AUTH-TOKEN") String token,
+            @PathVariable Long id) {
+        return ResponseEntity.ok().body(fileUploadService.updatePicToByEmailAndId(fileUploadService.decodeAndConvertFile(octet.get("octet")), token, id));
     }
 
     /**

@@ -4,7 +4,7 @@
     text-align: center;
     height: 2532px;
     z-index: 1;
-    
+    padding-top:100px
 }
 /*intro-content1*/
 .intro-content{
@@ -179,11 +179,7 @@
 
 /*intro-content3*/
 .intro-titlediv{
-    width: 500px;
-    height: 400px;
-    background-color: rgba(0, 0, 0, .5);
-    border-radius: 15px;
-    color: #ffffff;
+    
 }
 
 .intro-content3{
@@ -194,6 +190,11 @@
 .intro-title-content{
     position: relative;
     top: 35%;
+    width: 500px;
+    height: 400px;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 15px;
+    color: #ffffff;
 }
 
 .intro-title3{
@@ -201,4 +202,102 @@
     padding-left: 50%;
     font-size: 24px  !important;
 }
+.intro-subtit{
+    padding-top: 28%;
+}
 
+
+@media (max-width:768px) {
+    .Introduce{
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+        height: 2532px;
+        z-index: 1;
+        padding-top: 10%;
+    }
+
+
+.intro-content1{
+    height:30%
+}
+
+.intro-content2{
+    padding-bottom: 80%;
+}
+
+.intro-content3{
+}
+.intro-title3{
+    padding-top: 0;
+    padding-left:0;
+    font-size: 24px  !important;
+    height: 100%;
+}
+
+.intro-answer{
+    z-index: 3;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    padding-top: 3%;
+}
+
+.circle-img > img{
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+    /* object-fit:contain; */
+}
+
+.intro-subtitle{
+    position: absolute;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    padding-top: 3%;
+}
+
+.intro-qeustion{
+    padding-bottom: 3%;
+}
+
+.intro-manual{
+    display: flex;
+}
+
+.intro-imgmanual{
+    width: 100%;
+    display: block;
+}
+
+.step-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 5%;
+}
+
+.intro-title-content{
+    margin: 0 auto;
+    width: 500px;
+    height: 400px;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 15px;
+    color: #ffffff;
+}
+
+
+
+.intro-titlediv{
+    height: 80%;
+}
+
+.intro-subtit{
+    padding-top: 28%;
+}
+
+.intro-title-content .MainButton{
+    padding: 15px 40px
+}
+}

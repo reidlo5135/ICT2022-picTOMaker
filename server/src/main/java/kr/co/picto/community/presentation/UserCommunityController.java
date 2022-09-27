@@ -34,7 +34,7 @@ public class UserCommunityController {
     }
 
     /**
-     * frontend - CommunitytDetails.js
+     * frontend - CommunityDetails.js
      **/
     @GetMapping(value = "/{id}")
     @ApiOperation(value = "특정 게시물 조회", notes = "Select Board By Id")
