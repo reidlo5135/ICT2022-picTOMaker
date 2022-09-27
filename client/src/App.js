@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BrowserView, MobileView} from "react-device-detect";
 import './App.css';
 import {Route, Switch} from 'react-router-dom';
@@ -21,8 +21,13 @@ import CommunityDetails from './page/CommunityPage/components/CommunityDetails';
 import CommunityPosting from './page/CommunityPage/components/CommunityPosting';
 import M_main from "./page/MainPage/Mobile_main";
 import M_intro from "./page/IntroducePage/components/Mobile-intro";
+import {wsConnect} from "./services/StompService";
 
 export default function App(){
+
+    useEffect(() => {
+        wsConnect();
+    }, []);
 
     return (
         <div className='App'>

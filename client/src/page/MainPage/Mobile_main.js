@@ -73,7 +73,7 @@ export default function Main(){
     };
 
     useEffect(() => {
-      wsConnect();
+        wsConnect();
     }, []);
 
     return(
