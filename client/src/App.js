@@ -20,6 +20,8 @@ import CommunitytDetails from './page/CommunityPage/components/CommunitytDetails
 import CommunityPosting from './page/CommunityPage/components/CommunityPosting';
 import M_main from "./page/MainPage/Mobile_main";
 import M_intro from "./page/IntroducePage/components/Mobile-intro";
+import M_mypage from "./page/UserInfoPage/Mobile-mypage";
+import M_community from "./page/CommunityPage/Mobile-Community";
 
 export default function App(){
 
@@ -31,10 +33,10 @@ export default function App(){
                         <Route exact path = '/' component={M_main}/>
                         <Route path = '/select' component={MenuSelect}/>
                         <Route path = '/signUp' component={LocalUserSignUp}/>
-                        <Route path = '/myPage' component={MyPageContent}/>
+                        <Route path = '/myPage' component={M_mypage}/>
                         <Route path = '/introduce' component={M_intro}/>
                         <Route path = '/qna' component={QnA}/>
-                        <Route path = '/community' component={Community}/>
+                        <Route path = '/community' component={M_community}/>
                         <Route path = '/cdetail/:id' component={CommunitytDetails}/>
                         <Route path = '/cposting' component={CommunityPosting}/>
                         <Route path = '/terms' component={UserAgreement}/>
