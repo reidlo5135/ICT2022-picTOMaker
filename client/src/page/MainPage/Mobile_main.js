@@ -13,15 +13,14 @@ import kakaotalk from "../../assets/image/kakaotalk.png";
 import naver from "../../assets/image/naver.png";
 import google from "../../assets/image/google.png";
 import {Link} from "react-router-dom";
-import Top from "../../component/Top";
 
 export default function Main(){
+    const history = useHistory();
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
-    const history = useHistory();
 
     const openModal = () => {
         const token = cookies.accessToken;
@@ -66,7 +65,7 @@ export default function Main(){
                     localStorage.setItem("refresh_token", response.body.data.refreshToken);
                     localStorage.setItem("provider", "LOCAL");
                     closeModal();
-                    history.push("/");
+                    history.push("/user/redirect");
                 }
             }
             wsCommunication('/pub/user/login', {}, data, '/sub/login', action);
@@ -80,7 +79,6 @@ export default function Main(){
     return(
         <React.Fragment>
         <div className='mobile-main'>
-            <Top/>
             <div className='explanation'>
                 <div className='Title'>
                     <div className='tit-desc'>

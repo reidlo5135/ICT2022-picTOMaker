@@ -9,12 +9,14 @@ import kr.co.picto.user.dto.local.UserInfoDto;
 import kr.co.picto.user.dto.local.UserLoginDto;
 import kr.co.picto.user.dto.local.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RestController;
 
+@Log4j2
 @RestController
 @RequiredArgsConstructor
 @MessageMapping(value = "/user/")
@@ -44,12 +46,13 @@ public class WSUserController {
      **/
     @SendTo(value = "/sub/info")
     @MessageMapping(value = "/info")
-    public ResponseEntity<SingleResult<UserInfoDto>> getProfile(@Header(value = "X-AUTH-TOKEN") String access_token) {
-        return ResponseEntity.ok().body(userService.info(access_token));
+    public ResponseEntity<SingleResult<UserInfoDto>> getProfile(@Header(value = "X-AUTH-TOKEN") String token) {
+        log.info("INFO TOKEN : " + token);
+        return ResponseEntity.ok().body(userService.info(token));
     }
 
     /**
-     * frontend - SocialUserCallback.js
+     * frontend - TopProfile.js
      **/
     @SendTo(value = "/sub/reissue")
     @MessageMapping(value = "/reissue")
@@ -71,8 +74,8 @@ public class WSUserController {
      **/
     @SendTo(value = "/sub/user/drop")
     @MessageMapping(value = "/drop")
-    public ResponseEntity deActivate(@Header(value = "X-AUTH-TOKEN") String access_token) {
-        userService.delete(access_token);
+    public ResponseEntity deActivate(@Header(value = "X-AUTH-TOKEN") String token) {
+        userService.delete(token);
         return ResponseEntity.ok().build();
     }
 
@@ -81,8 +84,8 @@ public class WSUserController {
      */
     @SendTo(value = "/sub/user/logout")
     @MessageMapping(value = "/logout")
-    public ResponseEntity logout(@Header(value = "X-AUTH-TOKEN") String access_token) {
-        userService.logoutAndDeleteToken(access_token);
+    public ResponseEntity logout(@Header(value = "X-AUTH-TOKEN") String token) {
+        userService.logoutAndDeleteToken(token);
         return ResponseEntity.ok().build();
     }
 }
