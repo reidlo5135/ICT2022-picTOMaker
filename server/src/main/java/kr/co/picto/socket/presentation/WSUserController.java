@@ -65,8 +65,8 @@ public class WSUserController {
      */
     @SendTo(value = "/sub/user/up")
     @MessageMapping(value = "/up")
-    public ResponseEntity<SingleResult<UserInfoDto>> update(UserUpdateDto userUpdateDto, @Header(value = "X-AUTH-TOKEN") String access_token) {
-        return ResponseEntity.ok().body(userService.update(userUpdateDto, access_token));
+    public ResponseEntity<SingleResult<UserInfoDto>> update(UserUpdateDto userUpdateDto, @Header(value = "X-AUTH-TOKEN") String token) {
+        return ResponseEntity.ok().body(userService.update(userUpdateDto, token));
     }
 
     /**
