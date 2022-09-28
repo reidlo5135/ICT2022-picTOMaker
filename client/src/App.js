@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {BrowserView, MobileView} from "react-device-detect";
 import './App.css';
 import {Route, Switch} from 'react-router-dom';
@@ -9,7 +9,6 @@ import Introduce from "./page/IntroducePage/Introduce";
 import QnA from "./page/QnAPage/QnA";
 import Community from "./page/CommunityPage/Community";
 import UserAgreement from "./page/UserAgreementsPage/UserAgreement";
-import MobileUserCallback from "./component/MobileUserCallback";
 import SocialUserCallback from "./page/SocialLoginPage/SocialUserCallback";
 import MyPageContent from "./page/UserInfoPage/MyPage";
 import PoseWebStudio from "./component/studio/poseweb/PoseWebStudio";
@@ -17,17 +16,14 @@ import EditTool from './component/studio/edittool/EditTool';
 import EditImageTool from "./component/studio/edittool/EditImageTool";
 import {AnimatePresence} from "framer-motion";
 import HandWebStudio from './component/studio/handweb/HandWebStudio';
-import CommunityDetails from './page/CommunityPage/components/CommunityDetails';
+import CommunitytDetails from './page/CommunityPage/components/CommunitytDetails';
 import CommunityPosting from './page/CommunityPage/components/CommunityPosting';
 import M_main from "./page/MainPage/Mobile_main";
 import M_intro from "./page/IntroducePage/components/Mobile-intro";
-import {wsConnect} from "./services/StompService";
+import M_mypage from "./page/UserInfoPage/Mobile-myPage";
+import M_community from "./page/CommunityPage/Mobile-Community";
 
 export default function App(){
-
-    useEffect(() => {
-        wsConnect();
-    }, []);
 
     return (
         <div className='App'>
@@ -37,14 +33,13 @@ export default function App(){
                         <Route exact path = '/' component={M_main}/>
                         <Route path = '/select' component={MenuSelect}/>
                         <Route path = '/signUp' component={LocalUserSignUp}/>
-                        <Route path = '/myPage' component={MyPageContent}/>
+                        <Route path = '/myPage' component={M_mypage}/>
                         <Route path = '/introduce' component={M_intro}/>
                         <Route path = '/qna' component={QnA}/>
-                        <Route path = '/community' component={Community}/>
-                        <Route path = '/cdetail/:id' component={CommunityDetails}/>
+                        <Route path = '/community' component={M_community}/>
+                        <Route path = '/cdetail/:id' component={CommunitytDetails}/>
                         <Route path = '/cposting' component={CommunityPosting}/>
                         <Route path = '/terms' component={UserAgreement}/>
-                        <Route path= '/user/redirect' component={MobileUserCallback} />
                         <Route path = '/oauth2/redirect/kakao' component={SocialUserCallback} />
                         <Route path='/oauth2/redirect/naver' component={SocialUserCallback} />
                         <Route path='/oauth2/redirect/google' component={SocialUserCallback} />
@@ -65,7 +60,7 @@ export default function App(){
                         <Route path = '/introduce' component={Introduce}/>
                         <Route path = '/qna' component={QnA}/>
                         <Route path = '/community' component={Community}/>
-                        <Route path = '/cdetail/:id' component={CommunityDetails}/>
+                        <Route path = '/cdetail/:id' component={CommunitytDetails}/>
                         <Route path = '/cposting' component={CommunityPosting}/>
                         <Route path = '/terms' component={UserAgreement}/>
                         <Route path = '/oauth2/redirect/kakao' component={SocialUserCallback} />
