@@ -5,10 +5,10 @@ import img from "../../../assets/image/naver.png";
 import Ccomment from "./CommunityComment";
 import CommunityCmt from "./CommunityCmt";
 
-const CommunitytDetails = ({ history, diaryList, match}) => {
+const CommunityDetails = ({ history, diaryList, match}) => {
     const [data,setData] = useState([]);
     const dataId = useRef(0);
-    console.log('CommunitytDetails matchParams : ' + match.params.id);
+    console.log('CommunityDetails matchParams : ' + match.params.id);
 
     const getData = async () => {
         await axios.get(`/v1/api/community/${match.params.id}`)
@@ -86,4 +86,4 @@ const CommunitytDetails = ({ history, diaryList, match}) => {
     )
 }
 
-export default CommunitytDetails;
+export default CommunityDetails;

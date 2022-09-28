@@ -1,7 +1,5 @@
-import React, {useState} from 'react';
-import SockJS from "sockjs-client";
-import Stomp from 'stompjs';
-import {post} from "../../services/AxiosService";
+import React, {useState, useEffect} from 'react';
+import {wsConnect, wsCommunication} from "../../services/StompService";
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router";
 import Modal from "../../component/Modal";
@@ -15,23 +13,14 @@ import kakaotalk from "../../assets/image/kakaotalk.png";
 import naver from "../../assets/image/naver.png";
 import google from "../../assets/image/google.png";
 import {Link} from "react-router-dom";
-import Top from "../../component/Top";
-import { motion } from "framer-motion";
-import AOS from "aos";
-import 'swiper/swiper-bundle.min.css'
-import 'swiper/swiper.min.css'
-import 'swiper/components/navigation/navigation.min.css'
-import 'swiper/components/pagination/pagination.min.css'
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 export default function Main(){
+    const history = useHistory();
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
-    const history = useHistory();
 
     const openModal = () => {
         const token = cookies.accessToken;
@@ -65,59 +54,31 @@ export default function Main(){
         }else if(email === "" && password === "") {
             alert('아이디와 비밀번호를 입력해주세요.');
         } else {
-            const sock = new SockJS("http://localhost:8080/ws/");
-            const ws = Stomp.over(sock);
-            let UserLoginDto = {
+            let data = {
                 email,
                 password
             }
-            try {
-                ws.connect({}, () => {
-                    ws.send('/pub/login', {}, JSON.stringify(UserLoginDto));
-                    ws.subscribe(
-                        '/sub/login',
-                        (data) => {
-                            const response = JSON.parse(data.body);
-                            console.log("Stomp ws msg : ", response);
-                            console.log("")
-                            if(response.body.code === 0) {
-                                setIsLogged(true);
-                                setCookie("accessToken", response.body.data.accessToken, {path: "/"});
-                                localStorage.setItem("refresh_token", response.body.data.refreshToken);
-                                localStorage.setItem("provider", "LOCAL");
-                                closeModal();
-                                history.push("/");
-                            }
-                        }
-                    )
-                });
-            } catch (e) {
-                console.error(e);
+            const action = (response) => {
+                if(response.body.code === 0) {
+                    setIsLogged(true);
+                    setCookie("accessToken", response.body.data.accessToken, {path: "/"});
+                    localStorage.setItem("refresh_token", response.body.data.refreshToken);
+                    localStorage.setItem("provider", "LOCAL");
+                    closeModal();
+                    history.push("/user/redirect");
+                }
             }
-            // post('/v1/api/user/login', {
-            //     email,
-            //     password
-            // }).then((response) => {
-            //     console.log('res data ', response.data);
-            //     if(response.data.code === 0){
-            //         setIsLogged(true);
-            //         setCookie("accessToken", response.data.data.accessToken, {path: "/"});
-            //         localStorage.setItem("refresh_token", response.data.data.refreshToken);
-            //         localStorage.setItem("provider", "LOCAL");
-            //         closeModal();
-            //         history.push('/');
-            //     }
-            // }).catch((err) => {
-            //     console.error('err : ', JSON.stringify(err));
-            //     alert(err.response.data.msg);
-            // });
+            wsCommunication('/pub/user/login', {}, data, '/sub/login', action);
         }
-    }
+    };
+
+    useEffect(() => {
+        wsConnect();
+    }, []);
 
     return(
         <React.Fragment>
         <div className='mobile-main'>
-            <Top/>
             <div className='explanation'>
                 <div className='Title'>
                     <div className='tit-desc'>
