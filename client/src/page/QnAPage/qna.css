@@ -1628,7 +1628,19 @@ html, body {
 
 @media all and (min-width:480px) and (max-width:767px) {
   .qnapage{
+    
     height: 930px;
+  }
+  .phone{
+    width: 90vw;
   }
 }
 
+@media all and (max-width:479px) {
+  .qnapage{
+    height: 930px;
+  }
+  .phone{
+    width: 90vw;
+  }
+}
