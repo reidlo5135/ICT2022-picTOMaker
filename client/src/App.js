@@ -16,7 +16,7 @@ import EditTool from './component/studio/edittool/EditTool';
 import EditImageTool from "./component/studio/edittool/EditImageTool";
 import {AnimatePresence} from "framer-motion";
 import HandWebStudio from './component/studio/handweb/HandWebStudio';
-import CommunitytDetails from './page/CommunityPage/components/CommunitytDetails';
+import CommunitytDetails from './page/CommunityPage/components/CommunityDetails';
 import CommunityPosting from './page/CommunityPage/components/CommunityPosting';
 import M_main from "./page/MainPage/Mobile_main";
 import M_intro from "./page/IntroducePage/components/Mobile-intro";

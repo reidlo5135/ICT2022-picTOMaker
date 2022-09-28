@@ -10,6 +10,7 @@ import Step3 from "../../../assets/image/step3.svg"
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import Circle from "../../../assets/image/circle.png"
+import Top from '../../../component/Top';
 
 export default function IntroducePage(){
     useEffect(() => {
@@ -25,6 +26,7 @@ export default function IntroducePage(){
             exit={{ opacity: 0 }}
             transition={{ ease: "easeOut", duration: 1 }}
         >
+        <Top/>
             <div className='Introduce' >
                 <div className="col-md-7 intro-content intro-content1" data-aos="fade-up" data-aos-duration="300">
                     <div className='intro-qeustion' ><img src={Logo} alt={"픽토메이커"} style={{width:"70px",height:"35px"}}/>란?</div>
