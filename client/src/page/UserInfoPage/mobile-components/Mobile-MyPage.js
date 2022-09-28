@@ -1,17 +1,16 @@
 import React,{useState,useEffect} from 'react';
-import {del} from "../../services/AxiosService";
-import Logo from "../../assets/image/Logo.png";
-import "./myPage.css";
-import "../../styles/font.css";
+import {del} from "../../../services/AxiosService";
+import Logo from "../../../assets/image/Logo.png";
+import "../myPage.css";
+import "../../../styles/font.css";
 import {Link} from "react-router-dom";
-import MyPic from './components/MyPagePicToDetails';
-import MyPageProfileDetails from './components/MyPageProfileDetails';
-import MyPageProfile from "./Mobile-components/Mobile-myPageProfile";
+import MyPic from '../components/MyPagePicToDetails';
+import MyPageProfileDetails from '../components/MyPageProfileDetails';
+import M_MyPageProfile from "./Mobile-MyPageProfile";
 import {useHistory} from "react-router";
 import {useCookies} from "react-cookie";
-import axios from "axios";
 import { motion } from "framer-motion";
-import Top from "../../component/Top";
+import Top from "../../../component/Top";
 
 export default function MyPageContent(){
     const [mode, setMode] = useState('profile');

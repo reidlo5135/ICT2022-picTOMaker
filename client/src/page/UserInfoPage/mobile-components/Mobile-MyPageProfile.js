@@ -4,7 +4,7 @@ import Human from '../../../assets/image/Human.png';
 import "../myPage.css";
 import "../../../styles/font.css";
 
-const MyPageProfile = () => {
+const M_MyPageProfile = () => {
     const getProfile = localStorage.getItem('profile');
     const provider = localStorage.getItem('provider');
 
@@ -50,4 +50,4 @@ const MyPageProfile = () => {
     );
 }
 
-export default MyPageProfile;
+export default M_MyPageProfile;
