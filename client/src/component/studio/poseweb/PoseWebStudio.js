@@ -42,7 +42,13 @@ export default function PoseWebStudio() {
 
     function capture() {
         console.log("capture");
-        childRef.current.capture();
+        
+        const delay = parseInt(localStorage.getItem("delay"));
+        console.log(delay)
+        setTimeout(() => {
+            childRef.current.capture()
+        },delay)
+        
     }
 
     function onResults(props) {
@@ -52,8 +58,8 @@ export default function PoseWebStudio() {
     // 초기설정 Hook
     useEffect(()=> {
         console.log("PoseWebStudio Mounting Start")
-
-        window.localStorage.setItem('thick',50);
+        window.localStorage.setItem('delay',0);
+        window.localStorage.setItem('thick',25);
         window.localStorage.setItem('lineColor',"FF03030");
         window.localStorage.setItem('backgroundColor',"FFFFFF");
         /*

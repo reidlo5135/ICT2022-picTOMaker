@@ -41,8 +41,10 @@ export default function HandWebStudio() {
     const canvasRef = useRef(null);
 
     function capture() {
-        console.log("capture");
-        childRef.current.capture();
+        const delay = parseInt(localStorage.getItem("delay"));
+        setTimeout(() => {
+            childRef.current.capture()
+        },delay)
     }
 
     function onResults(props) {
@@ -52,7 +54,7 @@ export default function HandWebStudio() {
     // 초기설정 Hook
     useEffect(()=> {
         console.log("HandWebStudio Mounting Start")
-
+        window.localStorage.setItem('delay',0);
         window.localStorage.setItem('thick',50);
         window.localStorage.setItem('lineColor',"FF03030");
         window.localStorage.setItem('backgroundColor',"FFFFFF");

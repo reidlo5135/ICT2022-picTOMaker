@@ -21,10 +21,10 @@ export default function StudioCaptureDelay (props) {
                 name="row-radio-buttons-group"
                 color = "button"
                 >
-                <FormControlLabel color = "button" value="none" control={<Radio color = "button" />} label="해제" />
-                <FormControlLabel color = "button"value="3" control={<Radio color = "button" />} label="3초" />
-                <FormControlLabel color = "button" value="5" control={<Radio  color = "button"/>} label="5초" />
-                <FormControlLabel color = "button" value="10" control={<Radio color = "button" />} label="10초" />
+                <FormControlLabel onClick = {()=>{localStorage.setItem("delay",0)}} color = "button" value="none" control={<Radio color = "button" />} label="해제" />
+                <FormControlLabel onClick = {()=>{localStorage.setItem("delay",3000)}} color = "button"value="3" control={<Radio color = "button" />} label="3초" />
+                <FormControlLabel onClick = {()=>{localStorage.setItem("delay",5000)}} color = "button" value="5" control={<Radio  color = "button"/>} label="5초" />
+                <FormControlLabel onClick = {()=>{localStorage.setItem("delay",10000)}} color = "button" value="10" control={<Radio color = "button" />} label="10초" />
 
                 </RadioGroup>
             </FormControl>

@@ -5,7 +5,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Button from '@mui/material/Button'
 import {colorInfo} from './colorData'
 import { ThemeProvider } from '@mui/material';
 import {theme} from './edittool/theme/MainTheme'
@@ -27,15 +26,6 @@ export default function StudioSettingComponent() {
         
         localStorage.setItem("lineThick",event.target.value);
     };
-    
-
-    // const settingConfirm = () => {
-    //     const convertLineColor = colorInfo.find((value)=> value.name === lineColor);
-    //     console.log(convertLineColor.hex);
-    //     window.localStorage.setItem("lineThick",lineThick);
-    //     window.localStorage.setItem("lineColor",convertLineColor.hex);
-    //     window.localStorage.setItem("backgroundColor",bgColor)
-    // }
 
 
     return (
@@ -73,8 +63,6 @@ export default function StudioSettingComponent() {
                         </Select>
                     </FormControl>
                 </Box>
-
-                <Button sx={{marginTop: "20px"}} color="button" variant="contained">확인</Button>
             </div>
             </ThemeProvider>
         </>
