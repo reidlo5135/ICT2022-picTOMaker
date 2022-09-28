@@ -9,7 +9,6 @@ import Introduce from "./page/IntroducePage/Introduce";
 import QnA from "./page/QnAPage/QnA";
 import Community from "./page/CommunityPage/Community";
 import UserAgreement from "./page/UserAgreementsPage/UserAgreement";
-import MobileUserCallback from "./component/MobileUserCallback";
 import SocialUserCallback from "./page/SocialLoginPage/SocialUserCallback";
 import MyPageContent from "./page/UserInfoPage/MyPage";
 import PoseWebStudio from "./component/studio/poseweb/PoseWebStudio";
@@ -17,41 +16,40 @@ import EditTool from './component/studio/edittool/EditTool';
 import EditImageTool from "./component/studio/edittool/EditImageTool";
 import {AnimatePresence} from "framer-motion";
 import HandWebStudio from './component/studio/handweb/HandWebStudio';
-import CommunityDetails from './page/CommunityPage/components/CommunityDetails';
+import CommunityDetails from "./page/CommunityPage/components/CommunityDetails";
 import CommunityPosting from './page/CommunityPage/components/CommunityPosting';
-import M_main from "./page/MainPage/Mobile_main";
-import M_intro from "./page/IntroducePage/components/Mobile-intro";
-import {wsConnect} from "./services/StompService";
+import M_Main from "./page/MainPage/mobile-components/Mobile-Main";
+import M_UserCallback from "./page/MainPage/mobile-components/Mobile-UserCallback";
+import M_SocialUserCallback from "./page/SocialLoginPage/mobile-components/Mobile-SocialUserCallback";
+import M_Intro from "./page/IntroducePage/components/Mobile-intro";
+import M_MyPage from "./page/UserInfoPage/mobile-components/Mobile-MyPage";
+import M_Community from "./page/CommunityPage/mobile-components/Mobile-Community";
 
 export default function App(){
-
-    useEffect(() => {
-        wsConnect();
-    }, []);
 
     return (
         <div className='App'>
             <MobileView>
                 <AnimatePresence>
                     <Switch>
-                        <Route exact path = '/' component={M_main}/>
+                        <Route exact path = '/' component={M_Main}/>
                         <Route path = '/select' component={MenuSelect}/>
                         <Route path = '/signUp' component={LocalUserSignUp}/>
-                        <Route path = '/myPage' component={MyPageContent}/>
-                        <Route path = '/introduce' component={M_intro}/>
+                        <Route path = '/myPage' component={M_MyPage}/>
+                        <Route path = '/introduce' component={M_Intro}/>
                         <Route path = '/qna' component={QnA}/>
-                        <Route path = '/community' component={Community}/>
+                        <Route path = '/community' component={M_Community}/>
                         <Route path = '/cdetail/:id' component={CommunityDetails}/>
                         <Route path = '/cposting' component={CommunityPosting}/>
                         <Route path = '/terms' component={UserAgreement}/>
-                        <Route path= '/user/redirect' component={MobileUserCallback} />
-                        <Route path = '/oauth2/redirect/kakao' component={SocialUserCallback} />
-                        <Route path='/oauth2/redirect/naver' component={SocialUserCallback} />
-                        <Route path='/oauth2/redirect/google' component={SocialUserCallback} />
-                        <Route path='/studio/pose/web' component={PoseWebStudio}/>
-                        <Route path='/studio/hand/web' component={HandWebStudio}/>
-                        <Route path='/edit' component={EditTool} />
-                        <Route path='/tool/image' component={EditImageTool} />
+                        <Route path= '/user/redirect' component={M_UserCallback} />'
+                        <Route path = '/oauth2/redirect/kakao' component={M_SocialUserCallback} />
+                        <Route path= '/oauth2/redirect/naver' component={M_SocialUserCallback} />
+                        <Route path= '/oauth2/redirect/google' component={M_SocialUserCallback} />
+                        <Route path= '/studio/pose/web' component={PoseWebStudio}/>
+                        <Route path= '/studio/hand/web' component={HandWebStudio}/>
+                        <Route path= '/edit' component={EditTool} />
+                        <Route path= '/tool/image' component={EditImageTool} />
                     </Switch>
                 </AnimatePresence>
             </MobileView>
