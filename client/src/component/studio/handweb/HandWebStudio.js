@@ -70,7 +70,7 @@ export default function HandWebStudio() {
             <div className ="studio_container">
                 {/*<CamPose ref={childRef}/>*/}
                 <TestHand ref={childRef} />
-                {/* <div className = 'button-group'>
+                <div className = 'button-group'>
                     <div className='camera-btn'>
                         <div>
                             <img className="setting" src={Time} alt="asdf" onClick={timeOpenModal}/>
@@ -92,7 +92,7 @@ export default function HandWebStudio() {
                             </div>
                         </div>
                     </div>
-                </div> */}
+                </div>
             </div>
         </>
     );
