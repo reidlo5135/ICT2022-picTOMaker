@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import Circle from "../../../assets/image/circle.png"
 import Top from '../../../component/Top';
 
-export default function IntroducePage(){
+export default function M_Intro(){
     useEffect(() => {
         AOS.init({
             duration : 1000

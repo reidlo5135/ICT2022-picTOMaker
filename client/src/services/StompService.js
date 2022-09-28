@@ -5,16 +5,11 @@ const sock = new SockJS("http://localhost:8080/ws/");
 const ws = Stomp.over(sock);
 
 export const wsConnect = () => {
-    try {
-        ws.connect({});
-    } catch (e) {
-        console.error(e);
-        return e;
-    }
+    ws.connect({});
 };
 
-export const wsCommunication = (requestUrl, requestHeaders, requestData, responseUrl, action) => {
-    try {
+export const wsCommunicationWithConnection = (requestUrl, requestHeaders, requestData, responseUrl, action) => {
+    ws.connect({}, () => {
         ws.send(requestUrl, requestHeaders, JSON.stringify(requestData));
         ws.subscribe(responseUrl,
             (data) => {
@@ -23,8 +18,16 @@ export const wsCommunication = (requestUrl, requestHeaders, requestData, respons
                 action(res);
             }
         );
-    } catch (e) {
-        console.error(e);
-        return e;
-    }
+    })
+};
+
+export const wsCommunication = (requestUrl, requestHeaders, requestData, responseUrl, action) => {
+    ws.send(requestUrl, requestHeaders, JSON.stringify(requestData));
+    ws.subscribe(responseUrl,
+        (data) => {
+            const res = JSON.parse(data.body);
+            console.log("Stomp ws msg : ", res);
+            action(res);
+        }
+    );
 }
