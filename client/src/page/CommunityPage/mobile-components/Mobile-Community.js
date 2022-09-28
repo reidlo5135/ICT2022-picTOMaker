@@ -1,10 +1,10 @@
 import React,{useRef, useState,useEffect} from "react";
-import {get} from "../../services/AxiosService";
-import Top from "../../component/Top";
-import CommunityList from "./Mobile-Community/Mobile-CommunityList";
-import CommunityPagination from "./components/CommunityPagination";
+import {get} from "../../../services/AxiosService";
+import Top from "../../../component/Top";
+import CommunityList from "./Mobile-CommunityList";
+import CommunityPagination from "../components/CommunityPagination";
 
-function Community() {
+function M_Community() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(4);
@@ -97,4 +97,4 @@ function Community() {
   );
 }
 
-export default Community;
+export default M_Community;

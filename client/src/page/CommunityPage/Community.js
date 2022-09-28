@@ -1,7 +1,7 @@
-import React,{useRef, useState,useEffect} from "react";
+import React, {useRef, useState,useEffect} from "react";
 import {get} from "../../services/AxiosService";
 import Top from "../../component/Top";
-import CommunityList from "./Mobile-Community/Mobile-CommunityList";
+import CommunityList from "./mobile-components/Mobile-CommunityList";
 import CommunityPagination from "./components/CommunityPagination";
 
 function Community() {
