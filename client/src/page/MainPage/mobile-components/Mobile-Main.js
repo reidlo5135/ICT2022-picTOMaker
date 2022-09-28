@@ -1,20 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import {wsConnect, wsCommunication} from "../../services/StompService";
+import {wsConnect, wsCommunication} from "../../../services/StompService";
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router";
-import Modal from "../../component/Modal";
-import "./main.css";
-import "../../styles/font.css";
-import "../../styles/modal.css";
-import "../../styles/login.css";
-import Logo from "../../assets/image/Logo.png";
-import {GOOGLE_AUTH_URL, KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../../component/SocialUserConfig";
-import kakaotalk from "../../assets/image/kakaotalk.png";
-import naver from "../../assets/image/naver.png";
-import google from "../../assets/image/google.png";
+import Modal from "../../../component/Modal";
+import "../main.css";
+import "../../../styles/font.css";
+import "../../../styles/modal.css";
+import "../../../styles/login.css";
+import Logo from "../../../assets/image/Logo.png";
+import {GOOGLE_AUTH_URL, KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../../../component/SocialUserConfig";
+import kakaotalk from "../../../assets/image/kakaotalk.png";
+import naver from "../../../assets/image/naver.png";
+import google from "../../../assets/image/google.png";
 import {Link} from "react-router-dom";
 
-export default function Main(){
+export default function M_Main(){
     const history = useHistory();
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const [email, setEmail] = useState("");
@@ -43,6 +43,10 @@ export default function Main(){
 
     const pwInputCheck = (event) => {
         setPassword(event.target.value);
+    }
+
+    const login = () => {
+
     }
 
     const localLogin = (e) => {
@@ -106,27 +110,22 @@ export default function Main(){
                                 문의하기
                             </button>
                         </Link>
-                        <Link to='community'>
+                        <Link to='/community'>
                             <button className='MainButton'>
                                 커뮤니티
                             </button>
                         </Link>
+                        {
+                            cookies.accessToken === null || cookies.accessToken === undefined ?
+                                <div></div> :
+                                <Link to='/myPage'>
+                                    <button className='MainButton'>
+                                        마이페이지
+                                    </button>
+                                </Link>
+                        }
                     </div>
                 </div>
-                {/* <div className='btn-wrap'>
-                    <button className='MainButton' onClick={openModal}>
-                        <div className='btn-start'>시작하기</div>
-                    </button>
-                    <button className='MainButton' >
-                        이용방법
-                    </button>
-                    <button className='MainButton' >
-                        문의하기
-                    </button>
-                    <button className='MainButton'>
-                        커뮤니티
-                    </button>
-                </div> */}
                     <div className={'loginModal'}>
                             <Modal open={modalOpen} close={closeModal}>
                                 <div className='SignIn'>

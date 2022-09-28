@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import Circle from "../../../assets/image/circle.png"
 
-export default function IntroducePage(){
+export default function M_Intro(){
     useEffect(() => {
         AOS.init({
             duration : 1000
@@ -91,8 +91,10 @@ export default function IntroducePage(){
                     <div className='col-md-7 intro-title3'>
                         <div className='intro-titlediv'>
                             <div className='intro-title-content'>
-                                <div className="intro-subtit" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="300">나만의 픽토그램이 필요하신가요?</div>
-                                <div  data-aos="fade-right" data-aos-duration="1000" data-aos-delay="700">지금 바로 시작해 보세요!</div>
+                                <div className='tit-wrap'>
+                                    <div className="intro-subtit" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="300">나만의 픽토그램이 필요하신가요?</div>
+                                    <div  data-aos="fade-right" data-aos-duration="1000" data-aos-delay="700">지금 바로 시작해 보세요!</div>
+                                </div>
                                 <Link to="/">
                                     <button className='MainButton'  data-aos="fade-right" data-aos-duration="1000" data-aos-delay="1000">
                                         처음으로
