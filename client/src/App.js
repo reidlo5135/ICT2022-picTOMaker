@@ -24,6 +24,7 @@ import M_SocialUserCallback from "./page/SocialLoginPage/mobile-components/Mobil
 import M_Intro from "./page/IntroducePage/components/Mobile-intro";
 import M_MyPage from "./page/UserInfoPage/mobile-components/Mobile-MyPage";
 import M_Community from "./page/CommunityPage/mobile-components/Mobile-Community";
+import MobileWebStudio from "./component/studio/poseweb/Mobile-WebStudio";
 
 export default function App(){
 
@@ -46,8 +47,7 @@ export default function App(){
                         <Route path = '/oauth2/redirect/kakao' component={M_SocialUserCallback} />
                         <Route path= '/oauth2/redirect/naver' component={M_SocialUserCallback} />
                         <Route path= '/oauth2/redirect/google' component={M_SocialUserCallback} />
-                        <Route path= '/studio/pose/web' component={PoseWebStudio}/>
-                        <Route path= '/studio/hand/web' component={HandWebStudio}/>
+                        <Route path= '/studio/pose/mobile' component={MobileWebStudio} />
                         <Route path= '/edit' component={EditTool} />
                         <Route path= '/tool/image' component={EditImageTool} />
                     </Switch>
