@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/v1/api/user/login", "/v1/api/user/signup", "/v1/api/user/reissue", "/v1/api/oauth2/**").permitAll()
                 .antMatchers("/v1/api/picto/**", "/v1/api/community/**", "/v1/api/qna/**").permitAll()
-                .antMatchers("/exception", "/ws/**").permitAll()
+                .antMatchers("/exception", "/ws/**", "/socket/picto").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/v1/api/oauth2/**").permitAll()
                 .mvcMatchers("/v3/api-docs/**",
                         "/configuration/**",
