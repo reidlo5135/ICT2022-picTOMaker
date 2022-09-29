@@ -50,16 +50,6 @@ export default function MobileWebStudio() {
     // 초기설정 Hook
     useEffect(()=> {
         console.log("PoseWebStudio Mounting Start")
-
-        window.localStorage.setItem('thick',50);
-        window.localStorage.setItem('lineColor',"FF03030");
-        window.localStorage.setItem('backgroundColor',"FFFFFF");
-
-        if(isMobile) {
-            localStorage.setItem("isFromMobile", "true");
-        } else {
-            localStorage.setItem("isFromMobile", "false");
-        }
     },[]);
 
     return (

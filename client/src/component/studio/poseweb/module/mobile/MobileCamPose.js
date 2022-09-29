@@ -10,10 +10,16 @@ export const MobileCamPose = forwardRef((props,ref) => {
         capture() {
             console.log("MobileCamPose result : ", result);
             const skeleton = JSON.stringify(result);
-            localStorage.setItem("pictogram_result", skeleton);
-            const ws = new WebSocket("ws://localhost:8080/socket/picto");
+            const ws = new WebSocket("ws://localhost:8080/picto");
+            const json = {
+                "skeleton": skeleton,
+                "thick": 50,
+                "lineColor": "FF03030",
+                "backgroundColor": "FFFFFF",
+                "isFromMobile": "true"
+            }
             ws.onopen = () => {
-                ws.send(skeleton);
+                ws.send(JSON.stringify(json));
             }
             ws.onmessage = (e) => {
                 const data = JSON.parse(e.data);

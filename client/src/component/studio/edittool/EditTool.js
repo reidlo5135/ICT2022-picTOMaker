@@ -15,21 +15,23 @@ export default function EditTool(props) {
     const history = useHistory();
 
     const [selectMode, setSelectMode] = useState("none");
+    const [isFromMobile, setIsFromMobile] = useState("false");
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
-    const isFromMobile = localStorage.getItem("isFromMobile");
 
     const pictogramImage = props.pictogramImage;
 
+
     function drawingPictogramMobile() {
-        const ws = new WebSocket("ws://localhost:8080/socket/picto");
+        const ws = new WebSocket("ws://localhost:8080/picto");
         ws.onopen = () => {
             ws.send("editTool");
         }
         ws.onmessage = (e) => {
             const data = JSON.parse(e.data);
             console.log("EditTool.js nonResult : ", data);
-            drawCanvas(data);
+            drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor);
+            console.log("isFM : ", isFromMobile);
         }
     }
 
@@ -43,9 +45,8 @@ export default function EditTool(props) {
         }
     }
 
-    function drawCanvas(result) {
-        const thick = window.localStorage.getItem("lineThick");
-        const color = '#' + window.localStorage.getItem("lineColor");
+    function drawCanvas(result, thick, color) {
+        console.log("drawCanvas result, thick, color : ", result + ", " + thick + ", " + color);
 
         for (let i = 0; i < 33; i++) {
             result[i].x = result[i].x * 640;
@@ -216,10 +217,12 @@ export default function EditTool(props) {
 
     useEffect(()=> {
         canvas = new fabric.Canvas('edit-canvas');
+        console.log("isFromMobile : ", isFromMobile);
         if(isFromMobile === "true") {
             console.log("EditTool.js is on Mobile");
             drawingPictogramMobile();
         } else {
+            console.log("EditTool.js is on Browser");
             drawingPictogram();
         }
     },[]);
