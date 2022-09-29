@@ -238,3 +238,70 @@
   animation-delay:2.75s ;
   animation-duration: 2.25s;
 }
+
+@media (min-width:768px) and (max-width:1023px){
+  .HT-Content > a {
+    width: 100vw;
+    text-decoration-line: none;
+  }
+  .HT-Content{
+    margin: 5% auto;
+    display: grid;
+    justify-content: center;
+    width: 100%;
+    height: 700px;
+    border-radius: 3%;
+  }
+  .Select-Content {
+    width: 100%;
+    margin: 0 auto;
+    height: 860px;
+  }
+  .cont {
+    width: 80%;
+    height: 80%;
+  }
+  .Human-Image > img, .Things-Image > img, .Edit-Image > img {
+    margin:0;
+    padding:5%;
+    text-align: inherit;
+    width: 15% !important;
+    height: 15% !important;
+    display: block;
+  }
+  .Human-Image{
+    padding: 10%;
+    width: 20vw;
+  }
+  .desc-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .Human-des, .Things-des, .Edit-des {
+    text-align: center;
+    margin: 10% auto;
+  }
+  .Human-mdes, .Things-mdes, .Edit-mdes {
+    height: 10px;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto;
+  }
+}
+
+@media all and (min-width:480px) and (max-width:767px) {
+  .HT-Content > a {
+    width: 100vw;
+    text-decoration-line: none;
+}
+} 
+
+@media all and (max-width:479px) {
+  .HT-Content > a {
+    width: 100vw;
+    text-decoration-line: none;
+}
+}

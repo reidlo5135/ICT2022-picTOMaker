@@ -24,6 +24,7 @@ import M_SocialUserCallback from "./page/SocialLoginPage/mobile-components/Mobil
 import M_Intro from "./page/IntroducePage/components/Mobile-intro";
 import M_MyPage from "./page/UserInfoPage/mobile-components/Mobile-MyPage";
 import M_Community from "./page/CommunityPage/mobile-components/Mobile-Community";
+import M_Select from "./page/MenuSelectPage/mobile-select/Mobile-MenuSelect";
 import MobileWebStudio from "./component/studio/poseweb/Mobile-WebStudio";
 
 export default function App(){
@@ -34,7 +35,7 @@ export default function App(){
                 <AnimatePresence>
                     <Switch>
                         <Route exact path = '/' component={M_Main}/>
-                        <Route path = '/select' component={MenuSelect}/>
+                        <Route path = '/select' component={M_Select}/>
                         <Route path = '/signUp' component={LocalUserSignUp}/>
                         <Route path = '/myPage' component={M_MyPage}/>
                         <Route path = '/introduce' component={M_Intro}/>
