@@ -18,13 +18,15 @@ export default function SelectMobileOrBrowser() {
     }
     return (
         <div className="selectpage">
-            <div className="star"></div>
-            <div className="star"></div>
-            <div className="star"></div>
-            <div className="star"></div>
-            <div className="star"></div>
-            <div className="star"></div>
-            <div className="star"></div>
+            <div className="star-ani">
+                <div className="star"></div>
+                <div className="star"></div>
+                <div className="star"></div>
+                <div className="star"></div>
+                <div className="star"></div>
+                <div className="star"></div>
+                <div className="star"></div>
+            </div>
             <Link to='/'>
                 <div className='qna-logo'>
                     <img src={Logo} alt="PictoMaker-Logo" style={{width:"150px",height:"70px"}}/>
