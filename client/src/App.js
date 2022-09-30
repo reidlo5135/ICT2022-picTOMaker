@@ -27,6 +27,7 @@ import M_Community from "./page/CommunityPage/mobile-components/Mobile-Community
 import M_Select from "./page/MenuSelectPage/mobile-select/Mobile-MenuSelect";
 import MobileWebStudio from "./component/studio/poseweb/Mobile-WebStudio";
 import SelectMobileOrBrowser from "./page/MenuSelectPage/components/SelectMobileOrBrowser";
+import M_EditTool from "./component/studio/edittool/mobile-edittool/Mobile-EditTool";
 
 export default function App(){
 
@@ -50,7 +51,7 @@ export default function App(){
                         <Route path= '/oauth2/redirect/naver' component={M_SocialUserCallback} />
                         <Route path= '/oauth2/redirect/google' component={M_SocialUserCallback} />
                         <Route path= '/studio/pose/mobile' component={MobileWebStudio} />
-                        <Route path= '/edit' component={EditTool} />
+                        <Route path= '/edit' component={M_EditTool} />
                         <Route path= '/tool/image' component={EditImageTool} />
                     </Switch>
                 </AnimatePresence>
