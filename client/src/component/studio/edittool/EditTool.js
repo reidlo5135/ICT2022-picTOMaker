@@ -40,7 +40,9 @@ export default function EditTool(props) {
         if (nonResult !== "null") {
             const result = JSON.parse(nonResult);
             console.log("DrawPicTOBrowser result : ", result);
-            drawCanvas(result);
+            const thick = localStorage.getItem("thick");
+            const color = localStorage.getItem("lineColor");
+            drawCanvas(result, thick, color);
             window.localStorage.setItem('pictogram_result', null);
         }
     }
