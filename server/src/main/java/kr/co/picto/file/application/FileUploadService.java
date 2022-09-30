@@ -10,6 +10,7 @@ import kr.co.picto.file.dto.S3ImageRequestDto;
 import kr.co.picto.file.dto.S3ImageResponseDto;
 import kr.co.picto.file.exception.CustomFileNotFoundException;
 import kr.co.picto.token.application.JwtProvider;
+import kr.co.picto.user.application.social.SocialUserService;
 import kr.co.picto.user.domain.local.User;
 import kr.co.picto.user.domain.local.UserRepository;
 import kr.co.picto.user.domain.social.SocialUser;
@@ -49,6 +50,7 @@ public class FileUploadService {
     private final UserRepository userRepository;
     private final UploadService uploadService;
     private final ResponseService responseService;
+    private final SocialUserService socialUserService;
 
     @Transactional
     public MultipartFile decodeAndConvertFile(String octet) {
@@ -127,15 +129,15 @@ public class FileUploadService {
             S3Image image = null;
             S3ImageRequestDto imageRequestDto = null;
             if(provider.equals("LOCAL")) {
-                User blu = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new);
-                imageRequestDto = new S3ImageRequestDto(blu.getEmail(), fileName, fileUrl, getFileExtension(fileName), provider);
-                image = imageRequestDto.toBluEntity(blu);
-                log.info("File SVC uploadImage blu : " + blu);
+                User user = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new);
+                imageRequestDto = new S3ImageRequestDto(user.getEmail(), fileName, fileUrl, getFileExtension(fileName), provider);
+                image = imageRequestDto.toBluEntity(user);
+                log.info("File SVC uploadImage blu : " + user);
             } else {
-                SocialUser bau = socialUserRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new);
-                imageRequestDto = new S3ImageRequestDto(bau.getEmail(), fileName, fileUrl, getFileExtension(fileName), provider);
-                image = imageRequestDto.toBauEntity(bau);
-                log.info("File SVC uploadImage bau : " + bau);
+                SocialUser socialUser = socialUserRepository.findById(socialUserService.findIdByToken(access_token)).orElseThrow(CustomUserNotFoundException::new);
+                imageRequestDto = new S3ImageRequestDto(socialUser.getEmail(), fileName, fileUrl, getFileExtension(fileName), provider);
+                image = imageRequestDto.toBauEntity(socialUser);
+                log.info("File SVC uploadImage bau : " + socialUser);
             }
 
             return responseService.getSingleResult(s3ImageRepository.save(image).getId());
@@ -146,13 +148,11 @@ public class FileUploadService {
 
     @Transactional(readOnly = true)
     public ListResult<S3ImageResponseDto> getPicToByEmail(String access_token, String provider) {
-        long userPk = Long.parseLong(jwtProvider.getUserPk(access_token));
-        log.info("userPK : " + userPk);
         String email = null;
         if(provider.equals("LOCAL")) {
-            email = userRepository.findById(userPk).orElseThrow(CustomUserNotFoundException::new).getEmail();
+            email = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new).getEmail();
         } else {
-            email = socialUserRepository.findById(userPk).orElseThrow(CustomUserNotFoundException::new).getEmail();
+            email = socialUserRepository.findById(socialUserService.findIdByToken(access_token)).orElseThrow(CustomUserNotFoundException::new).getEmail();
         }
         List<S3Image> imageList = s3ImageRepository.findByEmailAndProvider(email, provider);
         if(imageList.isEmpty()) throw new CustomFileNotFoundException();
@@ -162,7 +162,12 @@ public class FileUploadService {
 
     @Transactional(readOnly = true)
     public SingleResult<Long> getPicToCountByEmailAndProvider(String access_token, String provider) {
-        String email = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new).getEmail();
+        String email = null;
+        if(provider.equals("LOCAL")) {
+            email = userRepository.findById(Long.parseLong(jwtProvider.getUserPk(access_token))).orElseThrow(CustomUserNotFoundException::new).getEmail();
+        } else {
+            email = socialUserRepository.findById(socialUserService.findIdByToken(access_token)).orElseThrow(CustomUserNotFoundException::new).getEmail();
+        }
         if(s3ImageRepository.findByEmailAndProvider(email, provider).isEmpty()) throw new CustomFileNotFoundException();
 
         return responseService.getSingleResult(s3ImageRepository.countByEmailAndProvider(email, provider));

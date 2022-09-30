@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {fabric} from 'fabric';
 import DetailComponent from './detail/DetailComponent';
-import { color } from '@mui/system';
 import Top from "../../Top";
 import '../../../styles/stuido/topbar.css';
 import '../../../styles/stuido/edittool.css';
@@ -16,194 +15,203 @@ export default function EditTool(props) {
     const history = useHistory();
 
     const [selectMode, setSelectMode] = useState("none");
+    const isFromMobile = localStorage.getItem("isFromMobile");
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
+    const type = window.localStorage.getItem("picto_type");
 
     const pictogramImage = props.pictogramImage;
 
+    function drawingPictogramMobile() {
+        const ws = new WebSocket("ws://localhost:8080/picto");
+        ws.onopen = () => {
+            ws.send("editTool");
+        }
+        ws.onmessage = (e) => {
+            const data = JSON.parse(e.data);
+            console.log("EditTool.js nonResult : ", data);
+            drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor);
+            console.log("isFM : ", isFromMobile);
+        }
+    }
+
     function drawingPictogram() {
         const nonResult = window.localStorage.getItem('pictogram_result');
-        const type = window.localStorage.getItem("picto_type");
         if (nonResult !== "null") {
-            console.log("뿌잉")
             const result = JSON.parse(nonResult);
-            const thick = window.localStorage.getItem("lineThick");
-            const color = '#' + window.localStorage.getItem("lineColor");
+            console.log("DrawPicTOBrowser result : ", result);
+            const thick = localStorage.getItem("thick");
+            const color = localStorage.getItem("lineColor");
+            drawCanvas(result, thick, color);
+            window.localStorage.setItem('pictogram_result', null);
+        }
+    }
 
-            if (type === "hand") {
-                for (let i = 0; i < 21; i++) {
-                    result[i].x = result[i].x * 640;
-                    result[i].y = result[i].y * 480;
-                }
+    function drawCanvas(result, thick, color) {
+        console.log("drawCanvas result, thick, color : ", result + ", " + thick + ", " + color);
+        console.log(result);
 
-                console.log(result);
-
-                
-
-                const zeroToOne = new fabric.Line([result[0].x, result[0].y, result[1].x, result[1].y], {
-                    strokeLineCap: 'round', 
-                    strokeWidth: thick,
-                    stroke: color
-                });
-                
-                const oneToTwo = new fabric.Line([result[1].x, result[1].y, result[2].x, result[2].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const twoToThree = new fabric.Line([result[2].x, result[2].y, result[3].x, result[3].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const threeToFour = new fabric.Line([result[3].x, result[3].y, result[4].x, result[4].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const fiveToSix = new fabric.Line([result[5].x, result[5].y, result[6].x, result[6].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const sixToSeven = new fabric.Line([result[6].x, result[6].y, result[7].x, result[7].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const sevenToEight = new fabric.Line([result[7].x, result[7].y, result[8].x, result[8].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const nineToTen = new fabric.Line([result[9].x, result[9].y, result[10].x, result[10].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const tenToEleven = new fabric.Line([result[10].x, result[10].y, result[11].x, result[11].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const elevenToTwelve = new fabric.Line([result[11].x, result[11].y, result[12].x, result[12].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const thirdteenToFourteen = new fabric.Line([result[13].x, result[13].y, result[14].x, result[14].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const fourteenTofifteen = new fabric.Line([result[14].x, result[14].y, result[15].x, result[15].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const fifteenToSixteen = new fabric.Line([result[15].x, result[15].y, result[16].x, result[16].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const sevenTeenToEightTeen = new fabric.Line([result[17].x, result[17].y, result[18].x, result[18].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const eightTeenToNineteen = new fabric.Line([result[18].x, result[18].y, result[19].x, result[19].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const nineTeenToTwenty = new fabric.Line([result[19].x, result[19].y, result[20].x, result[20].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                //
-
-                const twoToFive = new fabric.Line([result[2].x, result[2].y, result[5].x, result[5].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const fiveToNine = new fabric.Line([result[5].x, result[5].y, result[9].x, result[9].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const nineToThirdteen = new fabric.Line([result[9].x, result[9].y, result[13].x, result[13].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const thirdTeenToSeventeen = new fabric.Line([result[13].x, result[13].y, result[17].x, result[17].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-                const sevenTeenToZero = new fabric.Line([result[17].x, result[17].y, result[0].x, result[0].y], {
-                    strokeLineCap: 'round',
-                    strokeWidth: thick,
-                    stroke: color
-                });
-
-
-                var palm = new fabric.Polygon([
-                    {x:result[1].x , y:result[1].y},
-                    {x:result[2].x , y:result[2].y},
-                    {x:result[5].x , y:result[5].y},
-                    {x:result[9].x , y:result[9].y},
-                    {x:result[13].x , y:result[13].y},
-                    {x:result[17].x , y:result[17].y},
-                    {x:result[0].x , y:result[0].y}
-                ], {
-                    fill : color
-                });
-                
-                var group = new fabric.Group([zeroToOne,oneToTwo,twoToThree,threeToFour,fiveToSix,sixToSeven,sevenToEight,nineToTen,tenToEleven,elevenToTwelve,thirdteenToFourteen,fourteenTofifteen,fifteenToSixteen,sevenTeenToEightTeen,eightTeenToNineteen,nineTeenToTwenty
-                    ,twoToFive,fiveToNine,nineToThirdteen, thirdTeenToSeventeen, sevenTeenToZero,palm ], {
-                    originX : 'cetner',
-                    originY : 'cetner',
-                    angle: -10
-                  });
-
-
-            
-
-                canvas.add(group);
-
-               
-            }
-
-            if (type === "pose") { 
-                
-
-            for (let i = 0; i < 33; i++) {
+        if (type === "hand") {
+            for (let i = 0; i < 21; i++) {
                 result[i].x = result[i].x * 640;
                 result[i].y = result[i].y * 480;
             }
 
+            const zeroToOne = new fabric.Line([result[0].x, result[0].y, result[1].x, result[1].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const oneToTwo = new fabric.Line([result[1].x, result[1].y, result[2].x, result[2].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const twoToThree = new fabric.Line([result[2].x, result[2].y, result[3].x, result[3].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const threeToFour = new fabric.Line([result[3].x, result[3].y, result[4].x, result[4].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const fiveToSix = new fabric.Line([result[5].x, result[5].y, result[6].x, result[6].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const sixToSeven = new fabric.Line([result[6].x, result[6].y, result[7].x, result[7].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const sevenToEight = new fabric.Line([result[7].x, result[7].y, result[8].x, result[8].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const nineToTen = new fabric.Line([result[9].x, result[9].y, result[10].x, result[10].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const tenToEleven = new fabric.Line([result[10].x, result[10].y, result[11].x, result[11].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const elevenToTwelve = new fabric.Line([result[11].x, result[11].y, result[12].x, result[12].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const thirdteenToFourteen = new fabric.Line([result[13].x, result[13].y, result[14].x, result[14].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const fourteenTofifteen = new fabric.Line([result[14].x, result[14].y, result[15].x, result[15].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const fifteenToSixteen = new fabric.Line([result[15].x, result[15].y, result[16].x, result[16].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const sevenTeenToEightTeen = new fabric.Line([result[17].x, result[17].y, result[18].x, result[18].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const eightTeenToNineteen = new fabric.Line([result[18].x, result[18].y, result[19].x, result[19].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const nineTeenToTwenty = new fabric.Line([result[19].x, result[19].y, result[20].x, result[20].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            //
+            const twoToFive = new fabric.Line([result[2].x, result[2].y, result[5].x, result[5].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const fiveToNine = new fabric.Line([result[5].x, result[5].y, result[9].x, result[9].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const nineToThirdteen = new fabric.Line([result[9].x, result[9].y, result[13].x, result[13].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const thirdTeenToSeventeen = new fabric.Line([result[13].x, result[13].y, result[17].x, result[17].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+            const sevenTeenToZero = new fabric.Line([result[17].x, result[17].y, result[0].x, result[0].y], {
+                strokeLineCap: 'round',
+                strokeWidth: thick,
+                stroke: color
+            });
+
+
+            var palm = new fabric.Polygon([
+                {x:result[1].x , y:result[1].y},
+                {x:result[2].x , y:result[2].y},
+                {x:result[5].x , y:result[5].y},
+                {x:result[9].x , y:result[9].y},
+                {x:result[13].x , y:result[13].y},
+                {x:result[17].x , y:result[17].y},
+                {x:result[0].x , y:result[0].y}
+            ], {
+                fill : color
+            });
+
+            var group = new fabric.Group([zeroToOne,oneToTwo,twoToThree,threeToFour,fiveToSix,sixToSeven,sevenToEight,nineToTen,tenToEleven,elevenToTwelve,thirdteenToFourteen,fourteenTofifteen,fifteenToSixteen,sevenTeenToEightTeen,eightTeenToNineteen,nineTeenToTwenty
+                ,twoToFive,fiveToNine,nineToThirdteen, thirdTeenToSeventeen, sevenTeenToZero,palm ], {
+                originX : 'cetner',
+                originY : 'cetner',
+                angle: -10
+            });
+
+            canvas.add(group);
+        }
+
+        if (type === "pose") {
+            for (let i = 0; i < 33; i++) {
+                result[i].x = result[i].x * 640;
+                result[i].y = result[i].y * 480;
+            }
             // 어깨
             const shoulder = new fabric.Line([result[12].x, result[12].y, result[11].x, result[11].y], {
                 strokeLineCap: 'round',
@@ -289,14 +297,15 @@ export default function EditTool(props) {
             });
 
             canvas.add(shoulder, leftUpperArm, leftLowerArm, rightUpperArm, rightLowerArm, leftUpperBody, rightUpperBody, waist, leftUpperLeg, leftLowerLeg, rightUpperLeg, rightLowerLeg, head);
-            }
-            
-           
-
-      
-
- 
         }
+
+        canvas.discardActiveObject();
+        let sel = new fabric.ActiveSelection(canvas.getObjects(), {
+            canvas: canvas,
+        });
+        canvas.setActiveObject(sel);
+        canvas.getActiveObject().toGroup();
+        canvas.requestRenderAll();
     }
 
     function download() {
@@ -367,7 +376,14 @@ export default function EditTool(props) {
 
     useEffect(()=> {
         canvas = new fabric.Canvas('edit-canvas');
-        drawingPictogram();
+        console.log("isFromMobile : ", isFromMobile);
+        if(isFromMobile === "true") {
+            console.log("EditTool.js is on Mobile");
+            drawingPictogramMobile();
+        } else {
+            console.log("EditTool.js is on Browser");
+            drawingPictogram();
+        }
     },[]);
 
 

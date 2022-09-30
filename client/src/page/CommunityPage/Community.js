@@ -1,10 +1,7 @@
-import React,{useRef, useState,useEffect} from "react";
-import axios from "axios";
-import CommunityEditor from "./components/CommunityEditor";
-import Ccomment from "./components/CommunityComment";
+import React, {useRef, useState,useEffect} from "react";
+import {get} from "../../services/AxiosService";
 import Top from "../../component/Top";
-import CommunitytDetails from "./components/CommunitytDetails";
-import CommunityList from "./components/CommunityList";
+import CommunityList from "./mobile-components/Mobile-CommunityList";
 import CommunityPagination from "./components/CommunityPagination";
 
 function Community() {
@@ -15,9 +12,8 @@ function Community() {
   const dataId = useRef(0);
 
   const getData = async () => {
-    try {
-      await axios.get('/v1/api/community/')
-          .then((response) => {
+    get('/v1/api/community/')
+        .then((response) => {
             console.log('response : ', response.data);
             console.log('response : ', response.data.list);
 
@@ -26,26 +22,23 @@ function Community() {
                 console.log('community res : ' + res);
                 const initData = res.slice(0, 20).map((it) => {
                     return {
-                      id: it.id,
-                      author: it.nickname,
-                      title: it.title,
-                      content: it.content,
-                      emotion: Math.floor(Math.random() * 5) + 1,
-                      //Math.random()*5 = 0부터 4까지의 난수 생성(소수점까지 포함)
-                      //Math.floor = 소수점을 없애줌 , +1 = 5까지
-                      create_date: new Date().getTime() + 1,
+                        id: it.id,
+                        author: it.nickname,
+                        title: it.title,
+                        content: it.content,
+                        emotion: Math.floor(Math.random() * 5) + 1,
+                        //Math.random()*5 = 0부터 4까지의 난수 생성(소수점까지 포함)
+                        //Math.floor = 소수점을 없애줌 , +1 = 5까지
+                        create_date: new Date().getTime() + 1,
                     };
                 });
-              setData(initData);
+                setData(initData);
             }
-          })
-          .catch((err) => {
+        })
+        .catch((err) => {
             console.error('err : ', JSON.stringify(err));
             alert(err.response.data.msg);
-          });
-    } catch (err) {
-      console.error(err);
-    }
+        });
   }
 
   useEffect(() => {

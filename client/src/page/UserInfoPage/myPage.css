@@ -171,17 +171,23 @@
     bottom:60px;
 }
 
+.pic-utils{
+    position: relative;
+    bottom: 70px;
+}
 .pic-btns{
+    padding-right: 2px;
     display: flex;
     justify-content: space-around;
 }
 
-.pic-download,.pic-edit,.pict-delete{
-    position: relative;
+.pic-download,.pic-edit,.pic-delete{
+    width: 30px;
+    height: 30px;
+    background-color: #DF504C;
     padding: 0px 0px;
     border-radius: 100%;
     bottom: 50px;
-    background: linear-gradient(to left, #EB5D38, #E72D71);
     color: #ffffff;
     text-decoration: none;
     font-weight: 700;
@@ -191,7 +197,6 @@
 .pic-txt{
     display: flex;
     justify-content: space-around;
-    position: relative;
     bottom: 48px;
 }
 
@@ -200,30 +205,24 @@
 }
 
 .pic-download{
-    width: 35px;
-    height: 35px;
     border: none;
     background: url("../../assets/image/studio_image/download_btn.png") no-repeat;
     background-size: cover;
 }
 
 .pic-edit{
-    width: 35px;
-    height: 35px;
     border: none;
     background: url("../../assets/image/studio_image/pencil_btn.png") no-repeat;
     background-size: cover;
 }
 
 .pic-delete{
-    width: 35px;
-    height: 35px;
     border: none;
-    background: url("../../assets/image/studio_image/trash-can-solid.svg") no-repeat;
+    background: url("../../assets/image/studio_image/delete.png") no-repeat;
     background-size: cover;
 }
 
-.pic-download:hover,.pic-edit:hover {
+.pic-download:hover,.pic-edit:hover,.pic-delete:hover {
     cursor: pointer;
 }
 
@@ -260,4 +259,142 @@ button > p{
 }
 .page-item:hover{
     cursor: pointer;
+}
+
+@media (min-width:768px) and (max-width:1023px){
+    .MyPage-Menu{
+        line-height: 150%;
+        font-weight: bold;
+        display: flex;
+        margin: 0 auto;
+        justify-content: space-around;
+        height: 100%;
+        align-items: center;
+    }
+    .MyPage-Content{
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        display: block;
+    }
+    .MyPage-Left{
+        display: block;
+        width: 100%;
+        height: 10vw;
+    }
+    .MyPage-Right {
+        width: 100%;
+        height: 70vw;
+    }
+    .Right-Contents {
+        margin: 0;
+        padding: 10%;
+    }
+    .MyPage-footer {
+        font-size: 12px;
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        height: 20vw;
+        position : absolute;
+        bottom : 0;
+    }
+    .Copyright {
+        margin-left: -5%;
+        text-align: center;
+        color: #d6d6d6;
+        margin: 0 auto;
+    }
+}
+
+@media all and (min-width:480px) and (max-width:767px) {
+    .MyPage-Menu{
+        line-height: 150%;
+        font-weight: bold;
+        display: flex;
+        margin: 0 auto;
+        justify-content: space-around;
+        height: 100%;
+        align-items: center;
+    }
+    .MyPage-Content{
+        width: 100%; 
+        height: 100%;
+        margin: 0 auto;
+        display: block;
+    }
+    .MyPage-Left{
+        display: block;
+        width: 100%;
+        height: 10vw;
+    }
+    .MyPage-Right {
+        width: 100%;
+        height: 70vw;
+    }
+    .Right-Contents {
+        margin: 0;
+        padding: 10%;
+    }
+    .MyPage-footer {
+        font-size: 12px;
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+        height: 20vw;
+        position : absolute;
+        bottom : 0;
+    }
+    .Copyright {
+        margin-left: -5%;
+        text-align: center;
+        color: #d6d6d6;
+        margin: 0 auto;
+    }
+} 
+
+@media all and (max-width:479px) {
+    .MyPage-Menu{
+        line-height: 150%;
+        font-weight: bold;
+        display: flex;
+        margin: 0 auto;
+        justify-content: space-around;
+        height: 100%;
+        align-items: center;
+    }
+    .MyPage-Content{
+        width: 100%; 
+        height: 100%;
+        margin: 0 auto;
+        display: block;
+    }
+    .MyPage-Left{
+        display: block;
+        width: 100%;
+        height: 10vw;
+    }
+    .MyPage-Right {
+        width: 100%;
+        height: 70vw;
+    }
+    .Right-Contents {
+        margin: 0;
+        padding: 10%;
+    }
+    .MyPage-footer {
+        font-size: 12px;
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+        height: 20vw;
+        position : absolute;
+        bottom : 0;
+    }
+    .Copyright {
+        margin-left: -5%;
+        text-align: center;
+        color: #d6d6d6;
+        margin: 0 auto;
+    }
 }

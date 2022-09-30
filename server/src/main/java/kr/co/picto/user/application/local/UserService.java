@@ -3,8 +3,8 @@ package kr.co.picto.user.application.local;
 import kr.co.picto.common.application.ResponseService;
 import kr.co.picto.common.domain.SingleResult;
 import kr.co.picto.token.application.JwtProvider;
-import kr.co.picto.token.domain.RefreshToken;
-import kr.co.picto.token.domain.RefreshTokenRepository;
+import kr.co.picto.token.domain.local.RefreshToken;
+import kr.co.picto.token.domain.local.RefreshTokenRepository;
 import kr.co.picto.token.dto.TokenRequestDto;
 import kr.co.picto.token.dto.TokenResponseDto;
 import kr.co.picto.user.domain.AccountStatus;
@@ -132,7 +132,7 @@ public class UserService {
         refreshTokenRepository.deleteByTokenId(user.getId());
     }
 
-    private void checkStatus(User user) {
+    private static void checkStatus(User user) {
         if(user.getStatus() == AccountStatus.INACTIVE) throw new CustomUserNotFoundException();
     }
 }

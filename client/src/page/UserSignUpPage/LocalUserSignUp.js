@@ -1,9 +1,9 @@
 import React, {useState } from 'react';
 import { Link, useHistory } from "react-router-dom";
+import {post} from "../../services/AxiosService";
 import Logo from "../../assets/image/Logo.png";
 import "./localUserSignUp.css"
 import "../../styles/font.css"
-import axios from "axios";
 
 export default function LocalUserSignUp(){
 
@@ -47,28 +47,22 @@ export default function LocalUserSignUp(){
         }else if(!isEqualsPassword) {
             alert('비밀번호가 일치하지 않습니다.');
         } else {
-            try {
-                axios.post('/v1/api/user/signup', {
-                    email,
-                    name,
-                    nickName,
-                    password
-                }).then((response) => {
-                    console.log('response : ', response.data);
-                    console.log('response : ', response.data.data);
+            post('/v1/api/user/signup', {
+                email,
+                name,
+                nickName,
+                password
+            }, {}).then((response) => {
+                console.log("SignUp response : ", response.data);
+                console.log("SignUp response.data : ", response.data.data);
 
-                    if(response.data.code === 0){
-                        alert(nickName + ' 픽토메이커님 환영합니다!');
-                        history.push("/");
-                    }
-                }).catch((err) => {
-                    console.error('err : ', JSON.stringify(err));
-                    alert(err.response.data.msg);
-                });
-            } catch (err) {
-                console.error('err : ', JSON.stringify(err));
-
-            }
+                if(response.data.code === 0) {
+                    alert(nickName + " 픽토메이커님 환영합니다!");
+                    history.push("/");
+                }
+            }).catch((err) => {
+                console.error("err : ", JSON.stringify(err));
+            })
         }
     };
 

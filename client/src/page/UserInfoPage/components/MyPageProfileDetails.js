@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import {get} from "../../../services/AxiosService";
 import {useCookies} from "react-cookie";
-import axios from "axios";
 import "../myPage.css";
 import "../../../styles/font.css";
 
@@ -22,21 +22,21 @@ export default function MyPageProfileDetails(){
 
             const email = jsonProf.email;
             setEmail(email);
-            axios.get(`/v1/api/picto/count/${provider}`, {
+            get(`/v1/api/picto/count/${provider}`, {
                 headers: {
                     "X-AUTH-TOKEN": cookies.accessToken
                 }
             }).then((response) => {
-                    console.log('MyPage-profile getPicToCount : ', response.data);
+                console.log('MyPage-profile getPicToCount : ', response.data);
 
-                    if(response.data.code === 0) {
-                        console.log('MyPage-profile getPicToCount count : ', response.data.data);
-                        setCount(response.data.data);
-                    }
-                }).catch((err) => {
-                    console.error('err : ', JSON.stringify(err));
-                    setCount(0);
-                });
+                if(response.data.code === 0) {
+                    console.log('MyPage-profile getPicToCount count : ', response.data.data);
+                    setCount(response.data.data);
+                }
+            }).catch((err) => {
+                console.error('err : ', JSON.stringify(err));
+                setCount(0);
+            });
 
             if(provider === 'LOCAL') {
                 setNickName(jsonProf.nickName);

@@ -37,7 +37,7 @@ export default function MenuSelectDetails(){
                         </div>
                     </div>
                 </Link>
-                <Link to="/edit">
+                <Link to="/edit/select">
                     <div className='Edit-Content cont'>
                         <span></span><span></span><span></span><span></span>
                         <div className='Edit-Image'>
