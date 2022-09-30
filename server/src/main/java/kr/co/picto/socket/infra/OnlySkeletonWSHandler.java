@@ -30,7 +30,8 @@ public class OnlySkeletonWSHandler extends TextWebSocketHandler {
         String msg = message.getPayload();
         log.info("payload : " + msg);
         JSONObject obj = jsonToObjectParser(msg);
-        log.info("JSONMap : " + obj);
+        log.info("JSONObj : " + obj);
+
         for(String key : sessionMap.keySet()) {
             WebSocketSession wss = sessionMap.get(key);
             try {
@@ -52,6 +53,7 @@ public class OnlySkeletonWSHandler extends TextWebSocketHandler {
         sessionMap.remove(session.getId());
         super.afterConnectionClosed(session, status);
     }
+
     private static JSONObject jsonToObjectParser(String jsonStr) {
         log.info("JSON STR : " + jsonStr);
         JSONParser parser = new JSONParser();
