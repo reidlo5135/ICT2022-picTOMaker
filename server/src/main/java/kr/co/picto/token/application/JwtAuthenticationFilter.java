@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                 "/v3/api-docs",
                 ".png",
                 "ws",
-                "/socket/picto"
+                "/picto"
         };
         for(String str : patterns) {
             if(uri.equals(str) || uri.contains(str)) {
