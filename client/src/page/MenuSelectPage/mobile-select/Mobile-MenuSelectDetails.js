@@ -21,23 +21,28 @@ export default function MenuSelectDetails(){
             <span className='start'></span>
             <span className='start'></span>
             <div className='HT-Content'>
-                <Link to="/studio/pose/web">
+                <Link to="/studio/pose/mobile">
                     <div className='Human-content cont'>
                         <span></span><span></span><span></span><span></span>
-                        <div className='Human-Image'>
-                            <img src={Human} alt="Human-Img" style={{width:"30%",height:"30%"}}/>
-                        </div>
-                        <div className='Human-mdes'>
-                            인체인식
-                        </div>
-                        <div className='Human-des'>
-                            인체를 인식하여 <br />
-                            사람 형태의 그래픽을 생성해줍니다.<br />
-                            카메라에 신체를 맞춰 포즈를 취해보세요!
+                        <div className='cont-wrap'>
+                            <div className='Human-Image'>
+                                <img src={Human} alt="Human-Img" style={{width:"30%",height:"30%"}}/>
+                            </div>
+                        
+                            <div className='desc-wrap'>
+                                <div className='Human-mdes'>
+                                    인체인식(모바일)
+                                </div>
+                                <div className='Human-des'>
+                                    인체를 인식하여 <br />
+                                    사람 형태의 그래픽을 생성해줍니다.<br />
+                                    카메라에 신체를 맞춰 포즈를 취해보세요!
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </Link>
-                <Link to="/edit/select">
+                <Link to="/edit">
                     <div className='Edit-Content cont'>
                         <span></span><span></span><span></span><span></span>
                         <div className='Edit-Image'>
