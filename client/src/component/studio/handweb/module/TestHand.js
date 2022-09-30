@@ -5,20 +5,23 @@ import "../../../../styles/stuido/posewebstudio.css"
 import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState} from 'react';
 
 // Static Image를 통해 인체 모델을 테스트합니다.
+let result = null;
 
 const TestHand = forwardRef((props,ref) => {
     useImperativeHandle(ref,()=> ({
         capture() {
             console.log(result)
             window.localStorage.setItem("pictogram_result",JSON.stringify(result));
+            window.localStorage.setItem("picto_type","hand");
 
             // const item = window.localStorage.getItem("pictogram_result")
             // console.log(JSON.parse(item));
+            
             document.location.href = "/edit"
         }
     }));
 
-    let [result, setResult] = useState(null);
+    
 
     const canvasRef = useRef(null);
 

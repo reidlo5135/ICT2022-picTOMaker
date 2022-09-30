@@ -1,6 +1,6 @@
 .SignUp{
     display: flex;
-    width: 1280px;
+    width: 100%;
 
 }
 .SU-Content{
@@ -9,11 +9,11 @@
 .SU-Logo{
     width:278px;
     height:142px;
-    margin: 10% 0 5% 65%;
+    margin: 3% auto;
 }
 .SU-Input{
     width: 400px;
-    margin: 0 60% 0 59%;
+    margin: 0 auto;
 }
 .Label-txt{
     font-size: 18px;
@@ -87,7 +87,7 @@
 
 .SU-Caution{
     width: 100%;
-    margin: 0 50% 0 60%;
+    text-align: center;
     font-size: 13px;
 }
 .SU-Caution span{
@@ -96,3 +96,121 @@
 }
 /*#bbbbbb 테두라*/
 /*#f8f8f8 안쪽*/
+
+@media (min-width:768px) and (max-width:1023px){
+    .SignUp{
+        width: 100vw;
+        margin: 0 auto;
+    }
+    .SU-Logo {
+        width: 278px;
+        height: 142px;
+        margin: 10% auto;
+    }
+    .SU-Logo img{
+        width: 278px;
+        max-width: 100%;
+        height: auto;
+        height: 142px;
+    }
+    .SU-Input {
+        width: 400px;
+        margin: 0 auto;
+    }
+    .SU-Caution {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 13px;
+        text-align: center;
+    }
+}
+
+@media all and (min-width:480px) and (max-width:767px){
+    .SignUp{
+        width: 100vw;
+        margin: 0 auto;
+    }
+    .SU-Logo {
+        width: 278px;
+        height: 142px;
+        margin: 10% auto;
+    }
+    .SU-Logo img{
+        width: 278px;
+        max-width: 100%;
+        height: auto;
+        height: 142px;
+    }
+    .SU-Input {
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .SU-Caution {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 13px;
+        text-align: center;
+    }
+}
+
+@media all and (max-width:479px){
+    .SignUp{
+        width: 100vw;
+        margin: 0 auto;
+    }
+    .SU-Logo {
+        width: 278px;
+        height: 142px;
+        margin: 10% auto;
+    }
+    .SU-Logo img{
+        width: 278px;
+        max-width: 100%;
+        height: auto;
+        height: 142px;
+    }
+    .SU-Input {
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .SU-Caution {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 13px;
+        text-align: center;
+    }
+    .SU-Form input {
+        padding-left: 15px;
+        width: 411px;
+        max-width: 70%;
+        height: 42px;
+        border: solid 0.5px #d4d4d4;
+        border-radius: 7px;
+        background-color: #f8f8f8;
+    }
+    .signUpButtonInAction {
+        width: 411px;
+        height: 42px;
+        position: relative;
+        border-radius: 13px;
+        border: #ffffff solid 1px;
+        color: #ffffff;
+        background: linear-gradient(to left,#282c34, #ffffff);
+        text-decoration: none;
+        transition: 0.25s;
+        cursor: pointer;
+        margin-top: 4%;
+        margin-left: 0;
+        max-width: 75%;
+    }
+
+    .SU-Caution {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 13px;
+        text-align: center;
+        max-width: 60%;
+    }
+}

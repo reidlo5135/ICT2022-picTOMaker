@@ -1,8 +1,5 @@
-import React,{useRef,useEffect,useState} from 'react';
-import * as cam from '@mediapipe/camera_utils';
-// import {DeviceCheck, getStream} from './util/DevicesCheck';
-import CamHand from './module/CamHand'
-import TestHand from './module/TestHand'
+import React, {useRef,useEffect,useState} from 'react';
+import {MobileCamPose} from "./module/mobile/MobileCamPose";
 import Button from '@mui/material/Button';
 import Top from "../../Top";
 import "../../../styles/stuido/topbar.css";
@@ -13,8 +10,9 @@ import Camera from "../../../assets/image/studio_image/camera.png";
 import Modal from "../../Modal";
 import StudioSettingComponent from '../StudioSettingComponent';
 import StudioCaptureDelay from '../StudioCaptureDelay';
+import {isMobile} from "react-device-detect";
 
-export default function HandWebStudio() {
+export default function MobileWebStudio() {
     const [timeModalOpen, setTimeModalOpen] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -29,7 +27,7 @@ export default function HandWebStudio() {
     const openModal = () => {
         setModalOpen(true);
     }
-    
+
     const closeModal = () => {
         setModalOpen(false);
     }
@@ -48,19 +46,10 @@ export default function HandWebStudio() {
     function onResults(props) {
         console.log(props);
     }
-    
+
     // 초기설정 Hook
     useEffect(()=> {
-        console.log("HandWebStudio Mounting Start")
-
-        window.localStorage.setItem('thick',50);
-        window.localStorage.setItem('lineColor',"FF03030");
-        window.localStorage.setItem('backgroundColor',"FFFFFF");
-        /*
-        if (DeviceCheck()) {
-            console.log("디바이스 인식 성공")
-            const deviceStream = getStream();
-        } */
+        console.log("PoseWebStudio Mounting Start");
     },[]);
 
     return (
@@ -69,7 +58,7 @@ export default function HandWebStudio() {
             <div id="topbar"></div>
             <div className ="studio_container">
                 {/*<CamPose ref={childRef}/>*/}
-                <TestHand ref={childRef} />
+                <MobileCamPose ref={childRef} />
                 <div className = 'button-group'>
                     <div className='camera-btn'>
                         <div>
@@ -96,4 +85,4 @@ export default function HandWebStudio() {
             </div>
         </>
     );
-};
+}

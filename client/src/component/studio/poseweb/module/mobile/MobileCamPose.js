@@ -1,26 +1,33 @@
-import testImage from '../..//resource/human_pose.png'
-import {Pose} from '@mediapipe/pose'
-import {drawLine, drawHead} from '../../util/DrawingUtils'
-import "../../../../../styles/stuido/posewebstudio.css"
-import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState} from 'react';
+import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState, useCallback} from 'react';
+import {Pose} from '@mediapipe/pose';
+import {drawLine, drawHead} from '../../util/DrawingUtils';
+import testImage from '../../resource/human_pose.png';
+import "../../../../../styles/stuido/posewebstudio.css";
 
-// Static Image를 통해 인체 모델을 테스트합니다.
-let result = null;
+export const MobileCamPose = forwardRef((props,ref) => {
 
-const TestPose = forwardRef((props,ref) => {
     useImperativeHandle(ref,()=> ({
         capture() {
-            console.log(result)
-            window.localStorage.setItem("pictogram_result",JSON.stringify(result));
-            window.localStorage.setItem("picto_type","pose")
-
-            // const item = window.localStorage.getItem("pictogram_result")
-            // console.log(JSON.parse(item));
-            document.location.href = "/edit"
+            console.log("MobileCamPose result : ", result);
+            const skeleton = JSON.stringify(result);
+            const ws = new WebSocket("ws://localhost:8080/picto");
+            const json = {
+                "skeleton": skeleton,
+                "thick": 50,
+                "lineColor": "FF03030",
+                "backgroundColor": "FFFFFF"
+            }
+            ws.onopen = () => {
+                ws.send(JSON.stringify(json));
+            }
+            ws.onmessage = (e) => {
+                const data = JSON.parse(e.data);
+                console.log("ws data : ", data);
+            }
         }
     }));
 
-   
+    let [result, setResult] = useState(null);
 
     const canvasRef = useRef(null);
 
@@ -40,7 +47,7 @@ const TestPose = forwardRef((props,ref) => {
         canvasCtx.clearRect(0,0,640,480);
 
         if(result !== undefined) {
-            // 어깨선 
+            // 어깨선
             drawLine(result[12].x,result[12].y,result[11].x,result[11].y,canvasCtx,640,480,"15","000000")
 
             // 좌측 팔
@@ -50,7 +57,7 @@ const TestPose = forwardRef((props,ref) => {
             // 우측 팔
             drawLine(result[11].x,result[11].y,result[13].x,result[13].y,canvasCtx,640,480,"15","000000") // 어깨 -> 팔꿈치
             drawLine(result[13].x,result[13].y,result[15].x,result[15].y,canvasCtx,640,480,"15","000000") // 팔꿈치 -> 손목
-            
+
 
             // 좌측 상체
             drawLine(result[12].x,result[12].y,result[24].x,result[24].y,canvasCtx,640,480,"15","000000")
@@ -78,8 +85,8 @@ const TestPose = forwardRef((props,ref) => {
         const imageElement = document.getElementById('test-image')
 
         const pose = new Pose({locateFile : (file) => {
-            return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
-          }})
+                return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
+            }})
 
         // 포즈 설정값
         pose.setOptions({
@@ -89,7 +96,7 @@ const TestPose = forwardRef((props,ref) => {
             smoothSegmentation: false,
             minDetectionConfidence: 0.5,
             minTrackingConfidence: 0.5
-          });
+        });
 
         // 데이터 추출 후 실행할 콜백함수 설정
         pose.onResults(onResults);
@@ -109,6 +116,4 @@ const TestPose = forwardRef((props,ref) => {
             </div>
         </>
     )
-})
-
-export default TestPose;
+});
