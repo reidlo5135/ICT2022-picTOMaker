@@ -15,12 +15,11 @@ export default function EditTool(props) {
     const history = useHistory();
 
     const [selectMode, setSelectMode] = useState("none");
-    const [isFromMobile, setIsFromMobile] = useState("false");
+    const isFromMobile = localStorage.getItem("isFromMobile");
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
 
     const pictogramImage = props.pictogramImage;
-
 
     function drawingPictogramMobile() {
         const ws = new WebSocket("ws://localhost:8080/picto");

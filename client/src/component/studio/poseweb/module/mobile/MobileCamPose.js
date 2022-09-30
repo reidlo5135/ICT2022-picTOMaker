@@ -15,8 +15,7 @@ export const MobileCamPose = forwardRef((props,ref) => {
                 "skeleton": skeleton,
                 "thick": 50,
                 "lineColor": "FF03030",
-                "backgroundColor": "FFFFFF",
-                "isFromMobile": "true"
+                "backgroundColor": "FFFFFF"
             }
             ws.onopen = () => {
                 ws.send(JSON.stringify(json));
