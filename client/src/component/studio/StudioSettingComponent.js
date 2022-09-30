@@ -11,38 +11,31 @@ import { ThemeProvider } from '@mui/material';
 import {theme} from './edittool/theme/MainTheme'
 
 
+
 export default function StudioSettingComponent() {
-    const [lineThick, setLineThick] = useState(15);
-    const [lineColor, setLineColor] = useState('빨간색');
-    const [bgColor, setBgColor] = useState('빨간색');
+ 
 
     const lineColorHandleChange = (event) => {
-        setLineColor(event.target.value)
+        const convertLineColor = colorInfo.find((value) => value.name === event.target.value);
+        localStorage.setItem("lineColor",convertLineColor.hex);
     };
 
-    const bgColorHandleChange = (event) => {
-        setBgColor(event.target.value);
-    };
+   
 
     const lineThickHandleChange = (event, newValue) => {
-        setLineThick(newValue);
-    }
+        
+        
+        localStorage.setItem("lineThick",event.target.value);
+    };
+    
 
-    useEffect(()=> {
-        console.log("lineColor : " + lineColor);
-    },[lineColor])
-
-    useEffect(()=> {
-        console.log("bgColor : " + bgColor);
-    },[bgColor])
-
-    const settingConfirm = () => {
-        const convertLineColor = colorInfo.find((value)=> value.name === lineColor);
-        console.log(convertLineColor.hex);
-        window.localStorage.setItem("lineThick",lineThick);
-        window.localStorage.setItem("lineColor",convertLineColor.hex);
-        window.localStorage.setItem("backgroundColor",bgColor)
-    }
+    // const settingConfirm = () => {
+    //     const convertLineColor = colorInfo.find((value)=> value.name === lineColor);
+    //     console.log(convertLineColor.hex);
+    //     window.localStorage.setItem("lineThick",lineThick);
+    //     window.localStorage.setItem("lineColor",convertLineColor.hex);
+    //     window.localStorage.setItem("backgroundColor",bgColor)
+    // }
 
 
     return (
@@ -69,7 +62,6 @@ export default function StudioSettingComponent() {
                             
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={lineColor}
                             label="Color"
                             onChange={lineColorHandleChange}
                         >
@@ -82,27 +74,7 @@ export default function StudioSettingComponent() {
                     </FormControl>
                 </Box>
 
-                <p>배경 색상</p>
-                <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">색상</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={bgColor}
-                            label="Color"
-                            onChange={bgColorHandleChange}
-                        >
-
-                            {colorInfo.map((color,index)=> {
-                                 return (<MenuItem key={index} value={color.name}>{color.name}</MenuItem>)
-                            })}
-                            
-                        </Select>
-                    </FormControl>
-                </Box>
-
-                <Button sx={{marginTop: "20px"}} color="button" variant="contained" onClick={settingConfirm}>확인</Button>
+                <Button sx={{marginTop: "20px"}} color="button" variant="contained">확인</Button>
             </div>
             </ThemeProvider>
         </>

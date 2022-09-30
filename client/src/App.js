@@ -25,6 +25,8 @@ import M_Intro from "./page/IntroducePage/components/Mobile-intro";
 import M_MyPage from "./page/UserInfoPage/mobile-components/Mobile-MyPage";
 import M_Community from "./page/CommunityPage/mobile-components/Mobile-Community";
 import M_Select from "./page/MenuSelectPage/mobile-select/Mobile-MenuSelect";
+import MobileWebStudio from "./component/studio/poseweb/Mobile-WebStudio";
+import SelectMobileOrBrowser from "./page/MenuSelectPage/components/SelectMobileOrBrowser";
 
 export default function App(){
 
@@ -47,8 +49,7 @@ export default function App(){
                         <Route path = '/oauth2/redirect/kakao' component={M_SocialUserCallback} />
                         <Route path= '/oauth2/redirect/naver' component={M_SocialUserCallback} />
                         <Route path= '/oauth2/redirect/google' component={M_SocialUserCallback} />
-                        <Route path= '/studio/pose/web' component={PoseWebStudio}/>
-                        <Route path= '/studio/hand/web' component={HandWebStudio}/>
+                        <Route path= '/studio/pose/mobile' component={MobileWebStudio} />
                         <Route path= '/edit' component={EditTool} />
                         <Route path= '/tool/image' component={EditImageTool} />
                     </Switch>
@@ -59,6 +60,7 @@ export default function App(){
                     <Switch>
                         <Route exact path = '/' component={Main}/>
                         <Route path = '/select' component={MenuSelect}/>
+                        <Route exact path= '/edit/select' component={SelectMobileOrBrowser} />
                         <Route path = '/signUp' component={LocalUserSignUp}/>
                         <Route path = '/myPage' component={MyPageContent}/>
                         <Route path = '/introduce' component={Introduce}/>
@@ -68,10 +70,10 @@ export default function App(){
                         <Route path = '/cposting' component={CommunityPosting}/>
                         <Route path = '/terms' component={UserAgreement}/>
                         <Route path = '/oauth2/redirect/kakao' component={SocialUserCallback} />
-                        <Route path='/oauth2/redirect/naver' component={SocialUserCallback} />
-                        <Route path='/oauth2/redirect/google' component={SocialUserCallback} />
-                        <Route path='/studio/pose/web' component={PoseWebStudio}/>
-                        <Route path='/studio/hand/web' component={HandWebStudio}/>
+                        <Route path= '/oauth2/redirect/naver' component={SocialUserCallback} />
+                        <Route path= '/oauth2/redirect/google' component={SocialUserCallback} />
+                        <Route path= '/studio/pose/web' component={PoseWebStudio}/>
+                        <Route path= '/studio/hand/web' component={HandWebStudio}/>
                         <Route path='/edit' component={EditTool} />
                         <Route path='/tool/image' component={EditImageTool} />
                     </Switch>
