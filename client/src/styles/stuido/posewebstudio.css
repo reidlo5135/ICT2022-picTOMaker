@@ -85,3 +85,54 @@
   border-bottom-right-radius: 30px;
 
 }
+
+@media (max-width:1023px){
+  .button-group {
+    width: 90vw;
+    margin: 0 auto;
+    height: 235px;
+    border: 1px solid #aeaeae;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+  }
+  .studio_container {
+    width: 90vw;
+    margin: 0 auto;
+  }
+  .left-content > img{
+    width: 100%;
+    height: 100%;
+  }
+  .left-content {
+    width: 50%;
+    height: 100%;
+  }
+  .right-content{
+    width: 50%;
+    height: 100%;
+  }
+  .test-pose {
+    width: 100%;
+    height: 500px;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+  }
+  #draw-canvas{
+      margin: 0 auto;
+      width: 50%;
+      display: block;
+      height: 100%;
+  }
+  .camera-btn {
+    display: flex;
+    flex-direction: row;
+    height: 235px;
+    margin-top: 0;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .camera-btn > Button {
+    margin-left: 0;
+  }
+}
