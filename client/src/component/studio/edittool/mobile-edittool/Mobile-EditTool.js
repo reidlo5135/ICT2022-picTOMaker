@@ -397,11 +397,11 @@ export default function EditTool(props) {
                         <canvas id="edit-canvas" width ="640px" height = "480px"></canvas>
                     </div>
                     <div id="tool-view">
-                        <button id="pencil-btn" onClick = {()=> {pencilMode()}}></button>
-                        <button id="figure-btn" onClick = {()=> {figureMode()}}></button>
-                        <button id="download-btn" onClick={()=> {download()}} ></button>
-                        <button id="image-btn" onClick = {()=> {imageMode()}}></button>
-                        <button id="text-btn" onClick = {()=> {textMode()}}></button>
+                        <button id="pencil-btn" className='edit-btn' onClick = {()=> {pencilMode()}}></button>
+                        <button id="figure-btn" className='edit-btn' onClick = {()=> {figureMode()}}></button>
+                        <button id="download-btn" className='edit-btn' onClick={()=> {download()}} ></button>
+                        <button id="image-btn" className='edit-btn' onClick = {()=> {imageMode()}}></button>
+                        <button id="text-btn" className='edit-btn' onClick = {()=> {textMode()}}></button>
                     </div>
                 </div>
                 <div id="tool-detail-view">
