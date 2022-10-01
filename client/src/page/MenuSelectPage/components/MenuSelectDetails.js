@@ -21,7 +21,7 @@ export default function MenuSelectDetails(){
             <span className='start'></span>
             <span className='start'></span>
             <div className='HT-Content'>
-                <Link to="/studio/pose/web">
+                <Link to="/pose/hand">
                     <div className='Human-content cont'>
                         <span></span><span></span><span></span><span></span>
                         <div className='Human-Image'>

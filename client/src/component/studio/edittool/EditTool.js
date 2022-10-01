@@ -18,7 +18,7 @@ export default function EditTool(props) {
     const isFromMobile = localStorage.getItem("isFromMobile");
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
-    const type = window.localStorage.getItem("picto_type");
+    let type = null;
 
     const pictogramImage = props.pictogramImage;
 
@@ -30,7 +30,7 @@ export default function EditTool(props) {
         ws.onmessage = (e) => {
             const data = JSON.parse(e.data);
             console.log("EditTool.js nonResult : ", data);
-            drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor);
+            drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor, data.type);
             console.log("isFM : ", isFromMobile);
         }
     }
@@ -42,14 +42,16 @@ export default function EditTool(props) {
             console.log("DrawPicTOBrowser result : ", result);
             const thick = localStorage.getItem("thick");
             const color = localStorage.getItem("lineColor");
-            drawCanvas(result, thick, color);
+            type = localStorage.getItem("picto_type");
+            drawCanvas(result, thick, color, type);
             window.localStorage.setItem('pictogram_result', null);
         }
     }
 
-    function drawCanvas(result, thick, color) {
+    function drawCanvas(result, thick, color, type) {
         console.log("drawCanvas result, thick, color : ", result + ", " + thick + ", " + color);
-        console.log(result);
+        console.log("result : ", result);
+        console.log("type : ", type);
 
         if (type === "hand") {
             for (let i = 0; i < 21; i++) {

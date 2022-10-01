@@ -1,19 +1,10 @@
 import React from "react";
-import "../menuSelect.css";
-import "../../../styles/font.css";
 import {Link} from "react-router-dom";
 import Logo from "../../../assets/image/Logo.png";
-import Mobile from "../../../assets/image/Mobile.png";
-import Browser from "../../../assets/image/Browser.png";
+import Human from "../../../assets/image/Human.png";
+import Hand from "../../../assets/image/Hand.png";
 
-export default function SelectMobileOrBrowser() {
-    const isMobile = () => {
-        localStorage.setItem("isFromMobile", "true");
-    }
-
-    const isBrowser = () => {
-        localStorage.setItem("isFromMobile", "false");
-    }
+export default function SelectPoseOrHand() {
     return (
         <div className="selectpage">
             <div className="star-ani">
@@ -42,25 +33,25 @@ export default function SelectMobileOrBrowser() {
                 <span className='start'></span>
                 <span className='start'></span>
                 <div className='HT-Content'>
-                    <Link to='/edit'>
-                        <div className='Human-content cont' onClick={isMobile}>
+                    <Link to="/studio/pose/web">
+                        <div className='Human-content cont'>
                             <span></span><span></span><span></span><span></span>
                             <div className='Human-Image'>
-                                <img src={Mobile} alt="Mobile-Img" style={{width:"30%",height:"30%"}}/>
+                                <img src={Human} alt="Human-Img" style={{width:"30%",height:"30%"}}/>
                             </div>
                             <div className='Human-mdes'>
-                                모바일로 촬영한<br/>픽토그램 편집
+                                전신(Pose) 촬영
                             </div>
                         </div>
                     </Link>
-                    <Link to='/edit'>
-                        <div className='Edit-Content cont' onClick={isBrowser}>
+                    <Link to="/studio/hand/web">
+                        <div className='Edit-Content cont'>
                             <span></span><span></span><span></span><span></span>
                             <div className='Edit-Image'>
-                                <img src={Browser} alt="Edit-Img" style={{width:"30%",height:"30%"}}/>
+                                <img src={Hand} alt="Edit-Img" style={{width:"30%",height:"30%"}}/>
                             </div>
                             <div className='Edit-mdes'>
-                                PC로 촬영한<br/>픽토그램 편집
+                                손(Hand) 촬영
                             </div>
                         </div>
                     </Link>

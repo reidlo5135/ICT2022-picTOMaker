@@ -4,7 +4,7 @@ import {drawLine, drawHead} from '../../util/DrawingUtils';
 import testImage from '../../resource/human_pose.png';
 import "../../../../../styles/stuido/posewebstudio.css";
 
-export const MobileCamPose = forwardRef((props,ref) => {
+const MobileCamPose = forwardRef((props,ref) => {
 
     useImperativeHandle(ref,()=> ({
         capture() {
@@ -15,7 +15,8 @@ export const MobileCamPose = forwardRef((props,ref) => {
                 "skeleton": skeleton,
                 "thick": 50,
                 "lineColor": "FF03030",
-                "backgroundColor": "FFFFFF"
+                "backgroundColor": "FFFFFF",
+                "type": "pose"
             }
             ws.onopen = () => {
                 ws.send(JSON.stringify(json));
@@ -117,3 +118,5 @@ export const MobileCamPose = forwardRef((props,ref) => {
         </>
     )
 });
+
+export default MobileCamPose;
