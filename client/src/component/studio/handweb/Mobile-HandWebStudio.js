@@ -1,4 +1,7 @@
-import React, {useRef,useEffect,useState} from 'react';
+import React,{useRef,useEffect,useState} from 'react';
+import * as cam from '@mediapipe/camera_utils';
+// import {DeviceCheck, getStream} from './util/DevicesCheck';
+import CamHand from './module/CamHand';
 import MobileCamHand from "./module/mobile/MobileCamHand";
 import Button from '@mui/material/Button';
 import Top from "../../Top";
@@ -38,8 +41,10 @@ export default function HandWebStudio() {
     const canvasRef = useRef(null);
 
     function capture() {
-        console.log("capture");
-        childRef.current.capture();
+        const delay = parseInt(localStorage.getItem("delay"));
+        setTimeout(() => {
+            childRef.current.capture()
+        },delay)
     }
 
     function onResults(props) {
@@ -49,6 +54,11 @@ export default function HandWebStudio() {
     // 초기설정 Hook
     useEffect(()=> {
         console.log("HandWebStudio Mounting Start");
+        /*
+        if (DeviceCheck()) {
+            console.log("디바이스 인식 성공")
+            const deviceStream = getStream();
+        } */
     },[]);
 
     return (
