@@ -4,3 +4,12 @@
     height : 80px;
     background : linear-gradient(to right, #CC356C, #EB5B39);
 }
+@media (max-width:1023px){
+    #topbar {
+        margin: 0 auto;
+        width: 90vw;
+        height: 10vw;
+        background: linear-gradient(to right, #CC356C, #EB5B39);
+    }
+
+}

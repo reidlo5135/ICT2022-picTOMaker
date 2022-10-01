@@ -13,6 +13,7 @@ import kakaotalk from "../../../assets/image/kakaotalk.png";
 import naver from "../../../assets/image/naver.png";
 import google from "../../../assets/image/google.png";
 import {Link} from "react-router-dom";
+import Top from "../../../component/Top"
 
 export default function M_Main(){
     const history = useHistory();
@@ -82,92 +83,93 @@ export default function M_Main(){
 
     return(
         <React.Fragment>
-        <div className='mobile-main'>
-            <div className='explanation'>
-                <div className='Title'>
-                    <div className='tit-desc'>
-                        <div className='MainTitle'>
-                            쉽고 재밌는 픽토그램 제작 플랫폼
-                        </div>
-                        <div className='SubTitle'>
-                            PC와 Mobile을 통해 간단하고 재밌게
-                            <div>
-                                픽토그램을 제작해 보세요.
+            <Top/>
+            <div className='mobile-main'>
+                <div className='explanation'>
+                    <div className='Title'>
+                        <div className='tit-desc'>
+                            <div className='MainTitle'>
+                                쉽고 재밌는 픽토그램 제작 플랫폼
+                            </div>
+                            <div className='SubTitle'>
+                                PC와 Mobile을 통해 간단하고 재밌게
+                                <div>
+                                    픽토그램을 제작해 보세요.
+                                </div>
                             </div>
                         </div>
+                        <div className='btn-wrap'>
+                            <button className='MainButton' onClick={openModal}>
+                                시작하기
+                            </button>
+                            <Link to='/introduce'>
+                                <button className='MainButton'>
+                                    이용방법
+                                </button>
+                            </Link>
+                            <Link to='/qna'>
+                                <button className='MainButton'>
+                                    문의하기
+                                </button>
+                            </Link>
+                            <Link to='/community'>
+                                <button className='MainButton'>
+                                    커뮤니티
+                                </button>
+                            </Link>
+                            {
+                                cookies.accessToken === null || cookies.accessToken === undefined ?
+                                    <div></div> :
+                                    <Link to='/myPage'>
+                                        <button className='MainButton'>
+                                            마이페이지
+                                        </button>
+                                    </Link>
+                            }
+                        </div>
                     </div>
-                    <div className='btn-wrap'>
-                        <button className='MainButton' onClick={openModal}>
-                            시작하기
-                        </button>
-                        <Link to='/introduce'>
-                            <button className='MainButton'>
-                                이용방법
-                            </button>
-                        </Link>
-                        <Link to='/qna'>
-                            <button className='MainButton'>
-                                문의하기
-                            </button>
-                        </Link>
-                        <Link to='/community'>
-                            <button className='MainButton'>
-                                커뮤니티
-                            </button>
-                        </Link>
-                        {
-                            cookies.accessToken === null || cookies.accessToken === undefined ?
-                                <div></div> :
-                                <Link to='/myPage'>
-                                    <button className='MainButton'>
-                                        마이페이지
-                                    </button>
-                                </Link>
-                        }
-                    </div>
-                </div>
                     <div className={'loginModal'}>
-                            <Modal open={modalOpen} close={closeModal}>
-                                <div className='SignIn'>
-                                    <div className='SI-Content'>
-                                            <span className={'logo_modal'}>
-                                                <img src={Logo} alt="PictoMaker-Logo" />
-                                            </span>
-                                        <div className='SI-Input'>
-                                            <form>
-                                                <div className='SI-Form'>
-                                                    <input type={'email'} className='form-input' onChange={emailInputCheck} placeholder="이메일"/>
-                                                    <input type={'password'} className='form-input' onChange={pwInputCheck} placeholder="비밀번호"/>
-                                                </div>
-                                                <button className='SI-Button' onClick={localLogin}>
-                                                    로그인
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <p>
-                                            <Link to='/v1/user/'>
-                                                <p className={'p_pw'}>비밀번호 찾기</p>
-                                            </Link>
-                                            <Link to='/signUp'>
-                                                <p className={'p_signUp'}>| 회원가입</p>
-                                            </Link>
-                                        </p>
-                                        <div className='Sns-Si'>
-                                            <hr className='.social-inline'></hr>
-                                            <span>간편 로그인</span>
-                                            <div className='Si-social-div'>
-                                                <a href={KAKAO_AUTH_URL}><img src={kakaotalk} alt="kakaotalk-icon" /></a>
-                                                <a href={NAVER_AUTH_URL}><img src={naver} alt="naver-icon" /></a>
-                                                <a href={GOOGLE_AUTH_URL}><img src={google} alt="google-icon" /></a>
+                        <Modal open={modalOpen} close={closeModal}>
+                            <div className='SignIn'>
+                                <div className='SI-Content'>
+                                        <span className={'logo_modal'}>
+                                            <img src={Logo} alt="PictoMaker-Logo" />
+                                        </span>
+                                    <div className='SI-Input'>
+                                        <form>
+                                            <div className='SI-Form'>
+                                                <input type={'email'} className='form-input' onChange={emailInputCheck} placeholder="이메일"/>
+                                                <input type={'password'} className='form-input' onChange={pwInputCheck} placeholder="비밀번호"/>
                                             </div>
+                                            <button className='SI-Button' onClick={localLogin}>
+                                                로그인
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <p>
+                                        <Link to='/v1/user/'>
+                                            <p className={'p_pw'}>비밀번호 찾기</p>
+                                        </Link>
+                                        <Link to='/signUp'>
+                                            <p className={'p_signUp'}>| 회원가입</p>
+                                        </Link>
+                                    </p>
+                                    <div className='Sns-Si'>
+                                        <hr className='.social-inline'></hr>
+                                        <span>간편 로그인</span>
+                                        <div className='Si-social-div'>
+                                            <a href={KAKAO_AUTH_URL}><img src={kakaotalk} alt="kakaotalk-icon" /></a>
+                                            <a href={NAVER_AUTH_URL}><img src={naver} alt="naver-icon" /></a>
+                                            <a href={GOOGLE_AUTH_URL}><img src={google} alt="google-icon" /></a>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             </Modal>
-                        </div>
-                        <div className="col-md-7 mobile-intro">
-                            <div className='mobile-intro-div'></div>
-                        </div>
+                    </div>
+                    <div className="col-md-7 mobile-intro">
+                        <div className='mobile-intro-div'></div>
+                    </div>
                 </div>
             </div>
         </React.Fragment>
