@@ -1,6 +1,5 @@
 import React, {useRef,useEffect,useState} from 'react';
-import CamHand from './module/CamHand'
-import TestHand from './module/test/TestHand'
+import MobileCamHand from "./module/mobile/MobileCamHand";
 import Button from '@mui/material/Button';
 import Top from "../../Top";
 import "../../../styles/stuido/topbar.css";
@@ -27,7 +26,7 @@ export default function HandWebStudio() {
     const openModal = () => {
         setModalOpen(true);
     }
-    
+
     const closeModal = () => {
         setModalOpen(false);
     }
@@ -46,14 +45,10 @@ export default function HandWebStudio() {
     function onResults(props) {
         console.log(props);
     }
-    
+
     // 초기설정 Hook
     useEffect(()=> {
-        console.log("HandWebStudio Mounting Start")
-
-        window.localStorage.setItem('thick',50);
-        window.localStorage.setItem('lineColor',"FF03030");
-        window.localStorage.setItem('backgroundColor',"FFFFFF");
+        console.log("HandWebStudio Mounting Start");
     },[]);
 
     return (
@@ -61,8 +56,7 @@ export default function HandWebStudio() {
             <Top/>
             <div id="topbar"></div>
             <div className ="studio_container">
-                {/*<CamPose ref={childRef}/>*/}
-                <TestHand ref={childRef} />
+                <MobileCamHand ref={childRef} />
                 <div className = 'button-group'>
                     <div className='camera-btn'>
                         <div>
