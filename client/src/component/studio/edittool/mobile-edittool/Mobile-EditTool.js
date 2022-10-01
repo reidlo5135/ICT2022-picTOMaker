@@ -3,10 +3,10 @@ import {useCookies} from "react-cookie";
 import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {fabric} from 'fabric';
-import DetailComponent from './detail/DetailComponent';
-import Top from "../../Top";
-import '../../../styles/stuido/topbar.css';
-import '../../../styles/stuido/edittool.css';
+import DetailComponent from '../detail/DetailComponent';
+import Top from "../../../Top";
+import '../../../../styles/stuido/topbar.css';
+import '../../../../styles/stuido/edittool.css';
 
 let canvas = null;
 
@@ -18,7 +18,7 @@ export default function EditTool(props) {
     const isFromMobile = localStorage.getItem("isFromMobile");
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
-    let type = null;
+    const type = window.localStorage.getItem("picto_type");
 
     const pictogramImage = props.pictogramImage;
 
@@ -30,7 +30,7 @@ export default function EditTool(props) {
         ws.onmessage = (e) => {
             const data = JSON.parse(e.data);
             console.log("EditTool.js nonResult : ", data);
-            drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor, data.type);
+            drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor);
             console.log("isFM : ", isFromMobile);
         }
     }
@@ -42,16 +42,14 @@ export default function EditTool(props) {
             console.log("DrawPicTOBrowser result : ", result);
             const thick = localStorage.getItem("thick");
             const color = localStorage.getItem("lineColor");
-            type = localStorage.getItem("picto_type");
-            drawCanvas(result, thick, color, type);
+            drawCanvas(result, thick, color);
             window.localStorage.setItem('pictogram_result', null);
         }
     }
 
-    function drawCanvas(result, thick, color, type) {
+    function drawCanvas(result, thick, color) {
         console.log("drawCanvas result, thick, color : ", result + ", " + thick + ", " + color);
-        console.log("result : ", result);
-        console.log("type : ", type);
+        console.log(result);
 
         if (type === "hand") {
             for (let i = 0; i < 21; i++) {
@@ -399,13 +397,11 @@ export default function EditTool(props) {
                         <canvas id="edit-canvas" width ="640px" height = "480px"></canvas>
                     </div>
                     <div id="tool-view">
-                        <button id="pencil-btn" onClick = {()=> {pencilMode()}}></button>
-                        <button id="figure-btn" onClick = {()=> {figureMode()}}></button>
-                        <button id="image-btn" onClick = {()=> {imageMode()}}></button>
-                        <button id="text-btn" onClick = {()=> {textMode()}}></button>
-                        <button id="download-btn" onClick={()=> {download()}} ></button>
-                        <button id="open-btn" onClick = {()=> {openMode()}}> </button>
-                        <button id="share-btn" onClick = {()=> {shareMode()}}></button>
+                        <button id="pencil-btn" className='edit-btn' onClick = {()=> {pencilMode()}}></button>
+                        <button id="figure-btn" className='edit-btn' onClick = {()=> {figureMode()}}></button>
+                        <button id="download-btn" className='edit-btn' onClick={()=> {download()}} ></button>
+                        <button id="image-btn" className='edit-btn' onClick = {()=> {imageMode()}}></button>
+                        <button id="text-btn" className='edit-btn' onClick = {()=> {textMode()}}></button>
                     </div>
                 </div>
                 <div id="tool-detail-view">
