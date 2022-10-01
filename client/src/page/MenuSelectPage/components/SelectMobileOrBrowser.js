@@ -9,12 +9,10 @@ import Browser from "../../../assets/image/Browser.png";
 export default function SelectMobileOrBrowser() {
     const isMobile = () => {
         localStorage.setItem("isFromMobile", "true");
-        document.location.href = "/edit";
     }
 
     const isBrowser = () => {
         localStorage.setItem("isFromMobile", "false");
-        document.location.href = "/edit";
     }
     return (
         <div className="selectpage">
@@ -44,24 +42,28 @@ export default function SelectMobileOrBrowser() {
                 <span className='start'></span>
                 <span className='start'></span>
                 <div className='HT-Content'>
-                    <div className='Edit-Content cont' onClick={isMobile}>
-                        <span></span><span></span><span></span><span></span>
-                        <div className='Edit-Image'>
-                            <img src={Mobile} alt="Edit-Img" style={{width:"30%",height:"30%"}}/>
+                    <Link to='/edit'>
+                        <div className='Human-content cont' onClick={isMobile}>
+                            <span></span><span></span><span></span><span></span>
+                            <div className='Human-Image'>
+                                <img src={Mobile} alt="Mobile-Img" style={{width:"30%",height:"30%"}}/>
+                            </div>
+                            <div className='Human-mdes'>
+                                모바일로 촬영한<br/>픽토그램 편집
+                            </div>
                         </div>
-                        <div className='Edit-mdes'>
-                            모바일로 촬영한 픽토그램 편집
+                    </Link>
+                    <Link to='/edit'>
+                        <div className='Edit-Content cont' onClick={isBrowser}>
+                            <span></span><span></span><span></span><span></span>
+                            <div className='Edit-Image'>
+                                <img src={Browser} alt="Edit-Img" style={{width:"30%",height:"30%"}}/>
+                            </div>
+                            <div className='Edit-mdes'>
+                                PC로 촬영한<br/>픽토그램 편집
+                            </div>
                         </div>
-                    </div>
-                    <div className='Edit-Content cont' onClick={isBrowser}>
-                        <span></span><span></span><span></span><span></span>
-                        <div className='Edit-Image'>
-                            <img src={Browser} alt="Edit-Img" style={{width:"30%",height:"30%"}}/>
-                        </div>
-                        <div className='Edit-mdes'>
-                            PC로 촬영한 픽토그램 편집
-                        </div>
-                    </div>
+                    </Link>
                 </div>
             </div>
         </div>

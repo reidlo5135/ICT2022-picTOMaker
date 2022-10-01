@@ -1,8 +1,8 @@
-import testImage from '../..//resource/human_pose.png'
-import {Pose} from '@mediapipe/pose'
-import {drawLine, drawHead} from '../../util/DrawingUtils'
-import "../../../../../styles/stuido/posewebstudio.css"
-import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState} from 'react';
+import React, {forwardRef, useImperativeHandle, useEffect, useRef} from 'react';
+import testImage from "../../resource/human_pose.png";
+import {Pose} from '@mediapipe/pose';
+import {drawLine, drawHead} from '../../util/DrawingUtils';
+import "../../../../../styles/stuido/posewebstudio.css";
 
 // Static Image를 통해 인체 모델을 테스트합니다.
 let result = null;
@@ -13,14 +13,9 @@ const TestPose = forwardRef((props,ref) => {
             console.log(result)
             window.localStorage.setItem("pictogram_result",JSON.stringify(result));
             window.localStorage.setItem("picto_type","pose")
-
-            // const item = window.localStorage.getItem("pictogram_result")
-            // console.log(JSON.parse(item));
             document.location.href = "/edit"
         }
     }));
-
-   
 
     const canvasRef = useRef(null);
 
