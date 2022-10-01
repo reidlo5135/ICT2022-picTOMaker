@@ -1,7 +1,7 @@
 import React from 'react';
-import Human from "../../../assets/image/Human.png"
-import Things from "../../../assets/image/Things.png"
-import Edit from "../../../assets/image/Edit.png"
+import Human from "../../../assets/image/Human.png";
+import Things from "../../../assets/image/Things.png";
+import Edit from "../../../assets/image/Edit.png";
 import { Link } from "react-router-dom";
 import "../menuSelect.css";
 import "../../../styles/font.css";
@@ -21,7 +21,7 @@ export default function MenuSelectDetails(){
             <span className='start'></span>
             <span className='start'></span>
             <div className='HT-Content'>
-                <Link to="/studio/pose/mobile">
+                <Link to="/pose/hand">
                     <div className='Human-content cont'>
                         <span></span><span></span><span></span><span></span>
                         <div className='cont-wrap'>
@@ -30,7 +30,6 @@ export default function MenuSelectDetails(){
                                     <img src={Human} alt="Human-Img" style={{width:"30%",height:"30%"}}/>
                                 </div>
                             </div>
-                        
                             <div className='desc-wrap'>
                                 <div className='Human-mdes'>
                                     <p>인체인식(모바일)</p>
@@ -54,7 +53,6 @@ export default function MenuSelectDetails(){
                                     <img src={Edit} alt="Edit-Img" style={{width:"30%",height:"30%"}}/>
                                 </div>
                             </div>
-                        
                             <div className='desc-wrap'>
                                 <div className='Edit-mdes'>
                                     <p>픽토그램 편집</p>
