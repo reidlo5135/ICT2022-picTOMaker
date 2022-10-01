@@ -1,5 +1,5 @@
 import React, {useRef,useEffect,useState} from 'react';
-import {MobileCamPose} from "./module/mobile/MobileCamPose";
+import MobileCamPose from "./module/mobile/MobileCamPose";
 import Button from '@mui/material/Button';
 import Top from "../../Top";
 import "../../../styles/stuido/topbar.css";
@@ -10,7 +10,6 @@ import Camera from "../../../assets/image/studio_image/camera.png";
 import Modal from "../../Modal";
 import StudioSettingComponent from '../StudioSettingComponent';
 import StudioCaptureDelay from '../StudioCaptureDelay';
-import {isMobile} from "react-device-detect";
 
 export default function MobileWebStudio() {
     const [timeModalOpen, setTimeModalOpen] = useState(false);
@@ -57,7 +56,6 @@ export default function MobileWebStudio() {
             <Top/>
             <div id="topbar"></div>
             <div className ="studio_container">
-                {/*<CamPose ref={childRef}/>*/}
                 <MobileCamPose ref={childRef} />
                 <div className = 'button-group'>
                     <div className='camera-btn'>

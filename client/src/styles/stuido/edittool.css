@@ -52,6 +52,7 @@
     background: url("../../assets/image/studio_image/pencil_btn.png") no-repeat;
     height : 64px;
     border: none;
+    background-size: 100%;
 }
 
 #pencil-btn:hover {
@@ -65,6 +66,7 @@
     background: url("../../assets/image/studio_image/figure_btn.png") no-repeat;
     height : 64px;
     border: none;
+    background-size: 100%;
 }
 #figure-btn:hover {
     cursor : pointer;
@@ -77,6 +79,7 @@
     background: url("../../assets/image/studio_image/image_btn.png") no-repeat;
     height : 64px;
     border: none;
+    background-size: 100%;
 }
 
 #text-btn {
@@ -84,6 +87,7 @@
     background: url("../../assets/image/studio_image/text_btn.png") no-repeat;
     height : 64px;
     border: none;
+    background-size: 100%;
 }
 
 #download-btn {
@@ -91,6 +95,7 @@
     background: url("../../assets/image/studio_image/download_btn.png") no-repeat;
     height : 64px;
     border: none;
+    background-size: 100%;
 }
 
 #open-btn {
@@ -98,6 +103,7 @@
     background: url("../../assets/image/studio_image/open_btn.png") no-repeat;
     height : 64px;
     border: none;
+    background-size: 100%;
 }
 
 #share-btn {
@@ -105,4 +111,54 @@
     background: url("../../assets/image/studio_image/share_btn.png") no-repeat;
     height : 64px;
     border: none;
+    background-size: 100%;
+}
+
+@media (max-width:1023px) {
+    #middle-view {
+        width: 90vw;
+        height: 70vw;
+    }
+
+    #edit-view {
+        width: 100%;
+        height: 100%;
+    }
+    #edit-canvas{
+        width: 100% !important;
+        height: 100% !important;
+    }
+    .upper-canvas{
+        width: 100% !important;
+        height: 100% !important;
+    }
+    .canvas-container{
+        width: 100% !important;
+        height: 100% !important;
+        position: relative;
+        user-select: none;
+    }
+    #tool-view{
+        display: flex;
+        background-color: white;
+        width: 100%;
+        height: 20vw;
+        border-right: 1px solid #B5B5B5;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: inherit;
+    }
+    #tool-detail-view {
+        width: 90vw;
+        height: 20vw;
+        background-color: white;
+        margin: 0 auto;
+        border: 1px solid #B5B5B5;
+    }
+    .edit-btn{
+        background-size: 100%;
+        width: 15% !important;
+        height: 70% !important;
+    }
+    
 }

@@ -1,8 +1,6 @@
-import React,{useRef,useEffect,useState} from 'react';
-import * as cam from '@mediapipe/camera_utils';
-// import {DeviceCheck, getStream} from './util/DevicesCheck';
+import React, {useRef,useEffect,useState} from 'react';
 import CamHand from './module/CamHand'
-import TestHand from './module/TestHand'
+import TestHand from './module/test/TestHand'
 import Button from '@mui/material/Button';
 import Top from "../../Top";
 import "../../../styles/stuido/topbar.css";
@@ -56,11 +54,6 @@ export default function HandWebStudio() {
         window.localStorage.setItem('thick',50);
         window.localStorage.setItem('lineColor',"FF03030");
         window.localStorage.setItem('backgroundColor',"FFFFFF");
-        /*
-        if (DeviceCheck()) {
-            console.log("디바이스 인식 성공")
-            const deviceStream = getStream();
-        } */
     },[]);
 
     return (

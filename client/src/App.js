@@ -25,8 +25,12 @@ import M_Intro from "./page/IntroducePage/components/Mobile-intro";
 import M_MyPage from "./page/UserInfoPage/mobile-components/Mobile-MyPage";
 import M_Community from "./page/CommunityPage/mobile-components/Mobile-Community";
 import M_Select from "./page/MenuSelectPage/mobile-select/Mobile-MenuSelect";
-import MobileWebStudio from "./component/studio/poseweb/Mobile-WebStudio";
+import MobilePoseWebStudio from "./component/studio/poseweb/Mobile-PoseWebStudio";
+import MobileHandWebStudio from "./component/studio/handweb/Mobile-HandWebStudio";
 import SelectMobileOrBrowser from "./page/MenuSelectPage/components/SelectMobileOrBrowser";
+import SelectPoseOrHand from "./page/MenuSelectPage/components/SelectPoseOrHand";
+import MobileSelectPoseOrHand from "./page/MenuSelectPage/mobile-select/Mobile-SelectPoseOrHand";
+import M_EditTool from "./component/studio/edittool/mobile-edittool/Mobile-EditTool";
 
 export default function App(){
 
@@ -37,6 +41,7 @@ export default function App(){
                     <Switch>
                         <Route exact path = '/' component={M_Main}/>
                         <Route path = '/select' component={M_Select}/>
+                        <Route path= '/pose/hand' component={MobileSelectPoseOrHand} />
                         <Route path = '/signUp' component={LocalUserSignUp}/>
                         <Route path = '/myPage' component={M_MyPage}/>
                         <Route path = '/introduce' component={M_Intro}/>
@@ -49,8 +54,9 @@ export default function App(){
                         <Route path = '/oauth2/redirect/kakao' component={M_SocialUserCallback} />
                         <Route path= '/oauth2/redirect/naver' component={M_SocialUserCallback} />
                         <Route path= '/oauth2/redirect/google' component={M_SocialUserCallback} />
-                        <Route path= '/studio/pose/mobile' component={MobileWebStudio} />
-                        <Route path= '/edit' component={EditTool} />
+                        <Route path= '/studio/pose/mobile' component={MobilePoseWebStudio} />
+                        <Route path= '/studio/hand/mobile' component={MobileHandWebStudio} />
+                        <Route path= '/edit' component={M_EditTool} />
                         <Route path= '/tool/image' component={EditImageTool} />
                     </Switch>
                 </AnimatePresence>
@@ -60,7 +66,8 @@ export default function App(){
                     <Switch>
                         <Route exact path = '/' component={Main}/>
                         <Route path = '/select' component={MenuSelect}/>
-                        <Route exact path= '/edit/select' component={SelectMobileOrBrowser} />
+                        <Route path= '/edit/select' component={SelectMobileOrBrowser} />
+                        <Route path= '/pose/hand' component={SelectPoseOrHand} />
                         <Route path = '/signUp' component={LocalUserSignUp}/>
                         <Route path = '/myPage' component={MyPageContent}/>
                         <Route path = '/introduce' component={Introduce}/>
