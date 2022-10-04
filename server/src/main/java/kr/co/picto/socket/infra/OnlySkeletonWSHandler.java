@@ -37,7 +37,11 @@ public class OnlySkeletonWSHandler extends TextWebSocketHandler {
             try {
                 if(msg.equals("editTool")) {
                     log.info("EditTool DataMap : " + data);
-                    wss.sendMessage(new TextMessage(data.get("toBrowser").toJSONString()));
+                    if(data.isEmpty()) {
+                        wss.sendMessage(new TextMessage("empty"));
+                    } else {
+                        wss.sendMessage(new TextMessage(data.get("toBrowser").toJSONString()));
+                    }
                 } else {
                     data.put("toBrowser", obj);
                 }
@@ -51,6 +55,7 @@ public class OnlySkeletonWSHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessionMap.remove(session.getId());
+        data.clear();
         super.afterConnectionClosed(session, status);
     }
 
