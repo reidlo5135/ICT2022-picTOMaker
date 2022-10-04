@@ -19,7 +19,7 @@ export default function EditTool(props) {
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
     let type = null;
-    const ws = new WebSocket("ws://localhost:8080/picto");
+    const ws = new WebSocket("ws://ec2-52-79-56-189.ap-northeast-2.compute.amazonaws.com/picto");
 
     const pictogramImage = props.pictogramImage;
 

@@ -12,7 +12,7 @@ const MobileCamHand = forwardRef((props, ref) => {
         capture() {
             console.log("MobileCamHand result : ", result);
             const skeleton = JSON.stringify(result);
-            const ws = new WebSocket("ws://localhost:8080/picto");
+            const ws = new WebSocket("ws://ec2-52-79-56-189.ap-northeast-2.compute.amazonaws.com/picto");
             const json = {
                 "skeleton": skeleton,
                 "thick": 50,
@@ -22,11 +22,7 @@ const MobileCamHand = forwardRef((props, ref) => {
             }
             ws.onopen = () => {
                 ws.send(JSON.stringify(json));
-            }
-            ws.onmessage = (e) => {
-                const data = JSON.parse(e.data);
-                console.log("ws data : ", data);
-            }
+            };
         }
     }));
 
