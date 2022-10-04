@@ -19,20 +19,29 @@ export default function EditTool(props) {
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
     let type = null;
+    const ws = new WebSocket("ws://localhost:8080/picto");
 
     const pictogramImage = props.pictogramImage;
 
     function drawingPictogramMobile() {
-        const ws = new WebSocket("ws://localhost:8080/picto");
         ws.onopen = () => {
             ws.send("editTool");
-        }
+        };
         ws.onmessage = (e) => {
-            const data = JSON.parse(e.data);
-            console.log("EditTool.js nonResult : ", data);
-            drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor, data.type);
-            console.log("isFM : ", isFromMobile);
-        }
+            console.log("E : ", e.data);
+            if(e.data === "empty") {
+                alert("모바일 기기에서 먼저 촬영 후에 제작이 가능해요.");
+                ws.close();
+            } else {
+                const data = JSON.parse(e.data);
+                console.log("EditTool.js nonResult : ", data);
+                drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor, data.type);
+                console.log("isFM : ", isFromMobile);
+            }
+        };
+        ws.onclose = () => {
+            history.push("/");
+        };
     }
 
     function drawingPictogram() {
@@ -330,6 +339,9 @@ export default function EditTool(props) {
                 if(response.data.code === 0) {
                     localStorage.setItem("picTOUrl", response.data.data);
                     alert('성공적으로 저장되었습니다!');
+                    if(isFromMobile === "true") {
+                        ws.close();
+                    }
                     history.push("/");
                 }
             }).catch((err) => {

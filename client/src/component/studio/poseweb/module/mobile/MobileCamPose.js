@@ -1,10 +1,12 @@
-import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState, useCallback} from 'react';
+import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState} from 'react';
+import {useHistory} from "react-router";
 import {Pose} from '@mediapipe/pose';
 import {drawLine, drawHead} from '../../util/DrawingUtils';
 import testImage from '../../resource/human_pose.png';
 import "../../../../../styles/stuido/posewebstudio.css";
 
 const MobileCamPose = forwardRef((props,ref) => {
+    const history = useHistory();
 
     useImperativeHandle(ref,()=> ({
         capture() {
@@ -17,14 +19,12 @@ const MobileCamPose = forwardRef((props,ref) => {
                 "lineColor": "FF03030",
                 "backgroundColor": "FFFFFF",
                 "type": "pose"
-            }
+            };
             ws.onopen = () => {
                 ws.send(JSON.stringify(json));
-            }
-            ws.onmessage = (e) => {
-                const data = JSON.parse(e.data);
-                console.log("ws data : ", data);
-            }
+                alert("픽토그램 촬영이 완료되었어요.\nPC 브라우저에서 편집 페이지에서 확인해주세요.");
+                history.push("/");
+            };
         }
     }));
 
@@ -78,16 +78,15 @@ const MobileCamPose = forwardRef((props,ref) => {
             // 머리
             drawHead(result[0].x,result[0].y,canvasCtx,640,480,"15","000000");
         }
-        console.log(result)
+        console.log(result);
     }
 
     useEffect(()=> {
-
-        const imageElement = document.getElementById('test-image')
+        const imageElement = document.getElementById('test-image');
 
         const pose = new Pose({locateFile : (file) => {
                 return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
-            }})
+        }});
 
         // 포즈 설정값
         pose.setOptions({
