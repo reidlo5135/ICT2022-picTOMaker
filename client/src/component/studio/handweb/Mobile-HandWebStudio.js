@@ -2,7 +2,7 @@ import React,{useRef,useEffect,useState} from 'react';
 import * as cam from '@mediapipe/camera_utils';
 // import {DeviceCheck, getStream} from './util/DevicesCheck';
 import CamHand from './module/CamHand';
-import TestHand from './module/test/TestHand'
+import MobileCamHand from "./module/mobile/MobileCamHand";
 import Button from '@mui/material/Button';
 import Top from "../../Top";
 import "../../../styles/stuido/topbar.css";
@@ -53,11 +53,7 @@ export default function HandWebStudio() {
 
     // 초기설정 Hook
     useEffect(()=> {
-        console.log("HandWebStudio Mounting Start")
-        window.localStorage.setItem('delay',0);
-        window.localStorage.setItem('thick',50);
-        window.localStorage.setItem('lineColor',"FF03030");
-        window.localStorage.setItem('backgroundColor',"FFFFFF");
+        console.log("HandWebStudio Mounting Start");
         /*
         if (DeviceCheck()) {
             console.log("디바이스 인식 성공")
@@ -70,8 +66,7 @@ export default function HandWebStudio() {
             <Top/>
             <div id="topbar"></div>
             <div className ="studio_container">
-                {/*<CamPose ref={childRef}/>*/}
-                <TestHand ref={childRef} />
+                <MobileCamHand ref={childRef} />
                 <div className = 'button-group'>
                     <div className='camera-btn'>
                         <div>

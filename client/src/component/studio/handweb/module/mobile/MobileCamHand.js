@@ -1,27 +1,30 @@
-import testImage from '../resource/test_hand2.png'
-import {Hands} from '@mediapipe/hands'
-import {drawLine, drawHead} from '../../poseweb/util/DrawingUtils'
-import "../../../../styles/stuido/posewebstudio.css"
-import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState} from 'react';
+import React, {forwardRef, useImperativeHandle, useEffect, useRef} from 'react';
+import testImage from '../../resource/test_hand2.png';
+import {Hands} from '@mediapipe/hands';
+import {drawLine, drawHead} from '../../../poseweb/util/DrawingUtils';
+import "../../../../../styles/stuido/posewebstudio.css";
 
 // Static Image를 통해 인체 모델을 테스트합니다.
 let result = null;
 
-const TestHand = forwardRef((props,ref) => {
+const MobileCamHand = forwardRef((props, ref) => {
     useImperativeHandle(ref,()=> ({
         capture() {
-            console.log(result)
-            window.localStorage.setItem("pictogram_result",JSON.stringify(result));
-            window.localStorage.setItem("picto_type","hand");
-
-            // const item = window.localStorage.getItem("pictogram_result")
-            // console.log(JSON.parse(item));
-            
-            document.location.href = "/edit"
+            console.log("MobileCamHand result : ", result);
+            const skeleton = JSON.stringify(result);
+            const ws = new WebSocket("ws://ec2-52-79-56-189.ap-northeast-2.compute.amazonaws.com/picto");
+            const json = {
+                "skeleton": skeleton,
+                "thick": 50,
+                "lineColor": "FF03030",
+                "backgroundColor": "FFFFFF",
+                "type": "hand"
+            }
+            ws.onopen = () => {
+                ws.send(JSON.stringify(json));
+            };
         }
     }));
-
-    
 
     const canvasRef = useRef(null);
 
@@ -40,7 +43,7 @@ const TestHand = forwardRef((props,ref) => {
 
         canvasCtx.save();
         canvasCtx.clearRect(0,0,640,480);
-        
+
         if(result !== undefined) {
             console.log(result[8].x);
             drawLine(result[8].x,result[8].y,result[5].x,result[5].y,canvasCtx,640,480,"15","000000")
@@ -60,12 +63,11 @@ const TestHand = forwardRef((props,ref) => {
     }
 
     useEffect(()=> {
-
         const imageElement = document.getElementById('test-image')
 
         const hands = new Hands({locateFile : (file) => {
-            return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
-          }})
+                return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+        }});
 
         // 포즈 설정값
         hands.setOptions({
@@ -73,7 +75,7 @@ const TestHand = forwardRef((props,ref) => {
             modelComplexity: 1,
             minDetectionConfidence: 0.5,
             minTrackingConfidence: 0.5
-          });
+        });
 
         // 데이터 추출 후 실행할 콜백함수 설정
         hands.onResults(onResults);
@@ -95,4 +97,4 @@ const TestHand = forwardRef((props,ref) => {
     )
 })
 
-export default TestHand;
+export default MobileCamHand;

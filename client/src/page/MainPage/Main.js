@@ -61,7 +61,6 @@ export default function Main(){
                 email,
                 password
             }).then((response) => {
-                console.log('res data ', response.data);
                 if(response.data.code === 0){
                     setIsLogged(true);
                     setCookie("accessToken", response.data.data.accessToken, {path: "/"});
@@ -71,7 +70,7 @@ export default function Main(){
                     history.push('/');
                 }
             }).catch((err) => {
-                console.error('err : ', JSON.stringify(err));
+                console.error('err : ', err);
                 alert(err.response.data.msg);
             });
         }

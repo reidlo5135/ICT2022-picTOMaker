@@ -29,7 +29,7 @@ export default function PoseWebStudio() {
     const openModal = () => {
         setModalOpen(true);
     }
-    
+
     const closeModal = () => {
         setModalOpen(false);
     }
@@ -48,7 +48,7 @@ export default function PoseWebStudio() {
     function onResults(props) {
         console.log(props);
     }
-    
+
     // 초기설정 Hook
     useEffect(()=> {
         console.log("PoseWebStudio Mounting Start")

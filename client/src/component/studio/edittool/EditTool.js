@@ -18,21 +18,30 @@ export default function EditTool(props) {
     const isFromMobile = localStorage.getItem("isFromMobile");
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
-    const type = window.localStorage.getItem("picto_type");
+    let type = null;
+    const ws = new WebSocket("ws://ec2-52-79-56-189.ap-northeast-2.compute.amazonaws.com/picto");
 
     const pictogramImage = props.pictogramImage;
 
     function drawingPictogramMobile() {
-        const ws = new WebSocket("ws://localhost:8080/picto");
         ws.onopen = () => {
             ws.send("editTool");
-        }
+        };
         ws.onmessage = (e) => {
-            const data = JSON.parse(e.data);
-            console.log("EditTool.js nonResult : ", data);
-            drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor);
-            console.log("isFM : ", isFromMobile);
-        }
+            console.log("E : ", e.data);
+            if(e.data === "empty") {
+                alert("모바일 기기에서 먼저 촬영 후에 제작이 가능해요.");
+                ws.close();
+            } else {
+                const data = JSON.parse(e.data);
+                console.log("EditTool.js nonResult : ", data);
+                drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor, data.type);
+                console.log("isFM : ", isFromMobile);
+            }
+        };
+        ws.onclose = () => {
+            history.push("/");
+        };
     }
 
     function drawingPictogram() {
@@ -42,14 +51,16 @@ export default function EditTool(props) {
             console.log("DrawPicTOBrowser result : ", result);
             const thick = localStorage.getItem("thick");
             const color = localStorage.getItem("lineColor");
-            drawCanvas(result, thick, color);
+            type = localStorage.getItem("picto_type");
+            drawCanvas(result, thick, color, type);
             window.localStorage.setItem('pictogram_result', null);
         }
     }
 
-    function drawCanvas(result, thick, color) {
+    function drawCanvas(result, thick, color, type) {
         console.log("drawCanvas result, thick, color : ", result + ", " + thick + ", " + color);
-        console.log(result);
+        console.log("result : ", result);
+        console.log("type : ", type);
 
         if (type === "hand") {
             for (let i = 0; i < 21; i++) {
@@ -328,6 +339,9 @@ export default function EditTool(props) {
                 if(response.data.code === 0) {
                     localStorage.setItem("picTOUrl", response.data.data);
                     alert('성공적으로 저장되었습니다!');
+                    if(isFromMobile === "true") {
+                        ws.close();
+                    }
                     history.push("/");
                 }
             }).catch((err) => {

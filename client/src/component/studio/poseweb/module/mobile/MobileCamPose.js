@@ -1,29 +1,30 @@
-import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState, useCallback} from 'react';
+import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState} from 'react';
+import {useHistory} from "react-router";
 import {Pose} from '@mediapipe/pose';
 import {drawLine, drawHead} from '../../util/DrawingUtils';
 import testImage from '../../resource/human_pose.png';
 import "../../../../../styles/stuido/posewebstudio.css";
 
-export const MobileCamPose = forwardRef((props,ref) => {
+const MobileCamPose = forwardRef((props,ref) => {
+    const history = useHistory();
 
     useImperativeHandle(ref,()=> ({
         capture() {
             console.log("MobileCamPose result : ", result);
             const skeleton = JSON.stringify(result);
-            const ws = new WebSocket("ws://localhost:8080/picto");
+            const ws = new WebSocket("ws://ec2-52-79-56-189.ap-northeast-2.compute.amazonaws.com/picto");
             const json = {
                 "skeleton": skeleton,
                 "thick": 50,
                 "lineColor": "FF03030",
-                "backgroundColor": "FFFFFF"
-            }
+                "backgroundColor": "FFFFFF",
+                "type": "pose"
+            };
             ws.onopen = () => {
                 ws.send(JSON.stringify(json));
-            }
-            ws.onmessage = (e) => {
-                const data = JSON.parse(e.data);
-                console.log("ws data : ", data);
-            }
+                alert("픽토그램 촬영이 완료되었어요.\nPC 브라우저에서 편집 페이지에서 확인해주세요.");
+                history.push("/");
+            };
         }
     }));
 
@@ -77,16 +78,15 @@ export const MobileCamPose = forwardRef((props,ref) => {
             // 머리
             drawHead(result[0].x,result[0].y,canvasCtx,640,480,"15","000000");
         }
-        console.log(result)
+        console.log(result);
     }
 
     useEffect(()=> {
-
-        const imageElement = document.getElementById('test-image')
+        const imageElement = document.getElementById('test-image');
 
         const pose = new Pose({locateFile : (file) => {
                 return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
-            }})
+        }});
 
         // 포즈 설정값
         pose.setOptions({
@@ -117,3 +117,5 @@ export const MobileCamPose = forwardRef((props,ref) => {
         </>
     )
 });
+
+export default MobileCamPose;
