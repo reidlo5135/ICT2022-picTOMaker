@@ -34,7 +34,6 @@ const MobileCamHand = forwardRef((props, ref) => {
     const webcamRef = useRef(null);
 
     function onResults(results) {
-        console.log(results)
         if (loadingModal === true) {
             setLoadingModal(false);
         }
@@ -72,7 +71,6 @@ const MobileCamHand = forwardRef((props, ref) => {
             drawRect(result, lineColor, canvasCtx);
             
         }
-        console.log(result)
     }
 
     useEffect(()=> {

@@ -35,6 +35,9 @@
 	align-items: center;
 	display: flex;
 }
+.profile-link{
+	text-decoration: none;
+}
 
 .Top{
 	width:1280px;
