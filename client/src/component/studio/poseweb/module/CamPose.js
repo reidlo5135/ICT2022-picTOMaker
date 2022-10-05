@@ -12,9 +12,10 @@ const CamPose = forwardRef((props,ref)=> {
 
     useImperativeHandle(ref,()=> ({
         capture() {
-            // const item = window.localStorage.getItem("pictogram_result")
-            // console.log(JSON.parse(item));
-            document.location.href = "/edit"
+            console.log(result);
+            window.localStorage.setItem("pictogram_result",JSON.stringify(result));
+            window.localStorage.setItem("picto_type","pose");
+            document.location.href = "/edit";
         }
     }));
 
@@ -27,7 +28,7 @@ const CamPose = forwardRef((props,ref)=> {
             setLoadingModal(false);
         }
         result = results.poseLandmarks;
-        window.localStorage.setItem("pictogram_result",JSON.stringify(result));
+        window.localStorage.setItem("pictogram_result", JSON.stringify(result));
         draw();
     }
 
@@ -78,7 +79,7 @@ const CamPose = forwardRef((props,ref)=> {
     }
 
     useEffect(()=> {
-        console.log("CamPose Mounting Start")
+        console.log("CamPose Mounting Start");
 
         const userVideoElement = document.getElementById("user-video");
 
@@ -119,7 +120,7 @@ const CamPose = forwardRef((props,ref)=> {
                 <canvas style={{borderRight : "1px solid #aeaeae"}} ref={canvasRef} id="draw-canvas" width="640px" height="480px"></canvas>
             </div>
         </>
-    )
-})
+    );
+});
 
 export default CamPose;
