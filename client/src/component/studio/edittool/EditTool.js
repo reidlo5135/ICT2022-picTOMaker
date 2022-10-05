@@ -16,31 +16,10 @@ export default function EditTool(props) {
     const history = useHistory();
 
     const [selectMode, setSelectMode] = useState("none");
-    const isFromMobile = localStorage.getItem("isFromMobile");
-    const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
     let type = null;
-    const ws = new WebSocket("ws://ec2-52-79-56-189.ap-northeast-2.compute.amazonaws.com/picto");
 
     const pictogramImage = props.pictogramImage;
-
-    function drawingPictogramMobile() {
-        ws.onopen = () => {
-            ws.send("editTool");
-        };
-        ws.onmessage = (e) => {
-            if(e.data === "empty") {
-                alert("모바일 기기에서 먼저 촬영 후에 제작이 가능해요.");
-                ws.close();
-            } else {
-                const data = JSON.parse(e.data);
-                drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor, data.type);
-            }
-        };
-        ws.onclose = () => {
-            history.push("/");
-        };
-    }
 
     function drawingPictogram() {
         const nonResult = window.localStorage.getItem('pictogram_result');
@@ -351,10 +330,6 @@ export default function EditTool(props) {
                 if(response.data.code === 0) {
                     localStorage.setItem("picTOUrl", response.data.data);
                     alert('성공적으로 저장되었습니다!');
-                    if(isFromMobile === "true") {
-                        ws.close();
-                    }
-                    localStorage.removeItem("isFromMobile");
                     history.push("/");
                 }
             }).catch((err) => {
@@ -402,11 +377,7 @@ export default function EditTool(props) {
 
     useEffect(()=> {
         canvas = new fabric.Canvas('edit-canvas');
-        if(isFromMobile === "true") {
-            drawingPictogramMobile();
-        } else {
-            drawingPictogram();
-        }
+        drawingPictogram();
     },[]);
 
 

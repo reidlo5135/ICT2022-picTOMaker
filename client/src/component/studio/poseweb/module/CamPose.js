@@ -1,9 +1,9 @@
-import {Pose} from '@mediapipe/pose'
-import * as cam from '@mediapipe/camera_utils'
-import { useEffect, useRef, forwardRef, useImperativeHandle, useState } from 'react'
-import {drawBody, drawHead, drawLine} from '../util/DrawingUtils'
-import Spin from '../resource/loading.gif'
-import Modal from '../../../LoadingModal'
+import {Pose} from '@mediapipe/pose';
+import * as cam from '@mediapipe/camera_utils';
+import { useEffect, useRef, forwardRef, useImperativeHandle, useState } from 'react';
+import {drawBody, drawHead, drawLine} from '../util/DrawingUtils';
+import Spin from '../resource/loading.gif';
+import Modal from '../../../LoadingModal';
 
 // Static Image를 통해 인체 모델을 테스트합니다.
 let result = null;
@@ -13,9 +13,9 @@ const CamPose = forwardRef((props,ref)=> {
 
     useImperativeHandle(ref,()=> ({
         capture() {
-            window.localStorage.setItem("pictogram_result",JSON.stringify(result));
-            window.localStorage.setItem("picto_type","pose")
-            document.location.href = "/edit"
+            window.localStorage.setItem("pictogram_result", JSON.stringify(result));
+            window.localStorage.setItem("picto_type","pose");
+            document.location.href = "/edit";
         }
     }));
 
