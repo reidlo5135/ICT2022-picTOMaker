@@ -1,38 +1,38 @@
-import {Pose} from '@mediapipe/pose'
-import * as cam from '@mediapipe/camera_utils'
-import { useEffect, useRef, forwardRef, useImperativeHandle, useState } from 'react'
-import {drawHead, drawLine} from '../util/DrawingUtils'
-import Spin from '../resource/loading.gif'
-import Modal from '../../../LoadingModal'
+import {Pose} from '@mediapipe/pose';
+import * as cam from '@mediapipe/camera_utils';
+import { useEffect, useRef, forwardRef, useImperativeHandle, useState } from 'react';
+import {drawBody, drawHead, drawLine} from '../util/DrawingUtils';
+import Spin from '../resource/loading.gif';
+import Modal from '../../../LoadingModal';
 
 // Static Image를 통해 인체 모델을 테스트합니다.
-const CamPose = forwardRef((props,ref)=> {
+let result = null;
 
+const CamPose = forwardRef((props,ref)=> {
     const [loadingModal,setLoadingModal] = useState(true);
 
     useImperativeHandle(ref,()=> ({
         capture() {
-            // const item = window.localStorage.getItem("pictogram_result")
-            // console.log(JSON.parse(item));
-            document.location.href = "/edit"
+            window.localStorage.setItem("pictogram_result", JSON.stringify(result));
+            window.localStorage.setItem("picto_type","pose");
+            document.location.href = "/edit";
         }
     }));
 
-    let result = null;
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
 
     function onResults(results) {
+        console.log(results);
         if (loadingModal === true) {
             setLoadingModal(false);
         }
         result = results.poseLandmarks;
-        window.localStorage.setItem("pictogram_result",JSON.stringify(result));
+        window.localStorage.setItem("pictogram_result", JSON.stringify(result));
         draw();
     }
 
     function draw() {
-        
         canvasRef.current.width = 640;
         canvasRef.current.height = 480;
 
@@ -74,12 +74,13 @@ const CamPose = forwardRef((props,ref)=> {
 
             // 머리
             drawHead(result[0].x,result[0].y,canvasCtx,640,480,thick,lineColor);
+
+            // 몸통
+            drawBody(result,lineColor,canvasCtx);
         }
     }
 
     useEffect(()=> {
-        console.log("CamPose Mounting Start")
-
         const userVideoElement = document.getElementById("user-video");
 
         const pose = new Pose({locateFile : (file) => {
@@ -119,7 +120,7 @@ const CamPose = forwardRef((props,ref)=> {
                 <canvas style={{borderRight : "1px solid #aeaeae"}} ref={canvasRef} id="draw-canvas" width="640px" height="480px"></canvas>
             </div>
         </>
-    )
-})
+    );
+});
 
 export default CamPose;

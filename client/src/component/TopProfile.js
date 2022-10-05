@@ -22,8 +22,6 @@ const TopProfile = () => {
                 "X-AUTH-TOKEN": cookies.accessToken
             }
         }).then((response) => {
-            console.log('OAuth profile res data.data : ', response.data.data);
-
             profile = JSON.parse(JSON.stringify(response.data.data));
             setEmail(profile.email);
             setNickName(profile.name);
@@ -47,8 +45,6 @@ const TopProfile = () => {
                 "X-AUTH-TOKEN": cookies.accessToken
             }
         }).then((response) => {
-            console.log('Local profile res data.data : ', response.data.data);
-
             profile = JSON.parse(JSON.stringify(response.data.data));
             setEmail(profile.email);
             setNickName(profile.nickName);
@@ -61,8 +57,6 @@ const TopProfile = () => {
 
             localStorage.setItem("profile", JSON.stringify(profile));
         }).catch((err) => {
-            console.error('err : ', JSON.stringify(err));
-            console.error('code : ', err.response.data.code);
             axios.post('/v1/api/user/reissue', {
                 accessToken: cookies.accessToken,
                 refreshToken: localStorage.getItem("refresh_token")
@@ -77,7 +71,6 @@ const TopProfile = () => {
     };
 
     useEffect(() => {
-        console.log("TopProfile.js token : ", cookies.accessToken);
         if(provider === null) {
             setIsLogged(false);
         } else if(provider !== 'LOCAL') {

@@ -10,10 +10,10 @@ let result = null;
 const TestPose = forwardRef((props,ref) => {
     useImperativeHandle(ref,()=> ({
         capture() {
-            console.log(result)
+            console.log(result);
             window.localStorage.setItem("pictogram_result",JSON.stringify(result));
-            window.localStorage.setItem("picto_type","pose")
-            document.location.href = "/edit"
+            window.localStorage.setItem("picto_type","pose");
+            document.location.href = "/edit";
         }
     }));
 

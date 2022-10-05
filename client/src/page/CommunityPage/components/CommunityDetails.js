@@ -13,12 +13,8 @@ const CommunityDetails = ({ history, diaryList, match}) => {
     const getData = async () => {
         await axios.get(`/v1/api/community/${match.params.id}`)
             .then((response) => {
-                console.log('response : ', response.data);
-                console.log('response : ', response.data.data);
-
                 if(response.data.code === 0) {
                     const res = response.data.data;
-                    console.log('community detail res : ' + res);
                     setData(res);
                 }
             })
