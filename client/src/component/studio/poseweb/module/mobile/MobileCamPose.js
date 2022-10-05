@@ -82,6 +82,8 @@ const MobileCamPose = forwardRef((props,ref) => {
     }
 
     useEffect(()=> {
+        console.log("Mobile CamPose Mounting Start");
+
         const imageElement = document.getElementById('test-image');
 
         const pose = new Pose({locateFile : (file) => {
