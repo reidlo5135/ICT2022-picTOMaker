@@ -1,7 +1,7 @@
 import React, {forwardRef, useImperativeHandle, useEffect, useRef,useState} from 'react';
 import testImage from '../../resource/test_hand2.png';
 import {Hands} from '@mediapipe/hands';
-import {drawLine, drawHead} from '../../../poseweb/util/DrawingUtils';
+import {drawLine, drawHead, drawRect} from '../../../poseweb/util/DrawingUtils'
 import "../../../../../styles/stuido/posewebstudio.css";
 import Modal from '../../../../LoadingModal'
 import * as cam from '@mediapipe/camera_utils'
@@ -50,23 +50,27 @@ const MobileCamHand = forwardRef((props, ref) => {
         const canvasElement = canvasRef.current;
         const canvasCtx = canvasElement.getContext('2d');
 
+        const thick = window.localStorage.getItem('lineThick');
+        const lineColor = window.localStorage.getItem('lineColor');
+
         canvasCtx.save();
         canvasCtx.clearRect(0,0,640,480);
 
         if(result !== undefined) {
-            console.log(result[8].x);
-            drawLine(result[8].x,result[8].y,result[5].x,result[5].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[12].x,result[12].y,result[9].x,result[9].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[16].x,result[16].y,result[13].x,result[13].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[20].x,result[20].y,result[17].x,result[17].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[2].x,result[2].y,result[4].x,result[4].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[1].x,result[1].y,result[2].x,result[2].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[1].x,result[1].y,result[0].x,result[0].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[17].x,result[17].y,result[0].x,result[0].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[2].x,result[2].y,result[5].x,result[5].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[5].x,result[5].y,result[9].x,result[9].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[9].x,result[9].y,result[13].x,result[13].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[13].x,result[13].y,result[17].x,result[17].y,canvasCtx,640,480,"15","000000")
+            drawLine(result[8].x,result[8].y,result[5].x,result[5].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[12].x,result[12].y,result[9].x,result[9].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[16].x,result[16].y,result[13].x,result[13].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[20].x,result[20].y,result[17].x,result[17].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[2].x,result[2].y,result[4].x,result[4].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[1].x,result[1].y,result[2].x,result[2].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[1].x,result[1].y,result[0].x,result[0].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[17].x,result[17].y,result[0].x,result[0].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[2].x,result[2].y,result[5].x,result[5].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[5].x,result[5].y,result[9].x,result[9].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[9].x,result[9].y,result[13].x,result[13].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[13].x,result[13].y,result[17].x,result[17].y,canvasCtx,640,480,thick,lineColor)
+            drawRect(result, lineColor, canvasCtx);
+            
         }
         console.log(result)
     }
