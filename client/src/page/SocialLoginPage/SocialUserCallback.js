@@ -31,9 +31,6 @@ export default function SocialUserCallback(){
             "X-AUTH-TOKEN": token
         }
     }).then((response) => {
-        console.log('res data : ', response.data);
-        console.log('res data.data : ', response.data.data);
-
         if(response.data.code === 0) {
             setIsLogged(true);
             setCookie("accessToken", response.data.data.access_token, {path: "/"});
