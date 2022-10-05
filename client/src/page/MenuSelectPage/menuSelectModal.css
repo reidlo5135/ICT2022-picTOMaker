@@ -71,6 +71,8 @@
         align-items: center;
         animation: modal-bg-show 0.3s;
         width: 100vw;
-        height: 100vw
+    }
+    .SI-Input {
+        width: 100%;
     }
 }
