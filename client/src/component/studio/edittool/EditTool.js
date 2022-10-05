@@ -10,10 +10,9 @@ import '../../../styles/stuido/edittool.css';
 
 let canvas = null;
 
-export default function EditTool(props) {
+export default function EditTool(props,match) {
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const history = useHistory();
-
     const [selectMode, setSelectMode] = useState("none");
     const isFromMobile = localStorage.getItem("isFromMobile");
     const profile = localStorage.getItem("profile");

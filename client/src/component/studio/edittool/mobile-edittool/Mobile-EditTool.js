@@ -4,7 +4,7 @@ import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {fabric} from 'fabric';
 import DetailComponent from '../detail/DetailComponent';
-import Top from "../../../Top";
+import Top from "../../../mobile-components/Mobile-Top";
 import '../../../../styles/stuido/topbar.css';
 import '../../../../styles/stuido/edittool.css';
 

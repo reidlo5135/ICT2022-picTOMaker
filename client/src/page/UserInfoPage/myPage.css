@@ -155,6 +155,8 @@
     z-index: 1;
     position: relative;
     bottom:50px;
+    background-color: white;
+    box-shadow: 4px 5px 5px #eeeeee;
 }
 
 .pic-img > img{

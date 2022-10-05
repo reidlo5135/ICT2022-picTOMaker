@@ -1,7 +1,7 @@
 import React, {useRef,useEffect,useState} from 'react';
 import MobileCamPose from "./module/mobile/MobileCamPose";
 import Button from '@mui/material/Button';
-import Top from "../../Top";
+import Top from "../../mobile-components/Mobile-Top";
 import "../../../styles/stuido/topbar.css";
 import "../../../styles/stuido/posewebstudio.css";
 import Gear from "../../../assets/image/studio_image/gear-solid.svg";
