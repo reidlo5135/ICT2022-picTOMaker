@@ -14,7 +14,6 @@ export const wsCommunicationWithConnection = (requestUrl, requestHeaders, reques
         ws.subscribe(responseUrl,
             (data) => {
                 const res = JSON.parse(data.body);
-                console.log("Stomp ws msg : ", res);
                 action(res);
             }
         );
@@ -26,7 +25,6 @@ export const wsSub = (responseUrl, action) => {
         ws.subscribe(responseUrl,
             (data) => {
                 const res = JSON.parse(data.body);
-                console.log("Stomp ws msg : ", res);
                 action(res);
             }
         );
@@ -38,7 +36,6 @@ export const wsCommunication = (requestUrl, requestHeaders, requestData, respons
     ws.subscribe(responseUrl,
         (data) => {
             const res = JSON.parse(data.body);
-            console.log("Stomp ws msg : ", res);
             action(res);
         }
     );

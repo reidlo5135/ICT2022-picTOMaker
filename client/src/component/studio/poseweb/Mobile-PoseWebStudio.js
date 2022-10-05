@@ -48,7 +48,6 @@ export default function MobileWebStudio() {
 
     // 초기설정 Hook
     useEffect(()=> {
-        console.log("PoseWebStudio Mounting Start");
     },[]);
 
     return (

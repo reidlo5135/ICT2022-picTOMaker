@@ -28,11 +28,8 @@ export default function Main(){
     const openModal = () => {
         const token = cookies.accessToken;
         if((token === null || token === undefined) && isLogged === false) {
-            console.log('Main isLogged : ', isLogged);
             setModalOpen(true);
         } else {
-            console.log("token : ", token);
-            console.log('Main isLogged : ', isLogged);
             history.push("/select");
         }
     }

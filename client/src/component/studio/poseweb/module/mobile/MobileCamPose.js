@@ -4,13 +4,18 @@ import {Pose} from '@mediapipe/pose';
 import {drawLine, drawHead} from '../../util/DrawingUtils';
 import testImage from '../../resource/human_pose.png';
 import "../../../../../styles/stuido/posewebstudio.css";
+import * as cam from "@mediapipe/camera_utils";
+import Modal from "../../../../LoadingModal";
+import Spin from "../../resource/loading.gif";
+
+let result = null;
 
 const MobileCamPose = forwardRef((props,ref) => {
     const history = useHistory();
+    const [loadingModal,setLoadingModal] = useState(true);
 
     useImperativeHandle(ref,()=> ({
         capture() {
-            console.log("MobileCamPose result : ", result);
             const skeleton = JSON.stringify(result);
             const ws = new WebSocket("ws://ec2-52-79-56-189.ap-northeast-2.compute.amazonaws.com/picto");
             const json = {
@@ -28,11 +33,13 @@ const MobileCamPose = forwardRef((props,ref) => {
         }
     }));
 
-    let [result, setResult] = useState(null);
-
+    const webcamRef = useRef(null);
     const canvasRef = useRef(null);
 
     function onResults(results) {
+        if (loadingModal === true) {
+            setLoadingModal(false);
+        }
         result = results.poseLandmarks;
         draw();
     }
@@ -78,16 +85,13 @@ const MobileCamPose = forwardRef((props,ref) => {
             // 머리
             drawHead(result[0].x,result[0].y,canvasCtx,640,480,"15","000000");
         }
-        console.log(result);
     }
 
     useEffect(()=> {
-        console.log("Mobile CamPose Mounting Start");
-
-        const imageElement = document.getElementById('test-image');
+        const userVideoElement = document.getElementById("user-video");
 
         const pose = new Pose({locateFile : (file) => {
-                return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
+                return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
         }});
 
         // 포즈 설정값
@@ -103,18 +107,25 @@ const MobileCamPose = forwardRef((props,ref) => {
         // 데이터 추출 후 실행할 콜백함수 설정
         pose.onResults(onResults);
 
-        pose.send({image : imageElement});
+        const camera = new cam.Camera(userVideoElement,{
+            onFrame: async () => {
+                await pose.send({image : userVideoElement});
+            },
+            width : 640,
+            height : 480
+        });
+        camera.start();
     },[]);
 
     return (
         <>
-            <div className="test-pose">
-                <div className='left-content'>
-                    <img src={testImage} id="test-image"></img>
-                </div>
-                <div className='right-content'>
-                    <canvas ref={canvasRef} id="draw-canvas" width="640px" height="480px"></canvas>
-                </div>
+            <Modal open={loadingModal}>
+                <img style={{display : "block" , margin : "auto"}} src={Spin} alt="불러오고 있습니다."/>
+                <h2 style={{textAlign : "center"}}>스튜디오를 불러오고 있습니다.</h2>
+            </Modal>
+            <div className="cam-pose">
+                <video style = {{borderLeft : "1px solid #aeaeae"}} autoPlay id="user-video" ref={webcamRef}></video>
+                <canvas style={{borderRight : "1px solid #aeaeae"}} ref={canvasRef} id="draw-canvas" width="640px" height="480px"></canvas>
             </div>
         </>
     )

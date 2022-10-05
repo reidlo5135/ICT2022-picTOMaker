@@ -43,17 +43,12 @@ export default function HandWebStudio() {
     function capture() {
         const delay = parseInt(localStorage.getItem("delay"));
         setTimeout(() => {
-            childRef.current.capture()
-        },delay)
-    }
-
-    function onResults(props) {
-        console.log(props);
+            childRef.current.capture();
+        }, delay)
     }
 
     // 초기설정 Hook
     useEffect(()=> {
-        console.log("HandWebStudio Mounting Start");
         /*
         if (DeviceCheck()) {
             console.log("디바이스 인식 성공")

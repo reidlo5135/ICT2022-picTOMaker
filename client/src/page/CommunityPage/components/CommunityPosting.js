@@ -36,7 +36,6 @@ const CommunityPosting = () => {
     const getProf = () => {
         try {
             const jsonProf = JSON.parse(getProfile);
-            console.log('QNA jProf : ', jsonProf);
             if(provider === 'LOCAL') {
                 setProfNickName(jsonProf.nickName);
             } else {
@@ -50,7 +49,6 @@ const CommunityPosting = () => {
 
     useEffect(() => {
         getProf();
-        console.log(`img: ${imageSrc}`)
     }, []);
 
     const handleInput = e => {
@@ -67,9 +65,6 @@ const CommunityPosting = () => {
                 name: profNickName,
                 content
             }).then((response) => {
-                console.log('response : ', response.data);
-                console.log('response : ', response.data.data);
-
                 if(response.data.code === 0) {
                     alert('문의사항이 접수되었습니다.');
                     setIsOpen(!isOpen);
@@ -141,16 +136,12 @@ const CommunityPosting = () => {
 
       const registerBoard = () => {
           const image = imageSrc.toDataURL("image/png").replace("image/png", "image/octet-stream");
-          console.log('image : ', image);
           post(`/v1/api/community/${provider}`, {
               email,
               title,
               content,
               image
           }).then((response) => {
-              console.log('response : ', response.data);
-              console.log('response : ', response.data.data);
-
               if(response.data.code === 0) {
                   alert('게시물이 등록되었습니다.');
                   setIsOpen(!isOpen);

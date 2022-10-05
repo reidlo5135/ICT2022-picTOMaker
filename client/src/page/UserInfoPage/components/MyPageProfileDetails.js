@@ -18,8 +18,6 @@ export default function MyPageProfileDetails(){
     const getProf = () => {
         try {
             const jsonProf = JSON.parse(getProfile);
-            console.log('MyPage-profile jProf : ', jsonProf);
-
             const email = jsonProf.email;
             setEmail(email);
             get(`/v1/api/picto/count/${provider}`, {
@@ -27,10 +25,7 @@ export default function MyPageProfileDetails(){
                     "X-AUTH-TOKEN": cookies.accessToken
                 }
             }).then((response) => {
-                console.log('MyPage-profile getPicToCount : ', response.data);
-
                 if(response.data.code === 0) {
-                    console.log('MyPage-profile getPicToCount count : ', response.data.data);
                     setCount(response.data.data);
                 }
             }).catch((err) => {

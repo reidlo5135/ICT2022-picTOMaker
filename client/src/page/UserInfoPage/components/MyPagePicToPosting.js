@@ -16,18 +16,14 @@ const MyPagePicToPosting = ({ posts, loading }) => {
             headers: {
                 "X-AUTH-TOKEN": cookies.accessToken
             }
-        })
-            .then((response) => {
-                console.log('MyPagePicToPosting deletePicTo response data : ' + response.data);
-                console.log('MyPagePicToPosting deletePicTo response data.data : ' + response.data.data);
-
-                if(response.data.code === 0) {
-                    alert('성공적으로 삭제되었습니다.');
-                }
-            }).catch((err) => {
-                console.error('err : ', JSON.stringify(err));
-                alert(err.response.data.msg);
-            });
+        }).then((response) => {
+            if(response.data.code === 0) {
+                alert('성공적으로 삭제되었습니다.');
+            }
+        }).catch((err) => {
+            console.error('err : ', JSON.stringify(err));
+            alert(err.response.data.msg);
+        });
     }
 
   return (
