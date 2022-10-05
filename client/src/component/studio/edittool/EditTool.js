@@ -7,6 +7,7 @@ import DetailComponent from './detail/DetailComponent';
 import Top from "../../Top";
 import '../../../styles/stuido/topbar.css';
 import '../../../styles/stuido/edittool.css';
+import { models } from '../objectdetection/ModelList';
 
 let canvas = null;
 
@@ -15,39 +16,24 @@ export default function EditTool(props) {
     const history = useHistory();
 
     const [selectMode, setSelectMode] = useState("none");
-    const isFromMobile = localStorage.getItem("isFromMobile");
-    const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
     let type = null;
-    const ws = new WebSocket("ws://ec2-52-79-56-189.ap-northeast-2.compute.amazonaws.com/picto");
 
     const pictogramImage = props.pictogramImage;
 
-    function drawingPictogramMobile() {
-        ws.onopen = () => {
-            ws.send("editTool");
-        };
-        ws.onmessage = (e) => {
-            if(e.data === "empty") {
-                alert("모바일 기기에서 먼저 촬영 후에 제작이 가능해요.");
-                ws.close();
-            } else {
-                const data = JSON.parse(e.data);
-                drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor, data.type);
-            }
-        };
-        ws.onclose = () => {
-            history.push("/");
-        };
-    }
-
     function drawingPictogram() {
         const nonResult = window.localStorage.getItem('pictogram_result');
+        type = localStorage.getItem("picto_type");
+        if (type === "object") {
+            drawCanvas(null,null,null,type);
+            return;
+        }
+
         if (nonResult !== "null") {
             const result = JSON.parse(nonResult);
-            const thick = localStorage.getItem("thick");
+            const thick = localStorage.getItem("lineThick");
             const color = localStorage.getItem("lineColor");
-            type = localStorage.getItem("picto_type");
+            
             drawCanvas(result, thick, color, type);
             window.localStorage.setItem('pictogram_result', null);
         }
@@ -299,7 +285,27 @@ export default function EditTool(props) {
                 stroke: color
             });
 
-            canvas.add(shoulder, leftUpperArm, leftLowerArm, rightUpperArm, rightLowerArm, leftUpperBody, rightUpperBody, waist, leftUpperLeg, leftLowerLeg, rightUpperLeg, rightLowerLeg, head);
+            // 몸통
+            const body = new fabric.Polygon([
+                {x:result[12].x , y:result[12].y},
+                {x:result[11].x , y:result[11].y},
+                {x:result[23].x , y:result[23].y},
+                {x:result[24].x , y:result[24].y}
+        ],{
+            fill : color,
+    }) 
+
+            canvas.add(shoulder, leftUpperArm, leftLowerArm, rightUpperArm, rightLowerArm, leftUpperBody, rightUpperBody, waist, leftUpperLeg, leftLowerLeg, rightUpperLeg, rightLowerLeg, head, body);
+        }
+
+        if (type === "object") {
+            console.log("오브젝트 입니다!!")
+            const objectValue = localStorage.getItem("object");
+
+            console.log(models[objectValue].url)            
+            fabric.Image.fromURL(models[objectValue].url, function(oImg) {
+                canvas.add(oImg);
+            })
         }
 
         canvas.discardActiveObject();
@@ -324,10 +330,6 @@ export default function EditTool(props) {
                 if(response.data.code === 0) {
                     localStorage.setItem("picTOUrl", response.data.data);
                     alert('성공적으로 저장되었습니다!');
-                    if(isFromMobile === "true") {
-                        ws.close();
-                    }
-                    localStorage.removeItem("isFromMobile");
                     history.push("/");
                 }
             }).catch((err) => {
@@ -375,11 +377,7 @@ export default function EditTool(props) {
 
     useEffect(()=> {
         canvas = new fabric.Canvas('edit-canvas');
-        if(isFromMobile === "true") {
-            drawingPictogramMobile();
-        } else {
-            drawingPictogram();
-        }
+        drawingPictogram();
     },[]);
 
 

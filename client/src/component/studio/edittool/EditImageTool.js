@@ -17,22 +17,16 @@ export default function EditImageTool() {
     const [changedUrl, setChangedUrl] = useState();
 
     const profile = localStorage.getItem("profile");
-    const provider = localStorage.getItem("provider");
-    console.log('EditTool state : ', location.state);
-
     const post = location.state.post;
-    console.log('EditImageTool drawImage post : ', post);
     const image = new Image();
 
     function getImage() {
-        console.log('EditTool drawImage image : ', image);
         image.src = post.fileUrl;
         image.onload = () => {
             const imageInstance = new fabric.Image.fromURL(image.src,function(oImg) {
                 canvas.add(oImg);
             });
-            console.log('EditImageTool imageInstance : ', imageInstance);
-        }
+        };
         canvas.discardActiveObject();
         let sel = new fabric.ActiveSelection(canvas.getObjects(), {
             canvas: canvas,
@@ -43,22 +37,15 @@ export default function EditImageTool() {
 
         const url = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
         setChangedUrl(url);
-        console.log('EditTool getImage url : ', url);
     }
 
     function update() {
-        console.log('EditTool update image : ', image);
-        console.log('EditTool getImage changedUrl : ', changedUrl);
-
         const jsonProf = JSON.parse(profile);
         const email = jsonProf.email;
         try {
             axios.put(`/v1/api/picto/email/${email}/id/${post.id}`, {
                 octet: changedUrl
             }).then((response) => {
-                console.log('EditImageTool update response data : ', response.data);
-                console.log('EditImageTool update response data.data : ', response.data.data);
-
                 if(response.data.code === 0) {
                     alert('성공적으로 저장되었습니다!');
                     history.push("/");
