@@ -1,8 +1,9 @@
 .topMenu{
 	margin: 0 auto;
-	width:1280px;
-	display: flex;
-	border-bottom: solid 1px #F2F2F2;
+    width: 1280px;
+    display: flex;
+    border-bottom: solid 1px #F2F2F2;
+    justify-content: space-between;
 }
 
 .topMenu .img_logo {
@@ -20,13 +21,6 @@
 	padding-right: 10px;
 	cursor: pointer;
 	margin-left: 50px;
-}
-
-.profile-link{
-	left: 72%;
-	position: relative;
-	top: 13px;
-	text-decoration: none;
 }
 
 .img_profile {
@@ -59,10 +53,9 @@
 }
 
 /*Sidebar*/
-.hamburger-menu{
-	position: absolute;
-	left: 53%;
-	margin-left: 552px!important;
+.top_sidebar{
+	display: flex;
+    align-items: center;
 }
 #menu__toggle {
 	opacity: 0;
@@ -145,7 +138,7 @@
 		display: flex;
 		border-bottom: solid 1px #F2F2F2;
 		align-items: center;
-}
+	}
 
 	.profile-link{
 		position: inherit;
@@ -154,27 +147,27 @@
 	
 	}
 
-	.profile-link{
-		position: inherit;
-		text-decoration: none;
-	}
-
-
 
 @media all and (min-width:480px) and (max-width:767px) {
 	.topMenu{
-		justify-content: center;
-		width:100%;
+		justify-content: space-between;
+		width: 90vw;
 		display: flex;
 		border-bottom: solid 1px #F2F2F2;
+		align-items: center;
+	}
+	.profile-link{
+		position: inherit;
+		text-decoration: none;
 	}
 }
 
 @media all and (max-width:479px) {
 	.topMenu{
-		justify-content: center;
-		width:100%;
+		justify-content: space-between;
+		width: 90vw;
 		display: flex;
 		border-bottom: solid 1px #F2F2F2;
+		align-items: center;
 	}
 }
