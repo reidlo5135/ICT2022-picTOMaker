@@ -94,6 +94,9 @@
     padding: 0;
     display: flex;
   }
+  #user-video{
+    width:50%;
+  }
   .button-group {
     width: 90vw;
     margin: 0 auto;
