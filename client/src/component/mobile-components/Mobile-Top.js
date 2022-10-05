@@ -4,12 +4,11 @@ import {useCookies} from "react-cookie";
 import { Link } from "react-router-dom";
 import TopProfile from "../TopProfile";
 import Logo from "../../assets/image/Logo.png";
-import Sidebar from "../Sidebar";
 import "../../styles/top.css";
 import "../../styles/font.css";
 
 
-export default function Top(){
+export default function MobileTop(){
     const history = useHistory();
     const [cookies] = useCookies(["accessToken"])
     const access_token = cookies.accessToken;

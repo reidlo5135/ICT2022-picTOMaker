@@ -13,7 +13,7 @@ import kakaotalk from "../../../assets/image/kakaotalk.png";
 import naver from "../../../assets/image/naver.png";
 import google from "../../../assets/image/google.png";
 import {Link} from "react-router-dom";
-import Top from "../../../component/Top"
+import MobileTop from "../../../component/mobile-components/Mobile-Top"
 
 export default function M_Main(){
     const history = useHistory();
@@ -83,7 +83,7 @@ export default function M_Main(){
 
     return(
         <React.Fragment>
-            <Top/>
+            <MobileTop/>
             <div className='mobile-main'>
                 <div className='explanation'>
                     <div className='Title'>

@@ -56,8 +56,10 @@ export default function Top(){
                 <Link to='/'>
                     <img src={Logo} className='img_logo' alt="PictoMaker-Logo" style={{width:"100px",height:"50px"}}/>
                 </Link>
-                {(access_token === null || access_token === undefined) ? <div></div> : <TopProfile />}
-                {(access_token === null || access_token === undefined) ? <div></div> : <Sidebar/>}
+                <div className='top_sidebar'>
+                    {(access_token === null || access_token === undefined) ? <div></div> : <TopProfile />}
+                    {(access_token === null || access_token === undefined) ? <div></div> : <Sidebar/>}
+                </div>
             </div>
         </div>
     );

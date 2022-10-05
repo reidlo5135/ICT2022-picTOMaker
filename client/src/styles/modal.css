@@ -26,7 +26,7 @@
     color: #999;
     background-color: transparent;
 }
-.modal-secs {
+.modal > section {
     width: 90%;
     max-width: 450px;
     margin: 0 auto;
