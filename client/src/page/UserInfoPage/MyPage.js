@@ -75,7 +75,7 @@ export default function MyPageContent(){
         } else {
             url = `/v1/api/oauth2/${provider}`;
             header = {
-                "Authorization": cookies.accessToken
+                "X-AUTH-TOKEN": cookies.accessToken
             }
         }
         del(url, {
