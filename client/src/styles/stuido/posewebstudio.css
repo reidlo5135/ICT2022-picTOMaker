@@ -97,6 +97,10 @@
   #user-video{
     width:50%;
   }
+  #user-hand-video {
+    width: 100%;
+    height: 100%;
+  }
   .button-group {
     width: 90vw;
     margin: 0 auto;

@@ -1,13 +1,17 @@
-import React, {forwardRef, useImperativeHandle, useEffect, useRef} from 'react';
+import React, {forwardRef, useImperativeHandle, useEffect, useRef,useState} from 'react';
 import testImage from '../../resource/test_hand2.png';
 import {Hands} from '@mediapipe/hands';
 import {drawLine, drawHead} from '../../../poseweb/util/DrawingUtils';
 import "../../../../../styles/stuido/posewebstudio.css";
-
+import Modal from '../../../../LoadingModal'
+import * as cam from '@mediapipe/camera_utils'
+import Spin from '../../resource/loading.gif'
 // Static Image를 통해 인체 모델을 테스트합니다.
 let result = null;
 
 const MobileCamHand = forwardRef((props, ref) => {
+    const [loadingModal,setLoadingModal] = useState(true);
+
     useImperativeHandle(ref,()=> ({
         capture() {
             console.log("MobileCamHand result : ", result);
@@ -27,10 +31,15 @@ const MobileCamHand = forwardRef((props, ref) => {
     }));
 
     const canvasRef = useRef(null);
+    const webcamRef = useRef(null);
 
     function onResults(results) {
-        console.log(results.multiHandLandmarks[0])
+        console.log(results)
+        if (loadingModal === true) {
+            setLoadingModal(false);
+        }
         result = results.multiHandLandmarks[0];
+        window.localStorage.setItem("pictogram_result",JSON.stringify(result));
         draw();
     }
 
@@ -63,6 +72,7 @@ const MobileCamHand = forwardRef((props, ref) => {
     }
 
     useEffect(()=> {
+        const userVideoElement = document.getElementById("user-hand-video");
         const imageElement = document.getElementById('test-image')
 
         const hands = new Hands({locateFile : (file) => {
@@ -81,13 +91,25 @@ const MobileCamHand = forwardRef((props, ref) => {
         hands.onResults(onResults);
 
         hands.send({image : imageElement});
+        const camera = new cam.Camera(userVideoElement,{
+            onFrame: async () => {
+                await hands.send({image : userVideoElement});
+            },
+            width : 640,
+            height : 480
+        });
+        camera.start();
     },[]);
 
     return (
         <>
+            <Modal open={loadingModal}>
+                <img style={{display : "block" , margin : "auto"}} src={Spin} alt="불러오고 있습니다."/>
+                <h2 style={{textAlign : "center"}}>스튜디오를 불러오고 있습니다.</h2>
+            </Modal>
             <div className="test-pose">
                 <div className='left-content'>
-                    <img src={testImage} id="test-image"></img>
+                    <video  style = {{borderLeft : "1px solid #aeaeae"}} autoPlay id="user-hand-video" ref={webcamRef}></video>
                 </div>
                 <div className='right-content'>
                     <canvas ref={canvasRef} id="draw-canvas" width="640px" height="480px"></canvas>
