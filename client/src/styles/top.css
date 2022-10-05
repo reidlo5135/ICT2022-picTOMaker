@@ -145,15 +145,21 @@
 		display: flex;
 		border-bottom: solid 1px #F2F2F2;
 		align-items: center;
-	}
+}
 
 	.profile-link{
 		position: inherit;
 		text-decoration: none;
 	}
 	
+	}
 
-}
+	.profile-link{
+		position: inherit;
+		text-decoration: none;
+	}
+
+
 
 @media all and (min-width:480px) and (max-width:767px) {
 	.topMenu{
@@ -162,7 +168,7 @@
 		display: flex;
 		border-bottom: solid 1px #F2F2F2;
 	}
-} 
+}
 
 @media all and (max-width:479px) {
 	.topMenu{
