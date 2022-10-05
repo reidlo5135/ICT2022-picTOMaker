@@ -151,7 +151,7 @@
 		position: inherit;
 		text-decoration: none;
 	}
-
+	
 
 }
 
@@ -162,7 +162,7 @@
 		display: flex;
 		border-bottom: solid 1px #F2F2F2;
 	}
-}
+} 
 
 @media all and (max-width:479px) {
 	.topMenu{
