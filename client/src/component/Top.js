@@ -56,14 +56,6 @@ export default function Top(){
                 <Link to='/'>
                     <img src={Logo} className='img_logo' alt="PictoMaker-Logo" style={{width:"100px",height:"50px"}}/>
                 </Link>
-                {/* <div className='GnbMenu'>
-                    <Link to ='/introduce'>
-                        <div>소개</div>
-                    </Link>
-                    <div onClick={start} style={{cursor:"pointer"}}>시작하기</div>
-                    <div onClick={moveToQna}>문의사항</div>
-                    <div onClick={moveToComm}>커뮤니티</div>              
-                </div> */}
                 {(access_token === null || access_token === undefined) ? <div></div> : <TopProfile />}
                 {(access_token === null || access_token === undefined) ? <div></div> : <Sidebar/>}
             </div>

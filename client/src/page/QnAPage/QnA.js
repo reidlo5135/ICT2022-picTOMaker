@@ -26,8 +26,6 @@ export default function QnA() {
     const getProf = () => {
         try {
             const jsonProf = JSON.parse(getProfile);
-            console.log('QNA jProf : ', jsonProf);
-
             setProfEmail(jsonProf.email);
             setProfNickName(jsonProf.nickName);
         } catch (err) {
@@ -57,9 +55,6 @@ export default function QnA() {
             name: profNickName,
             qna
         }).then((response) => {
-            console.log('response : ', response.data);
-            console.log('response : ', response.data.data);
-
             if(response.data.code === 0) {
                 alert('문의사항이 접수되었습니다.');
                 setIsOpen(!isOpen);

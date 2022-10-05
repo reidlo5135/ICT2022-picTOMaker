@@ -31,7 +31,7 @@ export default function M_SocialUserCallback() {
 
     const headers = {
         "X-AUTH-TOKEN": token
-    }
+    };
 
     const action = (response) => {
         if(response.body.code === 0) {
@@ -41,7 +41,7 @@ export default function M_SocialUserCallback() {
             localStorage.setItem("provider", provider);
             history.push("/user/redirect");
         }
-    }
+    };
 
     wsCommunicationWithConnection(`/pub/user/social/login/${provider}`, headers, {}, '/sub/social/login', action);
 

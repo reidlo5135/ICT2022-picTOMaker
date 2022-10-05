@@ -13,13 +13,6 @@ const CommunityList = ({diaryList}) => {
             axios.post(`/v1/api/oauth2/profile/${provider}`, {
                 access_token
             }).then((response) => {
-                console.log('OAuth profile res data.data : ', response.data);
-                console.log('OAuth get profile email : ', response.data.email);
-                console.log('OAuth get profile nickname : ', response.data.nickname);
-                console.log('OAuth get profile profile_image_url : ', response.data.profile_image_url);
-
-                console.log('undefined : ', response.data.profile_image_url === undefined);
-
                 localStorage.setItem("profile", JSON.stringify(response.data));
             });
         } catch (err) {
@@ -33,14 +26,6 @@ const CommunityList = ({diaryList}) => {
                 access_token
             }).then((response) => {
                 const result = response.data['result'];
-                console.log('Local profile res data : ', result);
-                console.log('Local get profile email : ', result.email);
-                console.log('Local get profile nickname : ', result.nick_name);
-                console.log('Local get profile profile_image_url : ', result.profile_image_url);
-
-
-                console.log('undefined : ', result.profile_image_url === undefined);
-
                 localStorage.setItem("profile", JSON.stringify(result));
             });
         } catch (err) {
