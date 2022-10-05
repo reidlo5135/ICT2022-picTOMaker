@@ -91,6 +91,9 @@
     margin: 0 2% 0 2%;
     cursor: pointer;
 }
+.terms{
+    text-decoration: none;
+}
 
 .Copyright{
     margin-left: -5%;
