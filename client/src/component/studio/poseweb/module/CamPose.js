@@ -1,7 +1,7 @@
 import {Pose} from '@mediapipe/pose'
 import * as cam from '@mediapipe/camera_utils'
 import { useEffect, useRef, forwardRef, useImperativeHandle, useState } from 'react'
-import {drawHead, drawLine} from '../util/DrawingUtils'
+import {drawBody, drawHead, drawLine} from '../util/DrawingUtils'
 import Spin from '../resource/loading.gif'
 import Modal from '../../../LoadingModal'
 
@@ -13,8 +13,9 @@ const CamPose = forwardRef((props,ref)=> {
 
     useImperativeHandle(ref,()=> ({
         capture() {
-            window.localStorage.setItem("picto_type","pose");
-            document.location.href = "/edit";
+            window.localStorage.setItem("pictogram_result",JSON.stringify(result));
+            window.localStorage.setItem("picto_type","pose")
+            document.location.href = "/edit"
         }
     }));
 
@@ -22,6 +23,7 @@ const CamPose = forwardRef((props,ref)=> {
     const canvasRef = useRef(null);
 
     function onResults(results) {
+        console.log(results);
         if (loadingModal === true) {
             setLoadingModal(false);
         }
@@ -72,6 +74,9 @@ const CamPose = forwardRef((props,ref)=> {
 
             // 머리
             drawHead(result[0].x,result[0].y,canvasCtx,640,480,thick,lineColor);
+
+            // 몸통
+            drawBody(result,lineColor,canvasCtx);
         }
     }
 
