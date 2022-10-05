@@ -53,7 +53,6 @@ export default function HandWebStudio() {
 
     // 초기설정 Hook
     useEffect(()=> {
-        console.log("HandWebStudio Mounting Start")
         window.localStorage.setItem('delay',0);
         window.localStorage.setItem('lineThick',25);
         window.localStorage.setItem('lineColor',"FF03030");
@@ -70,8 +69,7 @@ export default function HandWebStudio() {
             <Top/>
             <div id="topbar"></div>
             <div className ="studio_container">
-                <CamHand ref={childRef}/>
-                {/* <TestHand ref={childRef} /> */}
+                <CamHand ref={childRef} />
                 <div className = 'button-group'>
                     <div className='camera-btn'>
                         <div>

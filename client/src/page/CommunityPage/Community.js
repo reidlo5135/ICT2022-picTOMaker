@@ -14,12 +14,8 @@ function Community() {
   const getData = async () => {
     get('/v1/api/community/')
         .then((response) => {
-            console.log('response : ', response.data);
-            console.log('response : ', response.data.list);
-
             if(response.data.code === 0) {
                 const res = response.data.list;
-                console.log('community res : ' + res);
                 const initData = res.slice(0, 20).map((it) => {
                     return {
                         id: it.id,
@@ -74,7 +70,6 @@ function Community() {
   const indexOfFirst = indexOfLast - postsPerPage;
   const currentPosts = (data) => {
       let currentPosts = 0;
-      console.log('community currentPosts data : ' + data);
       currentPosts = data.slice(indexOfFirst, indexOfLast);
       return currentPosts;
   };

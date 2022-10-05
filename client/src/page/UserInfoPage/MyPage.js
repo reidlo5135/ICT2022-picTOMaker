@@ -24,7 +24,7 @@ export default function MyPageContent(){
     }
 
     useEffect(()=> {
-        console.log('mode : ', mode);
+
     },[mode]);
 
     function conditionRender(conditionMode) {
@@ -75,13 +75,12 @@ export default function MyPageContent(){
         } else {
             url = `/v1/api/oauth2/${provider}`;
             header = {
-                "Authorization": cookies.accessToken
+                "X-AUTH-TOKEN": cookies.accessToken
             }
         }
         del(url, {
             headers: header
         }).then((response) => {
-            console.log("MyPage.js deActive user response : ", response);
             alert('회원 탈퇴가 정상적으로 이루어졌습니다.');
             localStorage.clear();
             console.clear();

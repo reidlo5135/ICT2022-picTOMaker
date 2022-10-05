@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router";
 import "../../SocialLoginPage/socialUserCallback.css";
-import {post} from "../../../services/AxiosService";
 import {wsCommunicationWithConnection, wsConnect} from "../../../services/StompService";
 
 export default function MobileUserCallback() {
@@ -17,32 +16,10 @@ export default function MobileUserCallback() {
 
     const headers = {
         "X-AUTH-TOKEN": cookies.accessToken
-    }
-
-    // const getOAuthProf = () => {
-    //     const action = (response) => {
-    //         console.log('Local profile res data.data : ', response.body.data);
-    //
-    //         profile = JSON.parse(JSON.stringify(response.body.data));
-    //         setEmail(profile.email);
-    //         setNickName(profile.nickName);
-    //
-    //         if(profile.profile_image_url === null){
-    //             setProfileImage(null);
-    //         } else {
-    //             setProfileImage(profile.profile_image_url);
-    //         }
-    //
-    //         localStorage.setItem("profile", JSON.stringify(profile));
-    //         history.push("/");
-    //     }
-    //     wsCommunication(`/pub/info/${provider}`, headers, {}, '/sub/social/info', action);
-    // };
+    };
 
     const getLocalProf = (requestUrl, responseUrl) => {
         const action = (response) => {
-            console.log('Local profile res data.data : ', response.body.data);
-
             profile = JSON.parse(JSON.stringify(response.body.data));
             setEmail(profile.email);
             setNickName(profile.nickName);

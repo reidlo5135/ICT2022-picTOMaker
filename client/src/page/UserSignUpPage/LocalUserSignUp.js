@@ -53,9 +53,6 @@ export default function LocalUserSignUp(){
                 nickName,
                 password
             }, {}).then((response) => {
-                console.log("SignUp response : ", response.data);
-                console.log("SignUp response.data : ", response.data.data);
-
                 if(response.data.code === 0) {
                     alert(nickName + " 픽토메이커님 환영합니다!");
                     history.push("/");
