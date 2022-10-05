@@ -52,7 +52,7 @@ export default function MenuSelectDetails(){
                         </div>
                     </div>
                 </Link>
-                <Link to="/things">
+                <Link to="/studio/object-detection">
                     <div className='Things-Content cont'>
                         <span></span><span></span><span></span><span></span>
                         <div className='Things-Image'>

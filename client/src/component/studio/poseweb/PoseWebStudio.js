@@ -46,7 +46,7 @@ export default function PoseWebStudio() {
 
     // 초기설정 Hook
     useEffect(()=> {
-        window.localStorage.setItem('thick', 50);
+        window.localStorage.setItem('lineThick',25);
         window.localStorage.setItem('lineColor',"FF03030");
         window.localStorage.setItem('backgroundColor',"FFFFFF");
         /*

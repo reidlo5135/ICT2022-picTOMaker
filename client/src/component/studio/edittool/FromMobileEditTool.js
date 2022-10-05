@@ -3,54 +3,44 @@ import {useCookies} from "react-cookie";
 import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {fabric} from 'fabric';
-import DetailComponent from '../detail/DetailComponent';
-import Top from "../../../Top";
-import '../../../../styles/stuido/topbar.css';
-import '../../../../styles/stuido/edittool.css';
+import DetailComponent from './detail/DetailComponent';
+import Top from "../../Top";
+import '../../../styles/stuido/topbar.css';
+import '../../../styles/stuido/edittool.css';
+import { models } from '../objectdetection/ModelList';
 
 let canvas = null;
 
-export default function EditTool(props) {
+export default function FromMobileEditTool(props) {
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const history = useHistory();
 
     const [selectMode, setSelectMode] = useState("none");
-    const isFromMobile = localStorage.getItem("isFromMobile");
-    const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
-    const type = window.localStorage.getItem("picto_type");
+    let type = null;
+    const ws = new WebSocket("ws://ec2-52-79-56-189.ap-northeast-2.compute.amazonaws.com/picto");
 
     const pictogramImage = props.pictogramImage;
 
     function drawingPictogramMobile() {
-        const ws = new WebSocket("ws://localhost:8080/picto");
         ws.onopen = () => {
             ws.send("editTool");
-        }
+        };
         ws.onmessage = (e) => {
-            const data = JSON.parse(e.data);
-            console.log("EditTool.js nonResult : ", data);
-            drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor);
-            console.log("isFM : ", isFromMobile);
-        }
+            if(e.data === "empty") {
+                alert("모바일 기기에서 먼저 촬영 후에 제작이 가능해요.");
+                ws.close();
+            } else {
+                const data = JSON.parse(e.data);
+                drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor, data.type);
+            }
+        };
+        ws.onclose = () => {
+            history.push("/");
+        };
     }
 
-    function drawingPictogram() {
-        const nonResult = window.localStorage.getItem('pictogram_result');
-        if (nonResult !== "null") {
-            const result = JSON.parse(nonResult);
-            console.log("DrawPicTOBrowser result : ", result);
-            const thick = localStorage.getItem("thick");
-            const color = localStorage.getItem("lineColor");
-            drawCanvas(result, thick, color);
-            window.localStorage.setItem('pictogram_result', null);
-        }
-    }
-
-    function drawCanvas(result, thick, color) {
-        console.log("drawCanvas result, thick, color : ", result + ", " + thick + ", " + color);
-        console.log(result);
-
+    function drawCanvas(result, thick, color, type) {
         if (type === "hand") {
             for (let i = 0; i < 21; i++) {
                 result[i].x = result[i].x * 640;
@@ -296,7 +286,27 @@ export default function EditTool(props) {
                 stroke: color
             });
 
-            canvas.add(shoulder, leftUpperArm, leftLowerArm, rightUpperArm, rightLowerArm, leftUpperBody, rightUpperBody, waist, leftUpperLeg, leftLowerLeg, rightUpperLeg, rightLowerLeg, head);
+            // 몸통
+            const body = new fabric.Polygon([
+                {x:result[12].x , y:result[12].y},
+                {x:result[11].x , y:result[11].y},
+                {x:result[23].x , y:result[23].y},
+                {x:result[24].x , y:result[24].y}
+            ],{
+                fill : color,
+            })
+
+            canvas.add(shoulder, leftUpperArm, leftLowerArm, rightUpperArm, rightLowerArm, leftUpperBody, rightUpperBody, waist, leftUpperLeg, leftLowerLeg, rightUpperLeg, rightLowerLeg, head, body);
+        }
+
+        if (type === "object") {
+            console.log("오브젝트 입니다!!")
+            const objectValue = localStorage.getItem("object");
+
+            console.log(models[objectValue].url)
+            fabric.Image.fromURL(models[objectValue].url, function(oImg) {
+                canvas.add(oImg);
+            });
         }
 
         canvas.discardActiveObject();
@@ -310,10 +320,6 @@ export default function EditTool(props) {
 
     function download() {
         const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-        console.log('image : ', image);
-
-        const jsonProf = JSON.parse(profile);
-        const email = jsonProf.email;
         try {
             axios.post(`/v1/api/picto/${provider}`, {
                 image
@@ -322,16 +328,13 @@ export default function EditTool(props) {
                     "X-AUTH-TOKEN": cookies.accessToken
                 }
             }).then((response) => {
-                console.log('response data : ', response.data);
-                console.log('response data.data : ', response.data.data);
-
                 if(response.data.code === 0) {
                     localStorage.setItem("picTOUrl", response.data.data);
                     alert('성공적으로 저장되었습니다!');
+                    ws.close();
                     history.push("/");
                 }
             }).catch((err) => {
-                console.error('err : ', JSON.stringify(err));
                 alert(err.response.data.msg);
             });
         } catch (err) {
@@ -376,14 +379,7 @@ export default function EditTool(props) {
 
     useEffect(()=> {
         canvas = new fabric.Canvas('edit-canvas');
-        console.log("isFromMobile : ", isFromMobile);
-        if(isFromMobile === "true") {
-            console.log("EditTool.js is on Mobile");
-            drawingPictogramMobile();
-        } else {
-            console.log("EditTool.js is on Browser");
-            drawingPictogram();
-        }
+        drawingPictogramMobile();
     },[]);
 
 
@@ -397,11 +393,13 @@ export default function EditTool(props) {
                         <canvas id="edit-canvas" width ="640px" height = "480px"></canvas>
                     </div>
                     <div id="tool-view">
-                        <button id="pencil-btn" className='edit-btn' onClick = {()=> {pencilMode()}}></button>
-                        <button id="figure-btn" className='edit-btn' onClick = {()=> {figureMode()}}></button>
-                        <button id="download-btn" className='edit-btn' onClick={()=> {download()}} ></button>
-                        <button id="image-btn" className='edit-btn' onClick = {()=> {imageMode()}}></button>
-                        <button id="text-btn" className='edit-btn' onClick = {()=> {textMode()}}></button>
+                        <button id="pencil-btn" onClick = {()=> {pencilMode()}}></button>
+                        <button id="figure-btn" onClick = {()=> {figureMode()}}></button>
+                        <button id="image-btn" onClick = {()=> {imageMode()}}></button>
+                        <button id="text-btn" onClick = {()=> {textMode()}}></button>
+                        <button id="download-btn" onClick={()=> {download()}} ></button>
+                        <button id="open-btn" onClick = {()=> {openMode()}}> </button>
+                        <button id="share-btn" onClick = {()=> {shareMode()}}></button>
                     </div>
                 </div>
                 <div id="tool-detail-view">
