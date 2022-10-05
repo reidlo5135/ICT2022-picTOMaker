@@ -11,10 +11,9 @@ import { models } from '../objectdetection/ModelList';
 
 let canvas = null;
 
-export default function EditTool(props) {
+export default function EditTool(props,match) {
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const history = useHistory();
-
     const [selectMode, setSelectMode] = useState("none");
     const provider = localStorage.getItem("provider");
     let type = null;

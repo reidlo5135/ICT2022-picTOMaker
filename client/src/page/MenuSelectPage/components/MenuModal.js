@@ -5,7 +5,7 @@ export default function Modal(props){
     return (
         <div className={open ? 'openModal modal' : 'modal'}>
             {open ? (
-                <section className="modal-secs">
+                <section className="modal-sec">
                     <header>
                         {header}
                     </header>

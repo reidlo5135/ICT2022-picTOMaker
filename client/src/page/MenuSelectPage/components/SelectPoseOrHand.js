@@ -22,16 +22,16 @@ export default function SelectPoseOrHand() {
                 </div>
             </Link>
             <div className='Select-Content'>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
+                <span className='star'></span>
+                <span className='star'></span>
+                <span className='star'></span>
+                <span className='star'></span>
+                <span className='star'></span>
+                <span className='star'></span>
+                <span className='star'></span>
+                <span className='star'></span>
+                <span className='star'></span>
+                <span className='star'></span>
                 <div className='HT-Content'>
                     <Link to="/studio/pose/web">
                         <div className='Human-content cont'>

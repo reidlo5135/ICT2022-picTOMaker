@@ -7,7 +7,6 @@ import {theme} from '../theme/MainTheme'
 
 export default function ImageComponent(props) {
     const canvas = props.canvas;
-
     useEffect(()=> {
         document.getElementById('contained-button-file').onchange = function(e) {
             const fileReader = new FileReader();

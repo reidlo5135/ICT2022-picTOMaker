@@ -26,14 +26,15 @@
     color: #999;
     background-color: transparent;
 }
-.modal-secs {
+.modal-sec {
     width: 90%;
-    max-width: 450px;
+    max-width: 90%;
     margin: 0 auto;
     border-radius: 0.3rem;
     background-color: #fff;
     animation: modal-show 0.3s;
     overflow: hidden;
+    height: 80%;
 }
 .modal > section > main {
     padding: 16px;
@@ -61,5 +62,15 @@
     }
     to {
         opacity: 1;
+    }
+}
+
+@media (max-width:1023px){
+	.modal.openModal {
+        display: flex;
+        align-items: center;
+        animation: modal-bg-show 0.3s;
+        width: 100vw;
+        height: 100vw
     }
 }
