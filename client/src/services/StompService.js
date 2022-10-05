@@ -1,7 +1,7 @@
 import SockJS from "sockjs-client";
 import Stomp from 'stompjs';
 
-const sock = new SockJS("http://localhost:8080/ws/");
+const sock = new SockJS("http://ec2-52-79-56-189.ap-northeast-2.compute.amazonaws.com/ws/");
 const ws = Stomp.over(sock);
 
 export const wsConnect = () => {
