@@ -31,6 +31,7 @@ import SelectMobileOrBrowser from "./page/MenuSelectPage/components/SelectMobile
 import SelectPoseOrHand from "./page/MenuSelectPage/components/SelectPoseOrHand";
 import MobileSelectPoseOrHand from "./page/MenuSelectPage/mobile-select/Mobile-SelectPoseOrHand";
 import M_EditTool from "./component/studio/edittool/mobile-edittool/Mobile-EditTool";
+import ObjectDetectionStudio from './component/studio/objectdetection/ObjectDetectionStudio';
 
 export default function App(){
 
@@ -83,6 +84,7 @@ export default function App(){
                         <Route path= '/studio/hand/web' component={HandWebStudio}/>
                         <Route path='/edit' component={EditTool} />
                         <Route path='/tool/image' component={EditImageTool} />
+                        <Route path = '/studio/object-detection' component={ObjectDetectionStudio}/>
                     </Switch>
                 </AnimatePresence>
             </BrowserView>

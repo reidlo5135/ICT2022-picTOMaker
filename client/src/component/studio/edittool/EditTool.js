@@ -7,6 +7,7 @@ import DetailComponent from './detail/DetailComponent';
 import Top from "../../Top";
 import '../../../styles/stuido/topbar.css';
 import '../../../styles/stuido/edittool.css';
+import { models } from '../objectdetection/ModelList';
 
 let canvas = null;
 
@@ -46,12 +47,18 @@ export default function EditTool(props) {
 
     function drawingPictogram() {
         const nonResult = window.localStorage.getItem('pictogram_result');
+        type = localStorage.getItem("picto_type");
+        if (type === "object") {
+            drawCanvas(null,null,null,type);
+            return;
+        }
+
         if (nonResult !== "null") {
             const result = JSON.parse(nonResult);
             console.log("DrawPicTOBrowser result : ", result);
-            const thick = localStorage.getItem("thick");
+            const thick = localStorage.getItem("lineThick");
             const color = localStorage.getItem("lineColor");
-            type = localStorage.getItem("picto_type");
+            
             drawCanvas(result, thick, color, type);
             window.localStorage.setItem('pictogram_result', null);
         }
@@ -307,7 +314,27 @@ export default function EditTool(props) {
                 stroke: color
             });
 
-            canvas.add(shoulder, leftUpperArm, leftLowerArm, rightUpperArm, rightLowerArm, leftUpperBody, rightUpperBody, waist, leftUpperLeg, leftLowerLeg, rightUpperLeg, rightLowerLeg, head);
+            // 몸통
+            const body = new fabric.Polygon([
+                {x:result[12].x , y:result[12].y},
+                {x:result[11].x , y:result[11].y},
+                {x:result[23].x , y:result[23].y},
+                {x:result[24].x , y:result[24].y}
+        ],{
+            fill : color,
+    }) 
+
+            canvas.add(shoulder, leftUpperArm, leftLowerArm, rightUpperArm, rightLowerArm, leftUpperBody, rightUpperBody, waist, leftUpperLeg, leftLowerLeg, rightUpperLeg, rightLowerLeg, head, body);
+        }
+
+        if (type === "object") {
+            console.log("오브젝트 입니다!!")
+            const objectValue = localStorage.getItem("object");
+
+            console.log(models[objectValue].url)            
+            fabric.Image.fromURL(models[objectValue].url, function(oImg) {
+                canvas.add(oImg);
+            })
         }
 
         canvas.discardActiveObject();

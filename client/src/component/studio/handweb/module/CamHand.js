@@ -1,32 +1,34 @@
-import {Pose} from '@mediapipe/pose'
+import {Hands} from '@mediapipe/hands'
 import * as cam from '@mediapipe/camera_utils'
 import { useEffect, useRef, forwardRef, useImperativeHandle, useState } from 'react'
-// import {drawHead, drawLine} from '../util/DrawingUtils'
+import {drawLine, drawHead, drawRect} from '../../poseweb/util/DrawingUtils'
 import Spin from '../resource/loading.gif'
 import Modal from '../../../LoadingModal'
 
 // Static Image를 통해 인체 모델을 테스트합니다.
+let result = null;
 const CamHand = forwardRef((props,ref)=> {
 
     const [loadingModal,setLoadingModal] = useState(true);
 
     useImperativeHandle(ref,()=> ({
         capture() {
-            // const item = window.localStorage.getItem("pictogram_result")
-            // console.log(JSON.parse(item));
+            window.localStorage.setItem("pictogram_result",JSON.stringify(result));
+            window.localStorage.setItem("picto_type","hand");
             document.location.href = "/edit"
         }
     }));
 
-    let result = null;
+ 
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
 
     function onResults(results) {
+        console.log(results)
         if (loadingModal === true) {
             setLoadingModal(false);
         }
-        result = results.poseLandmarks;
+        result = results.multiHandLandmarks[0];
         window.localStorage.setItem("pictogram_result",JSON.stringify(result));
         draw();
     }
@@ -46,7 +48,19 @@ const CamHand = forwardRef((props,ref)=> {
         canvasCtx.clearRect(0,0,640,480);
 
         if(result !== undefined) {
-            // 어깨선 
+            drawLine(result[8].x,result[8].y,result[5].x,result[5].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[12].x,result[12].y,result[9].x,result[9].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[16].x,result[16].y,result[13].x,result[13].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[20].x,result[20].y,result[17].x,result[17].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[2].x,result[2].y,result[4].x,result[4].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[1].x,result[1].y,result[2].x,result[2].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[1].x,result[1].y,result[0].x,result[0].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[17].x,result[17].y,result[0].x,result[0].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[2].x,result[2].y,result[5].x,result[5].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[5].x,result[5].y,result[9].x,result[9].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[9].x,result[9].y,result[13].x,result[13].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[13].x,result[13].y,result[17].x,result[17].y,canvasCtx,640,480,thick,lineColor)
+            drawRect(result, lineColor, canvasCtx);
             
         }
     }
@@ -56,25 +70,23 @@ const CamHand = forwardRef((props,ref)=> {
 
         const userVideoElement = document.getElementById("user-video");
 
-        const pose = new Pose({locateFile : (file) => {
-            return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
-        }});
+        const hands = new Hands({locateFile : (file) => {
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+          }})
 
         // 포즈 설정값
-        pose.setOptions({
+        hands.setOptions({
+            maxNumHands: 1,
             modelComplexity: 1,
-            smoothLandmarks: true,
-            enableSegmentation: false,
-            smoothSegmentation: false,
             minDetectionConfidence: 0.5,
             minTrackingConfidence: 0.5
           });
 
-          pose.onResults(onResults);
+        hands.onResults(onResults);
 
-          const camera = new cam.Camera(userVideoElement,{
+        const camera = new cam.Camera(userVideoElement,{
             onFrame: async () => {
-                await pose.send({image : userVideoElement});
+                await hands.send({image : userVideoElement});
             },
             width : 640,
             height : 480

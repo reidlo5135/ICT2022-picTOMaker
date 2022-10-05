@@ -52,8 +52,8 @@ export default function PoseWebStudio() {
     // 초기설정 Hook
     useEffect(()=> {
         console.log("PoseWebStudio Mounting Start")
-
-        window.localStorage.setItem('thick',50);
+        
+        window.localStorage.setItem('lineThick',25);
         window.localStorage.setItem('lineColor',"FF03030");
         window.localStorage.setItem('backgroundColor',"FFFFFF");
         /*
@@ -68,8 +68,8 @@ export default function PoseWebStudio() {
             <Top/>
             <div id="topbar"></div>
             <div className ="studio_container">
-                {/*<CamPose ref={childRef}/>*/}
-                <TestPose ref={childRef} />
+                <CamPose ref={childRef}/>
+                {/* <TestPose ref={childRef} /> */}
                 <div className = 'button-group'>
                     <div className='camera-btn'>
                         <div>

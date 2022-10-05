@@ -55,7 +55,7 @@ export default function HandWebStudio() {
     useEffect(()=> {
         console.log("HandWebStudio Mounting Start")
         window.localStorage.setItem('delay',0);
-        window.localStorage.setItem('thick',50);
+        window.localStorage.setItem('lineThick',25);
         window.localStorage.setItem('lineColor',"FF03030");
         window.localStorage.setItem('backgroundColor',"FFFFFF");
         /*
@@ -70,8 +70,8 @@ export default function HandWebStudio() {
             <Top/>
             <div id="topbar"></div>
             <div className ="studio_container">
-                {/*<CamPose ref={childRef}/>*/}
-                <TestHand ref={childRef} />
+                <CamHand ref={childRef}/>
+                {/* <TestHand ref={childRef} /> */}
                 <div className = 'button-group'>
                     <div className='camera-btn'>
                         <div>
