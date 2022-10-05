@@ -57,6 +57,7 @@ export default function App(){
                         <Route path= '/oauth2/redirect/google' component={M_SocialUserCallback} />
                         <Route path= '/studio/pose/mobile' component={MobilePoseWebStudio} />
                         <Route path= '/studio/hand/mobile' component={MobileHandWebStudio} />
+                        <Route path= '/edit/:id' component={M_EditTool} />
                         <Route path= '/tool/image' component={EditImageTool} />
                     </Switch>
                 </AnimatePresence>
