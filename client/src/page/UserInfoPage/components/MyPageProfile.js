@@ -15,8 +15,6 @@ const MyPageProfile = () => {
     const getProf = () => {
         try {
             const jsonProf = JSON.parse(getProfile);
-            console.log('jProf : ', jsonProf);
-
             setEmail(jsonProf.email);
             if(provider === 'LOCAL') {
                 setNickName(jsonProf.nickName);

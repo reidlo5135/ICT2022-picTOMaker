@@ -11,7 +11,6 @@ export default function SocialUserCallback(){
     const url = new URL(window.location.href);
     let provider;
     const token = new URL(window.location.href).searchParams.get("code");
-    console.log('code : ', token);
 
     if(token.toString() == null) {
         alert('Token is Null');
@@ -27,16 +26,11 @@ export default function SocialUserCallback(){
         provider = null;
     }
 
-    console.log('provider : ', provider);
-
     post(`/v1/api/oauth2/login/${provider}`, {}, {
         headers: {
             "X-AUTH-TOKEN": token
         }
     }).then((response) => {
-        console.log('res data : ', response.data);
-        console.log('res data.data : ', response.data.data);
-
         if(response.data.code === 0) {
             setIsLogged(true);
             setCookie("accessToken", response.data.data.access_token, {path: "/"});

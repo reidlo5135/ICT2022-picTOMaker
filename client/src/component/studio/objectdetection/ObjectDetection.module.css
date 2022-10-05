@@ -1,0 +1,52 @@
+.studioContainer {
+    width : 1280px;
+    height  : 500px;
+    margin : auto;
+}
+
+.result {
+    
+    display : inline-block;
+    width : 620px;
+    height  : 480px;
+    bottom : 460px;
+}
+
+
+#topbar {
+    margin : 0 auto;
+    width : 1280px;
+    height : 80px;
+    background : linear-gradient(to right, #CC356C, #EB5B39);
+}
+
+.button {
+    
+    width : 200px;
+    height : 50px;
+    background-color: #E72D71;
+    color : white;
+    border : none;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-top : 40px;
+}
+
+.button:hover {
+    cursor : pointer;
+}
+
+.buttonDis {
+    width : 200px;
+    height : 50px;
+    background-color: #575757;
+    color : white;
+    border : none;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-top : 40px;
+}
+
+.buttonDis:hover {
+    cursor : none;
+}

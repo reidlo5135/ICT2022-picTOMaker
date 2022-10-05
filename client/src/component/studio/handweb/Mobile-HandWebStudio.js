@@ -4,7 +4,7 @@ import * as cam from '@mediapipe/camera_utils';
 import CamHand from './module/CamHand';
 import MobileCamHand from "./module/mobile/MobileCamHand";
 import Button from '@mui/material/Button';
-import Top from "../../Top";
+import MobileTop from "../../mobile-components/Mobile-Top";
 import "../../../styles/stuido/topbar.css";
 import "../../../styles/stuido/posewebstudio.css";
 import Gear from "../../../assets/image/studio_image/gear-solid.svg";
@@ -43,17 +43,12 @@ export default function HandWebStudio() {
     function capture() {
         const delay = parseInt(localStorage.getItem("delay"));
         setTimeout(() => {
-            childRef.current.capture()
-        },delay)
-    }
-
-    function onResults(props) {
-        console.log(props);
+            childRef.current.capture();
+        }, delay)
     }
 
     // 초기설정 Hook
     useEffect(()=> {
-        console.log("HandWebStudio Mounting Start");
         /*
         if (DeviceCheck()) {
             console.log("디바이스 인식 성공")
@@ -63,7 +58,7 @@ export default function HandWebStudio() {
 
     return (
         <>
-            <Top/>
+            <MobileTop />
             <div id="topbar"></div>
             <div className ="studio_container">
                 <MobileCamHand ref={childRef} />

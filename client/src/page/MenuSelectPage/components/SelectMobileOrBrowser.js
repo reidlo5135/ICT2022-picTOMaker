@@ -42,7 +42,7 @@ export default function SelectMobileOrBrowser() {
                 <span className='start'></span>
                 <span className='start'></span>
                 <div className='HT-Content'>
-                    <Link to='/edit'>
+                    <Link to='/mobile/edit'>
                         <div className='Human-content cont' onClick={isMobile}>
                             <span></span><span></span><span></span><span></span>
                             <div className='Human-Image'>

@@ -2,14 +2,13 @@ import React from 'react';
 import {useHistory} from "react-router";
 import {useCookies} from "react-cookie";
 import { Link } from "react-router-dom";
-import TopProfile from "./TopProfile";
-import Logo from "../assets/image/Logo.png";
-import Sidebar from "./Sidebar";
-import "../styles/top.css";
-import "../styles/font.css";
+import TopProfile from "../TopProfile";
+import Logo from "../../assets/image/Logo.png";
+import "../../styles/top.css";
+import "../../styles/font.css";
 
 
-export default function Top(){
+export default function MobileTop(){
     const history = useHistory();
     const [cookies] = useCookies(["accessToken"])
     const access_token = cookies.accessToken;
@@ -57,7 +56,6 @@ export default function Top(){
                     <img src={Logo} className='img_logo' alt="PictoMaker-Logo" style={{width:"100px",height:"50px"}}/>
                 </Link>
                 {(access_token === null || access_token === undefined) ? <div></div> : <TopProfile />}
-                {(access_token === null || access_token === undefined) ? <div></div> : <Sidebar/>}
             </div>
         </div>
     );
