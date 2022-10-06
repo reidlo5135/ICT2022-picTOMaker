@@ -4,7 +4,7 @@ import Logo from "../../../assets/image/Logo.png";
 import "../myPage.css";
 import "../../../styles/font.css";
 import {Link} from "react-router-dom";
-import MyPic from './Mobile-MyPagePicToDetails';
+import MobileMyPagePicToDetails from './Mobile-MyPagePicToDetails';
 import MyPageProfileDetails from '../components/MyPageProfileDetails';
 import {useHistory} from "react-router";
 import {useCookies} from "react-cookie";
@@ -30,7 +30,7 @@ export default function MyPageContent(){
         if (conditionMode === "profile") {
             return <MyPageProfileDetails/>
         } else if (conditionMode === "mypic") {
-            return <MyPic/>
+            return <MobileMyPagePicToDetails/>
         } else if (conditionMode === "sharepic") {
             return <h1>SharePic</h1>
         }

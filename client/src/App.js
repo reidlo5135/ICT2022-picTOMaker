@@ -31,6 +31,7 @@ import SelectMobileOrBrowser from "./page/MenuSelectPage/components/SelectMobile
 import SelectPoseOrHand from "./page/MenuSelectPage/components/SelectPoseOrHand";
 import MobileSelectPoseOrHand from "./page/MenuSelectPage/mobile-select/Mobile-SelectPoseOrHand";
 import FromMobileEditTool from "./component/studio/edittool/FromMobileEditTool";
+import MobileEditTool from "./component/studio/edittool/mobile-edittool/Mobile-EditTool";
 import ObjectDetectionStudio from './component/studio/objectdetection/ObjectDetectionStudio';
 
 export default function App(){
@@ -57,7 +58,7 @@ export default function App(){
                         <Route path= '/oauth2/redirect/google' component={M_SocialUserCallback} />
                         <Route path= '/studio/pose/mobile' component={MobilePoseWebStudio} />
                         <Route path= '/studio/hand/mobile' component={MobileHandWebStudio} />
-                        <Route path= '/edit/:id' component={M_EditTool} />
+                        <Route path= '/edit/:id' component={MobileEditTool} />
                         <Route path= '/tool/image' component={EditImageTool} />
                     </Switch>
                 </AnimatePresence>
