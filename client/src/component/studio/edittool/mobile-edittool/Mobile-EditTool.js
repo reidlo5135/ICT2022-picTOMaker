@@ -10,7 +10,7 @@ import '../../../../styles/stuido/edittool.css';
 
 let canvas = null;
 
-export default function EditTool(props) {
+export default function MobileEditTool(props) {
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const history = useHistory();
 
