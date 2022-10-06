@@ -146,3 +146,27 @@
 }
 /*#bbbbbb 테두라*/
 /*#f8f8f8 안쪽*/
+
+@media (max-width:1023px){
+    .form-input {
+        width: 90% !important;
+        margin-left: 0;
+    }
+
+    .SI-Button{
+        width: 90%;
+    }
+    .SI-Button {
+        width: 100%;
+        height: 48px;
+        position: inherit;
+        margin: 0 !important;
+    }
+    .SI-Form {
+        display: flex;
+        margin-bottom: 4%;
+        margin: 0 auto;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

@@ -1,13 +1,17 @@
-import React, {forwardRef, useImperativeHandle, useEffect, useRef} from 'react';
+import React, {forwardRef, useImperativeHandle, useEffect, useRef,useState} from 'react';
 import testImage from '../../resource/test_hand2.png';
 import {Hands} from '@mediapipe/hands';
-import {drawLine, drawHead} from '../../../poseweb/util/DrawingUtils';
+import {drawLine, drawHead, drawRect} from '../../../poseweb/util/DrawingUtils'
 import "../../../../../styles/stuido/posewebstudio.css";
-
+import Modal from '../../../../LoadingModal'
+import * as cam from '@mediapipe/camera_utils'
+import Spin from '../../resource/loading.gif'
 // Static Image를 통해 인체 모델을 테스트합니다.
 let result = null;
 
 const MobileCamHand = forwardRef((props, ref) => {
+    const [loadingModal,setLoadingModal] = useState(true);
+
     useImperativeHandle(ref,()=> ({
         capture() {
             console.log("MobileCamHand result : ", result);
@@ -27,10 +31,14 @@ const MobileCamHand = forwardRef((props, ref) => {
     }));
 
     const canvasRef = useRef(null);
+    const webcamRef = useRef(null);
 
     function onResults(results) {
-        console.log(results.multiHandLandmarks[0])
+        if (loadingModal === true) {
+            setLoadingModal(false);
+        }
         result = results.multiHandLandmarks[0];
+        window.localStorage.setItem("pictogram_result",JSON.stringify(result));
         draw();
     }
 
@@ -41,28 +49,32 @@ const MobileCamHand = forwardRef((props, ref) => {
         const canvasElement = canvasRef.current;
         const canvasCtx = canvasElement.getContext('2d');
 
+        const thick = window.localStorage.getItem('lineThick');
+        const lineColor = window.localStorage.getItem('lineColor');
+
         canvasCtx.save();
         canvasCtx.clearRect(0,0,640,480);
 
         if(result !== undefined) {
-            console.log(result[8].x);
-            drawLine(result[8].x,result[8].y,result[5].x,result[5].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[12].x,result[12].y,result[9].x,result[9].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[16].x,result[16].y,result[13].x,result[13].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[20].x,result[20].y,result[17].x,result[17].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[2].x,result[2].y,result[4].x,result[4].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[1].x,result[1].y,result[2].x,result[2].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[1].x,result[1].y,result[0].x,result[0].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[17].x,result[17].y,result[0].x,result[0].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[2].x,result[2].y,result[5].x,result[5].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[5].x,result[5].y,result[9].x,result[9].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[9].x,result[9].y,result[13].x,result[13].y,canvasCtx,640,480,"15","000000")
-            drawLine(result[13].x,result[13].y,result[17].x,result[17].y,canvasCtx,640,480,"15","000000")
+            drawLine(result[8].x,result[8].y,result[5].x,result[5].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[12].x,result[12].y,result[9].x,result[9].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[16].x,result[16].y,result[13].x,result[13].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[20].x,result[20].y,result[17].x,result[17].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[2].x,result[2].y,result[4].x,result[4].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[1].x,result[1].y,result[2].x,result[2].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[1].x,result[1].y,result[0].x,result[0].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[17].x,result[17].y,result[0].x,result[0].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[2].x,result[2].y,result[5].x,result[5].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[5].x,result[5].y,result[9].x,result[9].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[9].x,result[9].y,result[13].x,result[13].y,canvasCtx,640,480,thick,lineColor)
+            drawLine(result[13].x,result[13].y,result[17].x,result[17].y,canvasCtx,640,480,thick,lineColor)
+            drawRect(result, lineColor, canvasCtx);
+            
         }
-        console.log(result)
     }
 
     useEffect(()=> {
+        const userVideoElement = document.getElementById("user-hand-video");
         const imageElement = document.getElementById('test-image')
 
         const hands = new Hands({locateFile : (file) => {
@@ -81,13 +93,25 @@ const MobileCamHand = forwardRef((props, ref) => {
         hands.onResults(onResults);
 
         hands.send({image : imageElement});
+        const camera = new cam.Camera(userVideoElement,{
+            onFrame: async () => {
+                await hands.send({image : userVideoElement});
+            },
+            width : 640,
+            height : 480
+        });
+        camera.start();
     },[]);
 
     return (
         <>
+            <Modal open={loadingModal}>
+                <img style={{display : "block" , margin : "auto"}} src={Spin} alt="불러오고 있습니다."/>
+                <h2 style={{textAlign : "center"}}>스튜디오를 불러오고 있습니다.</h2>
+            </Modal>
             <div className="test-pose">
                 <div className='left-content'>
-                    <img src={testImage} id="test-image"></img>
+                    <video  style = {{borderLeft : "1px solid #aeaeae"}} autoPlay id="user-hand-video" ref={webcamRef}></video>
                 </div>
                 <div className='right-content'>
                     <canvas ref={canvasRef} id="draw-canvas" width="640px" height="480px"></canvas>

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function MenuSelect() {
   return (
     <div className="selectpage">
-      <div className="star"></div>
+        <div className="star"></div>
         <div className="star"></div>
         <div className="star"></div>
         <div className="star"></div>

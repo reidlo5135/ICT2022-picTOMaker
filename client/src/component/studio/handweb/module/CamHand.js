@@ -24,7 +24,6 @@ const CamHand = forwardRef((props,ref)=> {
     const canvasRef = useRef(null);
 
     function onResults(results) {
-        console.log(results)
         if (loadingModal === true) {
             setLoadingModal(false);
         }
