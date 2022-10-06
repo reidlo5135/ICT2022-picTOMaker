@@ -4,13 +4,12 @@ import Logo from "../../../assets/image/Logo.png";
 import "../myPage.css";
 import "../../../styles/font.css";
 import {Link} from "react-router-dom";
-import MyPic from '../components/MyPagePicToDetails';
+import MobileMyPagePicToDetails from './Mobile-MyPagePicToDetails';
 import MyPageProfileDetails from '../components/MyPageProfileDetails';
-import M_MyPageProfile from "./Mobile-MyPageProfile";
 import {useHistory} from "react-router";
 import {useCookies} from "react-cookie";
 import { motion } from "framer-motion";
-import Top from "../../../component/Top";
+import MobileTop from "../../../component/mobile-components/Mobile-Top";
 
 export default function MyPageContent(){
     const [mode, setMode] = useState('profile');
@@ -31,7 +30,7 @@ export default function MyPageContent(){
         if (conditionMode === "profile") {
             return <MyPageProfileDetails/>
         } else if (conditionMode === "mypic") {
-            return <MyPic/>
+            return <MobileMyPagePicToDetails/>
         } else if (conditionMode === "sharepic") {
             return <h1>SharePic</h1>
         }
@@ -100,7 +99,7 @@ export default function MyPageContent(){
             transition={{ ease: "easeOut", duration: 1 }}
         >
             <div className='MyPage-Content'>  
-            <Top/> 
+            <MobileTop/> 
                 <div className='MyPage-Left'>
 
                     
