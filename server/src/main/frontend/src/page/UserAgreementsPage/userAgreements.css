@@ -1,0 +1,47 @@
+.terms{
+    width: 1280px;
+    margin:0 auto;
+}
+.terms-main-title{
+    text-align: center;
+}
+
+.terms-title{
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1%;
+    margin-top: 1%;
+}
+.terms-title > img{
+    margin-right: 1%;
+}
+
+.group{
+    margin-left: 5%;
+    line-height: 35px;
+}
+
+.group-title{
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1%;
+    margin-top: 1%;
+}
+
+.group-title > img{
+    margin-right: 1%;
+}
+
+.group-int{
+    position: relative;
+    padding: 1% 1% 1% 1%;
+    background-color: #fff;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    border-image: linear-gradient(to right, #EB5D38, #E72D71);
+    border-image-slice: 1;
+}
