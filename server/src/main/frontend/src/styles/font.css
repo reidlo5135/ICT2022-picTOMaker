@@ -1,0 +1,50 @@
+@font-face {
+    src : url("./../assets/fonts/NotoSansKR-Medium.otf");
+    src : url("./../assets/fonts/NotoSansKR-Regular.otf");
+    font-family: "Noto-Medium";
+}
+
+@font-face{
+    src : url("./../assets/fonts/JalnanOTF.otf");
+    font-family: "JalnanOTF";
+}
+body{
+    font-family: "Noto-Medium";
+}
+h1 {
+
+    font-family: "Noto-Medium";
+
+}
+
+p{
+    font-family: "Noto-Medium";
+}
+h2 {
+
+    font-family: "Noto-Medium";
+
+}
+h3 {
+
+    font-family: "Noto-Medium";
+
+}
+h4 {
+
+    font-family: "Noto-Medium";
+
+}
+h5 {
+
+    font-family: "Noto-Medium";
+
+}
+
+span {
+    font-family: "Noto-Medium";
+}
+
+ul{
+    font-family: "Noto-Medium";
+}

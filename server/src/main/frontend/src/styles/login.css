@@ -1,0 +1,172 @@
+.SIgnIn{
+    display: flex;
+    width: 1280px;
+
+}
+.SI-Content{
+    width: 100%;
+}
+
+.SI-Content p {
+    display: flex;
+    justify-content: center;
+    height: 15px;
+    margin: 7px 0 24px 0;
+}
+
+.SI-Content .p_pw {
+    line-height: 1.38;
+    letter-spacing: -.3px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #616568;
+    cursor: pointer;
+    margin-right: 3px;
+}
+
+.SI-Content .p_signUp {
+    line-height: 1.38;
+    letter-spacing: -.3px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #616568;
+    cursor: pointer;
+}
+
+.logo_modal {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0 30px;
+}
+
+.logo_modal img {
+    width: 200px;
+    height: 100px;
+}
+
+.SI-Input{
+    width: 400px;
+}
+
+.SI-Form{
+    margin-bottom:4%
+}
+
+.form-input {
+    width: 360px!important;
+    margin-top: 0!important;
+    margin-bottom: 12px!important;
+    margin-left: 13px;
+    padding: 13px 12px;
+    height: 40px;
+    line-height: 1.47;
+    font-size: 15px;
+    border: 1px solid #dee2e6;
+    letter-spacing: -.3px;
+    border-radius: 13px;
+    background-color: #fff;
+}
+
+.form-input:focus{
+    outline: solid 1.5px #E72D71;
+}
+
+.Sns-Si{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Sns-Si hr {
+    position: relative;
+    bottom: -10px;
+    display: block;
+    margin: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #f1f3f5;
+    border: none;
+}
+
+.Sns-Si span {
+    padding: 0 8px;
+    margin-bottom: 16px;
+    font-size: 11px;
+    line-height: 16px;
+    color: #abb0b5;
+    z-index: 11;
+    background-color: #fff;
+}
+
+.Sns-Si div {
+    display: flex;
+    margin: auto;
+    column-gap: 12px;
+}
+
+.Sns-Si img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 13px;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.SI-Button{
+    width: 400px;
+    height: 48px;
+    position: relative;
+    border-radius: 13px;
+    color: #ffffff;
+    text-decoration: none;
+    tranSItion: 0.25s;
+    background: linear-gradient(to left,#EB5D38, #E72D71);
+    margin: 0 0 0 2% !important;
+    font-weight: 700;
+}
+
+.SI-Button:hover {
+    letter-spacing: 2px;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.SI-Caution{
+    width: 100%;
+    margin: 0 50% 0 47.5%;
+    font-SIze: 13px;
+}
+.SI-Caution span{
+    color:#E72D71;
+    font-weight: bold;
+}
+/*#bbbbbb 테두라*/
+/*#f8f8f8 안쪽*/
+
+@media (max-width:1023px){
+    .form-input {
+        width: 90% !important;
+        margin-left: 0;
+    }
+
+    .SI-Button{
+        width: 90%;
+    }
+    .SI-Button {
+        width: 100%;
+        height: 48px;
+        position: inherit;
+        margin: 0 !important;
+    }
+    .SI-Form {
+        display: flex;
+        margin-bottom: 4%;
+        margin: 0 auto;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

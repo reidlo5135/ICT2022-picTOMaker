@@ -53,6 +53,10 @@ client/static/**
 client/static/static/**
 client/static/static/js/**
 
+server/src/main/frontend/node_modules
+server/src/main/frontend/src/component/SocialUserConfig.js
+server/src/main/frontend/build/
+
 # server #
 server/src/main/resources/application-private.yml
 server/src/main/resources/application-credentials.yml
