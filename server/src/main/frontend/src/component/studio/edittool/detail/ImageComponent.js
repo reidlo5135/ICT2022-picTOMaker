@@ -12,7 +12,6 @@ export default function ImageComponent(props) {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(e.target.files[0]);
             fileReader.onload = function (e) {
-                console.log(e.target.result);
                 const imageInstance = new fabric.Image.fromURL(e.target.result,function(oImg) {
                     canvas.add(oImg)
                 })

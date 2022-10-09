@@ -48,7 +48,6 @@ export default function HandWebStudio() {
     }
 
     function onResults(props) {
-        console.log(props);
     }
 
     // 초기설정 Hook

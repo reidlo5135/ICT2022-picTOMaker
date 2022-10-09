@@ -10,13 +10,8 @@ let result = null;
 const TestHand = forwardRef((props,ref) => {
     useImperativeHandle(ref,()=> ({
         capture() {
-            console.log(result)
             window.localStorage.setItem("pictogram_result",JSON.stringify(result));
             window.localStorage.setItem("picto_type","hand");
-
-            // const item = window.localStorage.getItem("pictogram_result")
-            // console.log(JSON.parse(item));
-            
             document.location.href = "/edit"
         }
     }));
@@ -26,7 +21,6 @@ const TestHand = forwardRef((props,ref) => {
     const canvasRef = useRef(null);
 
     function onResults(results) {
-        console.log(results.multiHandLandmarks[0])
         result = results.multiHandLandmarks[0];
         draw();
     }
@@ -42,7 +36,6 @@ const TestHand = forwardRef((props,ref) => {
         canvasCtx.clearRect(0,0,640,480);
         
         if(result !== undefined) {
-            console.log(result[8].x);
             drawLine(result[8].x,result[8].y,result[5].x,result[5].y,canvasCtx,640,480,"15","000000")
             drawLine(result[12].x,result[12].y,result[9].x,result[9].y,canvasCtx,640,480,"15","000000")
             drawLine(result[16].x,result[16].y,result[13].x,result[13].y,canvasCtx,640,480,"15","000000")
@@ -56,7 +49,6 @@ const TestHand = forwardRef((props,ref) => {
             drawLine(result[9].x,result[9].y,result[13].x,result[13].y,canvasCtx,640,480,"15","000000")
             drawLine(result[13].x,result[13].y,result[17].x,result[17].y,canvasCtx,640,480,"15","000000")
         }
-        console.log(result)
     }
 
     useEffect(()=> {

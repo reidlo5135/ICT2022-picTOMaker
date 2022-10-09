@@ -7,10 +7,6 @@ import axios from 'axios';
 
 const MyPagePicToPosting = ({ posts, loading }) => {
     const [cookies, setCookie] = useCookies(["accessToken"]);
-    console.log('POST posts : ', posts);
-    posts.map((post) => {
-        console.log('post : ', post);
-    });
 
   return (
     <>

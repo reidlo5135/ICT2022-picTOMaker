@@ -37,8 +37,6 @@ export default function MobileUserCallback() {
     };
 
     useEffect(() => {
-        console.log("Mobile-UserCallback.js token : ", cookies.accessToken);
-        console.log("Mobile-UserCallback.js provider : ", provider);
         let requestUrl = null;
         let responseUrl = null;
         if(provider === null) {

@@ -154,7 +154,6 @@ const CommunityPosting = () => {
       }
 
       const handleChangeFile = (e) => {
-        console.log(e.target.files);
         setImgFile(e.target.files);
         setImgBase64([]);
         for(let i=0 ; i<e.target.files.length ; i++) {
@@ -163,7 +162,6 @@ const CommunityPosting = () => {
                 reader.readAsDataURL(e.target.files[i]);
                 reader.onloadend = () => {
                     const base64 = reader.result; // 비트맵 데이터 리턴, 이 데이터를 통해 파일 미리보기가 가능함
-                    console.log(base64)
                     if(base64) {
                         let base64Sub = base64.toString()
                         setImgBase64(imgBase64 => [...imgBase64, base64Sub]);
@@ -173,31 +171,6 @@ const CommunityPosting = () => {
         }
     }
 
-    /* const WriteBoard = async () => {
-        const fd = new FormData();
-        for(let i=0 ; i<imgFile.length ; i++) {
-            fd.append("file", imgFile[i]);
-        }
-        await fileInstance({
-            method: 'post',
-            url: `/v1/api/community/${provider}`,
-            data: fd
-        })
-        .then((response) => {
-            if(response.data) {
-                console.log(response.data)
-                readImages();
-                setImgFile(null);
-                setImgBase64([]);
-                alert("업로드 완료!");
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-            alert("실패!");
-        })
-    }
- */
     const encodeFileToBase64 = (fileBlob) => {
         const reader = new FileReader();
         reader.readAsDataURL(fileBlob);
@@ -208,7 +181,6 @@ const CommunityPosting = () => {
         };       
         });
     };
-
 
   return (
     <>

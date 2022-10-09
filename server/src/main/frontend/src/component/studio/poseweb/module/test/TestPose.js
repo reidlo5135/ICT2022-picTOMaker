@@ -10,7 +10,6 @@ let result = null;
 const TestPose = forwardRef((props,ref) => {
     useImperativeHandle(ref,()=> ({
         capture() {
-            console.log(result);
             window.localStorage.setItem("pictogram_result",JSON.stringify(result));
             window.localStorage.setItem("picto_type","pose");
             document.location.href = "/edit";
@@ -65,11 +64,9 @@ const TestPose = forwardRef((props,ref) => {
             // 머리
             drawHead(result[0].x,result[0].y,canvasCtx,640,480,"15","000000");
         }
-        console.log(result)
     }
 
     useEffect(()=> {
-
         const imageElement = document.getElementById('test-image')
 
         const pose = new Pose({locateFile : (file) => {

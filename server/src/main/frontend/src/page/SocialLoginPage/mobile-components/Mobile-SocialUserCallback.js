@@ -11,7 +11,6 @@ export default function M_SocialUserCallback() {
     const url = new URL(window.location.href);
     let provider;
     const token = new URL(window.location.href).searchParams.get("code");
-    console.log('code : ', token);
 
     if(token.toString() == null) {
         alert('Token is Null');
@@ -26,8 +25,6 @@ export default function M_SocialUserCallback() {
     } else {
         provider = null;
     }
-
-    console.log('provider : ', provider);
 
     const headers = {
         "X-AUTH-TOKEN": token

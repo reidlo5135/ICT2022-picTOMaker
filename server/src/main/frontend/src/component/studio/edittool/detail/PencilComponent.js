@@ -21,7 +21,6 @@ export default function PencilComponent(props) {
     const handleChange = (event) => {
         const colorName = event.target.value;
         setColor(event.target.value);
-        console.log(event.target.value);
         switch(colorName) {
             case "빨간색":
                 canvas.freeDrawingBrush.color = '#FF3030';  

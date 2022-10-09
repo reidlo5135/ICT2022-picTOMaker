@@ -300,10 +300,7 @@ export default function FromMobileEditTool(props) {
         }
 
         if (type === "object") {
-            console.log("오브젝트 입니다!!")
             const objectValue = localStorage.getItem("object");
-
-            console.log(models[objectValue].url)
             fabric.Image.fromURL(models[objectValue].url, function(oImg) {
                 canvas.add(oImg);
             });
