@@ -40,7 +40,19 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                 "/v3/api-docs",
                 ".png",
                 "ws",
-                "/picto"
+                "/picto",
+                "/",
+                "/error",
+                "/favicon.ico",
+                "/**/*.png",
+                "/**/*.gif",
+                "/**/*.svg",
+                "/**/*.jpg",
+                "/**/*.html",
+                "/**/*.css",
+                "/**/*.js",
+                "/**/*.json",
+                "/**/*.otf"
         };
         for(String str : patterns) {
             if(uri.equals(str) || uri.contains(str)) {
