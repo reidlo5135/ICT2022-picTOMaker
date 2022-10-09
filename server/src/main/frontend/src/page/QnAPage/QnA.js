@@ -64,25 +64,10 @@ export default function QnA() {
             console.error('err : ', JSON.stringify(err));
             alert(err.response.data.msg);
         });
-        
-        /* setTimeout(() => {
-            window.location.reload();
-        }, 2500); */
     }
 
     function sendEmail(e){
         e.preventDefault();
-
-    /*  emailjs.sendForm(
-            'service_kdh',
-            'template_xw0dnqc',
-            e.target,
-            '_jS58pRqqhKudZIRC'
-            ).then(res=>{
-                console.log(res);
-                alert('문의내용이 전송 되었습니다.');
-                console.log(isOpen);
-            }).catch(err => console.log(err));  */
     }
 
     return(

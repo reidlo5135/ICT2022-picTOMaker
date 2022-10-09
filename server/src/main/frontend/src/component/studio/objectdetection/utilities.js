@@ -26,7 +26,6 @@ export const drawRect = (detections, ctx) => {
 
     detections.forEach(prediction => {
         let text = prediction['class'];
-        console.log(prediction)
         const color = 'green';
         ctx.strokeSylt = color;
         ctx.font = '18px Arial'

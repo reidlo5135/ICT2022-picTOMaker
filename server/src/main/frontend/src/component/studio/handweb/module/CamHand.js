@@ -65,13 +65,11 @@ const CamHand = forwardRef((props,ref)=> {
     }
 
     useEffect(()=> {
-        console.log("CamPose Mounting Start")
-
         const userVideoElement = document.getElementById("user-video");
 
         const hands = new Hands({locateFile : (file) => {
             return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
-          }})
+        }})
 
         // 포즈 설정값
         hands.setOptions({

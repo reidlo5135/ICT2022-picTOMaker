@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {BrowserView, MobileView} from "react-device-detect";
 import './App.css';
 import {Route, Switch} from 'react-router-dom';

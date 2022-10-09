@@ -8,7 +8,6 @@ import CommunityCmt from "./CommunityCmt";
 const CommunityDetails = ({ history, diaryList, match}) => {
     const [data,setData] = useState([]);
     const dataId = useRef(0);
-    console.log('CommunityDetails matchParams : ' + match.params.id);
 
     const getData = async () => {
         await axios.get(`/v1/api/community/${match.params.id}`)
@@ -27,7 +26,6 @@ const CommunityDetails = ({ history, diaryList, match}) => {
     useEffect(() => {
         getData();
     }, []);
-    console.log(data);
 
     return (
         <>

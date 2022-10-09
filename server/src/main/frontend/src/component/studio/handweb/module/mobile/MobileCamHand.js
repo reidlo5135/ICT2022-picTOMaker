@@ -14,7 +14,6 @@ const MobileCamHand = forwardRef((props, ref) => {
 
     useImperativeHandle(ref,()=> ({
         capture() {
-            console.log("MobileCamHand result : ", result);
             const skeleton = JSON.stringify(result);
             const ws = new WebSocket("ws://ec2-52-79-56-189.ap-northeast-2.compute.amazonaws.com/picto");
             const json = {

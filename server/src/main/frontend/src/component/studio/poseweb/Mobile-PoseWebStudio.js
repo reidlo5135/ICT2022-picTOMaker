@@ -38,7 +38,6 @@ export default function MobileWebStudio() {
     const canvasRef = useRef(null);
 
     function capture() {
-        console.log("capture");
         childRef.current.capture();
     }
 

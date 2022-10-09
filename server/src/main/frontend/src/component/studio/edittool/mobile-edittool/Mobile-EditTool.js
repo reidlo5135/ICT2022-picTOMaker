@@ -29,9 +29,7 @@ export default function MobileEditTool(props) {
         }
         ws.onmessage = (e) => {
             const data = JSON.parse(e.data);
-            console.log("EditTool.js nonResult : ", data);
             drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor);
-            console.log("isFM : ", isFromMobile);
         }
     }
 
@@ -39,7 +37,6 @@ export default function MobileEditTool(props) {
         const nonResult = window.localStorage.getItem('pictogram_result');
         if (nonResult !== "null") {
             const result = JSON.parse(nonResult);
-            console.log("DrawPicTOBrowser result : ", result);
             const thick = localStorage.getItem("thick");
             const color = localStorage.getItem("lineColor");
             drawCanvas(result, thick, color);
@@ -48,9 +45,6 @@ export default function MobileEditTool(props) {
     }
 
     function drawCanvas(result, thick, color) {
-        console.log("drawCanvas result, thick, color : ", result + ", " + thick + ", " + color);
-        console.log(result);
-
         if (type === "hand") {
             for (let i = 0; i < 21; i++) {
                 result[i].x = result[i].x * 640;
@@ -310,7 +304,6 @@ export default function MobileEditTool(props) {
 
     function download() {
         const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-        console.log('image : ', image);
 
         const jsonProf = JSON.parse(profile);
         const email = jsonProf.email;
@@ -322,9 +315,6 @@ export default function MobileEditTool(props) {
                     "X-AUTH-TOKEN": cookies.accessToken
                 }
             }).then((response) => {
-                console.log('response data : ', response.data);
-                console.log('response data.data : ', response.data.data);
-
                 if(response.data.code === 0) {
                     localStorage.setItem("picTOUrl", response.data.data);
                     alert('성공적으로 저장되었습니다!');
@@ -376,12 +366,9 @@ export default function MobileEditTool(props) {
 
     useEffect(()=> {
         canvas = new fabric.Canvas('edit-canvas');
-        console.log("isFromMobile : ", isFromMobile);
         if(isFromMobile === "true") {
-            console.log("EditTool.js is on Mobile");
             drawingPictogramMobile();
         } else {
-            console.log("EditTool.js is on Browser");
             drawingPictogram();
         }
     },[]);

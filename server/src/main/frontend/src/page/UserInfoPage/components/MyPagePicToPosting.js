@@ -6,10 +6,6 @@ import '../../SocialLoginPage/socialUserCallback.css';
 
 const MyPagePicToPosting = ({ posts, loading }) => {
     const [cookies, setCookie] = useCookies(["accessToken"]);
-    console.log('POST posts : ', posts);
-    posts.map((post) => {
-        console.log('post : ', post);
-    });
 
     const deletePicTo = (id) => {
         del(`/v1/api/picto/${id}`, {

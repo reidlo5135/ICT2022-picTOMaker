@@ -15,7 +15,6 @@ const ODCam = () => {
 
     
     const onClickButton = () => {
-        console.log(value);
         localStorage.setItem("object",value);
         localStorage.setItem("picto_type","object");
         localStorage.setItem("pictogram_result","{ dd : 'dd'}")
@@ -64,14 +63,8 @@ const ODCam = () => {
             if (obj[0]['class'] !== undefined) {
                 setValue(obj[0]['class'])
                 setAvaliable(true);
-                console.log(obj[0]['class'])
                 return;
             }
-
-          
-            
-
-        
         }
     };
 
@@ -81,8 +74,6 @@ const ODCam = () => {
       <div>
         <div id="topbar"></div>
         <div className={style.studioContainer}>
-
-
 
         <Webcam
           ref={webcamRef}
