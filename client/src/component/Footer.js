@@ -12,8 +12,8 @@ export default function Footer(){
 					개인정보관리자 : PICKTOMAKER
 				</div>
 				<div className="FooterMenu">
-					<p><Link to="/terms">이용약관</Link><span className='footer-bt'>ㅣ</span></p>
-					<p><Link to="/qna">문의하기</Link></p>
+					<p><Link to="/terms"><span className='footer-bt'>이용약관</span></Link><span className='footer-bt'>ㅣ</span></p>
+					<p><Link to="/qna"><span className='footer-bt'>문의하기</span></Link></p>
 				</div>
 				
 			</div>

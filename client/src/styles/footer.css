@@ -56,10 +56,10 @@
 
 p > a ,a:visited{
 	text-decoration: none;
-    color: #9b9999;
+    color: black;
     font-size: 14px;
 }
 
 .footer-bt{
-	color: #9b9999;
+	color: #9b9999 !important;
 }
