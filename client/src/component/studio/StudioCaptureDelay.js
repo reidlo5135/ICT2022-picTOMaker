@@ -9,7 +9,8 @@ import { ThemeProvider } from '@mui/material';
 import {theme} from './edittool/theme/MainTheme'
 // d
 export default function StudioCaptureDelay (props) {
-    const setTimeCloseModal = props.setState;
+    const setTimeModalOpen = props.close;
+
     return (
         <> 
         <ThemeProvider theme = {theme}>
@@ -30,7 +31,7 @@ export default function StudioCaptureDelay (props) {
             </FormControl>
 
             
-            <Button sx={{display : "block", margin : "auto",marginTop: "20px"}} color="button" variant="contained" onClick={()=> {setTimeCloseModal(false)}}>확인</Button>
+            <Button sx={{display : "block", margin : "auto",marginTop: "20px"}} color="button" variant="contained" onClick={()=> {setTimeModalOpen(false)}}>확인</Button>
             </ThemeProvider>   
                  </>
     ) 

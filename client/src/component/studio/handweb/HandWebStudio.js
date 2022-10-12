@@ -75,8 +75,8 @@ export default function HandWebStudio() {
                         <div>
                             <img className="setting" src={Time} alt="asdf" onClick={timeOpenModal}/>
                             <div className={'loginModal'}>
-                                <Modal open={timeModalOpen} close={timeCloseModal}>
-                                    <StudioCaptureDelay/>
+                                <Modal open={timeModalOpen} >
+                                    <StudioCaptureDelay close={setTimeModalOpen}/>
                                 </Modal>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ export default function HandWebStudio() {
                             <img className="setting" src={Gear} alt="asdf" onClick={openModal}/>
                             <div className={'loginModal'}>
                                 <Modal open={modalOpen} close={closeModal}>
-                                    <StudioSettingComponent/>
+                                    <StudioSettingComponent close={setModalOpen}/>
                                 </Modal>
                             </div>
                         </div>
