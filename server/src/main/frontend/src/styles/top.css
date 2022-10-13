@@ -1,9 +1,9 @@
 .topMenu{
 	margin: 0 auto;
-    width: 1280px;
-    display: flex;
-    border-bottom: solid 1px #F2F2F2;
-    justify-content: space-between;
+	width: 1280px;
+	display: flex;
+	border-bottom: solid 1px #F2F2F2;
+	justify-content: space-between;
 }
 
 .topMenu .img_logo {
@@ -31,9 +31,10 @@
 	margin-right: 13px;
 }
 
-.profile-content{
+.profile-content {
 	align-items: center;
 	display: flex;
+	color: black;
 }
 .profile-link{
 	text-decoration: none;
@@ -58,7 +59,7 @@
 /*Sidebar*/
 .top_sidebar{
 	display: flex;
-    align-items: center;
+	align-items: center;
 }
 #menu__toggle {
 	opacity: 0;
@@ -147,8 +148,8 @@
 		position: inherit;
 		text-decoration: none;
 	}
-	
-	}
+
+}
 
 
 @media all and (min-width:480px) and (max-width:767px) {
