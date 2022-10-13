@@ -21,7 +21,7 @@ export default function LocalUserSignUp(){
 
     const isValidEmail = email.includes('@') && email.includes('.');
     const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-    const isValidPassword = password.length >= 8 && specialLetter >= 1;
+    const isValidPassword = (password.length + specialLetter) >= 8;
     const isEqualsPassword = (password === confirmPassword);
 
     const handleInput = e => {
