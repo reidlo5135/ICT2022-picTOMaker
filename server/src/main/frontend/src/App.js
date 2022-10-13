@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BrowserView, MobileView} from "react-device-detect";
 import './App.css';
 import {Route, Switch} from 'react-router-dom';
@@ -90,6 +90,6 @@ export default function App(){
                     </Switch>
                 </AnimatePresence>
             </BrowserView>
-       </div>
+        </div>
     );
 }

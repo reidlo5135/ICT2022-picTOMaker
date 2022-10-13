@@ -10,6 +10,11 @@
 .Footer-wrap{
 	margin: 0 auto;
 	text-align: -webkit-center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: stretch;
+	height: 100%;
 }
 
 .Footer .FooterMenu{
@@ -32,7 +37,6 @@
 }
 
 .Footer .FooterText{
-	width: 50%;
 	font-size:16px;
 	line-height: 1.69;
 	margin-top: 30px;
@@ -53,4 +57,9 @@
 p > a ,a:visited{
 	text-decoration: none;
 	color: black;
+	font-size: 14px;
+}
+
+.footer-bt{
+	color: #9b9999 !important;
 }

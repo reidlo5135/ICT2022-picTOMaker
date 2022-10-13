@@ -107,13 +107,25 @@ export default function EditImageTool() {
                         <canvas id="edit-canvas" width ="640px" height = "480px"></canvas>
                     </div>
                     <div id="tool-view">
-                        <button id="pencil-btn" onClick = {()=> {pencilMode()}}></button>
-                        <button id="figure-btn" onClick = {()=> {figureMode()}}></button>
-                        <button id="image-btn" onClick = {()=> {imageMode()}}></button>
-                        <button id="text-btn" onClick = {()=> {textMode()}}></button>
-                        <button id="download-btn" onClick={()=> {update()}} ></button>
-                        <button id="open-btn" onClick = {()=> {openMode()}}> </button>
-                        <button id="share-btn" onClick = {()=> {shareMode()}}></button>
+                        <div className='pencil-tool tool'>
+                            <button id="pencil-btn" onClick = {()=> {pencilMode()}}></button>
+                            <p className='pencil-desc'>펜 그리기</p>
+                        </div>
+                        <div className='figure-tool tool'>
+                            <button id="figure-btn" onClick = {()=> {figureMode()}}></button>
+                            <p className='figure-desc'>도형 삽입</p>
+                        </div>
+                        <div className='image-tool tool'>
+                            <button id="image-btn" onClick = {()=> {imageMode()}}></button>
+                            <p className='image-desc'>이미지 삽입</p>
+                        </div>
+                        {/*                         <button id="text-btn" onClick = {()=> {textMode()}}></button> */}
+                        {/* <button id="open-btn" onClick = {()=> {openMode()}}></button> */}
+                        <div className='download-tool tool'>
+                            <button id="download-btn" onClick={()=> {update()}} ></button>
+                            <p className='download-desc'>다운로드</p>
+                        </div>
+                        {/*                         <button id="share-btn" onClick = {()=> {shareMode()}}></button> */}
                     </div>
                 </div>
                 <div id="tool-detail-view">
