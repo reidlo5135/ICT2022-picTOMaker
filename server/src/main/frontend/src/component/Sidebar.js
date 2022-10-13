@@ -43,9 +43,8 @@ export default function Sidebar(){
 
             <ul className="menu__box">
                 <li><Link to='/mypage' className='menu__item'>마이페이지</Link></li>
-                <li><a className="menu__item" href="client/src/component/Sidebar#" onClick={Logout}>로그아웃</a></li>
                 <li><Link to='/qna' className='menu__item'>문의하기</Link></li>
-                <li><Link to='/community' className='menu__item'>커뮤니티</Link></li>
+                <li><a className="menu__item" href="client/src/component/Sidebar#" onClick={Logout}>로그아웃</a></li>
             </ul>
         </div>
     );

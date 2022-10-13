@@ -52,6 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/",
                         "/error",
                         "/favicon.ico",
+                        "/**/favicon.ico",
                         "/**/*.png",
                         "/**/*.gif",
                         "/**/*.svg",
@@ -64,7 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v1/api/user/login", "/v1/api/user/signup", "/v1/api/user/reissue", "/v1/api/oauth2/**").permitAll()
                 .antMatchers("/v1/api/user/**").permitAll()
                 .antMatchers("/v1/api/picto/**", "/v1/api/community/**", "/v1/api/qna/**").permitAll()
-                .antMatchers("/exception", "/ws/**", "/picto").permitAll()
+                .antMatchers("/exception", "/ws/**", "/wss/**", "/picto").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/v1/api/oauth2/**").permitAll()
                 .mvcMatchers("/v3/api-docs/**",
                         "/configuration/**",
