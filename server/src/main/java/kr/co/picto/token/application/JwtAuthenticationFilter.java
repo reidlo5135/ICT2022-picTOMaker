@@ -40,6 +40,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                 "/v3/api-docs",
                 ".png",
                 "ws",
+                "wss",
                 "/picto",
                 "/",
                 "/error",
