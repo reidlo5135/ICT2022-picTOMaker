@@ -3,7 +3,8 @@
 2022-03-02 ~ <br>
 멘토: 오은석<br>
 멘티: 진승범, 강준모, 김동호, 서동근<br>
-<b>VERSION: 1.1.0</b><br>
+<b>VERSION: 1.2.0</b><br>
+<b><a href="https://www.pictomaker.com">-> Released URL</a></b><br>
 <b><a href="https://github.com/reidlo5135/ICT2022-picTOMaker-v2.0.0">-> Node-Express.js Version(v2.0.0)</a></b><br>
 <b><a href="https://github.com/reidlo5135/ICT2022-picTOMaker-v2.0.0/tree/dev-2.1.0">-> Node-Express.ts Version(v2.1.0)</a></b><br>
 

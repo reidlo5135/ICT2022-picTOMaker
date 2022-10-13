@@ -32,7 +32,7 @@ export default function EditTool(props,match) {
             const result = JSON.parse(nonResult);
             const thick = localStorage.getItem("lineThick");
             const color = localStorage.getItem("lineColor");
-            
+
             drawCanvas(result, thick, color, type);
             window.localStorage.setItem('pictogram_result', null);
         }
@@ -290,9 +290,9 @@ export default function EditTool(props,match) {
                 {x:result[11].x , y:result[11].y},
                 {x:result[23].x , y:result[23].y},
                 {x:result[24].x , y:result[24].y}
-        ],{
-            fill : color,
-    }) 
+            ],{
+                fill : color,
+            })
 
             canvas.add(shoulder, leftUpperArm, leftLowerArm, rightUpperArm, rightLowerArm, leftUpperBody, rightUpperBody, waist, leftUpperLeg, leftLowerLeg, rightUpperLeg, rightLowerLeg, head, body);
         }
@@ -301,7 +301,7 @@ export default function EditTool(props,match) {
             console.log("오브젝트 입니다!!")
             const objectValue = localStorage.getItem("object");
 
-            console.log(models[objectValue].url)            
+            console.log(models[objectValue].url)
             fabric.Image.fromURL(models[objectValue].url, function(oImg) {
                 canvas.add(oImg);
             })
@@ -390,13 +390,25 @@ export default function EditTool(props,match) {
                         <canvas id="edit-canvas" width ="640px" height = "480px"></canvas>
                     </div>
                     <div id="tool-view">
-                        <button id="pencil-btn" onClick = {()=> {pencilMode()}}></button>
-                        <button id="figure-btn" onClick = {()=> {figureMode()}}></button>
-                        <button id="image-btn" onClick = {()=> {imageMode()}}></button>
-                        <button id="text-btn" onClick = {()=> {textMode()}}></button>
-                        <button id="download-btn" onClick={()=> {download()}} ></button>
-                        <button id="open-btn" onClick = {()=> {openMode()}}> </button>
-                        <button id="share-btn" onClick = {()=> {shareMode()}}></button>
+                        <div className='pencil-tool tool'>
+                            <button id="pencil-btn" onClick = {()=> {pencilMode()}}></button>
+                            <p className='pencil-desc'>펜 그리기</p>
+                        </div>
+                        <div className='figure-tool tool'>
+                            <button id="figure-btn" onClick = {()=> {figureMode()}}></button>
+                            <p className='figure-desc'>도형 삽입</p>
+                        </div>
+                        <div className='image-tool tool'>
+                            <button id="image-btn" onClick = {()=> {imageMode()}}></button>
+                            <p className='image-desc'>이미지 삽입</p>
+                        </div>
+                        {/*                         <button id="text-btn" onClick = {()=> {textMode()}}></button> */}
+                        {/* <button id="open-btn" onClick = {()=> {openMode()}}></button> */}
+                        <div className='download-tool tool'>
+                            <button id="download-btn" onClick={()=> {download()}} ></button>
+                            <p className='download-desc'>다운로드</p>
+                        </div>
+                        {/*                         <button id="share-btn" onClick = {()=> {shareMode()}}></button> */}
                     </div>
                 </div>
                 <div id="tool-detail-view">
