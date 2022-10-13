@@ -31,9 +31,10 @@
 	margin-right: 13px;
 }
 
-.profile-content{
-	align-items: center;
-	display: flex;
+.profile-content {
+    align-items: center;
+    display: flex;
+    color: black;
 }
 .profile-link{
 	text-decoration: none;
