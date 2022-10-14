@@ -1,10 +1,12 @@
 import React from "react";
+import {useHistory} from "react-router";
 import {del} from "../../../services/AxiosService";
 import {useCookies} from "react-cookie";
 import {Link} from "react-router-dom";
 import '../../SocialLoginPage/socialUserCallback.css';
 
 const MyPagePicToPosting = ({ posts, loading }) => {
+    const history = useHistory();
     const [cookies, setCookie] = useCookies(["accessToken"]);
 
     const deletePicTo = (id) => {
@@ -15,6 +17,7 @@ const MyPagePicToPosting = ({ posts, loading }) => {
         }).then((response) => {
             if(response.data.code === 0) {
                 alert('성공적으로 삭제되었습니다.');
+                window.location.reload();
             }
         }).catch((err) => {
             console.error('err : ', JSON.stringify(err));

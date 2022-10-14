@@ -33,7 +33,10 @@ public class OnlySkeletonWSHandler extends TextWebSocketHandler {
         log.info("JSONObj : " + obj);
 
         for(String key : sessionMap.keySet()) {
+            log.info("SessionMap key : " +  key);
             WebSocketSession wss = sessionMap.get(key);
+            log.info("SessionMap id : " + wss.getId());
+            log.info("is Equal : " + (key.equals(wss.getId())));
             try {
                 if(msg.equals("editTool")) {
                     log.info("EditTool DataMap : " + data);
