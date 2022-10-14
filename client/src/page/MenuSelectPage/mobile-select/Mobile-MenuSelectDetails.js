@@ -10,16 +10,6 @@ import "../../../styles/font.css";
 export default function MenuSelectDetails(){
     return(
         <div className='Select-Content'>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
             <div className='HT-Content'>
                 <Link to="/pose/hand">
                     <div className='Human-content cont'>
