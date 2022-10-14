@@ -26,8 +26,11 @@ export default function M_Main(){
     const openModal = () => {
         const token = cookies.accessToken;
         if((token === null || token === undefined) && isLogged === false) {
+            console.log('Main isLogged : ', isLogged);
             setModalOpen(true);
         } else {
+            console.log("token : ", token);
+            console.log('Main isLogged : ', isLogged);
             history.push("/select");
         }
     }
@@ -109,11 +112,6 @@ export default function M_Main(){
                                     문의하기
                                 </button>
                             </Link>
-                            <Link to='/community'>
-                                <button className='MainButton'>
-                                    커뮤니티
-                                </button>
-                            </Link>
                             {
                                 cookies.accessToken === null || cookies.accessToken === undefined ?
                                     <div></div> :
@@ -144,11 +142,8 @@ export default function M_Main(){
                                         </form>
                                     </div>
                                     <p>
-                                        <Link to='/v1/user/'>
-                                            <p className={'p_pw'}>비밀번호 찾기</p>
-                                        </Link>
                                         <Link to='/signUp'>
-                                            <p className={'p_signUp'}>| 회원가입</p>
+                                            <p className={'p_signUp'}>회원가입</p>
                                         </Link>
                                     </p>
                                     <div className='Sns-Si'>
@@ -162,7 +157,7 @@ export default function M_Main(){
                                     </div>
                                 </div>
                             </div>
-                            </Modal>
+                        </Modal>
                     </div>
                     <div className="col-md-7 mobile-intro">
                         <div className='mobile-intro-div'></div>

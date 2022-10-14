@@ -7,19 +7,22 @@ body{
 }
 
 @media (min-width:768px) and (max-width:1023px){
-  .App{
-    height: 100vw;
+  .App {
+    height: 100%;
     width: 100vw;
   }
 }
 
 @media all and (min-width:480px) and (max-width:767px) {
-  .App{
-    height: 100vw;
+  .App {
+    height: 100%;
     width: 100vw;
   }
-} 
+}
 
 @media all and (max-width:479px) {
-
+  .App {
+    height: 100%;
+    width: 100vw;
+  }
 }

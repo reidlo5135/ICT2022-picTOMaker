@@ -10,16 +10,6 @@ import "../../../styles/font.css";
 export default function MenuSelectDetails(){
     return(
         <div className='Select-Content'>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
-            <span className='start'></span>
             <div className='HT-Content'>
                 <Link to="/pose/hand">
                     <div className='Human-content cont'>
@@ -76,7 +66,7 @@ export default function MenuSelectDetails(){
                                     <img src={Things} alt="Edit-Img" style={{width:"30%",height:"30%"}}/>
                                 </div>
                             </div>
-                        
+
                             <div className='desc-wrap'>
                                 <div className='Things-mdes'>
                                     <p>사물인식</p>

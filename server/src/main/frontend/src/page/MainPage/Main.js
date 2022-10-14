@@ -110,7 +110,7 @@ export default function Main(){
                                     </div>
                                     <p>
                                         <Link to='/signUp'>
-                                            <p className={'p_signUp'}>픽토메이커 회원가입</p>
+                                            <p className={'p_signUp'}>회원가입</p>
                                         </Link>
                                     </p>
                                     <div className='Sns-Si'>
