@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router";
 import "../../SocialLoginPage/socialUserCallback.css";
-import {wsCommunicationWithConnection, wsConnect} from "../../../services/StompService";
+import {wsCommunicationWithConnection} from "../../../services/StompService";
 
 export default function MobileUserCallback() {
     const [cookies, setCookie] = useCookies(["accessToken"]);
