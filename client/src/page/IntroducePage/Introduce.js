@@ -1,11 +1,12 @@
 import React from "react";
 import "./introduce.css";
 import IntroducePage from "./components/IntroducePage"
-import Top from "../../component/Top"
+import MobileTop from "../../component/mobile-components/Mobile-Top"
 import Footer from "../../component/Footer"
+import Top from "../../component/Top"
 
 
-function SelectPage() {
+function Introduce() {
   return (
     <div className="introducepage">
       <Top/>
@@ -15,4 +16,4 @@ function SelectPage() {
   );
 }
 
-export default SelectPage;
+export default Introduce;
