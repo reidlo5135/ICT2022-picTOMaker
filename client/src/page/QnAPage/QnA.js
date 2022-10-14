@@ -73,7 +73,7 @@ export default function QnA() {
     function sendEmail(e){
         e.preventDefault();
 
-    /*  emailjs.sendForm(
+     emailjs.sendForm(
             'service_kdh',
             'template_xw0dnqc',
             e.target,
@@ -82,7 +82,7 @@ export default function QnA() {
                 console.log(res);
                 alert('문의내용이 전송 되었습니다.');
                 console.log(isOpen);
-            }).catch(err => console.log(err));  */
+            }).catch(err => console.log(err)); 
     }
 
     return(
