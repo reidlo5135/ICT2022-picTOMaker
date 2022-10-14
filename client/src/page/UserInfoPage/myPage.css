@@ -338,7 +338,7 @@ button > p{
     }
     .MyPage-Right {
         width: 100%;
-        height: 70vw;
+        height: 100%;
     }
     .Right-Contents {
         margin: 0;
@@ -348,10 +348,9 @@ button > p{
         font-size: 12px;
         width: 100%;
         text-align: center;
-        margin: 0 auto;
-        height: 20vw;
-        position : absolute;
-        bottom : 0;
+        margin: 10% auto;
+        height: 0;
+        position: inherit;
     }
     .Copyright {
         margin-left: -5%;
