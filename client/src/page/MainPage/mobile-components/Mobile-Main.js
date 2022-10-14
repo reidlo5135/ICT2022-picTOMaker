@@ -112,11 +112,11 @@ export default function M_Main(){
                                     문의하기
                                 </button>
                             </Link>
-                            <Link to='/community'>
+{/*                             <Link to='/community'>
                                 <button className='MainButton'>
                                     커뮤니티
                                 </button>
-                            </Link>
+                            </Link> */}
                             {
                                 cookies.accessToken === null || cookies.accessToken === undefined ?
                                     <div></div> :
@@ -147,11 +147,11 @@ export default function M_Main(){
                                         </form>
                                     </div>
                                     <p>
-                                        <Link to='/v1/user/'>
+                                        {/* <Link to='/v1/user/'>
                                             <p className={'p_pw'}>비밀번호 찾기</p>
-                                        </Link>
+                                        </Link> */}
                                         <Link to='/signUp'>
-                                            <p className={'p_signUp'}>| 회원가입</p>
+                                            <p className={'p_signUp'}>회원가입</p>
                                         </Link>
                                     </p>
                                     <div className='Sns-Si'>

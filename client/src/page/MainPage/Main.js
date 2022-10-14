@@ -109,11 +109,11 @@ export default function Main(){
                                         </form>
                                     </div>
                                     <p>
-                                        <Link to='/v1/user/'>
+                                        {/* <Link to='/v1/user/'>
                                             <p className={'p_pw'}>비밀번호 찾기</p>
-                                        </Link>
+                                        </Link> */}
                                         <Link to='/signUp'>
-                                            <p className={'p_signUp'}>| 회원가입</p>
+                                            <p className={'p_signUp'}>회원가입</p>
                                         </Link>
                                     </p>
                                     <div className='Sns-Si'>
