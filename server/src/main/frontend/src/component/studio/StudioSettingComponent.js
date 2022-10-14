@@ -12,8 +12,8 @@ import {theme} from './edittool/theme/MainTheme'
 
 
 
-export default function StudioSettingComponent() {
- 
+export default function StudioSettingComponent(props) {
+    const setTimeModalOpen = props.close;
 
     const lineColorHandleChange = (event) => {
         const convertLineColor = colorInfo.find((value) => value.name === event.target.value);
@@ -74,7 +74,7 @@ export default function StudioSettingComponent() {
                     </FormControl>
                 </Box>
 
-                <Button sx={{marginTop: "20px"}} color="button" variant="contained">확인</Button>
+                <Button sx={{marginTop: "20px"}} color="button" variant="contained" onClick={()=> {setTimeModalOpen(false)}}>확인</Button>
             </div>
             </ThemeProvider>
         </>
