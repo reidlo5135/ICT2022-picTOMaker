@@ -16,8 +16,8 @@ const MobileCamPose = forwardRef((props,ref) => {
     useImperativeHandle(ref,()=> ({
         capture() {
             const skeleton = JSON.stringify(result);
-            // const ws = new WebSocket("wss://www.pictomaker.com/picto");
-            const ws = new WebSocket("ws://localhost:8080/picto");
+            const ws = new WebSocket("wss://www.pictomaker.com/picto");
+            // const ws = new WebSocket("ws://localhost:8080/picto");
             const json = {
                 "skeleton": skeleton,
                 "thick": 50,
