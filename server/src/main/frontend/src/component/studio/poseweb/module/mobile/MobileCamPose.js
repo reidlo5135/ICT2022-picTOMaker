@@ -2,7 +2,6 @@ import React, {forwardRef, useImperativeHandle, useEffect, useRef, useState} fro
 import {useHistory} from "react-router";
 import {Pose} from '@mediapipe/pose';
 import {drawLine, drawHead} from '../../util/DrawingUtils';
-import testImage from '../../resource/human_pose.png';
 import "../../../../../styles/stuido/posewebstudio.css";
 import * as cam from "@mediapipe/camera_utils";
 import Modal from "../../../../LoadingModal";
@@ -17,7 +16,8 @@ const MobileCamPose = forwardRef((props,ref) => {
     useImperativeHandle(ref,()=> ({
         capture() {
             const skeleton = JSON.stringify(result);
-            const ws = new WebSocket("ws://ec2-52-79-56-189.ap-northeast-2.compute.amazonaws.com/picto");
+            const ws = new WebSocket("wss://www.pictomaker.com/picto");
+            // const ws = new WebSocket("ws://localhost:8080/picto");
             const json = {
                 "skeleton": skeleton,
                 "thick": 50,

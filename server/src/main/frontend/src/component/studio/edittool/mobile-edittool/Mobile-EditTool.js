@@ -23,15 +23,14 @@ export default function MobileEditTool(props) {
     const pictogramImage = props.pictogramImage;
 
     function drawingPictogramMobile() {
-        const ws = new WebSocket("ws://localhost:8080/picto");
+        const ws = new WebSocket("wss://www.pictomaker.com/picto");
+        // const ws = new WebSocket("ws://localhost:8080/picto");
         ws.onopen = () => {
             ws.send("editTool");
         }
         ws.onmessage = (e) => {
             const data = JSON.parse(e.data);
-            console.log("EditTool.js nonResult : ", data);
             drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor);
-            console.log("isFM : ", isFromMobile);
         }
     }
 
