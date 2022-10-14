@@ -72,7 +72,7 @@ export default function App(){
                         <Route path= '/pose/hand' component={SelectPoseOrHand} />
                         <Route path = '/signUp' component={LocalUserSignUp}/>
                         <Route path = '/myPage' component={MyPageContent}/>
-                        <Route path = '/introduce' component={Introduce}/>
+                        {/* <Route path = '/introduce' component={Introduce}/> */}
                         <Route path = '/qna' component={QnA}/>
                         <Route path = '/community' component={Community}/>
                         <Route path = '/cdetail/:id' component={CommunityDetails}/>
