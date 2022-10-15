@@ -1,5 +1,7 @@
 package kr.co.picto.common.infra;
 
+import kr.co.picto.skeleton.application.SkeletonService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,9 +17,11 @@ import java.util.Map;
 
 @Log4j2
 @Component
+@RequiredArgsConstructor
 public class OnlySkeletonWSHandler extends TextWebSocketHandler {
     HashMap<String, WebSocketSession> sessionMap = new HashMap<>();
     private static Map<String, JSONObject> data = new HashMap<>();
+    private final SkeletonService skeletonService;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
