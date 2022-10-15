@@ -4,7 +4,7 @@ import Logo from "../../../assets/image/Logo.png";
 import "../myPage.css";
 import "../../../styles/font.css";
 import {Link} from "react-router-dom";
-import MobileMyPagePicToDetails from './Mobile-MyPagePicToDetails';
+import MyPic from './Mobile-MyPagePicToDetails';
 import MyPageProfileDetails from '../components/MyPageProfileDetails';
 import {useHistory} from "react-router";
 import {useCookies} from "react-cookie";
@@ -30,7 +30,7 @@ export default function MyPageContent(){
         if (conditionMode === "profile") {
             return <MyPageProfileDetails/>
         } else if (conditionMode === "mypic") {
-            return <MobileMyPagePicToDetails/>
+            return <MyPic/>
         } else if (conditionMode === "sharepic") {
             return <h1>SharePic</h1>
         }
@@ -38,16 +38,21 @@ export default function MyPageContent(){
 
     function Logout(e) {
         let url = null;
+        let header = {};
         e.preventDefault();
         if(provider === "LOCAL") {
             url = "/v1/api/user/logout";
-        } else {
-            url = "/v1/api/oauth2/logout";
-        }
-        del(url, {
-            headers: {
+            header = {
                 "X-AUTH-TOKEN": cookies.accessToken
             }
+        } else {
+            url = "/v1/api/oauth2/logout";
+            header = {
+                "Authorization": cookies.accessToken
+            }
+        }
+        del(url, {
+            headers: header
         }).then(() => {
             console.clear();
             localStorage.clear();
@@ -87,17 +92,17 @@ export default function MyPageContent(){
     }
 
     return (
-        <motion.div 
+        <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ ease: "easeOut", duration: 1 }}
         >
-            <div className='MyPage-Content'>  
-            <MobileTop/> 
+            <div className='MyPage-Content'>
+                <MobileTop/>
                 <div className='MyPage-Left'>
 
-                    
+
                     <div className='MyPage-Menu'>
                         <p onClick={()=> {
                             confirmMode("profile")
@@ -118,14 +123,14 @@ export default function MyPageContent(){
                         }}>회원탈퇴</p>
                     </div>
 
-                </div>      
+                </div>
                 {conditionRender(mode)}
                 <div className='MyPage-footer'>
                     <span onClick={Logout}>로그아웃</span>
                     <span>|</span>
-                    <span>개인정보처리방침</span>
-                    <span>|</span>
-                    <span>이용약관</span>
+                    <Link to="/terms" className='terms'>
+                        <span>이용약관</span>
+                    </Link>
                     <p className='Copyright'>Copyright 2022. PICTO*MAKER all rights reserved</p>
                 </div>
             </div>

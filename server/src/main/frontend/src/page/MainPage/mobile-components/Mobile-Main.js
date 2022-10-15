@@ -14,6 +14,10 @@ import naver from "../../../assets/image/naver.png";
 import google from "../../../assets/image/google.png";
 import {Link} from "react-router-dom";
 import MobileTop from "../../../component/mobile-components/Mobile-Top"
+import StartBtn from "../../../assets/image/start-btn.png"
+import IntroBtn from "../../../assets/image/intro-btn.png"
+import QnaBtn from "../../../assets/image/qna-btn.png"
+import MyPageBtn from "../../../assets/image/mypage-btn.png"
 
 export default function M_Main(){
     const history = useHistory();
@@ -44,10 +48,6 @@ export default function M_Main(){
 
     const pwInputCheck = (event) => {
         setPassword(event.target.value);
-    }
-
-    const login = () => {
-
     }
 
     const localLogin = (e) => {
@@ -99,17 +99,17 @@ export default function M_Main(){
                             </div>
                         </div>
                         <div className='btn-wrap'>
-                            <button className='MainButton' onClick={openModal}>
-                                시작하기
-                            </button>
+                            <div className='MainButton' >
+                                <img src={StartBtn} alt="시작하기 버튼" onClick={openModal}/>
+                            </div>
                             <Link to='/introduce'>
-                                <button className='MainButton'>
-                                    이용방법
-                                </button>
+                                <div className='MainButton'>
+                                    <img src={IntroBtn} alt="이용방법 버튼"/>
+                                </div>
                             </Link>
                             <Link to='/qna'>
                                 <button className='MainButton'>
-                                    문의하기
+                                    <img src={QnaBtn} alt="문의하기 버튼"/>
                                 </button>
                             </Link>
                             {
@@ -117,7 +117,7 @@ export default function M_Main(){
                                     <div></div> :
                                     <Link to='/myPage'>
                                         <button className='MainButton'>
-                                            마이페이지
+                                            <img src={MyPageBtn} alt="마이페이지 버튼"/>
                                         </button>
                                     </Link>
                             }
