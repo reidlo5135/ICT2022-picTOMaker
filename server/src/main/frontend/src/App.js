@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {BrowserView, MobileView} from "react-device-detect";
 import './App.css';
 import {Route, Switch} from 'react-router-dom';
 import Main from "./page/MainPage/Main";
 import MenuSelect from "./page/MenuSelectPage/MenuSelect";
 import LocalUserSignUp from "./page/UserSignUpPage/LocalUserSignUp";
-import Introduce from "./page/IntroducePage/Introduce";
 import QnA from "./page/QnAPage/QnA";
 import Community from "./page/CommunityPage/Community";
 import UserAgreement from "./page/UserAgreementsPage/UserAgreement";
@@ -24,12 +23,12 @@ import M_SocialUserCallback from "./page/SocialLoginPage/mobile-components/Mobil
 import M_Intro from "./page/IntroducePage/components/Mobile-intro";
 import M_MyPage from "./page/UserInfoPage/mobile-components/Mobile-MyPage";
 import M_Community from "./page/CommunityPage/mobile-components/Mobile-Community";
-import M_Select from "./page/MenuSelectPage/mobile-select/Mobile-MenuSelect";
+import M_Select from "./page/MenuSelectPage/mobile-components/Mobile-MenuSelect";
 import MobilePoseWebStudio from "./component/studio/poseweb/Mobile-PoseWebStudio";
 import MobileHandWebStudio from "./component/studio/handweb/Mobile-HandWebStudio";
 import SelectMobileOrBrowser from "./page/MenuSelectPage/components/SelectMobileOrBrowser";
 import SelectPoseOrHand from "./page/MenuSelectPage/components/SelectPoseOrHand";
-import MobileSelectPoseOrHand from "./page/MenuSelectPage/mobile-select/Mobile-SelectPoseOrHand";
+import MobileSelectPoseOrHand from "./page/MenuSelectPage/mobile-components/Mobile-SelectPoseOrHand";
 import FromMobileEditTool from "./component/studio/edittool/FromMobileEditTool";
 import MobileEditTool from "./component/studio/edittool/mobile-edittool/Mobile-EditTool";
 import ObjectDetectionStudio from './component/studio/objectdetection/ObjectDetectionStudio';
@@ -72,7 +71,6 @@ export default function App(){
                         <Route path= '/pose/hand' component={SelectPoseOrHand} />
                         <Route path = '/signUp' component={LocalUserSignUp}/>
                         <Route path = '/myPage' component={MyPageContent}/>
-                        <Route path = '/introduce' component={Introduce}/>
                         <Route path = '/qna' component={QnA}/>
                         <Route path = '/community' component={Community}/>
                         <Route path = '/cdetail/:id' component={CommunityDetails}/>

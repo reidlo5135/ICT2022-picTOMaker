@@ -54,3 +54,9 @@ server/src/main/resources/application-credentials.yml
 server/settings.gradle
 server/gradlew
 server/gradlew.bat
+
+# server-socket #
+server-socket/src/main/resources/application-private.yml
+server-socket/settings.gradle
+server-socket/gradlew
+server-socket/gradlew.bat

@@ -13,8 +13,6 @@
   margin : 0;
   padding : 0;
   display: flex;
-
-
 }
 
 .test-pose {
@@ -94,6 +92,11 @@
     padding: 0;
     display: flex;
   }
+  .camera-img{
+    width: 80px;
+    height: 80px;
+  }
+
   #user-video{
     width:50%;
   }

@@ -9,8 +9,7 @@ import "../../../styles/font.css";
 export default function MobileSelectPoseOrHand() {
     return (
         <div className="selectpage">
-            <div className="star-ani">
-                <div className="star"></div>
+            <div className="stars">
                 <div className="star"></div>
                 <div className="star"></div>
                 <div className="star"></div>
@@ -24,16 +23,6 @@ export default function MobileSelectPoseOrHand() {
                 </div>
             </Link>
             <div className='Select-Content'>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
-                <span className='start'></span>
                 <div className='HT-Content'>
                     <Link to="/studio/pose/mobile">
                         <div className='Human-content cont'>
