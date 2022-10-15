@@ -30,11 +30,8 @@ export default function M_Main(){
     const openModal = () => {
         const token = cookies.accessToken;
         if((token === null || token === undefined) && isLogged === false) {
-            console.log('Main isLogged : ', isLogged);
             setModalOpen(true);
         } else {
-            console.log("token : ", token);
-            console.log('Main isLogged : ', isLogged);
             history.push("/select");
         }
     }
@@ -61,7 +58,8 @@ export default function M_Main(){
         } else {
             let data = {
                 email,
-                password
+                password,
+                "provider": "LOCAL"
             }
             const action = (response) => {
                 if(response.body.code === 0) {
