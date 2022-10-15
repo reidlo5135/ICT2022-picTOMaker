@@ -1,0 +1,22 @@
+logging:
+  level:
+    root: warn
+    kr.co.picto: debug #debug info warn error fatal off
+
+server:
+  port: 8090
+
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
