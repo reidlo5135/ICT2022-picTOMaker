@@ -1,4 +1,4 @@
-package kr.co.picto.common.infra;
+package kr.co.picto.skeleton.presentation;
 
 import kr.co.picto.skeleton.application.SkeletonService;
 import lombok.RequiredArgsConstructor;
@@ -13,14 +13,12 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @Log4j2
 @Component
 @RequiredArgsConstructor
-public class OnlySkeletonWSHandler extends TextWebSocketHandler {
-    HashMap<String, WebSocketSession> sessionMap = new HashMap<>();
-    private static Map<String, JSONObject> data = new HashMap<>();
+public class SkeletonSocketHandler extends TextWebSocketHandler {
+    private HashMap<String, WebSocketSession> sessionMap = new HashMap<>();
     private final SkeletonService skeletonService;
 
     @Override
@@ -37,22 +35,18 @@ public class OnlySkeletonWSHandler extends TextWebSocketHandler {
         log.info("JSONObj : " + obj);
 
         for(String key : sessionMap.keySet()) {
-            log.info("SessionMap key : " +  key);
             WebSocketSession wss = sessionMap.get(key);
-            log.info("SessionMap id : " + wss.getId());
-            log.info("is Equal : " + (key.equals(wss.getId())));
             try {
-                if(msg.equals("editTool")) {
-                    log.info("EditTool DataMap : " + data);
-                    if(data.isEmpty()) {
+                if(msg.contains("camPose")) {
+                    skeletonService.save(obj);
+                }
+                if(msg.contains("editTool")) {
+                    if(skeletonService.select(obj) == null) {
                         wss.sendMessage(new TextMessage("empty"));
                     } else {
-                        wss.sendMessage(new TextMessage(data.get("toBrowser").toJSONString()));
+                        wss.sendMessage(new TextMessage(skeletonService.select(obj).toString()));
                     }
-                } else {
-                    data.put("toBrowser", obj);
                 }
-                wss.sendMessage(new TextMessage(obj.toJSONString()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -62,7 +56,6 @@ public class OnlySkeletonWSHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessionMap.remove(session.getId());
-        data.clear();
         super.afterConnectionClosed(session, status);
     }
 

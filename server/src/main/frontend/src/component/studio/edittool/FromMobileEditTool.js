@@ -16,15 +16,23 @@ export default function FromMobileEditTool(props) {
     const history = useHistory();
 
     const [selectMode, setSelectMode] = useState("none");
+    const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
     let type = null;
-    const ws = new WebSocket("wss://www.pictomaker.com/picto");
+    // const ws = new WebSocket("wss://www.pictomaker-socket.com/picto");
+
 
     const pictogramImage = props.pictogramImage;
 
+    const ws = new WebSocket("ws://localhost:8090/picto");
     function drawingPictogramMobile() {
+        const json = {
+            "editTool": "true",
+            "email": JSON.parse(profile).email,
+            "provider": provider
+        };
         ws.onopen = () => {
-            ws.send("editTool");
+            ws.send(JSON.stringify(json));
         };
         ws.onmessage = (e) => {
             if(e.data === "empty") {
@@ -41,6 +49,7 @@ export default function FromMobileEditTool(props) {
     }
 
     function drawCanvas(result, thick, color, type) {
+        console.log("DrawCanvas result : ", result);
         if (type === "hand") {
             for (let i = 0; i < 21; i++) {
                 result[i].x = result[i].x * 640;
