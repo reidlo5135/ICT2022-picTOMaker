@@ -1,4 +1,4 @@
-package kr.co.picto.common.infra;
+package kr.co.picto.skeleton.presentation;
 
 import kr.co.picto.skeleton.application.SkeletonService;
 import lombok.RequiredArgsConstructor;
@@ -13,14 +13,12 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @Log4j2
 @Component
 @RequiredArgsConstructor
-public class OnlySkeletonWSHandler extends TextWebSocketHandler {
-    HashMap<String, WebSocketSession> sessionMap = new HashMap<>();
-    private static Map<String, JSONObject> data = new HashMap<>();
+public class SkeletonSocketHandler extends TextWebSocketHandler {
+    private HashMap<String, WebSocketSession> sessionMap = new HashMap<>();
     private final SkeletonService skeletonService;
 
     @Override
@@ -58,7 +56,6 @@ public class OnlySkeletonWSHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessionMap.remove(session.getId());
-        data.clear();
         super.afterConnectionClosed(session, status);
     }
 

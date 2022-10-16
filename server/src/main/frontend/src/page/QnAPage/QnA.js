@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Logo from "../../assets/image/Logo.png";
 import "../../App.css";
 import "./qna.css";
+import emailjs from '@emailjs/browser';
 
 export default function QnA() {
     const history = useHistory();
@@ -64,10 +65,25 @@ export default function QnA() {
             console.error('err : ', JSON.stringify(err));
             alert(err.response.data.msg);
         });
+
+        /* setTimeout(() => {
+            window.location.reload();
+        }, 2500); */
     }
 
     function sendEmail(e){
         e.preventDefault();
+
+        emailjs.sendForm(
+            'service_kdh',
+            'template_xw0dnqc',
+            e.target,
+            '_jS58pRqqhKudZIRC'
+        ).then(res=>{
+            console.log(res);
+            alert('문의내용이 전송 되었습니다.');
+            console.log(isOpen);
+        }).catch(err => console.log(err));
     }
 
     return(
@@ -95,11 +111,11 @@ export default function QnA() {
                 </Link>
 
                 <motion.form onSubmit={sendEmail}
-                     animate={isOpen ? "open" : "closed"}
-                     variants={{
-                     open: {  opacity: 0, x: 0 },
-                     closed: {  opacity: 1, x: 0 }
-                     }} >
+                             animate={isOpen ? "open" : "closed"}
+                             variants={{
+                                 open: {  opacity: 0, x: 0 },
+                                 closed: {  opacity: 1, x: 0 }
+                             }} >
                     <div class="center">
                         <div class="phone">
                             <div class="notch">
@@ -108,28 +124,28 @@ export default function QnA() {
                             </div>
 
                             <div className='qna-form'>
-                            <div className='qna-left'>
-                                <div className='left-input'>
-                                    <label>성함</label><br/>
-                                    <input type="text" name="name" placeholder="성함을 입력하세요" value={profNickName} onChange={handleInput} /><br/>
+                                <div className='qna-left'>
+                                    <div className='left-input'>
+                                        <label>성함</label><br/>
+                                        <input type="text" name="name" placeholder="성함을 입력하세요" value={profNickName} onChange={handleInput} /><br/>
 
-                                    <label>이메일</label><br/>
-                                    <input type="email" name="email" placeholder="이메일을 입력하세요" value={profEmail} onChange={handleInput}/>
-                                </div>
+                                        <label>이메일</label><br/>
+                                        <input type="email" name="email" placeholder="이메일을 입력하세요" value={profEmail} onChange={handleInput}/>
+                                    </div>
                                 </div>
 
                                 <div className='qna-right'>
                                     <div className='right-input'>
-                                    <label>문의사항</label><br/>
-                                    <textarea name='qna' rows='50' className='textareat' placeholder="문의사항을 입력하세요." onChange={handleInput}/>
+                                        <label>문의사항</label><br/>
+                                        <textarea name='qna' rows='50' className='textareat' placeholder="문의사항을 입력하세요." onChange={handleInput}/>
+                                    </div>
                                 </div>
+                                <input type='submit' value='문의하기' className={getIsActive ? 'sendbutton' : 'sendinbutton'} disabled={getIsActive ?  false : true} onClick={onChangeIsOpen} onSubmit={sendEmail}/>
                             </div>
-                            <input type='submit' value='문의하기' className={getIsActive ? 'sendbutton' : 'sendinbutton'} disabled={getIsActive ?  false : true} onClick={onChangeIsOpen} onSubmit={sendEmail}/>
-                        </div>
                         </div>
                     </div>
                 </motion.form>
-{/*                 <motion.div className='mail-ani' 
+                {/*                 <motion.div className='mail-ani'
                      animate={isOpen ? true : false}
                      variants={{
                      open: {  opacity: 1,x: 1500},
