@@ -38,21 +38,16 @@ export default function MyPageContent(){
 
     function Logout(e) {
         let url = null;
-        let header = {};
         e.preventDefault();
         if(provider === "LOCAL") {
             url = "/v1/api/user/logout";
-            header = {
-                "X-AUTH-TOKEN": cookies.accessToken
-            }
         } else {
             url = "/v1/api/oauth2/logout";
-            header = {
-                "Authorization": cookies.accessToken
-            }
         }
         del(url, {
-            headers: header
+            headers: {
+                "X-AUTH-TOKEN": cookies.accessToken
+            }
         }).then(() => {
             console.clear();
             localStorage.clear();
