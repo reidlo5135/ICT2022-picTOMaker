@@ -1,4 +1,5 @@
 import React, {forwardRef, useImperativeHandle, useEffect, useRef,useState} from 'react';
+import {useHistory} from "react-router-dom";
 import testImage from '../../resource/test_hand2.png';
 import {Hands} from '@mediapipe/hands';
 import {drawLine, drawHead, drawRect} from '../../../poseweb/util/DrawingUtils'
@@ -10,21 +11,29 @@ import Spin from '../../resource/loading.gif'
 let result = null;
 
 const MobileCamHand = forwardRef((props, ref) => {
+    const history = useHistory();
     const [loadingModal,setLoadingModal] = useState(true);
+    const profile = JSON.parse(localStorage.getItem("profile"));
+    const provider = localStorage.getItem("provider");
 
     useImperativeHandle(ref,()=> ({
         capture() {
             const skeleton = JSON.stringify(result);
-            const ws = new WebSocket("wss://www.pictomaker.com/picto");
+            const ws = new WebSocket("ws://localhost:8090/picto");
             const json = {
+                "camPose": "true",
+                "email": profile.email,
+                "provider": provider,
                 "skeleton": skeleton,
                 "thick": 50,
                 "lineColor": "FF03030",
                 "backgroundColor": "FFFFFF",
                 "type": "hand"
-            }
+            };
             ws.onopen = () => {
                 ws.send(JSON.stringify(json));
+                alert("픽토그램 촬영이 완료되었어요.\nPC 브라우저에서 편집 페이지에서 확인해주세요.");
+                history.push("/");
             };
         }
     }));
