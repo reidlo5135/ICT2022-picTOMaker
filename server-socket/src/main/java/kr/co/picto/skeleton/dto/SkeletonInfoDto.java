@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.json.simple.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Locale;
 
 @Getter
 @Builder
@@ -26,17 +26,17 @@ public class SkeletonInfoDto {
                 .thick(skeleton.getThick())
                 .lineColor(skeleton.getLineColor())
                 .backgroundColor(skeleton.getBackgroundColor())
-                .type(skeleton.getType().toString())
+                .type(skeleton.getType().toString().toLowerCase(Locale.ROOT))
                 .build();
     }
 
-    public Map toMap(SkeletonInfoDto skeletonInfoDto) {
-        Map map = new HashMap();
-        map.put("skeleton", skeletonInfoDto.getCoordinate());
-        map.put("thick", skeletonInfoDto.getThick());
-        map.put("lineColor", skeletonInfoDto.getLineColor());
-        map.put("backgroundColor", skeletonInfoDto.getBackgroundColor());
-        map.put("type", skeletonInfoDto.getType());
-        return map;
+    public JSONObject toJSON(SkeletonInfoDto skeletonInfoDto) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("skeleton", skeletonInfoDto.getCoordinate());
+        jsonObject.put("thick", skeletonInfoDto.getThick());
+        jsonObject.put("lineColor", skeletonInfoDto.getLineColor());
+        jsonObject.put("backgroundColor", skeletonInfoDto.getBackgroundColor());
+        jsonObject.put("type", skeletonInfoDto.getType());
+        return jsonObject;
     }
 }
