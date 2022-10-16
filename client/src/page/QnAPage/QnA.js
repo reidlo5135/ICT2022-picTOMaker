@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Logo from "../../assets/image/Logo.png";
 import "../../App.css";
 import "./qna.css";
+import emailjs from '@emailjs/browser';
 
 export default function QnA() {
     const history = useHistory();
