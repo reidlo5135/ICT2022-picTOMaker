@@ -23,12 +23,12 @@ public class UserService {
     private final HttpHeaders httpHeaders;
     private HttpEntity httpEntity;
 //    private static final String TARGET_URI = "https://www.pictomaker.com/v1/api/user";
-    private static final String COMMON_URI = "http://localhost:8080/v1/api/user";
+    private static final String COMMON_TARGET_URI = "http://localhost:8080/v1/api/user";
 
     public Map<String, String> requestLogin(UserLoginDto userLoginDto) {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpEntity = new HttpEntity(userLoginDto, httpHeaders);
-        Map<String, String> responseMap = commonRequestService.post(COMMON_URI + "/login", httpEntity);
+        Map<String, String> responseMap = commonRequestService.post(COMMON_TARGET_URI + "/login", httpEntity);
         if(responseMap.get("msg").equals("성공") && userRepository.findByEmailAndProvider(userLoginDto.getEmail(), userLoginDto.getProvider()).isEmpty()) userRepository.save(userLoginDto.toEntity());
         return responseMap;
     }
@@ -36,35 +36,35 @@ public class UserService {
     public Map<String, String> requestSignUp(UserCreateDto userCreateDto) {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpEntity = new HttpEntity(userCreateDto, httpHeaders);
-        Map<String, String> responseMap = commonRequestService.post(COMMON_URI + "/signup", httpEntity);
+        Map<String, String> responseMap = commonRequestService.post(COMMON_TARGET_URI + "/signup", httpEntity);
         return responseMap;
     }
 
     public Map<String, String> requestInfo(String token) {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpEntity = new HttpEntity(token, httpHeaders);
-        Map<String, String> responseMap = commonRequestService.post(COMMON_URI + "/info", httpEntity);
+        Map<String, String> responseMap = commonRequestService.post(COMMON_TARGET_URI + "/info", httpEntity);
         return responseMap;
     }
 
     public Map<String, String> requestReissue(UserTokenRequestDto tokenRequestDto) {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpEntity = new HttpEntity(tokenRequestDto, httpHeaders);
-        Map<String, String> responseMap = commonRequestService.post(COMMON_URI + "/reissue", httpEntity);
+        Map<String, String> responseMap = commonRequestService.post(COMMON_TARGET_URI + "/reissue", httpEntity);
         return responseMap;
     }
 
     public Map<String, String> requestDelete(String token) {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpEntity = new HttpEntity(token, httpHeaders);
-        Map<String, String> responseMap = commonRequestService.post(COMMON_URI + "/", httpEntity);
+        Map<String, String> responseMap = commonRequestService.post(COMMON_TARGET_URI + "/", httpEntity);
         return responseMap;
     }
 
     public Map<String, String> requestLogout(String token) {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpEntity = new HttpEntity(token, httpHeaders);
-        Map<String, String> responseMap = commonRequestService.post(COMMON_URI + "/logout", httpEntity);
+        Map<String, String> responseMap = commonRequestService.post(COMMON_TARGET_URI + "/logout", httpEntity);
         return responseMap;
     }
 }

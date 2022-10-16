@@ -12,13 +12,18 @@ let result = null;
 const MobileCamPose = forwardRef((props,ref) => {
     const history = useHistory();
     const [loadingModal,setLoadingModal] = useState(true);
+    const profile = JSON.parse(localStorage.getItem("profile"));
+    const provider = localStorage.getItem("provider");
 
     useImperativeHandle(ref,()=> ({
         capture() {
             const skeleton = JSON.stringify(result);
-            const ws = new WebSocket("wss://www.pictomaker.com/picto");
-            // const ws = new WebSocket("ws://localhost:8080/picto");
+            // const ws = new WebSocket("wss://www.pictomaker.com/picto");
+            const ws = new WebSocket("ws://localhost:8090/picto");
             const json = {
+                "camPose": "true",
+                "email": profile.email,
+                "provider": provider,
                 "skeleton": skeleton,
                 "thick": 50,
                 "lineColor": "FF03030",

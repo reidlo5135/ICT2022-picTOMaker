@@ -44,7 +44,6 @@ public class UserController {
     @SendTo(value = "/sub/info")
     @MessageMapping(value = "/info")
     public ResponseEntity getProfile(@Header(value = "X-AUTH-TOKEN") String token) {
-        log.info("INFO TOKEN : " + token);
         return ResponseEntity.ok().body(userService.requestInfo(token));
     }
 
@@ -63,8 +62,7 @@ public class UserController {
     @SendTo(value = "/sub/user/drop")
     @MessageMapping(value = "/drop")
     public ResponseEntity deActivate(@Header(value = "X-AUTH-TOKEN") String token) {
-        userService.requestDelete(token);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(userService.requestDelete(token));
     }
 
     /**
@@ -73,7 +71,6 @@ public class UserController {
     @SendTo(value = "/sub/user/logout")
     @MessageMapping(value = "/logout")
     public ResponseEntity logout(@Header(value = "X-AUTH-TOKEN") String token) {
-        userService.requestLogout(token);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(userService.requestLogout(token));
     }
 }

@@ -16,22 +16,31 @@ export default function FromMobileEditTool(props) {
     const history = useHistory();
 
     const [selectMode, setSelectMode] = useState("none");
+    const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
     let type = null;
-    const ws = new WebSocket("wss://www.pictomaker.com/picto");
+    // const ws = new WebSocket("wss://www.pictomaker.com/picto");
+
 
     const pictogramImage = props.pictogramImage;
 
     function drawingPictogramMobile() {
+        const ws = new WebSocket("ws://localhost:8090/picto");
+        const json = {
+            "editTool": "true",
+            "email": JSON.parse(profile).email,
+            "provider": provider
+        };
         ws.onopen = () => {
-            ws.send("editTool");
+            ws.send(JSON.stringify(json));
         };
         ws.onmessage = (e) => {
             if(e.data === "empty") {
                 alert("모바일 기기에서 먼저 촬영 후에 제작이 가능해요.");
                 ws.close();
             } else {
-                const data = JSON.parse(e.data);
+                console.log("FMEditTool e.data : ", e.data);
+                const data = JSON.parse(JSON.stringify(e.data));
                 drawCanvas(JSON.parse(data.skeleton), data.thick, data.lineColor, data.type);
             }
         };
