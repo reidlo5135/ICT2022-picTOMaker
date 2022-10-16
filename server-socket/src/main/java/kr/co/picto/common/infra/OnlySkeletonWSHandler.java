@@ -37,22 +37,18 @@ public class OnlySkeletonWSHandler extends TextWebSocketHandler {
         log.info("JSONObj : " + obj);
 
         for(String key : sessionMap.keySet()) {
-            log.info("SessionMap key : " +  key);
             WebSocketSession wss = sessionMap.get(key);
-            log.info("SessionMap id : " + wss.getId());
-            log.info("is Equal : " + (key.equals(wss.getId())));
             try {
-                if(msg.equals("editTool")) {
-                    log.info("EditTool DataMap : " + data);
-                    if(data.isEmpty()) {
+                if(msg.contains("camPose")) {
+                    skeletonService.save(obj);
+                }
+                if(msg.contains("editTool")) {
+                    if(skeletonService.select(obj) == null) {
                         wss.sendMessage(new TextMessage("empty"));
                     } else {
-                        wss.sendMessage(new TextMessage(data.get("toBrowser").toJSONString()));
+                        wss.sendMessage(new TextMessage(skeletonService.select(obj).toString()));
                     }
-                } else {
-                    data.put("toBrowser", obj);
                 }
-                wss.sendMessage(new TextMessage(obj.toJSONString()));
             } catch (Exception e) {
                 e.printStackTrace();
             }

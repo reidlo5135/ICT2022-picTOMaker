@@ -23,7 +23,7 @@ public class Skeleton extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 4000)
     private String coordinate;
 
     @Column(nullable = false, length = 100)
