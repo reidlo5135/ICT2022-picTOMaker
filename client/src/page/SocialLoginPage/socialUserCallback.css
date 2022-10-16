@@ -32,3 +32,40 @@
         transform: rotate(360deg);
     }
 }
+
+@media (min-width:768px) and (max-width:1023px){
+    .loading div {
+        width: 300px;
+        height: 300px;
+        margin-left: 35%;
+    }
+}
+
+@media (min-width:768px) and (max-width:1023px){
+    .loading div {
+        margin-left: 35%;
+    }
+    .loading h1{
+        text-align: center;
+    }
+}
+@media (min-width:480px) and (max-width:767px){
+    .loading div {
+        width: 200px;
+        height:200px;
+        margin-left: 25%;
+    }
+    .loading h1{
+        text-align: center;
+    }
+}
+@media (max-width:479px){
+    .loading div {
+        width: 150px ;
+        height: 150px ;
+        margin-left: 30%;
+    }
+    .loading h1{
+        text-align: center;
+    }
+}
