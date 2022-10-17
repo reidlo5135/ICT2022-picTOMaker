@@ -22,8 +22,7 @@ public class UserService {
     private final CommonRequestService commonRequestService;
     private final HttpHeaders httpHeaders;
     private HttpEntity httpEntity;
-//    private static final String TARGET_URI = "https://www.pictomaker.com/v1/api/user";
-    private static final String COMMON_TARGET_URI = "http://localhost:8080/v1/api/user";
+    private static final String COMMON_TARGET_URI = "https://www.pictomaker.com/v1/api/user";
 
     public Map<String, String> requestLogin(UserLoginDto userLoginDto) {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);

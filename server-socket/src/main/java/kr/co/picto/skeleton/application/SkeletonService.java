@@ -24,9 +24,8 @@ public class SkeletonService {
     @Transactional(readOnly = true)
     public JSONObject select(JSONObject jsonObject) {
         User user = userRepository.findByEmailAndProvider(jsonObject.get("email").toString(), jsonObject.get("provider").toString()).orElseThrow(NullPointerException::new);
-        log.info("SkeletonService select user : " + user.getEmail());
+        if(skeletonRepository.findByUser(user).isEmpty()) return null;
         SkeletonInfoDto skeletonInfoDto = SkeletonInfoDto.from(skeletonRepository.findByUser(user).orElseThrow(NullPointerException::new));
-        log.info("SkeletonService select skeleton : " + skeletonInfoDto.getCoordinate());
 
         return skeletonInfoDto.toJSON(skeletonInfoDto);
     }
