@@ -5,6 +5,7 @@ import axios from "axios";
 import '../styles/top.css'
 import {Link} from "react-router-dom";
 import Human from '../assets/image/Human.png';
+import {wsCommunicationWithConnection} from "../services/StompService";
 
 const TopProfile = () => {
     const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
@@ -33,6 +34,16 @@ const TopProfile = () => {
             }
 
             localStorage.setItem("profile", JSON.stringify(response.data.data));
+            const data = {
+                "email": profile.email,
+                provider
+            }
+            const action = (response) => {
+                if(response.body.code === 0) {
+                    console.log('TopProfile response data : ', response.body.data);
+                }
+            }
+            wsCommunicationWithConnection('/pub/user/social/login', {}, data, '/sub/social/login', action);
         }).catch((err) => {
             console.error('err : ', JSON.stringify(err));
             alert(err.response.data.msg);
