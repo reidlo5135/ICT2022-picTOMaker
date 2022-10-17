@@ -50,7 +50,6 @@ export default function FromMobileEditTool(props) {
     }
 
     function drawCanvas(result, thick, color, type) {
-        console.log("DrawCanvas result : ", result);
         if (type === "hand") {
             for (let i = 0; i < 21; i++) {
                 result[i].x = result[i].x * 640;

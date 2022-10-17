@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useCookies} from "react-cookie";
 import {useHistory} from "react-router";
 import "../socialUserCallback.css";
-import {wsCommunicationWithConnection} from "../../../services/StompService";
+import {post} from "../../../services/AxiosService";
 
 export default function M_SocialUserCallback() {
     const [cookies, setCookie] = useCookies(["accessToken"]);
@@ -26,21 +26,23 @@ export default function M_SocialUserCallback() {
         provider = null;
     }
 
-    const headers = {
-        "X-AUTH-TOKEN": token
-    };
 
-    const action = (response) => {
-        if(response.body.code === 0) {
+    post(`/v1/api/oauth2/login/${provider}`, {}, {
+        headers: {
+            "X-AUTH-TOKEN": token
+        }
+    }).then((response) => {
+        if(response.data.code === 0) {
             setIsLogged(true);
-            setCookie("accessToken", response.body.data.access_token, {path: "/"});
-            localStorage.setItem("refresh_token", response.body.data.refresh_token);
+            setCookie("accessToken", response.data.data.access_token, {path: "/"});
+            localStorage.setItem("refresh_token", response.data.data.refresh_token);
             localStorage.setItem("provider", provider);
             history.push("/user/redirect");
         }
-    };
-
-    wsCommunicationWithConnection(`/pub/user/social/login/${provider}`, headers, {}, '/sub/social/login', action);
+    }).catch((err) => {
+        console.error('err : ', JSON.stringify(err));
+        alert(err.response.data.msg);
+    });
 
     return (
         <center>
