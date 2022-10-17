@@ -1,6 +1,7 @@
 package kr.co.picto.user.presentation;
 
 import kr.co.picto.user.application.UserService;
+import kr.co.picto.user.dto.SocialUserLoginDto;
 import kr.co.picto.user.dto.UserCreateDto;
 import kr.co.picto.user.dto.UserLoginDto;
 import kr.co.picto.user.dto.UserTokenRequestDto;
@@ -27,6 +28,16 @@ public class UserController {
     public ResponseEntity loginAndCreateToken(UserLoginDto userLoginDto) {
         log.info("UserController login email : " + userLoginDto.getEmail());
         return ResponseEntity.ok().body(userService.requestLogin(userLoginDto));
+    }
+
+    /**
+     * frontend - TopProfile.js
+     **/
+    @SendTo(value = "/sub/social/login")
+    @MessageMapping(value = "/social/login")
+    public ResponseEntity socialLogin(SocialUserLoginDto socialUserLoginDto) {
+        log.info("UserController Social Login email : " + socialUserLoginDto.getEmail());
+        return ResponseEntity.ok().body(userService.saveSocialUser(socialUserLoginDto));
     }
 
     /**
