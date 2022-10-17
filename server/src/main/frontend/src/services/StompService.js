@@ -1,8 +1,8 @@
 import SockJS from "sockjs-client";
 import Stomp from 'stompjs';
 
-// const sock = new SockJS("https://www.pictomaker-socket.com/ws/");
-const sock = new SockJS("http://localhost:8090/ws/");
+const sock = new SockJS("https://www.pictomaker-socket.com/ws/");
+// const sock = new SockJS("http://localhost:8090/ws/");
 const ws = Stomp.over(sock);
 
 export const wsConnect = () => {
