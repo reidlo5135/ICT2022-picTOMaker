@@ -35,7 +35,7 @@ const TopProfile = () => {
 
             localStorage.setItem("profile", JSON.stringify(response.data.data));
             const data = {
-                email,
+                "email": profile.email,
                 provider
             }
             const action = (response) => {
