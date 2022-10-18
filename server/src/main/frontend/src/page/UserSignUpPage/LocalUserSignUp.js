@@ -59,6 +59,7 @@ export default function LocalUserSignUp(){
                 }
             }).catch((err) => {
                 console.error("err : ", JSON.stringify(err));
+                alert(err.response.data.msg);
             })
         }
     };
