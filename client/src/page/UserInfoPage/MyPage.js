@@ -12,7 +12,7 @@ import {useCookies} from "react-cookie";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { Redirect } from "react-router-dom";
-import localLogin from "../MainPage/Main";
+
 export default function MyPageContent(){
     const [mode, setMode] = useState('profile');
     const history = useHistory();
@@ -29,7 +29,6 @@ export default function MyPageContent(){
             alert("로그인 후 이용 가능합니다.");
             history.push("/");
         }
-        localLogin();
     },[mode]);
 
     function conditionRender(conditionMode) {
