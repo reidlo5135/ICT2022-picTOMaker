@@ -1,7 +1,8 @@
 package kr.co.picto.user.presentation;
 
-import kr.co.picto.user.application.UserService;
-import kr.co.picto.user.dto.SocialUserLoginDto;
+import kr.co.picto.user.application.social.SocialUserService;
+import kr.co.picto.user.application.local.UserService;
+import kr.co.picto.user.dto.social.SocialUserLoginDto;
 import kr.co.picto.user.dto.UserCreateDto;
 import kr.co.picto.user.dto.UserLoginDto;
 import kr.co.picto.user.dto.UserTokenRequestDto;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @MessageMapping(value = "/user/")
 public class UserController {
     private final UserService userService;
+    private final SocialUserService socialUserService;
 
     /**
      * frontend - Mobile_main.js
@@ -26,7 +28,6 @@ public class UserController {
     @SendTo(value = "/sub/login")
     @MessageMapping(value = "/login")
     public ResponseEntity loginAndCreateToken(UserLoginDto userLoginDto) {
-        log.info("UserController login email : " + userLoginDto.getEmail());
         return ResponseEntity.ok().body(userService.requestLogin(userLoginDto));
     }
 
@@ -36,8 +37,7 @@ public class UserController {
     @SendTo(value = "/sub/social/login")
     @MessageMapping(value = "/social/login")
     public ResponseEntity socialLogin(SocialUserLoginDto socialUserLoginDto) {
-        log.info("UserController Social Login email : " + socialUserLoginDto.getEmail());
-        return ResponseEntity.ok().body(userService.saveSocialUser(socialUserLoginDto));
+        return ResponseEntity.ok().body(socialUserService.saveSocialUser(socialUserLoginDto));
     }
 
     /**

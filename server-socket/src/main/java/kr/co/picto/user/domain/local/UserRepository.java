@@ -1,4 +1,4 @@
-package kr.co.picto.user.domain;
+package kr.co.picto.user.domain.local;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

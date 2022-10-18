@@ -19,9 +19,6 @@ export default function FromMobileEditTool(props) {
     const profile = localStorage.getItem("profile");
     const provider = localStorage.getItem("provider");
     let type = null;
-    // const ws = new WebSocket("wss://www.pictomaker-socket.com/picto");
-
-
     const pictogramImage = props.pictogramImage;
 
     const ws = new WebSocket("wss://www.pictomaker-socket.com/picto");

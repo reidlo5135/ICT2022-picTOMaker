@@ -8,10 +8,9 @@ import "../../../styles/font.css";
 import "../../../styles/modal.css";
 import "../../../styles/login.css";
 import Logo from "../../../assets/image/Logo.png";
-import {GOOGLE_AUTH_URL, KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../../../component/SocialUserConfig";
+import {KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../../../component/SocialUserConfig";
 import kakaotalk from "../../../assets/image/kakaotalk.png";
 import naver from "../../../assets/image/naver.png";
-import google from "../../../assets/image/google.png";
 import {Link} from "react-router-dom";
 import MobileTop from "../../../component/mobile-components/Mobile-Top"
 import StartBtn from "../../../assets/image/start-btn.png"
@@ -150,7 +149,6 @@ export default function M_Main(){
                                         <div className='Si-social-div'>
                                             <a href={KAKAO_AUTH_URL}><img src={kakaotalk} alt="kakaotalk-icon" /></a>
                                             <a href={NAVER_AUTH_URL}><img src={naver} alt="naver-icon" /></a>
-                                            <a href={GOOGLE_AUTH_URL}><img src={google} alt="google-icon" /></a>
                                         </div>
                                     </div>
                                 </div>

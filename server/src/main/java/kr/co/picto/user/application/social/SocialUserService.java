@@ -3,18 +3,23 @@ package kr.co.picto.user.application.social;
 import com.google.gson.Gson;
 import kr.co.picto.common.application.ResponseService;
 import kr.co.picto.common.domain.SingleResult;
-import kr.co.picto.common.exception.CustomCommunicationException;
 import kr.co.picto.token.domain.social.SocialRefreshToken;
 import kr.co.picto.token.domain.social.SocialRefreshTokenRepository;
 import kr.co.picto.token.dto.SocialTokenResponseDto;
 import kr.co.picto.user.domain.AccountStatus;
 import kr.co.picto.user.domain.social.SocialUser;
 import kr.co.picto.user.domain.social.SocialUserRepository;
-import kr.co.picto.user.dto.social.*;
+import kr.co.picto.user.dto.social.KakaoProfile;
+import kr.co.picto.user.dto.social.NaverProfile;
+import kr.co.picto.user.dto.social.OAuth2RequestDto;
+import kr.co.picto.user.dto.social.SocialUserInfoDto;
 import kr.co.picto.user.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -69,22 +74,6 @@ public class SocialUserService {
         return responseService.getSingleResult(extractProfile(response, accessToken, provider));
     }
 
-    public SocialUserInfoDto getProfileForGoogle(String accessToken, String provider) {
-        String profileUrl = socialUserFactory.getProfileUrl(provider);
-
-        ResponseEntity<String> response = null;
-
-        if(provider.equals("google")) {
-            response = restTemplate.getForEntity(profileUrl + "?access_token=" + accessToken, String.class);
-        }
-
-        if(response.getStatusCode() == HttpStatus.OK) {
-            return extractProfile(response, accessToken, provider);
-        } else {
-            throw new CustomCommunicationException();
-        }
-    }
-
     @Transactional
     protected SocialUserInfoDto extractProfile(ResponseEntity<String> response, String accessToken, String provider) {
         SocialUserInfoDto socialUserInfoDto = null;
@@ -94,13 +83,6 @@ public class SocialUserService {
                 log.info("OAuth2ProvSVC " + provider + " extractProfile : " + kakaoProfile);
 
                 socialUserInfoDto = new SocialUserInfoDto(kakaoProfile.getKakao_account().getEmail(), kakaoProfile.getProperties().getNickname(), kakaoProfile.getProperties().getProfile_image(), provider);
-                saveUser(socialUserInfoDto, accessToken);
-                return socialUserInfoDto;
-            case "google":
-                GoogleProfile googleProfile = gson.fromJson(response.getBody(), GoogleProfile.class);
-                log.info("OAuth2ProvSVC " + provider + " extractProfile : " + googleProfile);
-
-                socialUserInfoDto = new SocialUserInfoDto(googleProfile.getEmail(), googleProfile.getName(), googleProfile.getPicture(), provider);
                 saveUser(socialUserInfoDto, accessToken);
                 return socialUserInfoDto;
             case "naver":
