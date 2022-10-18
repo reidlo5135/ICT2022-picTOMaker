@@ -83,7 +83,7 @@ export default function LocalUserSignUp(){
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>닉네임</div>
-                            <input type={'text'} name={'nickName'} onChange={handleInput} placeholder="최대 6글자 까지 가능합니다."  maxlength='6'/>
+                            <input type={'text'} name={'nickName'} onChange={handleInput} placeholder="최대 6글자 까지 가능합니다."  maxLength='6'/>
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>비밀번호</div>
