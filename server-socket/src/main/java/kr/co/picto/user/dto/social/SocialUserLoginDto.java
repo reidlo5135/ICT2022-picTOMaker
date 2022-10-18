@@ -1,6 +1,6 @@
-package kr.co.picto.user.dto;
+package kr.co.picto.user.dto.social;
 
-import kr.co.picto.user.domain.User;
+import kr.co.picto.user.domain.social.SocialUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +12,8 @@ public class SocialUserLoginDto {
     private String email;
     private String provider;
 
-    public User toEntity() {
-        return User.builder()
+    public SocialUser toEntity() {
+        return SocialUser.builder()
                 .email(email)
                 .provider(provider)
                 .build();

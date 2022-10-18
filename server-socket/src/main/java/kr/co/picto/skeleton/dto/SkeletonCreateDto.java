@@ -2,7 +2,8 @@ package kr.co.picto.skeleton.dto;
 
 import kr.co.picto.skeleton.TypeEnum;
 import kr.co.picto.skeleton.domain.Skeleton;
-import kr.co.picto.user.domain.User;
+import kr.co.picto.user.domain.social.SocialUser;
+import kr.co.picto.user.domain.local.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,6 +28,17 @@ public class SkeletonCreateDto {
                 .backgroundColor(backgroundColor)
                 .type(TypeEnum.valueOf(type))
                 .user(user)
+                .build();
+    }
+
+    public Skeleton toEntity(SocialUser socialUser) {
+        return Skeleton.builder()
+                .coordinate(coordinate)
+                .thick(thick)
+                .lineColor(lineColor)
+                .backgroundColor(backgroundColor)
+                .type(TypeEnum.valueOf(type))
+                .socialUser(socialUser)
                 .build();
     }
 }
