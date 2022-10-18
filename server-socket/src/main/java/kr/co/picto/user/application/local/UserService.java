@@ -1,8 +1,7 @@
-package kr.co.picto.user.application;
+package kr.co.picto.user.application.local;
 
 import kr.co.picto.common.application.CommonRequestService;
-import kr.co.picto.user.domain.UserRepository;
-import kr.co.picto.user.dto.SocialUserLoginDto;
+import kr.co.picto.user.domain.local.UserRepository;
 import kr.co.picto.user.dto.UserCreateDto;
 import kr.co.picto.user.dto.UserLoginDto;
 import kr.co.picto.user.dto.UserTokenRequestDto;
@@ -31,11 +30,6 @@ public class UserService {
         Map<String, String> responseMap = commonRequestService.post(COMMON_TARGET_URI + "/login", httpEntity);
         if(responseMap.get("msg").equals("성공") && userRepository.findByEmailAndProvider(userLoginDto.getEmail(), userLoginDto.getProvider()).isEmpty()) userRepository.save(userLoginDto.toEntity());
         return responseMap;
-    }
-
-    public String saveSocialUser(SocialUserLoginDto socialUserLoginDto) {
-        if(userRepository.findByEmailAndProvider(socialUserLoginDto.getEmail(), socialUserLoginDto.getProvider()).isEmpty()) userRepository.save(socialUserLoginDto.toEntity());
-        return "success";
     }
 
     public Map<String, String> requestSignUp(UserCreateDto userCreateDto) {

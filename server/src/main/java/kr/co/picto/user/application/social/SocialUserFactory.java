@@ -19,7 +19,6 @@ import org.springframework.util.LinkedMultiValueMap;
 public class SocialUserFactory {
 
     private final KakaoInfo kakaoInfo;
-    private final GoogleInfo googleInfo;
     private final NaverInfo naverInfo;
 
     void logRequest(LinkedMultiValueMap<String, String> map) {
@@ -40,16 +39,6 @@ public class SocialUserFactory {
 
             return new OAuth2RequestDto(kakaoInfo.getKakaoTokenUrl(), map);
 
-        } else if(provider.equals("google")) {
-
-            map.add("grant_type", "authorization_code");
-            map.add("client_id", googleInfo.getGoogleClientId());
-            map.add("client_secret", googleInfo.getGoogleClientSecret());
-            map.add("redirect_uri", googleInfo.getGoogleRedirect());
-
-            logRequest(map);
-
-            return new OAuth2RequestDto(googleInfo.getGoogleTokenUrl(), map);
         } else {
             map.add("grant_type", "authorization_code");
             map.add("client_id", naverInfo.getNaverClientId());
@@ -66,8 +55,6 @@ public class SocialUserFactory {
     public String getProfileUrl(String provider) {
         if (provider.equals("kakao")) {
             return kakaoInfo.getKakaoProfileUrl();
-        } else if(provider.equals("google")) {
-            return googleInfo.getGoogleProfileUrl();
         } else {
             return naverInfo.getNaverProfileUrl();
         }
@@ -94,21 +81,6 @@ public class SocialUserFactory {
         private String kakaoProfileUrl;
         @Value("${spring.security.oauth2.client.provider.kakao.user-unlink-uri}")
         private String kakaoUnlinkUrl;
-    }
-
-    @Getter
-    @Component
-    static class GoogleInfo {
-        @Value("${spring.security.oauth2.client.registration.google.client-id}")
-        String googleClientId;
-        @Value("${spring.security.oauth2.client.registration.google.redirectUri}")
-        String googleRedirect;
-        @Value("${spring.security.oauth2.client.registration.google.client-secret}")
-        String googleClientSecret;
-        @Value("${spring.security.oauth2.client.provider.google.token-uri}")
-        private String googleTokenUrl;
-        @Value("${spring.security.oauth2.client.provider.google.user-info-uri}")
-        private String googleProfileUrl;
     }
 
     @Getter

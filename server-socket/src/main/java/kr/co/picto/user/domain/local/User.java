@@ -1,4 +1,4 @@
-package kr.co.picto.user.domain;
+package kr.co.picto.user.domain.local;
 
 import kr.co.picto.common.domain.BaseTimeEntity;
 import lombok.*;

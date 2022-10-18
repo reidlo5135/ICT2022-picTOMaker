@@ -152,7 +152,9 @@
         transform: scale(1.01);
         cursor: pointer;
     }
-
+    .MainButton > img{
+        height: 70px;
+    }
     .btn-start{
 
     }
@@ -263,6 +265,9 @@
         transform: scale(1.01);
         cursor: pointer;
     }
+    .MainButton > img{
+        height: 60px;
+    }
 
     .btn-start{
 
@@ -367,6 +372,9 @@
         transition: 0.25s;
         border-style: none;
         margin: 0;
+    }
+    .MainButton > img{
+        height: 50px;
     }
     .MainButton:hover {
         letter-spacing: 2px;

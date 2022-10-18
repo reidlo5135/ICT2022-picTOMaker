@@ -39,9 +39,7 @@ const TopProfile = () => {
                 provider
             }
             const action = (response) => {
-                if(response.body.code === 0) {
-                    console.log('TopProfile response data : ', response.body.data);
-                }
+
             }
             wsCommunicationWithConnection('/pub/user/social/login', {}, data, '/sub/social/login', action);
         }).catch((err) => {
