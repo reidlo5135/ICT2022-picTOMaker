@@ -101,7 +101,7 @@ export default function LocalUserSignUp(){
                 </div>
                 <div className='SU-Caution'>
                     <p>
-                        가입시 <Link to="/terms"><span>이용약관</span></Link>에 동의한 것으로 간주합니다.
+                        가입시 <Link to="/terms" target="_blank"><span>이용약관</span></Link>에 동의한 것으로 간주합니다.
                     </p>
                 </div>
             </div>
