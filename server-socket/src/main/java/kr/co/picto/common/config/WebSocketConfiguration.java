@@ -1,5 +1,6 @@
-package kr.co.picto.common.infra;
+package kr.co.picto.common.config;
 
+import kr.co.picto.common.infra.WebSocketHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Configuration;
