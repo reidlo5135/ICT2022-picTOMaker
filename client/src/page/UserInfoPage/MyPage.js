@@ -11,7 +11,8 @@ import {useHistory} from "react-router";
 import {useCookies} from "react-cookie";
 import axios from "axios";
 import { motion } from "framer-motion";
-
+import { Redirect } from "react-router-dom";
+import localLogin from "../MainPage/Main";
 export default function MyPageContent(){
     const [mode, setMode] = useState('profile');
     const history = useHistory();
@@ -24,7 +25,11 @@ export default function MyPageContent(){
     }
 
     useEffect(()=> {
-
+        if(access_token==null){
+            alert("로그인 후 이용 가능합니다.");
+            history.push("/");
+        }
+        localLogin();
     },[mode]);
 
     function conditionRender(conditionMode) {
@@ -92,7 +97,9 @@ export default function MyPageContent(){
         });
     }
 
+
     return (
+	        
         <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

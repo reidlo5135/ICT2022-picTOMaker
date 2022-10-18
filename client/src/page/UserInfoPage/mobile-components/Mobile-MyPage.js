@@ -10,6 +10,7 @@ import {useHistory} from "react-router";
 import {useCookies} from "react-cookie";
 import { motion } from "framer-motion";
 import MobileTop from "../../../component/mobile-components/Mobile-Top";
+import { Redirect } from "react-router-dom";
 
 export default function MyPageContent(){
     const [mode, setMode] = useState('profile');
@@ -23,6 +24,10 @@ export default function MyPageContent(){
     }
 
     useEffect(()=> {
+        if(access_token==null){
+            alert("로그인 후 이용 가능합니다.");
+            history.push("/");
+        }
 
     },[mode]);
 
