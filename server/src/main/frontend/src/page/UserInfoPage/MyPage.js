@@ -9,7 +9,6 @@ import MyPageProfileDetails from './components/MyPageProfileDetails';
 import MyPageProfile from "./components/MyPageProfile";
 import {useHistory} from "react-router";
 import {useCookies} from "react-cookie";
-import axios from "axios";
 import { motion } from "framer-motion";
 
 export default function MyPageContent(){
@@ -24,7 +23,10 @@ export default function MyPageContent(){
     }
 
     useEffect(()=> {
-
+        if(access_token === undefined || access_token === null){
+            alert("로그인 후 이용 가능합니다.");
+            history.push("/");
+        }
     },[mode]);
 
     function conditionRender(conditionMode) {
