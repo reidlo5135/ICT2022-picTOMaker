@@ -59,6 +59,7 @@ export default function LocalUserSignUp(){
                 }
             }).catch((err) => {
                 console.error("err : ", JSON.stringify(err));
+                alert(err.response.data.msg);
             })
         }
     };
@@ -83,7 +84,7 @@ export default function LocalUserSignUp(){
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>닉네임</div>
-                            <input type={'text'} name={'nickName'} onChange={handleInput} placeholder="EX) 픽토메이커"/>
+                            <input type={'text'} name={'nickName'} onChange={handleInput} placeholder="최대 6글자 까지 가능합니다." maxLength='6'/>
                         </div>
                         <div className='SU-Form'>
                             <div className='Label-txt'>비밀번호</div>
@@ -101,7 +102,7 @@ export default function LocalUserSignUp(){
                 </div>
                 <div className='SU-Caution'>
                     <p>
-                        가입시 <Link to="/terms"><span>이용약관</span></Link>에 동의한 것으로 간주합니다.
+                        가입시 <Link to="/terms" target="_blank"><span>이용약관</span></Link>에 동의한 것으로 간주합니다.
                     </p>
                 </div>
             </div>

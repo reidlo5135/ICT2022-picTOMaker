@@ -70,10 +70,15 @@ public class UserService {
 
     @Transactional
     public SingleResult<Long> signUp(@Valid UserCreateDto userCreateDto) {
+        User findUser = userRepository.findByEmail(userCreateDto.getEmail()).orElse(null);
         if(userRepository.findByEmail(userCreateDto.getEmail()).isPresent()) {
-            throw new CustomUserExistException();
+            if(!isInActivate(findUser)) {
+                throw new CustomUserExistException();
+            } else {
+                findUser.activate();
+                return responseService.getSingleResult(findUser.getId());
+            }
         }
-
         return responseService.getSingleResult(userRepository.save(userCreateDto.toEntity(passwordEncoder)).getId());
     }
 
@@ -95,8 +100,6 @@ public class UserService {
 
     @Transactional
     public SingleResult<TokenResponseDto> reissue(TokenRequestDto tokenRequestDto) {
-        log.info("Reissue at : " + tokenRequestDto.getAccessToken());
-        log.info("Reissue rt : " + tokenRequestDto.getRefreshToken());
         if (!jwtProvider.validationToken(tokenRequestDto.getRefreshToken())) {
             throw new CustomRefreshTokenException();
         }
@@ -134,5 +137,16 @@ public class UserService {
 
     private static void checkStatus(User user) {
         if(user.getStatus() == AccountStatus.INACTIVE) throw new CustomUserNotFoundException();
+    }
+
+    private static boolean isInActivate(User user) {
+        try {
+            if(user.getStatus() == AccountStatus.INACTIVE) {
+                return true;
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
