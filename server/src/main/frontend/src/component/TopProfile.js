@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {post} from "../services/AxiosService";
+import {del, post} from "../services/AxiosService";
 import {useCookies} from "react-cookie";
-import axios from "axios";
 import '../styles/top.css'
 import {Link} from "react-router-dom";
 import Human from '../assets/image/Human.png';
@@ -66,16 +65,37 @@ const TopProfile = () => {
 
             localStorage.setItem("profile", JSON.stringify(profile));
         }).catch((err) => {
-            axios.post('/v1/api/user/reissue', {
-                accessToken: cookies.accessToken,
-                refreshToken: localStorage.getItem("refresh_token")
-            }).then((response) => {
-                setCookie("accessToken", response.data.data.accessToken);
-                localStorage.setItem("refresh_token", response.data.data.refreshToken);
-                window.location.reload();
-            }).catch((err) => {
-                alert(err.response.data.msg);
-            });
+            let url = null;
+            if(provider === "LOCAL") {
+                url = '/v1/api/user/reissue';
+                post(url, {
+                    accessToken: cookies.accessToken,
+                    refreshToken: localStorage.getItem("refresh_token")
+                }, {
+
+                }).then((response) => {
+                    setCookie("accessToken", response.data.data.accessToken);
+                    localStorage.setItem("refresh_token", response.data.data.refreshToken);
+                    window.location.reload();
+                }).catch((err) => {
+                    alert(err.response.data.msg);
+                });
+            } else {
+                url = "/v1/api/oauth2/logout";
+                del(url, {
+                    headers: {
+                        "X-AUTH-TOKEN": cookies.accessToken
+                    }
+                }).then(() => {
+                    alert("토큰이 만료되었습니다.\n다시 로그인을 해주십시오.");
+                    console.clear();
+                    localStorage.clear();
+                    removeCookie("accessToken", {path: "/"});
+                    history.push("/");
+                }).catch((err) => {
+                    alert(err.response.data.msg);
+                });
+            }
         });
     };
 

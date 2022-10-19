@@ -23,7 +23,10 @@ export default function MyPageContent(){
     }
 
     useEffect(()=> {
-
+        if(access_token === undefined || access_token === null){
+            alert("로그인 후 이용 가능합니다.");
+            history.push("/");
+        }
     },[mode]);
 
     function conditionRender(conditionMode) {
