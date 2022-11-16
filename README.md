@@ -39,7 +39,7 @@
 
 - Design - Figma, Adobe Xd
 - Frontend - React.js, HTML5, CSS3, JavaScript, MediaPipe, TensorFlow
-- Backend - Spring Boot, Spring Security, OAuth2.0, REST API, Swagger, Json Web Token, JAVA(11)
+- Backend - Spring Boot, Spring Security, OAuth2.0, Swagger 3.0, Java
 - Database - MySQL, Spring Data JPA, AWS RDS, AWS S3
 - WAS - Apache Tomcat, AWS EC2
 - Version Control - Git, GitHub, Git Kraken
