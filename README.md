@@ -4,7 +4,6 @@
 멘토: 오은석<br>
 멘티: 진승범, 강준모, 김동호, 서동근<br>
 <b>VERSION: 1.2.0</b><br>
-<b><a href="https://www.pictomaker.com">-> Released URL</a></b><br>
 <b><a href="https://github.com/reidlo5135/ICT2022-picTOMaker-v2.0.0">-> Node-Express.js Version(v2.0.0)</a></b><br>
 <b><a href="https://github.com/reidlo5135/ICT2022-picTOMaker-v2.0.0/tree/dev-2.1.0">-> Node-Express.ts Version(v2.1.0)</a></b><br>
 
@@ -56,7 +55,7 @@
 - <b>커뮤니티</b> : 자신이 만들거나 디자인한 픽토그램을 해당 서비를 통해 공유할 수 있고, SNS를 통해서도 공유 가능(OAuth2.0 - 소셜 로그인 제공)
 
 
-### [관리자 기능] - 별도 페이지 X(Swagger로 관리)
+### [관리자 기능] - 별도 페이지 X
 - 회원(토큰) 관리
 - 픽토그램 등록, 수정, 삭제, 검열
 - 커뮤니티 게시판 관리 기능
